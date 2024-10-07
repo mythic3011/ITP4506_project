@@ -1,0 +1,72 @@
+[
+  {
+    "product_name": "Medical Insurance (Ward)",
+    "type": "Health Insurance",
+    "coverage": "In-patient care in a ward",
+    "premium_range": "$200 - $400",
+    "details": "Covers hospital room and board during a hospital stay."
+  },
+  {
+    "product_name": "Comprehensive Car Insurance",
+    "type": "Vehicle Insurance",
+    "coverage": "All damages to the car and third-party liabilities",
+    "premium_range": "$100 - $200",
+    "details": "Extensive coverage including theft, fire, and natural disasters."
+  },
+  {
+    "product_name": "Term Life Insurance",
+    "type": "Life Insurance",
+    "coverage": "Fixed coverage for a specified term",
+    "premium_range": "$50 - $150",
+    "details": "Payout in case of death during the term of insurance."
+  },
+  {
+    "product_name": "Personal Injury Protection",
+    "type": "Vehicle Insurance",
+    "coverage": "Medical expenses regardless of fault",
+    "premium_range": "$15 - $30",
+    "details": "Covers medical expenses for you and your passengers."
+  },
+  {
+    "product_name": "Collision Coverage",
+    "type": "Vehicle Insurance",
+    "coverage": "Damages to your vehicle after an accident",
+    "premium_range": "$70 - $150",
+    "details": "Covers repair costs for collision damages to your vehicle."
+  },
+  {
+    "product_name": "Auto Liability Coverage",
+    "type": "Vehicle Insurance",
+    "coverage": "Bodily injury and property damage liability",
+    "premium_range": "$50 - $100",
+    "details": "Covers costs related to another person's injuries and property damage."
+  },
+  {
+    "product_name": "Uninsured and Underinsured Motorist Coverage",
+    "type": "Vehicle Insurance",
+    "coverage": "Protection against uninsured and underinsured drivers",
+    "premium_range": "$20 - $50",
+    "details": "Covers medical bills and repairs if hit by an uninsured or underinsured driver."
+  },
+  {
+    "product_name": "Comprehensive Coverage",
+    "type": "Vehicle Insurance",
+    "coverage": "Theft, fire, hail, vandalism, and other non-collision damages",
+    "premium_range": "$30 - $70",
+    "details": "Covers non-collision damages to your vehicle."
+  },
+  {
+    "product_name": "Medical Payments Coverage",
+    "type": "Vehicle Insurance",
+    "coverage": "Medical expenses for you and your passengers",
+    "premium_range": "$10 - $30",
+    "details": "Covers medical expenses regardless of fault."
+  },
+  {
+    "product_name": "Gap Insurance",
+    "type": "Vehicle Insurance",
+    "coverage": "Difference between vehicle's actual cash value and outstanding loan balance",
+    "premium_range": "$10 - $20",
+    "details": "Covers the gap between what you owe and the vehicle's value."
+  }
+]

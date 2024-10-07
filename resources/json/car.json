@@ -1,0 +1,112 @@
+[
+    {
+        "vehicle_name": "Toyota Camry",
+        "make": "Toyota",
+        "model": "Camry",
+        "year": 2022,
+        "type": "Sedan",
+        "engine": "2.5L 4-Cylinder",
+        "transmission": "8-Speed Automatic",
+        "fuel_type": "Gasoline",
+        "mpg": "28 City / 39 Highway"
+    },
+    {
+        "vehicle_name": "Honda Civic",
+        "make": "Honda",
+        "model": "Civic",
+        "year": 2022,
+        "type": "Sedan",
+        "engine": "2.0L 4-Cylinder",
+        "transmission": "6-Speed Manual",
+        "fuel_type": "Gasoline",
+        "mpg": "32 City / 42 Highway"
+    },
+    {
+        "vehicle_name": "Ford Mustang",
+        "make": "Ford",
+        "model": "Mustang",
+        "year": 2022,
+        "type": "Coupe",
+        "engine": "5.0L V8",
+        "transmission": "10-Speed Automatic",
+        "fuel_type": "Gasoline",
+        "mpg": "16 City / 25 Highway"
+    },
+    {
+        "vehicle_name": "Nissan Altima",
+        "make": "Nissan",
+        "model": "Altima",
+        "year": 2022,
+        "type": "Sedan",
+        "engine": "2.5L 4-Cylinder",
+        "transmission": "CVT",
+        "fuel_type": "Gasoline",
+        "mpg": "28 City / 39 Highway"
+    },
+    {
+        "vehicle_name": "Chevrolet Silverado",
+        "make": "Chevrolet",
+        "model": "Silverado",
+        "year": 2022,
+        "type": "Truck",
+        "engine": "5.3L V8",
+        "transmission": "10-Speed Automatic",
+        "fuel_type": "Gasoline",
+        "mpg": "16 City / 23 Highway"
+    },
+    {
+        "vehicle_name": "Jeep Grand Cherokee",
+        "make": "Jeep",
+        "model": "Grand Cherokee",
+        "year": 2022,
+        "type": "SUV",
+        "engine": "3.6L V6",
+        "transmission": "8-Speed Automatic",
+        "fuel_type": "Gasoline",
+        "mpg": "19 City / 26 Highway"
+    },
+    {
+        "vehicle_name": "Dodge Charger",
+        "make": "Dodge",
+        "model": "Charger",
+        "year": 2022,
+        "type": "Sedan",
+        "engine": "3.6L V6",
+        "transmission": "8-Speed Automatic",
+        "fuel_type": "Gasoline",
+        "mpg": "19 City / 30 Highway"
+    },
+    {
+        "vehicle_name": "Ram 1500",
+        "make": "Ram",
+        "model": "1500",
+        "year": 2022,
+        "type": "Truck",
+        "engine": "3.6L V6",
+        "transmission": "8-Speed Automatic",
+        "fuel_type": "Gasoline",
+        "mpg": "20 City / 26 Highway"
+    },
+    {
+        "vehicle_name": "Kia Optima",
+        "make": "Kia",
+        "model": "Optima",
+        "year": 2022,
+        "type": "Sedan",
+        "engine": "2.4L 4-Cylinder",
+        "transmission": "6-Speed Automatic",
+        "fuel_type": "Gasoline",
+        "mpg": "24 City / 34 Highway"
+    },
+    {
+        "vehicle_name": "Hyundai Elantra",
+        "make": "Hyundai",
+        "model": "Elantra",
+        "year": 2022,
+        "type": "Sedan",
+        "engine": "2.0L 4-Cylinder",
+        "transmission": "CVT",
+        "fuel_type": "Gasoline",
+        "mpg": "28 City / 38 Highway"
+    }
+]

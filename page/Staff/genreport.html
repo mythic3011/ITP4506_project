@@ -1,0 +1,366 @@
+<!doctype html>
+<html class="dark" lang="en">
+<head>
+    <title>Generate Report | Legend Motor Limited</title>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="../../resources/image/SLMC_Icon_login.jpg" rel="icon" type="image/x-icon"/>
+    <script src="../../resources/js/script.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            "50": "#eff6ff",
+                            "100": "#dbeafe",
+                            "200": "#bfdbfe",
+                            "300": "#93c5fd",
+                            "400": "#60a5fa",
+                            "500": "#3b82f6",
+                            "600": "#2563eb",
+                            "700": "#1d4ed8",
+                            "800": "#1e40af",
+                            "900": "#1e3a8a",
+                            "950": "#172554"
+                        }
+                    }
+                },
+                fontFamily: {
+                    'body': [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'system-ui',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'Noto Sans',
+                        'sans-serif',
+                        'Apple Color Emoji',
+                        'Segoe UI Emoji',
+                        'Segoe UI Symbol',
+                        'Noto Color Emoji'
+                    ],
+                    'sans': [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'system-ui',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'Noto Sans',
+                        'sans-serif',
+                        'Apple Color Emoji',
+                        'Segoe UI Emoji',
+                        'Segoe UI Symbol',
+                        'Noto Color Emoji'
+                    ]
+                }
+            }
+        }
+    </script>
+</head>
+<!--------------------Menu-------------------->
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+<div class="flex h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-gray-200 dark:bg-gray-900 w-64 flex-shrink-0 hidden md:flex md:flex-col">
+        <div class="flex flex-col items-center p-4">
+            <a class="flex items-center space-x-3 rtl:space-x-reverse mb-6" href="#">
+                <div class="h-8 w-8 relative">
+                    <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
+                         src="../../resources/image/SLMC_LOGO.png"/>
+                    <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block"
+                         src="../../resources/image/SLMC_LOGO_DM.png"/>
+                </div>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
+            </a>
+
+            <ul class="font-medium flex flex-col space-y-2">
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="order.html">Order Record</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="Item.html">Spare Part</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="genreport.html">Generate Report</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="../../logout.html" onclick="logout()">Log Out</a>
+                </li>
+            </ul>
+
+            <!-- Dark mode toggle button -->
+            <button class="mt-6 p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2
+            focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                    id="darkModeToggle">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <div class="md:hidden flex items-center justify-between p-4 bg-white dark:bg-gray-900">
+        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <div class="h-8 w-8 relative">
+                <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
+                     src="../../resources/image/SLMC_LOGO.png"/>
+                <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block"
+                     src="../../resources/image/SLMC_LOGO_DM.png"/>
+            </div>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
+        </a>
+        <button class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                id="mobileMenuButton">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="md:hidden flex flex-col" id="mobileMenu" style="display: none;">
+        <ul class="font-medium flex flex-col space-y-2 p-4 bg-white dark:bg-gray-900">
+            <li>
+                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                   href="order.html">Order Record</a>
+            </li>
+            <li>
+                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                   href="Item.html">Spare Part</a>
+            </li>
+            <li>
+                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                   href="genreport.html">Generate Report</a>
+            </li>
+            <li>
+                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                   href="../../logout.html" onclick="logout()">Log Out</a>
+            </li>
+        </ul>
+    </div>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-body">
+<main class="container mx-auto px-4 py-4 sm:py-8">
+    <div class="prose dark:prose-invert max-w-none">
+        <h1 class="text-2xl sm:text-3xl font-bold mb-4">Stock Report</h1>
+        <h2 id="total" class="text-lg sm:text-xl mb-4"></h2>
+
+        <div class="flex flex-wrap gap-2 mb-4">
+            <button onclick="printReport()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded text-sm">
+                Print
+            </button>
+            <button onclick="saveAsPDF()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-sm">
+                Save PDF
+            </button>
+            <button onclick="exportToCSV()" class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-2 px-4 rounded text-sm">
+                Export CSV
+            </button>
+        </div>
+
+        <div class="overflow-x-auto shadow-md sm:rounded-lg">
+            <table id="reportTable" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-4 py-3">Part number</th>
+                    <th scope="col" class="px-4 py-3">Part name</th>
+                    <th scope="col" class="px-4 py-3">Part Image</th>
+                    <th scope="col" class="px-4 py-3">Order number</th>
+                    <th scope="col" class="px-4 py-3">Order quantity</th>
+                    <th scope="col" class="px-4 py-3">Total sales amount</th>
+                </tr>
+                </thead>
+                <tbody id="reportTableBody">
+                <!-- Table rows will be inserted here dynamically by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="mt-4 sm:mt-6">
+            <button onclick="location.href='order.html'" class="w-full sm:w-auto bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded text-sm">
+                Finish
+            </button>
+        </div>
+        <!-- Footer -->
+        <footer class="text-center py-4">
+            <p class="text-gray-700 dark:text-gray-300">© 2024 Legend Motor Limited. All rights reserved.</p>
+        </footer>
+    </div>
+</main>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        fetchReportData();
+    });
+
+    function fetchReportData() {
+        const apiUrl = `../../resources/php/genReport.php?action=getStockReport`;
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include'
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success' && data.data) {
+                        renderReportTable(data.data);
+                    } else {
+                        throw new Error(data.message || 'Failed to fetch order item list');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error generate report:', error);
+                    // Display error message to user
+                    document.getElementById('orderTableBody').innerHTML = `<tr><td colspan="11" class="text-center text-red-500">Error loading orders: ${error.message}</td></tr>`;
+                });
+    }
+
+
+    function updateTotal(count) {
+        const totalElement = document.getElementById('total');
+        if (totalElement) {
+            totalElement.textContent = `Total: ${count} Orders`;
+            totalElement.className = 'text-lg font-bold mb-4 text-gray-800 dark:text-white';
+        }
+    }
+
+    function renderReportTable(data) {
+        const tableBody = document.getElementById('reportTableBody');
+        if (!tableBody) {
+            console.error('Table body element not found');
+            return;
+        }
+        tableBody.textContent = ''; // Clear existing content
+
+        data.forEach((item, index) => {
+            const row = document.createElement('tr');
+            row.className = index % 2 === 0
+                ? 'bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700'
+                : 'bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600';
+
+            const cellContents = [
+                item.partNumber,
+                item.partName,
+                createImageElement(item.partImage, item.partName),
+                createMultilineContent(item.orderNumbers),
+                createMultilineContent(item.orderQuantities),
+                `${item.totalSalesAmount} HKD`
+            ];
+
+            cellContents.forEach((content, cellIndex) => {
+                const cell = document.createElement('td');
+                cell.className = 'px-4 py-3 text-sm text-gray-900 dark:text-gray-200';
+
+                if (cellIndex === 0) {
+                    cell.className += ' font-medium';
+                }
+
+                if (typeof content === 'string') {
+                    cell.textContent = content;
+                } else {
+                    cell.appendChild(content);
+                }
+                row.appendChild(cell);
+            });
+
+            tableBody.appendChild(row);
+        });
+    }
+
+    function createImageElement(src, alt) {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = alt;
+        img.className = 'h-10 w-10 rounded-full object-cover';
+        return img;
+    }
+
+    function createMultilineContent(itemsString) {
+        const items = itemsString.split(',').map(item => item.trim());
+        const fragment = document.createDocumentFragment();
+        items.forEach((item, index) => {
+            if (index > 0) {
+                fragment.appendChild(document.createElement('br'));
+            }
+            const span = document.createElement('span');
+            span.textContent = item;
+            span.className = 'block text-sm text-gray-700 dark:text-gray-300';
+            fragment.appendChild(span);
+        });
+        return fragment;
+    }
+
+    function displayErrorMessage(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.textContent = message;
+        errorDiv.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4 dark:bg-red-900 dark:border-red-700 dark:text-red-100';
+
+        const closeButton = document.createElement('button');
+        closeButton.textContent = '×';
+        closeButton.className = 'absolute top-0 right-0 px-4 py-3';
+        closeButton.onclick = function() {
+            errorDiv.remove();
+        };
+
+        errorDiv.appendChild(closeButton);
+        document.body.insertBefore(errorDiv, document.body.firstChild);
+    }
+
+    function printReport() {
+        window.print();
+    }
+
+    function saveAsPDF() {
+        // Open the print dialog and select 'Save as PDF' as the printer
+        window.print();
+    }
+
+    function exportToCSV() {
+        const table = document.getElementById('reportTable');
+        if (!table) {
+            console.error('Report table not found');
+            return;
+        }
+
+        const csv = [];
+        for (let i = 0; i < table.rows.length; i++) {
+            const row = [];
+            const cols = table.rows[i].cells;
+            for (let j = 0; j < cols.length; j++) {
+                row.push(cols[j].textContent.replace(/,/g, ';')); // Replace commas with semicolons
+            }
+            csv.push(row.join(","));
+        }
+
+        const csvContent = "data:text/csv;charset=utf-8," + encodeURIComponent(csv.join("\n"));
+        const link = document.createElement("a");
+        link.setAttribute("href", csvContent);
+        link.setAttribute("download", "report.csv");
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+    <title>Edit Item | Username | Legend Motor Limited</title>
+    <link
+      href="../../resources/image/SLMC_Icon.png"
+      rel="icon"
+      type="image/x-icon"
+    />
+    <script src="../../resources/js/script.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: {
+                50: "#eff6ff",
+                100: "#dbeafe",
+                200: "#bfdbfe",
+                300: "#93c5fd",
+                400: "#60a5fa",
+                500: "#3b82f6",
+                600: "#2563eb",
+                700: "#1d4ed8",
+                800: "#1e40af",
+                900: "#1e3a8a",
+                950: "#172554",
+              },
+            },
+          },
+          fontFamily: {
+            body: [
+              "Inter",
+              "ui-sans-serif",
+              "system-ui",
+              "-apple-system",
+              "system-ui",
+              "Segoe UI",
+              "Roboto",
+              "Helvetica Neue",
+              "Arial",
+              "Noto Sans",
+              "sans-serif",
+              "Apple Color Emoji",
+              "Segoe UI Emoji",
+              "Segoe UI Symbol",
+              "Noto Color Emoji",
+            ],
+            sans: [
+              "Inter",
+              "ui-sans-serif",
+              "system-ui",
+              "-apple-system",
+              "system-ui",
+              "Segoe UI",
+              "Roboto",
+              "Helvetica Neue",
+              "Arial",
+              "Noto Sans",
+              "sans-serif",
+              "Apple Color Emoji",
+              "Segoe UI Emoji",
+              "Segoe UI Symbol",
+              "Noto Color Emoji",
+            ],
+          },
+        },
+      };
+    </script>
+  </head>
+  <!--------------------Menu-------------------->
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans">
+<div class="flex h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-gray-200 dark:bg-gray-900 w-64 flex-shrink-0 hidden md:flex md:flex-col">
+        <div class="flex flex-col items-center p-4">
+            <a class="flex items-center space-x-3 rtl:space-x-reverse mb-6" href="#">
+                <div class="h-8 w-8 relative">
+                    <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
+                         src="../../resources/image/SLMC_LOGO.png"/>
+                    <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block dark:pt-7"
+                         src="../../resources/image/SLMC_LOGO_DM.png"/>
+                </div>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
+            </a>
+
+            <ul class="font-medium flex flex-col space-y-2 -ml-8">
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 -ml-8"
+                       href="order.html">Order Record</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 -ml-8"
+                       href="Item.html">Spare Part</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 -ml-8"
+                       href="genreport.html">Generate Report</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 -ml-8"
+                       href="../../logout.html" onclick="logout()">Log Out</a>
+                </li>
+            </ul>
+
+            <!-- Dark mode toggle button -->
+            <button class="mt-6 p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2
+            focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                    id="darkModeToggle">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Button -->
+    <div class="fixed top-0 left-0 flex items-center justify-between p-4 bg-white dark:bg-gray-900 w-full">
+        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+            <div class="h-8 w-8 relative">
+                <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
+                     src="../../resources/image/SLMC_LOGO.png"/>
+                <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block"
+                     src="../../resources/image/SLMC_LOGO_DM.png"/>
+            </div>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
+        </a>
+        <button class="hidden p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                id="mobileMenuButton">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                 xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                      d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+        </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.style.display = mobileMenu.style.display === 'none' ? 'block' : 'none';
+            });
+        });
+    </script>
+    <div class="md:hidden" id="mobileMenu">
+        <ul class="font-medium flex flex-col space-y-2 p-4 bg-white dark:bg-gray-900">
+            <li>
+                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                   href="order.html">Order Record</a>
+            </li>
+            <li>
+                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                   href="Item.html">Spare Part</a>
+            </li>
+            <li>
+                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                   href="genreport.html">Generate Report</a>
+            </li>
+            <li>
+                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                   href="../../logout.html" onclick="logout()">Log Out</a>
+            </li>
+        </ul>
+    </div>
+    <!--------------------Menu-------------------->
+    <section
+      class="content bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen p-4 md:p-8 w-full md:w-3/4 mx-auto mt-8 md:mt-0"
+      id="editItemSection"
+    >
+      <h2
+        class="text-3xl md:text-4xl font-bold text-center text-blue-600 dark:text-blue-400 mb-8 mt-8"
+      >
+        Edit Item
+      </h2>
+      <div
+        class="max-w-4xl mx-auto bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg p-6 md:p-8"
+      >
+        <form id="editItemForm" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="space-y-2">
+              <label class="block text-sm font-medium">Spare part number</label>
+              <p
+                id="sparePartNumber"
+                class="text-lg font-semibold text-blue-600 dark:text-blue-400"
+              ></p>
+            </div>
+            <div class="space-y-2">
+              <label class="block text-sm font-medium"
+                >Spare part category</label
+              >
+              <p id="sparePartCategory" class="text-lg"></p>
+            </div>
+            <div class="space-y-2">
+              <label class="block text-sm font-medium">Spare part name</label>
+              <p id="sparePartName" class="text-lg"></p>
+            </div>
+            <div class="space-y-2">
+              <label for="file" class="block text-sm font-medium"
+                >Upload spare part image</label
+              >
+              <input
+                type="file"
+                id="file"
+                name="img"
+                accept="image/*"
+                class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              />
+            </div>
+            <div class="space-y-2">
+              <label class="block text-sm font-medium">Weight</label>
+              <p id="sparePartWeight" class="text-lg"></p>
+            </div>
+            <div class="space-y-2">
+              <label
+                for="input-stock-quantity"
+                class="block text-sm font-medium"
+                >Stock item quantity</label
+              >
+              <input
+                type="number"
+                id="input-stock-quantity"
+                placeholder="Enter stock item quantity"
+                required
+                class="w-full px-3 py-2 text-gray-700 bg-white dark:bg-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              />
+            </div>
+            <div class="space-y-2">
+              <label for="input-price" class="block text-sm font-medium"
+                >Price</label
+              >
+              <input
+                type="number"
+                id="input-price"
+                placeholder="Enter price"
+                required
+                class="w-full px-3 py-2 text-gray-700 bg-white dark:bg-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+              />
+            </div>
+          </div>
+          <div class="space-y-2">
+            <label for="description" class="block text-sm font-medium"
+              >Spare part description</label
+            >
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              placeholder="Enter spare part description"
+              class="w-full px-3 py-2 text-gray-700 bg-white dark:bg-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+            ></textarea>
+          </div>
+          <div
+            class="flex flex-col sm:flex-row sm:justify-end space-y-4 sm:space-y-0 sm:space-x-4"
+          >
+            <button
+              type="submit"
+              class="w-full sm:w-auto px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-offset-gray-800 transition-colors duration-200"
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              onclick="location.href='Item.html'"
+              class="w-full sm:w-auto px-6 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:bg-gray-600 dark:text-gray-200 dark:hover:bg-gray-500 dark:focus:ring-offset-gray-800 transition-colors duration-200"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
+      <!-- Footer -->
+      <footer class="text-center py-4">
+        <p class="text-gray-700 dark:text-gray-300">
+          © 2024 Legend Motor Limited. All rights reserved.
+        </p>
+      </footer>
+    </section>
+
+    <script src="../../resources/js/ManageItem.js"></script>
+<script>
+function fetchAPIForEdit(id) {
+    const apiUrl = `../../resources/php/ManageItem.php?action=get&id=${encodeURIComponent(id)}`;
+    const AuthToken = localStorage.getItem('userToken');
+
+    return fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${AuthToken}`
+        },
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.status === 'success') {
+            return result.data;
+        } else {
+            throw new Error(result.message || 'Failed to fetch spare part data');
+        }
+    });
+}
+
+function fetchItemData() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    if (!id) {
+        alert('No item ID provided');
+        return;
+    }
+
+    fetchAPIForEdit(id)
+        .then(itemData => {
+            document.getElementById("sparePartNumber").textContent = itemData.sparePartNum;
+            document.getElementById("sparePartCategory").textContent = itemData.sparePartCategory;
+            document.getElementById("sparePartName").textContent = itemData.sparePartName;
+            document.getElementById("sparePartWeight").textContent = itemData.weight;
+            document.getElementById("input-stock-quantity").value = itemData.stockItemQty;
+            document.getElementById("input-price").value = itemData.price;
+            document.getElementById("description").value = itemData.sparePartDescription;
+        })
+        .catch(error => {
+            console.error('Error fetching item data:', error);
+            alert('Error fetching item data: ' + error.message);
+        });
+}
+
+function updateItem() {
+    const id = document.getElementById("sparePartNumber").textContent;
+    const formData = new FormData();
+
+    formData.append("id", id);
+    formData.append("stockItemQty", document.getElementById("input-stock-quantity").value);
+    formData.append("price", document.getElementById("input-price").value);
+    formData.append("sparePartDescription", document.getElementById("description").value);
+
+    const fileInput = document.getElementById("file");
+    if (fileInput.files.length > 0) {
+        formData.append("image", fileInput.files[0]);
+    }
+
+    const AuthToken = localStorage.getItem('userToken');
+
+    fetch('../../resources/php/ManageItem.php?action=update', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${AuthToken}`
+        },
+        body: formData,
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.status === 'success') {
+            alert('Item updated successfully!');
+            window.location.href = 'Item.html';
+        } else {
+            throw new Error(result.message || 'Failed to update item');
+        }
+    })
+    .catch(error => {
+        console.error('Error updating item:', error);
+        alert('Error updating item: ' + error.message);
+    });
+}
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Fetch item data
+    fetchItemData();
+
+    // Handle form submission
+    document
+        .getElementById("editItemForm")
+        .addEventListener("submit", function (e) {
+            e.preventDefault();
+            updateItem();
+        });
+});
+</script>
+  </body>
+</html>
