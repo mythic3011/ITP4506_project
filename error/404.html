@@ -20,7 +20,7 @@
     <meta name="revisit-after" content="1 days" />
     <link
       rel="icon"
-      href="../resources/image/SLMC_Icon_login.jpg"
+      href="../resources/image/LMC_login.png"
       type="image/x-icon"
     />
     <link rel="stylesheet" href="../resources/css/index.css" />
@@ -109,7 +109,7 @@
         document.referrer === "" ||
         !document.referrer.includes(window.location.hostname)
       ) {
-        window.location.href = "../index.php";
+        window.location.href = "../index.html";
       } else {
         redirectUserRolePage();
       }
@@ -127,7 +127,7 @@
           countdownElement.innerHTML = seconds + "s";
           if (timeLeft === 0) {
             clearInterval(countdownTimer);
-            window.location.href = "../index.php";
+            window.location.href = "../index.html";
           }
           timeLeft--;
         }, 1000);
@@ -140,7 +140,7 @@
           <img
             alt="logo"
             class="mx-auto w-32 h-32 mb-4 transition-all duration-300 ease-in-out cursor-pointer"
-            src="../resources/image/SLMC_Icon_login.jpg"
+            src="../resources/image/LMC_login.png"
           />
           <!-- Text displayed on the webpage -->
           <span class="logintext mb-4 text-lg">404 Not Found</span>

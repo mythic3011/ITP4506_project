@@ -35,7 +35,7 @@ class User
             "Dealer" => "./page/dealer/viewSparePart.php",
             "SalesManager" => "./page/staff/order.html"
         ];
-        return $pages[$role] ?? "index.php";
+        return $pages[$role] ?? "index.html";
     }
 
     public function updateProfile(string $userId, array $data): bool

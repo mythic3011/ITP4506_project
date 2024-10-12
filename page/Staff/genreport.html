@@ -4,9 +4,10 @@
     <title>Generate Report | Legend Motor Limited</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="../../resources/image/SLMC_Icon_login.jpg" rel="icon" type="image/x-icon"/>
+    <link href="../../resources/image/LMC_login.png" rel="icon" type="image/x-icon"/>
     <script src="../../resources/js/script.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         tailwind.config = {
             darkMode: 'class',
@@ -114,49 +115,6 @@
             </button>
         </div>
     </nav>
-
-    <!-- Mobile Menu Button -->
-    <div class="md:hidden flex items-center justify-between p-4 bg-white dark:bg-gray-900">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <div class="h-8 w-8 relative">
-                <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-                     src="../../resources/image/SLMC_LOGO.png"/>
-                <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block"
-                     src="../../resources/image/SLMC_LOGO_DM.png"/>
-            </div>
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
-        </a>
-        <button class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                id="mobileMenuButton">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
-        </button>
-    </div>
-
-    <!-- Mobile Menu -->
-    <div class="md:hidden flex flex-col" id="mobileMenu" style="display: none;">
-        <ul class="font-medium flex flex-col space-y-2 p-4 bg-white dark:bg-gray-900">
-            <li>
-                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="order.html">Order Record</a>
-            </li>
-            <li>
-                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="Item.html">Spare Part</a>
-            </li>
-            <li>
-                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="genreport.html">Generate Report</a>
-            </li>
-            <li>
-                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="../../logout.html" onclick="logout()">Log Out</a>
-            </li>
-        </ul>
-    </div>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-body">
 <main class="container mx-auto px-4 py-4 sm:py-8">
     <div class="prose dark:prose-invert max-w-none">

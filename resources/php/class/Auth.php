@@ -99,6 +99,6 @@ class Auth {
             "Dealer" => "./page/dealer/viewSparePart.php",
             "SalesManager" => "./page/staff/order.html"
         ];
-        return $pages[$role] ?? "index.php";
+        return $pages[$role] ?? "index.html";
     }
 }
