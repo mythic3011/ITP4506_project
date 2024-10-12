@@ -12,6 +12,3 @@ services:
 networks:
   default:
     name: ITP4506_default
-
-volumes:
-  mariadb_data:

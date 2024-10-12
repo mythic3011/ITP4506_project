@@ -5,8 +5,8 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.idea/dataSources" />
       <excludeFolder url="file://$MODULE_DIR$/.idea/httpRequests" />
-      <excludeFolder url="file://$MODULE_DIR$/resources/php" />
-      <excludeFolder url="file://$MODULE_DIR$/resources/py" />
+      <excludeFolder url="file://$MODULE_DIR$/Archive/php" />
+      <excludeFolder url="file://$MODULE_DIR$/Archive/py" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
