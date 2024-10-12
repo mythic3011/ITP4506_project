@@ -368,7 +368,7 @@
 
             function getSparePartList() {
               showLoading();
-              // Fetch spare parts data from the server
+              // Fetch Product data from the server
               fetch("/api/spare-parts")
                 .then((response) => response.json())
                 .then((data) => {
@@ -383,7 +383,7 @@
                   }
                 })
                 .catch((error) =>
-                  console.error("Error fetching spare parts:", error)
+                  console.error("Error fetching Product:", error)
                 )
                 .finally(() => hideLoading());
             }

@@ -15,20 +15,6 @@
     <script type="module" src="../../resources/js/module/api.js"></script>
     <script type="module" src="../../resources/js/OrderAction.js"></script>
     <script>
-        function printOrder(div) {
-
-            var printContents = document.getElementById(div).innerHTML;
-            var originalContents = document.body.innerHTML;
-
-            document.body.innerHTML = printContents;
-
-            window.print();
-
-
-            document.body.innerHTML = originalContents;
-        }
-    </script>
-    <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
@@ -67,9 +53,17 @@
         function displayError(message) {
             const errorDiv = document.createElement('div');
             errorDiv.id = 'errorDiv';
-            errorDiv.className = 'text-red-500 text-center mt-4';
+            errorDiv.style = "margin-top: 1rem; text-align: center; color: #EF4444; ";
             errorDiv.textContent = message;
             document.getElementById('orderSummaryDiv').insertAdjacentElement('beforebegin', errorDiv);
+        }
+
+        function printOrder(div) {
+            var printContents = document.getElementById(div).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -160,8 +154,8 @@
             document.title = `Order Details - ${order.id} | ${localStorage.getItem('username')} | Legend Motor Limited`;
             const summaryContainer = document.getElementById('orderSummary');
             summaryContainer.innerHTML = `
-        <p><strong>Order Date:</strong> ${formatDate(order.orderDate)}</p>
-        <p><strong>Order Time:</strong> ${order.orderTime}</p>
+            <p><strong>Order Date:</strong> ${formatDate(order.orderDate)}</p>
+            <p><strong>Order Time:</strong> ${order.orderTime}</p>
         <p><strong>Order Status:</strong> ${order.orderStatus}</p>
         <p><strong>Sales Manager ID:</strong> ${order.salesManagerId}</p>
         <p><strong>Sales Manager:</strong> ${order.salesManager}</p>
@@ -173,13 +167,12 @@
         <p><strong>Total Amount:</strong> $${order.totalAmount.toLocaleString()}</p>
         <p><strong>Total Weight:</strong> ${order.totalWeight}kg</p>
         <p><strong>Shipping Cost:</strong> $${order.shippingCost} ($${(order.shippingCost / order.totalWeight).toFixed(2)}/kg)</p>
-        <p><strong>Total Cost:</strong> $${order.totalCost.toLocaleString()}</p>
-    `;
+        <p><strong>Total Cost:</strong> $${order.totalCost.toLocaleString()}</p>`;
             document.getElementById('OrderDetails-title').textContent = `Order Details - ${order.id}`;
         }
 
         function renderOrderItems(items) {
-            const itemsContainer = document.getElementById('order-Details-SpartPart');
+            const itemsContainer = document.getElementById('order-Details-Product');
             itemsContainer.innerHTML = items.map(item => `
         <tr>
             <td class="px-6 py-4 whitespace-nowrap">${item.name} (${item.id})</td>
@@ -314,7 +307,16 @@
 </head>
 <div class="flex h-screen">
     <!-- Navigation -->
-    <nav class="bg-white border-gray-200 dark:bg-gray-900 w-64 flex-shrink-0 hidden md:flex md:flex-col">
+    <nav style="display: none; 
+border-color: #E5E7EB; 
+width: 16rem; 
+background-color: #ffffff; 
+
+
+@media (min-width: 768px) { 
+  display: flex; 
+flex-direction: column; 
+ }">
         <div class="flex flex-col items-center p-4">
             <a class="flex items-center space-x-3 rtl:space-x-reverse mb-6" href="#">
                 <div class="h-8 w-8 relative">
@@ -463,9 +465,9 @@
                         </thead>
                         <tbody
                                 class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
-                                id="order-Details-SpartPart"
+                                id="order-Details-Product"
                         >
-                        <!-- Spare parts will be rendered here -->
+                        <!-- Product will be rendered here -->
                         </tbody>
                     </table>
                 </div>

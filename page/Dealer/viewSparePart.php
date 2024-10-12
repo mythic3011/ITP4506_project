@@ -67,7 +67,7 @@ $subtotal = array_reduce($cartItems, static function ($sum, $item) {
 
 $totalAmount = $subtotal + $shippingCost;
 
-// Fetch spare parts data from database
+// Fetch Product data from database
 $spareParts = $sparePart->getAllSpareParts(); // 假设SparePart类中有一个方法getAllSpareParts来获取所有备件数据
 ?>
 
@@ -76,7 +76,7 @@ $spareParts = $sparePart->getAllSpareParts(); // 假设SparePart类中有一个�
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Spare Parts | Smart & Luxury Motor Company</title>
+    <title>Product | Smart & Luxury Motor Company</title>
     <link href="../../resources/image/SLMC_Icon_DM.png" rel="icon" type="image/x-icon"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
     <script type="module" src="../../resources/js/script.js"></script>
@@ -204,11 +204,11 @@ $spareParts = $sparePart->getAllSpareParts(); // 假设SparePart类中有一个�
     </div>
 </nav>
 <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold mb-6">Spare Parts</h1>
+    <h1 class="text-3xl font-bold mb-6">Product</h1>
     <div class="mb-4 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
         <!-- Search Bar -->
         <div class="w-full sm:w-1/3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="sparePartSearch">Search Spare Parts:</label>
+            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="sparePartSearch">Search Product:</label>
             <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                    id="sparePartSearch"
                    placeholder="Enter spare part name or ID"

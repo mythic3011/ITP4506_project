@@ -134,7 +134,7 @@ class SparePart
 
     public function batchDeleteSparePart(mixed $ids)
     {
-        // array of ids for spare parts to be deleted
+        // array of ids for Product to be deleted
         $ids = is_array($ids) ? $ids : [$ids];
         $result = $this->db->query("DELETE FROM Item WHERE sparePartNum IN (" . implode(',', $ids) . ")");
         return $result;

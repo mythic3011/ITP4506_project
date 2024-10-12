@@ -9,54 +9,9 @@ services:
       - ./resources/docker/nginx/:/etc/nginx/
       - ./resources/docker/nginx/error/:/var/www/html/error/
       - ./:/var/www/html
-    depends_on:
-      - php
-  php:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./:/var/www/html
-#    depends_on:
-#      - mariadb
-    environment:
-      - DOCKER_ENV=true
-
-  mariadb:
-    image: mariadb:10.5
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: projectDB
-    ports:
-      - "3306:3306"
-    volumes:
-      - ./sql-scripts:/docker-entrypoint-initdb.d
-      - mariadb_data:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      - "8090:80"
-    environment:
-      PMA_HOST: mariadb
-      PMA_USER: root
-      PMA_PASSWORD: rootpassword
-    depends_on:
-      - mariadb
-
-  api:
-    build:
-      context: ./resources/py/
-      dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
-    volumes:
-      - ./resources/py/:/app
-      - ./resources/py/api.py:/app/api.py
-
 networks:
   default:
-    name: ITP4523M_Project_default
+    name: ITP4506_default
 
 volumes:
   mariadb_data:

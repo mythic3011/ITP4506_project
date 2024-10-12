@@ -1,309 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Login | Legend Motor Limited</title>
     <meta
-      name="description"
-      content="Login page for the Legend Motor Limited"
+            name="description"
+            content="Login page for the Legend Motor Limited"
     />
-    <meta name="author" content="Legend Motor Limited" />
-    <meta name="robots" content="noindex, nofollow" />
-    <link rel="stylesheet" href="resources/css/index.css" />
+    <meta name="author" content="Legend Motor Limited"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="stylesheet" href="resources/css/index.css"/>
     <link
-      rel="icon"
-      href="resources/image/SLMC_Icon_login.jpg"
-      type="image/x-icon"
+            rel="icon"
+            href="resources/image/SLMC_Icon_login.jpg"
+            type="image/x-icon"
     />
     <script type="module" src="resources/js/script.js"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: "#eff6ff",
-                100: "#dbeafe",
-                200: "#bfdbfe",
-                300: "#93c5fd",
-                400: "#60a5fa",
-                500: "#3b82f6",
-                600: "#2563eb",
-                700: "#1d4ed8",
-                800: "#1e40af",
-                900: "#1e3a8a",
-                950: "#172554",
-              },
-            },
-          },
-          fontFamily: {
-            body: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "system-ui",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-            sans: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "system-ui",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-          },
-        },
-      };
-    </script>
-  </head>
-  <body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white">
-    <main class="container mx-auto px-4 py-8">
-      <div
-        class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-md p-8"
-      >
-        <div class="text-center mb-8">
-          <img
-            src="resources/image/SLMC_Icon_login.jpg"
-            alt="Legend Motor Limited Logo"
-            class="mx-auto w-24 h-24"
-          />
-          <h1 class="text-2xl font-bold mt-4">Sign in to System</h1>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            color: #111;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dark-mode {
+            background-color: #1a202c;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .dark-mode .container {
+            background-color: #2d3748;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-8 {
+            margin-bottom: 32px;
+        }
+
+        .pt-8 {
+            padding-top: 32px;
+        }
+
+        img {
+            width: 96px;
+            height: 96px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        form {
+            margin-top: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: calc(100% - 16px);
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: none;
+            background-color: #007BFF;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            color: #555;
+        }
+
+        .dark-mode footer {
+            background-color: #2d3748;
+            color: #bbb;
+        }
+
+        /* Toggle Button */
+        #darkModeToggle {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            padding: 8px;
+            background-color: #e2e8f0;
+            border-radius: 50%;
+            box-shadow: 0 2 10 rgba (0, 0, 0, 0 .2);
+            cursor: pointer;
+        }
+
+        #darkModeToggle svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .dark-mode #darkModeToggle {
+            background-color: #4a5568;
+        }
+
+        .dark-mode #darkModeToggle svg {
+            fill: #ecc94b;
+        }
+
+    </style>
+</head>
+<body>
+
+<main class="container">
+    <div class="text-center mb-8 pt-8">
+        <img src="resources/image/SLMC_Icon_login.jpg" alt="Legend Motor Limited Logo"/>
+        <h1>Sign in to System</h1>
+    </div>
+    <div class="text-center mb-8">
+        <p class="text-sm text-gray-500 mt-4 mb-4">Don't have an account? <a href="./register.html" style="color:#007BFF;">Click Here to
+            Register</a></p>
+    </div>
+    <form id="loginForm" onsubmit="login()">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="email" id="username" name="username" required autocomplete="username" placeholder="Username"/>
         </div>
-        <form
-          id="loginForm"
-          action="resources/php/login.php"
-          method="POST"
-          class="space-y-6"
-        >
-          <div>
-            <label for="username" class="block text-sm font-medium"
-              >Username</label
-            >
-            <input
-              type="email"
-              id="username"
-              name="username"
-              required
-              autocomplete="username"
-              placeholder=" Username"
-              class="mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600"
-            />
-          </div>
-          <div>
-            <label for="password" class="block text-sm font-medium"
-              >Password</label
-            >
-            <input
-              type="password"
-              id="password"
-              name="password"
-              required
-              placeholder=" Password"
-              autocomplete="current-password"
-              class="mt-1 block w-full rounded-md border-gray-300 placeholder-gray placeholder-opacity-50 placeholder-center shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600"
-            />
-          </div>
-          <div class="flex items-center">
-            <input
-              type="checkbox"
-              id="remember-me"
-              name="remember-me"
-              class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <label for="remember-me" class="ml-2 block text-sm"
-              >Remember me</label
-            >
-          </div>
-          <div id="loginMessage" class="mt-4 text-center text-sm"></div>
-          <div class="flex items-center">
-            <p class="text-sm text-gray-500">
-              Don't have an account?
-              <a href="./register.html" class="text-blue-200 text-xxs"
-                >Clink Here to Register</a
-              >
-            </p>
-          </div>
-          <div>
-            <button
-              type="submit"
-              id="loginButton"
-              class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Login
-            </button>
-          </div>
-        </form>
-      </div>
-      <button
-        id="darkModeToggle"
-        class="fixed bottom-4 right-4 p-2 bg-gray-200 dark:bg-gray-700 rounded-full shadow-lg"
-        title="Toggle dark mode"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-6 w-6 text-gray-800 dark:text-yellow-300"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-          />
-        </svg>
-      </button>
-    </main>
-    <footer class="text-center mt-8">
-      <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
-    </footer>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required autocomplete="current-password"
+                   placeholder="Password"/>
+        </div>
+        <div class="form-group">
+            <input type="checkbox" id="remember-me" name="remember-me"/>
+            <label for="remember-me">Remember me</label>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+</main>
+
+<footer>
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
         const $ = (id) => document.getElementById(id);
         const elements = {
-          loginForm: $("loginForm"),
-          loginButton: $("loginButton"),
-          loginMessage: $("loginMessage"),
-          rememberMe: $("remember-me"),
-          usernameInput: $("username"),
-          darkModeToggle: $("darkModeToggle"),
-          html: document.documentElement,
+            loginForm: $("loginForm"),
+            loginButton: $("loginButton"),
+            loginMessage: $("loginMessage"),
+            rememberMe: $("remember-me"),
+            usernameInput: $("username"),
+            darkModeToggle: $("darkModeToggle"),
+            html: document.documentElement,
         };
 
         // Check for missing elements
         Object.entries(elements).forEach(([key, element]) => {
-          if (!element) console.error(`${key} not found`);
+            if (!element) console.error(`${key} not found`);
         });
 
         // Dark mode functionality
         function initDarkMode() {
-          if (
-            localStorage.theme === "dark" ||
-            (!("theme" in localStorage) &&
-              window.matchMedia("(prefers-color-scheme: dark)").matches)
-          ) {
-            elements.html.classList.add("dark");
-          } else {
-            elements.html.classList.remove("dark");
-          }
+            if (
+                localStorage.theme === "dark" ||
+                (!("theme" in localStorage) &&
+                    window.matchMedia("(prefers-color-scheme: dark)").matches)
+            ) {
+                elements.html.classList.add("dark");
+            } else {
+                elements.html.classList.remove("dark");
+            }
+        }
+
+        // Login function
+        // check if the user is existing in the json file and if not, redirect to the register page
+        // if the user is existing, check if the user is logged in or not, if not, redirect to the login page
+        function login() {
+            const username = elements.usernameInput.value;
+            const password = elements.passwordInput.value;
+            if (username && password) {
+                fetch("resources/json/user.json", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        username: username,
+                        password: password
+                    }),
+                    credentials: "include",
+                })
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then((response) => {
+                        console.log("Server response:", response);
+                        if (response.result && response.result.result) {
+                            const loginData = response.result.result;
+                            if (loginData.role === "Customer") {
+                                console.log("Redirecting to Customer page");
+                                window.location.href = "page/Customer/index.html";
+                            } else if (loginData.role === "Staff") {
+                                console.log("Redirecting to Staff page");
+                                window.location.href = "page/Staff/index.html";
+                            } else {
+                                console.log("Redirecting to:", loginData.page);
+                                setTimeout(() => {
+                                    window.location.href = loginData.page;
+                                }, 1000);
+                            }
+                        } else {
+                            throw new Error("Login failed. Please try again.");
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Login error:", error);
+                        elements.loginMessage.textContent =
+                            error.message || "An error occurred. Please try again.";
+                        elements.loginMessage.style.color = "red";
+                    })
+                    .finally(() => {
+                        elements.loginButton.disabled = false;
+                        elements.loginButton.textContent = "Login";
+                    });
+            } else {
+                alert("Please enter your username and password.");
+            }
         }
 
         initDarkMode();
 
         elements.darkModeToggle.addEventListener("click", function () {
-          elements.html.classList.toggle("dark");
-          localStorage.theme = elements.html.classList.contains("dark")
-            ? "dark"
-            : "light";
+            elements.html.classList.toggle("dark");
+            localStorage.theme = elements.html.classList.contains("dark")
+                ? "dark"
+                : "light";
         });
 
         // Load remembered username
         const rememberedUsername = localStorage.getItem("username");
         if (rememberedUsername && elements.usernameInput) {
-          elements.usernameInput.value = rememberedUsername;
-          if (elements.rememberMe) elements.rememberMe.checked = true;
+            elements.usernameInput.value = rememberedUsername;
+            if (elements.rememberMe) elements.rememberMe.checked = true;
         }
 
-        // Login functionality
-        if (
-          elements.loginForm &&
-          elements.loginButton &&
-          elements.loginMessage
-        ) {
-          elements.loginForm.addEventListener("submit", function (e) {
-            e.preventDefault();
-            elements.loginButton.disabled = true;
-            elements.loginButton.textContent = "Logging in...";
-
-            const formData = new FormData(elements.loginForm);
-
-            fetch("resources/json/user.json", {
-              method: "POST",
-              body: formData,
-              credentials: "include",
-            })
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-              })
-              .then((response) => {
-                console.log("Server response:", response);
-                // Search the response for the user stored in the cookie
-
-                if (response.result && response.result.result) {
-                  const loginData = response.result.result;
-                  elements.loginMessage.textContent = "Login successful!";
-                  elements.loginMessage.style.color = "green";
-
-                  if (elements.rememberMe && elements.rememberMe.checked) {
-                    localStorage.setItem("userToken", loginData.token);
-                    localStorage.setItem("remember-me", "true");
-                    localStorage.setItem("username", loginData.username);
-                    elements.loginMessage.textContent =
-                      "Login successful! Remember me is enabled.";
-                  } else {
-                    localStorage.removeItem("userToken");
-                    localStorage.removeItem("remember-me");
-                    localStorage.removeItem("username");
-                  }
-
-                  if (loginData.role === "Sales Manager") {
-                    console.log("Redirecting to Sales Manager page");
-                    window.location.href = "page/Staff/order.html";
-                  } else {
-                    console.log("Redirecting to:", loginData.page);
-                    setTimeout(() => {
-                      window.location.href = loginData.page;
-                    }, 1000);
-                  }
-                } else {
-                  throw new Error("Login failed. Please try again.");
-                }
-              })
-              .catch((error) => {
-                console.error("Login error:", error);
-                elements.loginMessage.textContent =
-                  error.message || "An error occurred. Please try again.";
-                elements.loginMessage.style.color = "red";
-              })
-              .finally(() => {
-                elements.loginButton.disabled = false;
-                elements.loginButton.textContent = "Login";
-              });
-          });
-        } else {
-          console.error(
-            "One or more required elements are missing from the page."
-          );
-        }
-      });
-    </script>
-  </body>
+        // // Login functionality
+        // if (
+        //     elements.loginForm &&
+        //     elements.loginButton &&
+        //     elements.loginMessage
+        // ) {
+        //     elements.loginForm.addEventListener("submit", function (e) {
+        //         e.preventDefault();
+        //         elements.loginButton.disabled = true;
+        //         elements.loginButton.textContent = "Logging in...";
+        //
+        //         const formData = new FormData(elements.loginForm);
+        //
+        //         fetch("resources/json/user.json", {
+        //             method: "POST",
+        //             body: formData,
+        //             credentials: "include",
+        //         })
+        //             .then((response) => {
+        //                 if (!response.ok) {
+        //                     throw new Error(`HTTP error! status: ${response.status}`);
+        //                 }
+        //                 return response.json();
+        //             })
+        //             .then((response) => {
+        //                 console.log("Server response:", response);
+        //                 // Search the response for the user stored in the cookie
+        //
+        //                 if (response.result && response.result.result) {
+        //                     const loginData = response.result.result;
+        //                     elements.loginMessage.textContent = "Login successful!";
+        //                     elements.loginMessage.style.color = "green";
+        //
+        //                     if (elements.rememberMe && elements.rememberMe.checked) {
+        //                         localStorage.setItem("userToken", loginData.token);
+        //                         localStorage.setItem("remember-me", "true");
+        //                         localStorage.setItem("username", loginData.username);
+        //                         elements.loginMessage.textContent =
+        //                             "Login successful! Remember me is enabled.";
+        //                     } else {
+        //                         localStorage.removeItem("userToken");
+        //                         localStorage.removeItem("remember-me");
+        //                         localStorage.removeItem("username");
+        //                     }
+        //
+        //                     if (loginData.role === "Sales Manager") {
+        //                         console.log("Redirecting to Sales Manager page");
+        //                         window.location.href = "page/Staff/order.html";
+        //                     } else {
+        //                         console.log("Redirecting to:", loginData.page);
+        //                         setTimeout(() => {
+        //                             window.location.href = loginData.page;
+        //                         }, 1000);
+        //                     }
+        //                 } else {
+        //                     throw new Error("Login failed. Please try again.");
+        //                 }
+        //             })
+        //             .catch((error) => {
+        //                 console.error("Login error:", error);
+        //                 elements.loginMessage.textContent =
+        //                     error.message || "An error occurred. Please try again.";
+        //                 elements.loginMessage.style.color = "red";
+        //             })
+        //             .finally(() => {
+        //                 elements.loginButton.disabled = false;
+        //                 elements.loginButton.textContent = "Login";
+        //             });
+        //     });
+        // } else {
+        //     console.error(
+        //         "One or more required elements are missing from the page."
+        //     );
+        // }
+    });
+</script>
+</body>
 </html>

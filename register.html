@@ -1,236 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Profile | Legend Motor Limited</title>
-    <!--    <link href="../../resources/css/profile.css" rel="stylesheet"/>-->
-    <link
-      href="../../resources/image/SLMC_Icon_login.jpg"
-      rel="icon"
-      type="image/x-icon"
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Registration Page</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta name="author" content="Legend Motor Limited" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="generator" content="Legend Motor Limited" />
+    <meta
+      name="copyright"
+      content="Copyright &copy; 2024 Legend Motor Limited"
     />
-    <script type="module" src="../../resources/js/script.js"></script>
-    <script
-      type="module"
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-    ></script>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: "#eff6ff",
-                100: "#dbeafe",
-                200: "#bfdbfe",
-                300: "#93c5fd",
-                400: "#60a5fa",
-                500: "#3b82f6",
-                600: "#2563eb",
-                700: "#1d4ed8",
-                800: "#1e40af",
-                900: "#1e3a8a",
-                950: "#172554",
-              },
-            },
-          },
-          fontFamily: {
-            body: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "system-ui",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-            sans: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "system-ui",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-          },
-        },
-      };
-    </script>
-    <script></script>
-  </head>
-  <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
-    <!-- Navigation -->
-    <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
-      <main class="flex-10 flex flex-col items-center justify-center">
-        <!-- Profile Section -->
-        <div class="container mx-auto px-10 py-10">
-          <div
-            class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden"
-          >
-            <div class="md:flex">
-              <!-- Left side - User info -->
-              <div
-                class="md:w-1/3 bg-gray-100 dark:bg-gray-700 p-10 text-center"
-              >
-                <svg
-                  class="mx-auto w-32 h-32 rounded-full border-4 border-white dark:border-none"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-                <h2
-                  id="FullName"
-                  class="mt-4 text-xl font-semibold text-gray-800 dark:text-white"
-                ></h2>
-                <p id="email" class="text-gray-600 dark:text-gray-300"></p>
-              </div>
+    <meta name="revisit-after" content="1 days" />
 
-              <!-- Right side - Profile details -->
-              <div class="md:w-2/3 p-10">
-                <h3
-                  class="text-2xl font-semibold text-gray-800 dark:text-white mb-6"
-                >
-                  Peronsal info Details
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      First Name
-                    </p>
-                    <p
-                      id="firstName"
-                      class="font-medium text-gray-800 dark:text-white"
-                    ></p>
-                  </div>
-                  <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      Last Name
-                    </p>
-                    <p
-                      id="lastName"
-                      class="font-medium text-gray-800 dark:text-white"
-                    ></p>
-                  </div>
-                  <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      Mobile Number
-                    </p>
-                    <p
-                      id="mobileNumber"
-                      class="font-medium text-gray-800 dark:text-white"
-                    ></p>
-                  </div>
-                  <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      Fax Number
-                    </p>
-                    <p
-                      id="faxNumber"
-                      class="font-medium text-gray-800 dark:text-white"
-                    ></p>
-                  </div>
-                  <div class="md:col-span-2">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      Address Line
-                    </p>
-                    <p
-                      id="addressLine1"
-                      class="font-medium text-gray-800 dark:text-white"
-                    ></p>
-                  </div>
-                  <div class="md:col-span-2">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      Address Line 2
-                    </p>
-                    <p
-                      id="addressLine2"
-                      class="font-medium text-gray-800 dark:text-white"
-                    >
-                      /
-                    </p>
-                  </div>
-                  <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      State/Province
-                    </p>
-                    <p
-                      id="stateProvince"
-                      class="font-medium text-gray-800 dark:text-white"
-                    >
-                      /
-                    </p>
-                  </div>
-                  <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">
-                      Country/ Region
-                    </p>
-                    <p
-                      id="country"
-                      class="font-medium text-gray-800 dark:text-white"
-                    >
-                      Hong Kong
-                    </p>
-                  </div>
-                </div>
-                <div class="mt-8">
-                  <button
-                    onclick="location.href='index.html'"
-                    id="editProfileButton"
-                    class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"
-                  >
-                    Resister
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s, box-shadow 0.5s;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: calc(100% - 40px);
+            padding: 12px;
+            padding-left: 40px; /* Space for icon */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input[type="checkbox"] {
+            width: auto;
+            padding-left: 0;
+        }
+
+        .form-group input:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+
+        .icon {
+            position: absolute;
+            left: 10px;
+            top: calc(50% - 0.01px); /* Adjusted for better alignment */
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.02);
+        }
+
+        /* Dark theme styles */
+        body.dark {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        .container.dark {
+            background: #1e1e1e;
+            box-shadow: 0 2px 20px rgba(255, 255, 255, 0.1);
+        }
+
+        input.dark {
+            background-color: #333333;
+            border: 1px solid #444444;
+            color: #ffffff;
+        }
+
+        /* Toggle Button */
+        #darkModeToggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: #f4f4f4;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: bg-color .3s ease-in-out;
+        }
+
+        #darkModeToggle svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        body.dark #darkModeToggle {
+            background-color: #444444;
+        }
+
+        body.dark #darkModeToggle svg {
+            fill: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="registrationContainer">
+    <h2>User Registration</h2>
+
+    <form id="registrationForm">
+        <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <i class="fas fa-user icon"></i>
+            <input id="fullName" name="fullName" required type="text">
+            <p class="error" id="fullNameError" style="display:none;">Please enter your full name.</p>
         </div>
-        <script type="module">
-          import {
-            initializeProfile,
-            setupEditButton,
-          } from "../../resources/js/profile.js";
 
-          document.addEventListener("DOMContentLoaded", () => {
-            initializeProfile();
-            setupEditButton();
-          });
-        </script>
-        <!-- Footer -->
-        <footer class="text-center py-4">
-          <p class="text-gray-700 dark:text-gray-300">
-            © 2024 Legend Motor Limited. All rights reserved.
-          </p>
-        </footer>
-      </main>
-      <script type="module" src="../../resources/js/profile.js"></script>
-    </body>
-  </body>
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <i class="fas fa-envelope icon"></i>
+            <input id="email" name="email" required type="email">
+            <p class="error" id="emailError" style="display:none;">Please enter a valid email address.</p>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+            <label for="password">Password</label>
+            <i class="fas fa-lock icon"></i>
+            <input id="password" name="password" required type="password">
+            <p class="error" id="passwordError" style="display:none;">Please enter a password.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <i class="fas fa-phone icon"></i>
+            <input id="phone" name="phone" required type="tel">
+            <p class="error" id="phoneError" style="display:none;">Please enter a valid phone number.</p>
+        </div>
+
+        <div class="form-group">
+            <label for="staffNumber">Staff Number (if applicable)</label>
+            <input id="staffNumber" name="staffNumber" type="text">
+        </div>
+
+        <div class="form-group">
+            <input id="terms" required type="checkbox">
+            I agree to the Terms and Conditions
+        </div>
+        <div id="LoadingSpinner" class="hidden justify-center items-center my-4" style="display: none;">
+            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+        </div>
+        <button type="submit">Register</button>
+        <div id="errorMessage" class="text-red-500 text-center mt-4" style="display: none;">
+            An error occurred while registering. Please try again later.
+        </div>
+    </form>
+    <p id="successMessage" style="color :green ;display:none;">Registration successful!</p>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#registrationForm').on('submit', function (event) {
+            event.preventDefault();
+
+            // Clear previous error messages
+            $('.error').hide();
+
+            // Validate inputs
+            let isValid = true;
+
+            if ($('#fullName').val().trim() === '') {
+                $('#fullNameError').show();
+                isValid = false;
+            }
+
+            const emailPattern = /^[^ ]+@[^ ]+\.[a-z]{2,3}$/;
+            if (!emailPattern.test($('#email').val())) {
+                $('#emailError').show();
+                isValid = false;
+            }
+
+            if ($('#phone').val().trim() === '') {
+                $('#phoneError').show();
+                isValid = false;
+            }
+
+            if ($('#password').val().trim() === '') {
+                $('#passwordError').show();
+                isValid = false;
+            }
+
+            if (isValid) {
+                const registrationData = {
+                    fullName: $('#fullName').val(),
+                    email: $('#email').val(),
+                    phone: $('#phone').val(),
+                    password: $('#password').val(),
+                    staffNumber: $('#staffNumber').val()
+                };
+
+                checkAndUpload(registrationData);
+            }
+        });
+
+        function checkAndUpload(data) {
+            $.ajax({
+                url: "resources/json/user.json",
+                type: "GET",
+                dataType: "json",
+                success: function (users) {
+                    let userExists = users.some(user => user.email === data.email);
+
+                    if (userExists) {
+                        alert("User already exists!");
+                    } else {
+                        data.userId = users.length + 1; // Increment user ID
+                        // if the staffNumber is not provided, the role will be defaulted to Customer
+                        if (!data.staffNumber) {
+                            data.role = "Customer";
+                        }else {
+                            data.role = "Staff";
+                        }
+                        users.push(data);
+                        upload(users);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching users:", error);
+                    alert("There was an error processing your request.");
+                }
+            });
+        }
+
+        function upload(data) {
+            $.ajax({
+                url: "../../resources/json/user.json",
+                type: "PUT",
+                data: JSON.stringify(data),
+                contentType: "application/json",
+                success: function (response) {
+                    console.log("Data updated successfully:", response);
+                    $('#successMessage').show();
+                    setTimeout(function () {
+                        $('#successMessage').hide();
+                        window.location.href = "../../index.html";
+                    }, 5000);
+                    $('#registrationForm')[0].reset();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error updating data:", error);
+                    alert("Failed to update data.");
+                }
+            });
+        }
+
+        // Theme toggle functionality
+        $('#darkModeToggle').on('click', function () {
+            $('body').toggleClass('dark');
+            $('.container').toggleClass('dark');
+            $('input').toggleClass('dark');
+        });
+
+        // Check system preference for dark mode
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme :dark)').matches) {
+            $('body').addClass('dark');
+            $('.container').addClass('dark');
+            $('input').addClass('dark');
+        }
+    });
+
+</script>
+</body>
 </html>
