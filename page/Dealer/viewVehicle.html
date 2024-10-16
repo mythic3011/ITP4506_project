@@ -1,76 +1,3 @@
-<?php
-session_start();
-require_once '../../resources/php/class/Order.php';
-require_once '../../resources/php/class/Cart.php';
-require_once '../../resources/php/class/User.php';
-require_once '../../resources/php/class/Auth.php';
-require_once '../../resources/php/class/SparePart.php';
-require_once '../../resources/php/class/Shipping.php';
-require_once '../../resources/php/class/Database.php';
-
-$user = new User();
-$order = new Order();
-$cart = new Cart();
-$auth = new Auth();
-$sparePart = new SparePart();
-$shipping = new Shipping();
-
-// Get token from session (consider using cookies or headers for better security)
-$token = $_SESSION['token'] ?? '';
-
-// In a real application, you should validate the token and get the user
-// For now, we're using a hardcoded user
-$currentUser = $user->getUser("alex@auto-racing.com");
-
-// Get cart ID from session
-$cartId = $_SESSION['cartId'] ?? '';
-
-// Handle form submission for placing an order or removing an item
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['remove_item_id'])) {
-        try {
-            $cart->removeItem($_POST['remove_item_id']);
-            $successMessage = 'Item removed successfully!';
-        } catch (Exception $e) {
-            $errorMessage = 'Failed to remove item: ' . $e->getMessage();
-        }
-    } elseif (isset($_POST['cart_id']) && isset($_POST['user_id'])) {
-        try {
-            $orderData = [
-                'cart' => $cart->getCartItems(),
-                'cartId' => $_POST['cart_id'],
-                'userId' => $_POST['user_id']
-            ];
-            $newOrderId = $order->placeOrder($orderData, $currentUser);
-            $cart->clearCart();
-            $successMessage = 'Order placed successfully!';
-        } catch (Exception $e) {
-            $errorMessage = 'Failed to place order: ' . $e->getMessage();
-        }
-    }
-}
-
-$cartItems = $cart->getCartItems();
-
-try {
-    $shippingCost = $shipping->calculateShippingCost('weight', array_sum(array_map(function($item) {
-        return $item->weight * $item->quantity;
-    }, $cartItems)));
-} catch (Exception $e) {
-    $errorMessage = 'Failed to calculate shipping cost: ' . $e->getMessage();
-    $shippingCost = 0;
-}
-
-$subtotal = array_reduce($cartItems, static function ($sum, $item) {
-    return $sum + $item->quantity * $item->getTotalPrice();
-}, 0);
-
-$totalAmount = $subtotal + $shippingCost;
-
-// Fetch Product data from database
-$spareParts = $sparePart->getAllSpareParts(); // 假设SparePart类中有一个方法getAllSpareParts来获取所有备件数据
-?>
-
 <!doctype html>
 <html class="dark" lang="en">
 <head>
@@ -185,7 +112,7 @@ $spareParts = $sparePart->getAllSpareParts(); // 假设SparePart类中有一个�
                 </li>
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                       href="viewSparePart.php">Spare Part</a>
+                       href="viewSparePart.php">Vehicle</a>
                 </li>
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
@@ -204,52 +131,7 @@ $spareParts = $sparePart->getAllSpareParts(); // 假设SparePart类中有一个�
     </div>
 </nav>
 <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-    <h1 class="text-3xl font-bold mb-6">Product</h1>
-    <div class="mb-4 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-        <!-- Search Bar -->
-        <div class="w-full sm:w-1/3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="sparePartSearch">Search Product:</label>
-            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                   id="sparePartSearch"
-                   placeholder="Enter spare part name or ID"
-                   type="text">
-        </div>
 
-        <!-- Sort By Dropdown -->
-        <div class="w-full sm:w-1/3">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="SparePartSorting">Sort By:</label>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    id="SparePartSorting">
-                <option value="None">None</option>
-                <option value="Price-Low-to-High">Price - Low to High</option>
-                <option value="Price-High-to-Low">Price - High to Low</option>
-                <option value="Category">Category</option>
-            </select>
-        </div>
-
-        <!-- Specify Category Dropdown -->
-        <div class="w-full sm:w-1/3" id="CategoryFilterContainer" style="display: none;">
-            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="CategoryFilter">Specify Category:</label>
-            <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    id="CategoryFilter">
-                <option value="All">All Categories</option>
-
-            </select>
-        </div>
-    </div>
-    <div id="SparePartList">
-        <?php foreach ($spareParts as $part): ?>
-            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden mb-4">
-                <img class="w-full h-48 object-cover" src="../../resources/image/spare/<?= htmlspecialchars($part['imageUrl']) ?>" alt="<?= htmlspecialchars($part['name']) ?>">
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold mb-2 text-gray-900 dark:text-white"><?= htmlspecialchars($part['name']) ?></h3>
-                    <p class="text-gray-600 dark:text-gray-300 mb-2">Spare Part No. <?= htmlspecialchars($part['id']) ?></p>
-                    <p class="text-gray-600 dark:text-gray-300 mb-4">Unit Price: $<?= number_format($part['price'], 2) ?></p>
-                    <a href="sparePart-template.html?id=<?= htmlspecialchars($part['id']) ?>" class="inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 text-center text-sm">View Details</a>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
 </main>
 <footer class="bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-700">
     <div class="container mx-auto px-4 py-8">
