@@ -89,19 +89,19 @@
         <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
           <div class="h-8 w-8 relative">
             <img
-              alt="SLMC Logo"
+              alt="LMC Logo"
               class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-              src="../../resources/image/SLMC_LOGO.png"
+              src="../../resources/image/LMC.png"
             />
             <img
-              alt="SLMC Logo"
+              alt="LMC Logo"
               class="absolute inset-0 object-contain hidden dark:block"
-              src="../../resources/image/SLMC_LOGO_DM.png"
+              src="../../resources/image/LMC_DM.png"
             />
           </div>
           <span
             class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-            >SLMC</span
+            >LMC</span
           >
         </a>
 
@@ -168,7 +168,7 @@
               <a
                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                 href="Item.html"
-                >Manage Spare Part</a
+                >Manage Vehicle</a
               >
             </li>
             <li>
@@ -208,16 +208,16 @@
               <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div class="space-y-2">
                   <label class="block text-sm font-medium"
-                    >Spare part number</label
+                    >Vehicle number</label
                   >
                   <p
-                    id="NewSparePart-id"
+                    id="NewVehicle-id"
                     class="text-lg font-semibold text-blue-600 dark:text-blue-400"
                   ></p>
                 </div>
                 <div class="space-y-2">
                   <label for="category" class="block text-sm font-medium"
-                    >Spare part category</label
+                    >Vehicle category</label
                   >
                   <select
                     name="category"
@@ -232,19 +232,19 @@
                 </div>
                 <div class="space-y-2">
                   <label for="input-part-no" class="block text-sm font-medium"
-                    >Spare part name</label
+                    >Vehicle name</label
                   >
                   <input
                     type="text"
                     id="input-part-no"
-                    placeholder="Enter spare part name"
+                    placeholder="Enter Vehicle name"
                     required
                     class="w-full px-3 py-2 text-gray-700 bg-white dark:bg-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                   />
                 </div>
                 <div class="space-y-2">
                   <label for="file" class="block text-sm font-medium"
-                    >Upload spare part image</label
+                    >Upload Vehicle image</label
                   >
                   <input
                     type="file"
@@ -295,13 +295,13 @@
               </div>
               <div class="space-y-2">
                 <label for="description" class="block text-sm font-medium"
-                  >Spare part description</label
+                  >Vehicle description</label
                 >
                 <textarea
                   id="description"
                   name="description"
                   rows="4"
-                  placeholder="Enter spare part description"
+                  placeholder="Enter Vehicle description"
                   class="w-full px-3 py-2 text-gray-700 bg-white dark:bg-gray-700 dark:text-gray-200 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
                 ></textarea>
               </div>
@@ -330,28 +330,27 @@
     </main>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        generateNewSparePartId();
+        generateNewVehicleId();
         document
           .getElementById("addItemForm")
           .addEventListener("submit", handleSubmit);
       });
 
-      function generateNewSparePartId() {
-        fetch("../../resources/php/ManageItem.php?action=getNewSparePartId")
+      function generateNewVehicleId() {
+        fetch("../../resources/php/ManageItem.php?action=getNewVehicleId")
           .then((response) => response.json())
           .then((data) => {
             if (data.status === "success") {
-              document.getElementById("NewSparePart-id").textContent =
-                data.data;
+              document.getElementById("NewVehicle-id").textContent = data.data;
             } else {
               throw new Error(
-                data.message || "Failed to generate new spare part ID"
+                data.message || "Failed to generate new Vehicle ID"
               );
             }
           })
           .catch((error) => {
-            console.error("Error generating new spare part ID:", error);
-            alert("Error generating new spare part ID: " + error.message);
+            console.error("Error generating new Vehicle ID:", error);
+            alert("Error generating new Vehicle ID: " + error.message);
           });
       }
 
@@ -368,30 +367,30 @@
         }
         isRunning = true;
 
-        const sparePartNum = parseInt(
-          document.getElementById("NewSparePart-id").textContent,
+        const VehicleNum = parseInt(
+          document.getElementById("NewVehicle-id").textContent,
           10
         );
-        if (isNaN(sparePartNum) || sparePartNum <= 0) {
-          alert("Error: Invalid spare part number");
+        if (isNaN(VehicleNum) || VehicleNum <= 0) {
+          alert("Error: Invalid Vehicle number");
           isRunning = false;
           return;
         }
 
         var formData = {
-          sparePartNum: sparePartNum,
-          sparePartCategory: parseInt(
+          VehicleNum: VehicleNum,
+          VehicleCategory: parseInt(
             document.getElementById("category").value,
             10
           ),
-          sparePartName: document.getElementById("input-part-no").value,
+          VehicleName: document.getElementById("input-part-no").value,
           weight: parseFloat(document.getElementById("input-weight").value),
           stockItemQty: parseInt(
             document.getElementById("input-stock-quantity").value,
             10
           ),
           price: parseFloat(document.getElementById("input-price").value),
-          sparePartDescription: document.getElementById("description").value,
+          VehicleDescription: document.getElementById("description").value,
         };
 
         const fileInput = document.getElementById("file");
@@ -424,17 +423,17 @@
             if (result.status === "success") {
               console.log("Item added:", result);
               alert(
-                "Spare part added successfully! New Spare Part Number: " +
-                  result.data.sparePartNum
+                "Vehicle added successfully! New Vehicle Number: " +
+                  result.data.VehicleNum
               );
               window.location.href = "Item.html";
             } else {
-              throw new Error(result.message || "Failed to add spare part");
+              throw new Error(result.message || "Failed to add Vehicle");
             }
           })
           .catch((error) => {
-            console.error("Error adding spare part:", error);
-            alert("Error adding spare part: " + error.message);
+            console.error("Error adding Vehicle:", error);
+            alert("Error adding Vehicle: " + error.message);
           })
           .finally(() => {
             isRunning = false;

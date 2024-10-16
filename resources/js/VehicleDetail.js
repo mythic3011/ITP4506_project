@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const sparePartId = getParameterByName("id");
+  const VehicleId = getParameterByName("id");
   const csrfToken = getCookie("csrf_token");
   const token = getCookie("token");
 
-  if (!sparePartId) {
+  if (!VehicleId) {
     console.error("Vehicle ID is missing");
     alert("No Vehicle ID provided. Please check the URL and try again.");
     return;
   }
 
-  fetchSparePartDetail(sparePartId, csrfToken, token)
-    .then((sparePart) => {
-      if (sparePart) {
-        renderSparePart(sparePart);
+  fetchVehicleDetail(VehicleId, csrfToken, token)
+    .then((Vehicle) => {
+      if (Vehicle) {
+        renderVehicle(Vehicle);
       } else {
         throw new Error("Vehicle not found");
       }
@@ -44,32 +44,27 @@ function getCategory(category) {
   }
 }
 
-function mapSparePartData(sparePart) {
+function mapVehicleData(Vehicle) {
   return {
-    id: sparePart.sparePartNum,
-    name: sparePart.sparePartName,
-    category: getCategory(sparePart.sparePartCategory),
-    price: sparePart.price,
-    imageUrl: "../../resources/image/spare/" + sparePart.sparePartImage,
-    stockItemQty: sparePart.stockItemQty,
-    weight: sparePart.weight || "N/A",
-    countryOfOrigin: sparePart.countryOfOrigin || "N/A",
-    brand: sparePart.brand || "N/A",
+    id: Vehicle.VehicleNum,
+    name: Vehicle.VehicleName,
+    category: getCategory(Vehicle.VehicleCategory),
+    price: Vehicle.price,
+    imageUrl: "../../resources/image/Vehicle/" + Vehicle.VehicleImage,
+    stockItemQty: Vehicle.stockItemQty,
+    countryOfOrigin: Vehicle.countryOfOrigin || "N/A",
+    brand: Vehicle.brand || "N/A",
   };
 }
 
-function fetchSparePartDetail(sparePartId, csrfToken, token) {
-  return fetch("../../resources/php/SparePartDetail.php", {
-    method: "POST",
+function fetchVehicleDetail(VehicleId, csrfToken, token) {
+  return fetch("../../resources/json/Product.json", {
+    method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-      "X-Requested-With": "XMLHttpRequest",
-      "X-CSRF-Token": csrfToken,
     },
     body: JSON.stringify({
-      csrf_token: csrfToken,
-      sparePartId: sparePartId,
+      VehicleId: VehicleId,
     }),
   })
     .then((response) => {
@@ -82,15 +77,16 @@ function fetchSparePartDetail(sparePartId, csrfToken, token) {
       if (data.error) {
         throw new Error(data.error);
       }
-      return mapSparePartData(data.data);
+      return mapVehicleData(data.data);
     });
 }
-function renderSparePart(data) {
+
+function renderVehicle(data) {
   // update page title
   document.title = "Vehicle - " + data.name;
 
-  const sparePart = data;
-  const container = document.getElementById("sparePartContainer");
+  const Vehicle = data;
+  const container = document.getElementById("VehicleContainer");
   container.replaceChildren(); // Clear the container
 
   const mainDiv = document.createElement("div");
@@ -105,29 +101,29 @@ function renderSparePart(data) {
   imgSection.className = "md:w-1/2";
   const img = document.createElement("img");
   img.className = "w-full h-auto object-cover";
-  img.src = sparePart.imageUrl;
-  img.alt = sparePart.name;
-  img.id = "sparePart-Image";
+  img.src = Vehicle.imageUrl;
+  img.alt = Vehicle.name;
+  img.id = "Vehicle-Image";
   imgSection.appendChild(img);
 
   // Info Section
   const infoSection = document.createElement("div");
   infoSection.className = "md:w-1/2 p-6";
-  infoSection.id = "SparePartDetail";
+  infoSection.id = "VehicleDetail";
 
   const nameElement = document.createElement("h1");
-  nameElement.id = "SparePartName";
+  nameElement.id = "VehicleName";
   nameElement.className =
     "text-2xl font-bold text-gray-900 dark:text-white mb-2";
-  nameElement.textContent = sparePart.name;
+  nameElement.textContent = Vehicle.name;
 
   const partNoElement = document.createElement("p");
-  partNoElement.id = "SparePartNo";
+  partNoElement.id = "VehicleNo";
   partNoElement.className = "text-sm text-gray-600 dark:text-gray-400 mb-4";
 
   const partNoSpan = document.createElement("span");
-  partNoSpan.id = "SparePart-NO";
-  partNoSpan.textContent = sparePart.id;
+  partNoSpan.id = "Vehicle-NO";
+  partNoSpan.textContent = Vehicle.id;
 
   partNoElement.textContent = "No. ";
   partNoElement.appendChild(partNoSpan);
@@ -140,10 +136,10 @@ function renderSparePart(data) {
   priceLabel.textContent = "Unit Price:";
 
   const priceValue = document.createElement("span");
-  priceValue.id = "SparePartPrice";
+  priceValue.id = "VehiclePrice";
   priceValue.className =
     "text-xl font-bold text-blue-600 dark:text-blue-400 ml-2";
-  priceValue.textContent = `$${sparePart.price}`;
+  priceValue.textContent = `$${Vehicle.price}`;
 
   priceDiv.appendChild(priceLabel);
   priceDiv.appendChild(priceValue);
@@ -153,8 +149,8 @@ function renderSparePart(data) {
 
   const stockSpan = document.createElement("span");
   stockSpan.className = "font-semibold";
-  stockSpan.id = "SparePart-Stock";
-  stockSpan.textContent = sparePart.stockItemQty;
+  stockSpan.id = "Vehicle-Stock";
+  stockSpan.textContent = Vehicle.stockItemQty;
 
   stockElement.textContent = "Stock Available: ";
   stockElement.appendChild(stockSpan);
@@ -270,8 +266,8 @@ function renderSparePart(data) {
   detailsLeftName.className = "text-gray-700 dark:text-gray-300";
   detailsLeftName.innerHTML = '<span class="font-semibold">Name: </span>';
   const detailsLeftNameSpan = document.createElement("span");
-  detailsLeftNameSpan.id = "SparePart-Detail-Name";
-  detailsLeftNameSpan.textContent = sparePart.name;
+  detailsLeftNameSpan.id = "Vehicle-Detail-Name";
+  detailsLeftNameSpan.textContent = Vehicle.name;
   detailsLeftName.appendChild(detailsLeftNameSpan);
 
   const detailsLeftNumber = document.createElement("p");
@@ -279,8 +275,8 @@ function renderSparePart(data) {
   detailsLeftNumber.innerHTML =
     '<span class="font-semibold">Vehicle Number: </span>';
   const detailsLeftNumberSpan = document.createElement("span");
-  detailsLeftNumberSpan.id = "SparePart-Detail-No";
-  detailsLeftNumberSpan.textContent = sparePart.id;
+  detailsLeftNumberSpan.id = "Vehicle-Detail-No";
+  detailsLeftNumberSpan.textContent = Vehicle.id;
   detailsLeftNumber.appendChild(detailsLeftNumberSpan);
 
   const detailsLeftPrice = document.createElement("p");
@@ -288,8 +284,8 @@ function renderSparePart(data) {
   detailsLeftPrice.innerHTML =
     '<span class="font-semibold">Unit Price: </span>';
   const detailsLeftPriceSpan = document.createElement("span");
-  detailsLeftPriceSpan.id = "SparePart-Detail-Price";
-  detailsLeftPriceSpan.textContent = `$${sparePart.price}`;
+  detailsLeftPriceSpan.id = "Vehicle-Detail-Price";
+  detailsLeftPriceSpan.textContent = `$${Vehicle.price}`;
   detailsLeftPrice.appendChild(detailsLeftPriceSpan);
 
   detailsLeft.appendChild(detailsLeftName);
@@ -301,8 +297,8 @@ function renderSparePart(data) {
   detailsRightWeight.className = "text-gray-700 dark:text-gray-300";
   detailsRightWeight.innerHTML = '<span class="font-semibold">Weight: </span>';
   const detailsRightWeightSpan = document.createElement("span");
-  detailsRightWeightSpan.id = "SparePart-Detail-Weight";
-  detailsRightWeightSpan.textContent = sparePart.weight;
+  detailsRightWeightSpan.id = "Vehicle-Detail-Weight";
+  detailsRightWeightSpan.textContent = Vehicle.weight;
   detailsRightWeight.appendChild(detailsRightWeightSpan);
 
   const detailsRightCountry = document.createElement("p");
@@ -310,16 +306,16 @@ function renderSparePart(data) {
   detailsRightCountry.innerHTML =
     '<span class="font-semibold">Country of Origin: </span>';
   const detailsRightCountrySpan = document.createElement("span");
-  detailsRightCountrySpan.id = "SparePart-Detail-Country";
-  detailsRightCountrySpan.textContent = sparePart.countryOfOrigin;
+  detailsRightCountrySpan.id = "Vehicle-Detail-Country";
+  detailsRightCountrySpan.textContent = Vehicle.countryOfOrigin;
   detailsRightCountry.appendChild(detailsRightCountrySpan);
 
   const detailsRightBrand = document.createElement("p");
   detailsRightBrand.className = "text-gray-700 dark:text-gray-300";
   detailsRightBrand.innerHTML = '<span class="font-semibold">Brand: </span>';
   const detailsRightBrandSpan = document.createElement("span");
-  detailsRightBrandSpan.id = "SparePart-Detail-Brand";
-  detailsRightBrandSpan.textContent = sparePart.brand;
+  detailsRightBrandSpan.id = "Vehicle-Detail-Brand";
+  detailsRightBrandSpan.textContent = Vehicle.brand;
   detailsRightBrand.appendChild(detailsRightBrandSpan);
 
   detailsRight.appendChild(detailsRightWeight);

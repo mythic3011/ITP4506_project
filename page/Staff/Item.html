@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spare Part Management</title>
+    <title>Vehicle Management</title>
     <link
       href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
       rel="stylesheet"
@@ -45,19 +45,19 @@
           >
             <div class="h-8 w-8 relative">
               <img
-                alt="SLMC Logo"
+                alt="LMC Logo"
                 class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-                src="../../resources/image/SLMC_LOGO.png"
+                src="../../resources/image/LMC.png"
               />
               <img
-                alt="SLMC Logo"
+                alt="LMC Logo"
                 class="absolute inset-0 object-contain hidden dark:block"
-                src="../../resources/image/SLMC_LOGO_DM.png"
+                src="../../resources/image/LMC_DM.png"
               />
             </div>
             <span
               class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-              >SLMC</span
+              >LMC</span
             >
           </a>
 
@@ -73,7 +73,7 @@
               <a
                 class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
                 href="Item.html"
-                >Spare Part</a
+                >Vehicle</a
               >
             </li>
             <li>
@@ -119,19 +119,19 @@
         <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
           <div class="h-8 w-8 relative">
             <img
-              alt="SLMC Logo"
+              alt="LMC Logo"
               class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-              src="../../resources/image/SLMC_LOGO.png"
+              src="../../resources/image/LMC.png"
             />
             <img
-              alt="SLMC Logo"
+              alt="LMC Logo"
               class="absolute inset-0 object-contain hidden dark:block"
-              src="../../resources/image/SLMC_LOGO_DM.png"
+              src="../../resources/image/LMC_DM.png"
             />
           </div>
           <span
             class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-            >SLMC</span
+            >LMC</span
           >
         </a>
         <button
@@ -175,7 +175,7 @@
             <a
               class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
               href="Item.html"
-              >Spare Part</a
+              >Vehicle</a
             >
           </li>
           <li>
@@ -234,7 +234,7 @@
             </div>
             <div class="overflow-x-auto shadow-md sm:rounded-lg">
               <table
-                id="sparePartsTable"
+                id="VehiclesTable"
                 class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
               >
                 <thead
@@ -299,7 +299,7 @@
                     </th>
                   </tr>
                 </thead>
-                <tbody id="sparePartsTableBody">
+                <tbody id="VehiclesTableBody">
                   <!-- Table rows will be inserted here by JavaScript -->
                 </tbody>
               </table>
@@ -307,7 +307,7 @@
           </section>
           <script>
             document.addEventListener("DOMContentLoaded", function () {
-              getSparePartList();
+              getVehicleList();
               const darkModeToggle = document.getElementById("darkModeToggle");
 
               // Function to toggle dark mode
@@ -338,16 +338,14 @@
                 .getElementById("loadingSpinner")
                 .classList.remove("hidden");
               // Hide the Table
-              document
-                .getElementById("sparePartsTable")
-                .classList.add("hidden");
+              document.getElementById("VehiclesTable").classList.add("hidden");
             }
 
             function hideLoading() {
               document.getElementById("loadingSpinner").classList.add("hidden");
               // Show the Table
               document
-                .getElementById("sparePartsTable")
+                .getElementById("VehiclesTable")
                 .classList.remove("hidden");
             }
 
@@ -366,16 +364,16 @@
               },
             ];
 
-            function getSparePartList() {
+            function getVehicleList() {
               showLoading();
               // Fetch Product data from the server
               fetch("/api/spare-parts")
                 .then((response) => response.json())
                 .then((data) => {
-                  renderSparePartsTable(data);
+                  renderVehiclesTable(data);
                   updateTotalItems(data.length);
                   // mock data
-                  renderSparePartsTable(mockItems);
+                  renderVehiclesTable(mockItems);
                   updateTotalItems(mockItems.length);
 
                   if (data.length === 0) {
@@ -390,7 +388,7 @@
             function updateTotalItems() {
               const totalItems = document.getElementById("total-items");
               if (totalItems) {
-                totalItems.textContent = `Total: ${spareParts.length} Items`;
+                totalItems.textContent = `Total: ${Vehicles.length} Items`;
               }
             }
 
@@ -420,7 +418,7 @@
               // redirect to addItem.html
               // find the max id from the table and add 1 to it
               const maxId = Math.max(
-                ...spareParts.map((part) => parseInt(part.id))
+                ...Vehicles.map((part) => parseInt(part.id))
               );
               window.location.href = `AddItem.html?id=${maxId + 1}`;
 
@@ -436,12 +434,12 @@
           <!-- <script>
     document.addEventListener('DOMContentLoaded', function() {
     console.log("DOM fully loaded");
-    loadAndRenderSpareParts();
+    loadAndRenderVehicles();
 });
 </script> -->
           <script src="../../resources/js/ManageItem.js"></script>
           <script>
-            document.addEventListener("DOMContentLoaded", initSpareParts);
+            document.addEventListener("DOMContentLoaded", initVehicles);
           </script>
           <footer
             class="bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-700"

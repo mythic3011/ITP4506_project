@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  getSparePartList();
+  getVehicleList();
   const darkModeToggle = document.getElementById("darkModeToggle");
   darkModeToggle.addEventListener("click", function () {
     document.documentElement.classList.toggle("dark");
@@ -71,8 +71,8 @@ tailwind.config = {
   },
 };
 
-function getSparePartList() {
-  // const spareParts = [
+function getVehicleList() {
+  // const Vehicles = [
   //     {
   //         id: '1',
   //         partNumber: 'SL00001',
@@ -86,13 +86,13 @@ function getSparePartList() {
   //     }
   // ];
 
-  const spareParts = [];
+  const Vehicles = [];
 
   fetch("../../resources/php/ManageItem.php")
     .then((response) => response.json())
     .then((data) => {
-      spareParts.push(...data);
-      renderSparePartsTable(spareParts);
+      Vehicles.push(...data);
+      renderVehiclesTable(Vehicles);
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -101,7 +101,7 @@ function getSparePartList() {
   const tableBody = document.getElementById("table-body");
   tableBody.replaceChildren();
 
-  spareParts.forEach((part) => {
+  Vehicles.forEach((part) => {
     const row = document.createElement("tr");
     row.innerHTML = `
             <td>
@@ -134,7 +134,7 @@ function itemAction(action) {
     window.location.href = "AddItem.html";
   } else if (action === "edit") {
     const checkboxes = document.querySelectorAll(
-      '#sparePartsTableBody input[type="checkbox"]:checked'
+      '#VehiclesTableBody input[type="checkbox"]:checked'
     );
 
     if (checkboxes.length === 0) {
@@ -153,7 +153,7 @@ function itemAction(action) {
     window.location.href = `editItem.html?id=${encodeURIComponent(partNumber)}`;
   } else if (action === "delete") {
     const checkboxes = document.querySelectorAll(
-      '#sparePartsTableBody input[type="checkbox"]:checked'
+      '#VehiclesTableBody input[type="checkbox"]:checked'
     );
     if (checkboxes.length === 0) {
       alert("No items selected for deletion");
@@ -172,7 +172,7 @@ function itemAction(action) {
         .then((result) => {
           console.log("Items deleted:", result);
           alert("Items deleted successfully");
-          loadAndRenderSpareParts(); // Refresh the table
+          loadAndRenderVehicles(); // Refresh the table
         })
         .catch((error) => {
           console.error("Error deleting items:", error);
@@ -185,24 +185,24 @@ function itemAction(action) {
 }
 
 //item list
-function renderSparePartsTable(spareParts) {
-  const tableBody = document.getElementById("sparePartsTableBody");
+function renderVehiclesTable(Vehicles) {
+  const tableBody = document.getElementById("VehiclesTableBody");
 
   const totalItems = document.getElementById("total-items");
   if (totalItems) {
-    totalItems.textContent = `Total: ${spareParts.length} Items`;
+    totalItems.textContent = `Total: ${Vehicles.length} Items`;
   }
 
   tableBody.replaceChildren(); // Clear the table body
 
-  spareParts.forEach((part, index) => {
+  Vehicles.forEach((part, index) => {
     const row = document.createElement("tr");
     row.className =
       index % 2 === 0
         ? "bg-white dark:bg-gray-800"
         : "bg-gray-50 dark:bg-gray-700";
     category = "N/A";
-    switch (part.sparePartCategory) {
+    switch (part.VehicleCategory) {
       case 1:
         category = "A";
         break;
@@ -222,16 +222,16 @@ function renderSparePartsTable(spareParts) {
     row.innerHTML = `
          <td class="w-4 p-4">
             <div class="flex items-center">
-                <input id="checkbox-table-${part.sparePartNum}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                       data-part-number="${part.sparePartNum}">
-                <label for="checkbox-table-${part.sparePartNum}" class="sr-only">checkbox</label>
+                <input id="checkbox-table-${part.VehicleNum}" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                       data-part-number="${part.VehicleNum}">
+                <label for="checkbox-table-${part.VehicleNum}" class="sr-only">checkbox</label>
             </div>
         </td>
-        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${part.sparePartNum}</td>
+        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${part.VehicleNum}</td>
         <td class="px-6 py-4">${category}</td>
-        <td class="px-6 py-4">${part.sparePartName}</td>
-        <td class="px-6 py-4"><img src="../../resources/image/spare/${part.sparePartImage}" alt="${part.name}" class="w-10 h-10 rounded-full" onerror="this.src='../../resources/image/spare/NoImage.jpg'"></td>
-        <td class="px-6 py-4">${part.sparePartDescription}</td>
+        <td class="px-6 py-4">${part.VehicleName}</td>
+        <td class="px-6 py-4"><img src="../../resources/image/spare/${part.VehicleImage}" alt="${part.name}" class="w-10 h-10 rounded-full" onerror="this.src='../../resources/image/spare/NoImage.jpg'"></td>
+        <td class="px-6 py-4">${part.VehicleDescription}</td>
         <td class="px-6 py-4">${part.weight}</td>
         <td class="px-6 py-4">${part.stockItemQty}</td>
         <td class="px-6 py-4">${part.price} HKD</td>
@@ -287,29 +287,29 @@ function fetchAPIForItemList(action = "list", method = "GET", data = null) {
     });
 }
 
-function loadAndRenderSpareParts() {
-  console.log("loadAndRenderSpareParts called");
+function loadAndRenderVehicles() {
+  console.log("loadAndRenderVehicles called");
   fetchAPIForItemList("list", "GET")
-    .then((spareParts) => {
-      if (spareParts && spareParts.length > 0) {
-        console.log("Received Product:", spareParts);
-        renderSparePartsTable(spareParts);
+    .then((Vehicles) => {
+      if (Vehicles && Vehicles.length > 0) {
+        console.log("Received Product:", Vehicles);
+        renderVehiclesTable(Vehicles);
       } else {
         console.log("No Product data received");
-        document.getElementById("sparePartsTableBody").innerHTML =
+        document.getElementById("VehiclesTableBody").innerHTML =
           '<tr><td colspan="9">No Product data available</td></tr>';
       }
     })
     .catch((error) => {
       console.error("Error loading Product:", error);
       document.getElementById(
-        "sparePartsTableBody"
+        "VehiclesTableBody"
       ).innerHTML = `<tr><td colspan="9">Error: ${error.message}</td></tr>`;
     });
 }
 
-function initSpareParts() {
-  loadAndRenderSpareParts();
+function initVehicles() {
+  loadAndRenderVehicles();
 }
 
 //edit item
@@ -345,7 +345,7 @@ function fetchAPIForEdit(id) {
       if (result.status === "success") {
         return result.data;
       } else {
-        throw new Error(result.message || "Failed to fetch spare part data");
+        throw new Error(result.message || "Failed to fetch Vehicle data");
       }
     });
 }
@@ -386,25 +386,25 @@ function fetchItemData() {
       }
 
       // Update the DOM with the fetched data, using optional chaining and nullish coalescing
-      document.getElementById("sparePartNumber").textContent =
-        itemData.sparePartNum ?? "";
-      document.getElementById("sparePartCategory").textContent =
-        getCategory(itemData.sparePartCategory) ?? "";
-      document.getElementById("sparePartName").textContent =
-        itemData.sparePartName ?? "";
-      document.getElementById("sparePartWeight").textContent =
+      document.getElementById("VehicleNumber").textContent =
+        itemData.VehicleNum ?? "";
+      document.getElementById("VehicleCategory").textContent =
+        getCategory(itemData.VehicleCategory) ?? "";
+      document.getElementById("VehicleName").textContent =
+        itemData.VehicleName ?? "";
+      document.getElementById("VehicleWeight").textContent =
         itemData.weight ?? "";
       document.getElementById("input-stock-quantity").value =
         itemData.stockItemQty ?? "";
       document.getElementById("input-price").value = itemData.price ?? "";
       document.getElementById("description").value =
-        itemData.sparePartDescription ?? "";
+        itemData.VehicleDescription ?? "";
 
       const currentImageElement = document.getElementById("currentImage");
       if (currentImageElement) {
-        if (itemData.sparePartImage) {
-          currentImageElement.src = `../../resources/image/spare/${itemData.sparePartImage}`;
-          currentImageElement.alt = "Spare Part Image";
+        if (itemData.VehicleImage) {
+          currentImageElement.src = `../../resources/image/spare/${itemData.VehicleImage}`;
+          currentImageElement.alt = "Vehicle Image";
         } else {
           currentImageElement.src = ""; // Set to empty or a default image path
           currentImageElement.alt = "No image available";
@@ -418,12 +418,12 @@ function fetchItemData() {
 }
 
 function updateItem() {
-  const id = document.getElementById("sparePartNumber").textContent;
+  const id = document.getElementById("VehicleNumber").textContent;
   const updateData = {
     id: id,
     stockItemQty: document.getElementById("input-stock-quantity").value,
     price: document.getElementById("input-price").value,
-    sparePartDescription: document.getElementById("description").value,
+    VehicleDescription: document.getElementById("description").value,
   };
 
   const fileInput = document.getElementById("file");
