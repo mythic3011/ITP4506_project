@@ -72,21 +72,21 @@ tailwind.config = {
 };
 
 function getVehicleList() {
-  // const Vehicles = [
-  //     {
-  //         id: '1',
-  //         partNumber: 'SL00001',
-  //         partCategory: 'Category A',
-  //         partName: 'Left front door',
-  //         partImage: '../../resources/image/spare/A/100002.png',
-  //         description: 'The front for Toyota',
-  //         weight: 20,
-  //         stockQuantity: 37,
-  //         price: '597 HKD'
-  //     }
-  // ];
+  const Vehicles = [
+      {
+          id: '1',
+          partNumber: 'SL00001',
+          partCategory: 'Category A',
+          partName: 'Left front door',
+          partImage: '../../resources/image/spare/A/100002.png',
+          description: 'The front for Toyota',
+          weight: 20,
+          stockQuantity: 37,
+          price: '597 HKD'
+      }
+  ];
 
-  const Vehicles = [];
+  // const Vehicles = [];
 
   fetch("../../resources/php/ManageItem.php")
     .then((response) => response.json())
