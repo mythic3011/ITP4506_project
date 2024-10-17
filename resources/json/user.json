@@ -1,11 +1,14 @@
 [
   {
-    "email": "a@a.com",
-    "password": "aaa"
+    "email": "is@a.com",
+    "role": "staff",
+    "post": "insurance",
+    "password": "a"
   },
   {
-    "email": "b@b.com",
-    "password": "bbb"
+    "email": "customer@a.com",
+    "role": "customer",
+    "password": "a"
   },
   {
     "email": "c@c.com",

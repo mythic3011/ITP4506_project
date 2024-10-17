@@ -25,6 +25,7 @@
 
                     // Redirect based on user role
                     setTimeout(() => {
+                        let post = `${user.post === "customer" ? "N" : user.post}`;
                         window.location.href = `./page/${user.role}/index.html`;
                     }, 3000);
                 } else {
