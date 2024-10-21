@@ -1,0 +1,25 @@
+nav {
+    border-color: #E5E7EB;
+    background-color: #ffffff;
+}
+
+nav.dark-mode {
+    background-color: #171717;
+    border-color: #171717;
+}
+
+#nav_container{
+    display: flex;
+    padding: 1rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1280px;
+}
+
+#hyperlink_of_logo{
+    display: flex;
+    margin-left: 0.75rem;
+    margin-left: 0.875rem;
+    align-items: center;
+}
