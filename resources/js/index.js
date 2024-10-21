@@ -15,7 +15,7 @@ $(document).ready(function () {
             const user = users.find(user => user.email === username && user.password === password);
 
             if (user) {
-                $message.text('Login successful! Redirecting...').addClass('success').removeClass('error');
+                $message.text('Redirecting...').addClass('success').removeClass('error');
                 $loginButton.removeClass('loading').text('Login successful!');
 
                 if ($('#remember-me').is(':checked')) {
@@ -31,11 +31,11 @@ $(document).ready(function () {
 
                 // Redirect based on user role
                 setTimeout(() => {
-                    let post = `${user.post === "customer" ? "N" : user.post}`;
                     window.location.href = `./page/${user.role}/${$systemSelect}/index.html`;
                 }, 3000);
             } else {
                 $message.text('Invalid username or password.').addClass('error').removeClass('success');
+
                 $loginButton.removeClass('loading').prop('disabled', false).text('Login');
             }
         }).fail(function () {
@@ -73,13 +73,5 @@ $(document).ready(function () {
         $('#darkModeToggle').addClass('dark-mode');
         $('body').addClass('switch-theme');
         $('footer').addClass('dark-mode');
-    }
-
-    const isLoggedIn = sessionStorage.getItem('logout') === false;
-
-    // Check if the user is logged in
-    if (isLoggedIn) {
-        // redirect to user role page and system
-        window.location.href = `./page/${sessionStorage.getItem('user').role}/${sessionStorage.getItem('login-system')}/index.html`;
     }
 });

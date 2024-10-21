@@ -13,26 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!rememberMe) console.error('Remember me checkbox not found');
     if (!usernameInput) console.error('Username input not found');
 
-    // Initialize Turnstile
-    const turnstileWidget = document.getElementById('turnstile-widget');
-    if (turnstileWidget) {
-        turnstile.render('#turnstile-widget', {
-            sitekey: '0x4AAAAAAAdmnv0tiJzz_0nV',
-            callback: function(token) {
-                document.getElementById('turnstileResponse').value = token;
-            },
-            'error-callback': function() {
-                const turnstileError = document.getElementById('turnstile-error');
-                if (turnstileError) {
-                    turnstileError.textContent = 'Turnstile widget error. Please try again or contact support.';
-                    turnstileError.classList.remove('hidden');
-                }
-            }
-        });
-    } else {
-        console.log('Turnstile widget not found. Likely in development environment.');
-    }
-
     // Check for saved theme preference or use system preference
     if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         html.classList.add('dark');

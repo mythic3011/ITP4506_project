@@ -1,17 +1,17 @@
 [
   {
     "email": "is@a.com",
-    "role": "staff",
+    "role": "Staff",
     "password": "a"
   },
   {
     "email": "customer@a.com",
-    "role": "customer",
+    "role": "Customer",
     "password": "a"
   },
   {
     "email": "c@c.com",
-    "role": "customer",
+    "role": "Customer",
     "password": "ccc"
   }
 ]
