@@ -73,7 +73,6 @@
       };
     </script>
   </head>
-
   <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
     <div class="flex h-screen">
       <!-- Navigation -->
@@ -156,96 +155,6 @@
         </div>
       </nav>
 
-      <!-- Mobile Menu Button -->
-      <div
-        class="md:hidden flex items-center justify-between p-4 bg-white dark:bg-gray-900"
-      >
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <div class="h-8 w-8 relative">
-            <img
-              alt="LMC Logo"
-              class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-              src="../../resources/image/LMC.png"
-            />
-            <img
-              alt="LMC Logo"
-              class="absolute inset-0 object-contain hidden dark:block"
-              src="../../resources/image/LMC_DM.png"
-            />
-          </div>
-          <span
-            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-            >LMC</span
-          >
-        </a>
-        <button
-          class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-          id="mobileMenuButton"
-        >
-          <svg
-            class="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </button>
-      </div>
-
-      <!-- Mobile Menu -->
-      <div
-        class="md:hidden flex flex-col"
-        id="mobileMenu"
-        style="display: none"
-      >
-        <ul
-          class="font-medium flex flex-col space-y-2 p-4 bg-white dark:bg-gray-900"
-        >
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="viewOrderRecord.html"
-              >Order Record</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="viewVehicle.html"
-              >Vehicle</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="shoppingCart.html"
-              >Cart</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="profile.html"
-              >Profile</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="../../logout.html"
-              onclick="logout()"
-              >Log Out</a
-            >
-          </li>
-        </ul>
-      </div>
       <div class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
           Vehicles
