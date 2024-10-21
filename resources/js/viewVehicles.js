@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let spareParts = [];
+  let Vehicless = [];
   const csrfToken = getCookie("csrf_token");
   const Token = getCookie("token");
   let cart = [];
@@ -33,13 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("token"),
       "X-Requested-With": "XMLHttpRequest",
-      "X-CSRF-Token": csrfToken,
     },
     body: JSON.stringify({
-      Token: Token,
-      csrf_token: csrfToken,
     }),
   })
     .then((response) => response.json())
@@ -48,23 +44,23 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(data.data);
       for (let i = 0; i < data.data.length; i++) {
         MappedData.push({
-          id: data.data[i].sparePartNum,
-          name: data.data[i].sparePartName,
-          category: getCategory(data.data[i].sparePartCategory),
+          id: data.data[i].VehiclesNum,
+          name: data.data[i].VehiclesName,
+          category: getCategory(data.data[i].VehiclesCategory),
           price: data.data[i].price,
-          imageUrl: data.data[i].sparePartImage,
+          imageUrl: data.data[i].VehiclesImage,
           stockItemQty: data.data[i].stockItemQty,
         });
       }
-      spareParts = MappedData;
-      console.log(spareParts);
-      renderSpareParts(spareParts);
+      Vehicless = MappedData;
+      console.log(Vehicless);
+      renderVehicless(Vehicless);
     })
     .catch((error) => console.error("Error fetching Product:", error));
 
   // Sorting event listener
   document
-    .getElementById("SparePartSorting")
+    .getElementById("VehiclesSorting")
     .addEventListener("change", function () {
       if (this.value === "Category") {
         document.getElementById("CategoryFilterContainer").style.display =
@@ -85,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Search functionality
   document
-    .getElementById("sparePartSearch")
+    .getElementById("VehiclesSearch")
     .addEventListener("input", function () {
       applyFiltersAndSort();
     });
@@ -96,12 +92,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function applyFiltersAndSort() {
     const searchTerm = document
-      .getElementById("sparePartSearch")
+      .getElementById("VehiclesSearch")
       .value.toLowerCase();
-    const sortBy = document.getElementById("SparePartSorting").value;
+    const sortBy = document.getElementById("VehiclesSorting").value;
     const categoryFilter = document.getElementById("CategoryFilter").value;
 
-    let filteredParts = spareParts.filter(
+    let filteredParts = Vehicless.filter(
       (part) =>
         (part.name.toLowerCase().includes(searchTerm) ||
           part.id.toLowerCase().includes(searchTerm)) &&
@@ -122,11 +118,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     console.log(filteredParts);
-    renderSpareParts(filteredParts);
+    renderVehicless(filteredParts);
   }
 
-  function renderSpareParts(parts) {
-    const container = document.getElementById("SparePartList");
+  function renderVehicless(parts) {
+    const container = document.getElementById("VehiclesList");
     container.replaceChildren(); // Clear the container
 
     // Get all unique categories from the parts
@@ -182,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const categoryElement = document.createElement("div");
       categoryElement.className = "mb-8";
-      categoryElement.id = `SparePartList-${category}`;
+      categoryElement.id = `VehiclesList-${category}`;
 
       const categoryTitle = document.createElement("h2");
       categoryTitle.className =
@@ -194,7 +190,7 @@ document.addEventListener("DOMContentLoaded", function () {
       grid.className = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6";
 
       categoryParts.forEach((part) => {
-        const card = createSparePartCard(part);
+        const card = createVehiclesCard(part);
         grid.appendChild(card);
       });
 
@@ -207,10 +203,10 @@ document.addEventListener("DOMContentLoaded", function () {
   document
     .getElementById("CategoryFilter")
     .addEventListener("change", function () {
-      renderSpareParts(spareParts); // Assuming 'parts' is available in the scope
+      renderVehicless(Vehicless); // Assuming 'parts' is available in the scope
     });
 
-  function createSparePartCard(part) {
+  function createVehiclesCard(part) {
     const card = document.createElement("div");
     card.className =
       "bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden";
@@ -232,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const partNo = document.createElement("p");
     partNo.className = "text-gray-600 dark:text-gray-300 mb-2";
-    partNo.textContent = `Spare Part No. ${part.id}`;
+    partNo.textContent = `Vehicle No. ${part.id}`;
     content.appendChild(partNo);
 
     const price = document.createElement("p");
@@ -245,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-2 sm:space-y-0 sm:space-x-2";
 
     const viewDetails = document.createElement("a");
-    viewDetails.href = `sparePart-template.html?id=${part.id}`;
+    viewDetails.href = `Vehicles-template.html?id=${part.id}`;
     viewDetails.className =
       "inline-block bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition duration-300 text-center text-sm";
     viewDetails.textContent = "View Details";

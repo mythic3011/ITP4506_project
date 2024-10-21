@@ -86,12 +86,12 @@
         <div class="flex flex-col items-center p-4">
             <a class="flex items-center space-x-3 rtl:space-x-reverse mb-6" href="#">
                 <div class="h-8 w-8 relative">
-                    <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-                         src="../../resources/image/SLMC_LOGO.png"/>
-                    <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block"
-                         src="../../resources/image/SLMC_LOGO_DM.png"/>
+                    <img alt="LMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
+                         src="../../resources/image/LMC.png"/>
+                    <img alt="LMC Logo" class="absolute inset-0 object-contain hidden dark:block"
+                         src="../../resources/image/LMC_DM.png"/>
                 </div>
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">LMC</span>
             </a>
 
             <ul class="font-medium flex flex-col space-y-2">
@@ -101,11 +101,11 @@
                 </li>
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="viewSparePart.php">Spare Part</a>
+                       href="viewVehicle.html">Vehicle</a>
                 </li>
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="shoppingCart.php">Cart</a>
+                       href="shoppingCart.html">Cart</a>
                 </li>
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -132,12 +132,12 @@
     <div class="md:hidden flex items-center justify-between p-4 bg-white dark:bg-gray-900">
         <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
             <div class="h-8 w-8 relative">
-                <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-                     src="../../resources/image/SLMC_LOGO.png"/>
-                <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block"
-                     src="../../resources/image/SLMC_LOGO_DM.png"/>
+                <img alt="LMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
+                     src="../../resources/image/LMC.png"/>
+                <img alt="LMC Logo" class="absolute inset-0 object-contain hidden dark:block"
+                     src="../../resources/image/LMC_DM.png"/>
             </div>
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">LMC</span>
         </a>
         <button class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
                 id="mobileMenuButton">
@@ -158,11 +158,11 @@
             </li>
             <li>
                 <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="viewSparePart.php">Spare Part</a>
+                   href="viewVehicle.html">Vehicle</a>
             </li>
             <li>
                 <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="shoppingCart.php">Cart</a>
+                   href="shoppingCart.html">Cart</a>
             </li>
             <li>
                 <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
@@ -314,8 +314,6 @@
                     })
                     .catch(error => {
                         console.error('Error printing order:', error);
-
-
                         displayError(error.message);
                     });
             }

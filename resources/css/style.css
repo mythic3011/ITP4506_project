@@ -1,0 +1,159 @@
+.hidden {
+    display: none;
+}
+
+.loading-spinner {
+    border-radius: 9999px;
+    border-bottom-width: 2px;
+    border-color: #3B82F6;
+    width: 2.5rem;
+    height: 2.5rem;
+    animation: spin 1s linear infinite;
+
+    @keyframes spin {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
+}
+
+body {
+    font-family: "Times New Roman", Times, serif;
+    background-color: #f4f4f4;
+    color: #111;
+    margin: 0;
+    padding: 0;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 10px;
+    background-color: #f4f4f4;
+    color: #555;
+}
+
+footer.dark-mode {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+/* remove default html style */
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:visited {
+    color: inherit;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    background-color: #f1f1f1;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.fadeout {
+    animation: fadeout
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+/*
+ * Responsive design
+ */
+
+@media (max-width: 768px) {
+    .hidden-sm {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 992px) {
+    .hidden-md {
+        display: none;
+    }
+}
+
+/* Dark mode */
+.dark-mode {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.dark-mode a {
+    color: #e0e0e0;
+}
+
+.dark-mode a:hover {
+    color: #fff;
+}
+
+.dark-mode .container {
+    background: #2b2b2b;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+    padding: 20px;
+}
+
+.dark-mode .text-center {
+    /* Copyright notice */
+    text-align: center;
+}
+
+.dark-mode .text-center {
+    /* Copyright notice */
+    text-align: center;
+}
+
+
+/*
+* Copyright notice
+*/
+
+.text-center {
+    /* Copyright notice */
+    text-align: center;
+}

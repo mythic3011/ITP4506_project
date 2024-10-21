@@ -2,8 +2,8 @@
 <html class="dark" lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Order Records | Legend Motor Company</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Product | Legend Motor Company</title>
     <link
       href="../../resources/image/LMC_login.png"
       rel="icon"
@@ -11,7 +11,7 @@
     />
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
     <script type="module" src="../../resources/js/script.js"></script>
-    <script type="module" src="../../resources/js/order.js"></script>
+    <script type="module" src="../../resources/js/viewVehicles.js"></script>
     <script>
       tailwind.config = {
         darkMode: "class",
@@ -73,6 +73,7 @@
       };
     </script>
   </head>
+
   <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
     <div class="flex h-screen">
       <!-- Navigation -->
@@ -87,13 +88,8 @@
             <div class="h-8 w-8 relative">
               <img
                 alt="LMC Logo"
-                class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-                src="../../resources/image/LMC.png"
-              />
-              <img
-                alt="LMC Logo"
-                class="absolute inset-0 object-contain hidden dark:block"
-                src="../../resources/image/LMC_DM.png"
+                class="absolute inset-0 object-contain dark pt-2 dark:pt-1"
+                src="../../resources/image/LMC_login.png"
               />
             </div>
             <span
@@ -250,106 +246,74 @@
           </li>
         </ul>
       </div>
+      <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">
+          Vehicles
+        </h1>
 
-      <!-- Page Content -->
-      <div class="flex-1 flex flex-col">
-        <main class="flex-1 overflow-y-auto p-6">
-          <div class="flex justify-between items-center mb-4">
-            <h1
-              class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white"
+        <div
+          class="mb-4 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4"
+        >
+          <!-- Search Bar -->
+          <div class="w-full sm:w-1/3">
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              for="VehicleSearch"
+              >Search Vehicles:</label
             >
-              Order Records
-            </h1>
-            <div class="flex items-center">
-              <label
-                class="mr-2 text-sm text-gray-700 dark:text-gray-300"
-                for="sort-select"
-                >Sort by:</label
-              >
-              <select
-                class="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                id="sort-select"
-              >
-                <option value="orderId">Order ID</option>
-                <option value="status">Status</option>
-                <option value="deliveryDate">Delivery Date</option>
-                <option value="orderDate">Order Date</option>
-                <option value="totalAmount">Total Amount</option>
-              </select>
-            </div>
+            <input
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              id="VehicleSearch"
+              placeholder="Enter Vehicle name or ID"
+              type="text"
+            />
           </div>
-          <p class="mb-4 text-gray-700 dark:text-gray-300">
-            Total Orders: <span class="font-bold" id="total-orders"></span>
-          </p>
-          <div
-            class="hidden justify-center items-center my-4"
-            id="loadingSpinner"
-          >
-            <div
-              class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"
-            ></div>
-          </div>
-          <div
-            class="overflow-x-auto bg-white dark:bg-gray-800 shadow-md rounded-lg"
-          >
-            <table
-              class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-              id="order-table"
-            >
-              <thead class="bg-gray-50 dark:bg-gray-700">
-                <tr>
-                  <th
-                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                  >
-                    Order ID
-                  </th>
-                  <th
-                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider hidden sm:table-cell"
-                  >
-                    Order Date
-                  </th>
-                  <th
-                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider hidden md:table-cell"
-                  >
-                    Order Time
-                  </th>
-                  <th
-                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider hidden lg:table-cell"
-                  >
-                    Delivery Date
-                  </th>
-                  <th
-                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                  >
-                    Total Cost
-                  </th>
-                  <th
-                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                  >
-                    Status
-                  </th>
-                  <th
-                    class="px-4 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                  >
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody
-                class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700"
-                id="order-body"
-              ></tbody>
-            </table>
-          </div>
-        </main>
 
+          <!-- Sort By Dropdown -->
+          <div class="w-full sm:w-1/3">
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              for="VehiclesSorting"
+              >Sort By:</label
+            >
+            <select
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              id="VehiclesSorting"
+            >
+              <option value="None">None</option>
+              <option value="Price-Low-to-High">Price - Low to High</option>
+              <option value="Price-High-to-Low">Price - High to Low</option>
+              <option value="Category">Category</option>
+            </select>
+          </div>
+
+          <!-- Specify Category Dropdown -->
+          <div
+            class="w-full sm:w-1/3"
+            id="CategoryFilterContainer"
+            style="display: none"
+          >
+            <label
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              for="CategoryFilter"
+              >Specify Category:</label
+            >
+            <select
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              id="CategoryFilter"
+            >
+              <option value="All">All Categories</option>
+            </select>
+          </div>
+        </div>
+        <div id="VehiclesList"></div>
         <!-- Footer -->
-        <footer class="text-center py-4">
-          <p class="text-gray-700 dark:text-gray-300">
-            © 2024 Legend Motor Company. All rights reserved.
-          </p>
-        </footer>
       </div>
     </div>
+    <footer class="text-center py-4">
+      <p class="text-gray-700 dark:text-gray-300">
+        © 2024 Legend Motor Company. All rights reserved.
+      </p>
+    </footer>
   </body>
 </html>

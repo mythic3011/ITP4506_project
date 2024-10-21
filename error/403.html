@@ -33,6 +33,7 @@
     />
     <link rel="stylesheet" href="/resources/css/index.css" />
     <script type="module" src="/resources/js/script.js"></script>
+    <script src="resources/js/403.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
     <script>
       tailwind.config = {
@@ -99,58 +100,9 @@
     class="bg-white text-gray-900 mx-auto font-sans dark:bg-slate-900"
     onload="Redirect()"
   >
-    <script>
-      if (
-        document.referrer === "" ||
-        !document.referrer.includes(window.location.hostname)
-      ) {
-        window.location.href = "../index.html";
-      } else {
-        // redirect to previous page
-        //window.location.href = document.referrer.split('?')[0];
-        redirectToPrePreviousPage();
-      }
-      // Function to redirect to the pre-previous page
-      function redirectToPrePreviousPage() {
-        var historyArr =
-          JSON.parse(sessionStorage.getItem("pageHistory")) || [];
-        if (historyArr.length >= 3) {
-          // Get the pre-previous page URL
-          var prePreviousPageUrl = historyArr[historyArr.length - 3];
-          // Check if the URL is from the same domain
-          var url = new URL(prePreviousPageUrl);
-          if (url.hostname === window.location.hostname) {
-            // Redirect to the pre-previous page
-            window.location.href = prePreviousPageUrl;
-          } else {
-            console.log("The pre-previous page is not from the same domain.");
-          }
-        } else {
-          console.log("No pre-previous page found in the history.");
-        }
-      }
-
-      function Redirect() {
-        var countdownElement = document.getElementById("countdown-text");
-        var timeLeft = parseInt(countdownElement.innerHTML);
-        if (isNaN(timeLeft)) {
-          console.error("Invalid countdown value");
-          return;
-        }
-        var countdownTimer = setInterval(function () {
-          var seconds = timeLeft % 60;
-          countdownElement.innerHTML = seconds + "s";
-          if (timeLeft === 0) {
-            clearInterval(countdownTimer);
-            window.location.href = "../index.html";
-          }
-          timeLeft--;
-        }, 1000);
-      }
-    </script>
     <main>
       <div
-        class="container px-16 py-16 mt-20 mb-20 mx-auto dark:text-white"
+        class="container px-16 py-16 mt-20 mb-20 mx-auto dark:text-white shadow-none"
         onload="checkUserThemePreference()"
       >
         <div class="text-center">
@@ -165,7 +117,7 @@
         </div>
         <!-- Form for user login -->
         <p
-          class="mt-5 mb-5 p-4 pb-4 rounded-2xl text-left flex flex-col 2xl:col-span-2 col:col-span-1 justify-center items-center dark:shadow-none dark:bg-shadow-8 dark:text-white"
+          class="mt-5 mb-5 p-4 pb-4 shadow-none rounded-2xl text-left flex flex-col 2xl:col-span-2 col:col-span-1 justify-center items-center dark:shadow-none dark:bg-shadow-8 dark:text-white"
         >
           <label
             class="text-sm font-bold mb-2 pr-2 pl-2 pt-2 mb-2 py-4 dark:text-white"
@@ -187,7 +139,7 @@
           </label>
         </p>
         <!-- Footer of the webpage -->
-        <footer class="container px-8 py-8 mt-20 mb-20 mx-auto">
+        <footer class="container px-8 py-8 mt-20 mb-20 mx-auto shadow-none">
           <div class="text-center">
             <!-- Copyright notice -->
             <span
