@@ -31,6 +31,14 @@
         <p>Don't have an account? <a href="./register.html" style="color:#007BFF;">Click Here to Register</a></p>
     </div>
     <form id="loginForm">
+        <!--- Select System -->
+        <div class="form-group" id="system-select" style="display: block">
+            <label for="system-select">Select System</label>
+            <select name="system" id="system-select-form" required="required" class="form-select">
+                <option value="Sale">Vehicle Sale</option>
+                <option value="Insurance">Vehicle Insurance</option>
+            </select>
+        </div>
         <div class="form-group">
             <label for="username">Username</label>
             <input type="email" id="username" name="username" required autocomplete="username" placeholder="Username"/>

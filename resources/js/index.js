@@ -6,6 +6,7 @@
             const password = $('#password').val().trim();
             const $loginButton = $('button[type="submit"]');
             const $message = $('#message');
+            const $systemSelect = $('#system-select-form').val();
 
             // Show loading spinner
             $loginButton.addClass('loading').prop('disabled', true);
@@ -23,10 +24,15 @@
                         localStorage.removeItem('username');
                     }
 
+                    // Store the user data in the session storage
+                    sessionStorage.setItem('user', JSON.stringify(user));
+                    sessionStorage.setItem('login-system', $systemSelect);
+                    sessionStorage.setItem('logout', false);
+
                     // Redirect based on user role
                     setTimeout(() => {
                         let post = `${user.post === "customer" ? "N" : user.post}`;
-                        window.location.href = `./page/${user.role}/index.html`;
+                        window.location.href = `./page/${user.role}/${$systemSelect}/index.html`;
                     }, 3000);
                 } else {
                     $message.text('Invalid username or password.').addClass('error').removeClass('success');

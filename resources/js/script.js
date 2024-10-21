@@ -19,20 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     mobileMenuButton.addEventListener('click', toggleMobileMenu);
 
-    // Language
-    const languageSelect = $("language");
-    if (languageSelect) {
-        const savedLanguage = localStorage.getItem("language") || "en";
-        languageSelect.value = savedLanguage;
-        updatePageLanguage(savedLanguage, languageMap); // Assuming languageMap is defined globally
-
-        languageSelect.addEventListener("change", function () {
-            const selectedLanguage = this.value;
-            localStorage.setItem("language", selectedLanguage);
-            updatePageLanguage(selectedLanguage, languageMap);
-        });
-    }
-
     // Logout functionality
     $('logoutButton').addEventListener('click', logout);
 
