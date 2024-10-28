@@ -1,0 +1,86 @@
+.tabs {
+  margin-bottom: 2.5rem;
+}
+
+.tab-buttons {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.375rem;
+  background-color: var(--bg-secondary);
+  border-radius: 0.75rem;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 0.875rem;
+  border: none;
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.tab-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--accent-color);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 0;
+}
+
+.tab-button:hover::before {
+  opacity: 0.05;
+}
+
+.tab-button.active {
+  background-color: var(--bg-primary);
+  color: var(--accent-color);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+.tab-button span {
+  position: relative;
+  z-index: 1;
+}
+
+.tab-content {
+  display: none;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .tab-buttons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tab-button {
+    width: 100%;
+    text-align: center;
+  }
+}

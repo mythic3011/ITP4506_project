@@ -1,0 +1,129 @@
+.orders-container {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--bg-light);
+}
+
+.orders-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.orders-header h2 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.filter-controls {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.select-input {
+    padding: 8px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: white;
+}
+
+.orders-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); /* Adjusted for better card width */
+    gap: 16px;
+}
+
+.order-card {
+    background-color: var(--bg-primary);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    transition: box-shadow 0.2s ease;
+}
+
+.order-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.order-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-header h3 {
+    font-size: .875rem;
+    font-weight: bold;
+}
+
+.status-badge {
+    padding: .25rem .75rem;
+    border-radius: .5rem;
+    font-size: .75rem;
+    font-weight: bold;
+    transition: .3s ease;
+}
+
+.status-badge.pending {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.processing {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.status-badge.completed {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.status-badge.cancelled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.order-content {
+    margin-bottom: .75rem;
+}
+
+.order-details p {
+    margin-bottom: .5rem;
+}
+
+.order-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.status-select {
+    padding: .5rem 1rem; /* Corrected spacing */
+    border-radius: .5rem;
+    background: white;
+    cursor: pointer;
+    appearance: none; /* Remove default styles */
+}
+
+.no-orders {
+    text-align: center;
+    padding: 3rem;
+    background: white;
+    border-radius: .5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .orders-list {
+        grid-template-columns:repeat(1, 1fr);
+        padding: 1rem;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        gap: .5rem;
+        margin-bottom: .75rem;
+    }
+}

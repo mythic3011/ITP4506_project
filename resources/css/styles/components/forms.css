@@ -1,0 +1,233 @@
+/* Form Container */
+.form-container {
+    background-color: var(--bg-primary); /* Light theme background */
+    border-radius: 1rem;
+    padding: 2.5rem; /* Increased padding for better usability */
+    box-shadow: 0 4px 8px var(--shadow-color); /* Enhanced shadow for depth */
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+/* Form Label */
+.form-label {
+    display: block;
+    font-size: 0.95rem; /* Increased font size for better visibility */
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+/* Form Input Group */
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    background-color: var(--input-bg); /* Background color for input group */
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem; /* Consistent rounding */
+    padding: 0.5rem; /* Padding for better touch targets */
+    transition: all 0.2s ease;
+}
+
+.input-group:hover {
+    border-color: var(--accent-color); /* Changed hover effect for better focus indication */
+}
+
+.input-group:focus-within {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); /* Focus effect */
+}
+
+/* Form Icons */
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: var(--text-secondary);
+}
+
+.input-icon.right {
+    left: auto;
+    right: 1rem;
+}
+
+.input-group:focus-within .input-icon {
+    color: var(--accent-color); /* Change icon color on focus */
+}
+
+/* Form Inputs */
+.form-input {
+    width: 100%;
+    padding: .75rem 1rem;
+    background: transparent;
+    border: none;
+    color: variables(--text-primary);
+    font-size: .875rem;
+    outline: none;
+}
+
+.form-input.with-icon {
+    padding-left: 2.75rem;
+}
+
+.form-input::placeholder {
+    color: variables(--text-secondary);
+    opacity: .7;
+}
+
+/* Select Input */
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M6 9l6 6l6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2.5rem;
+}
+
+/* Textarea */
+.form-textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Checkbox and Radio */
+.form-checkbox,
+.form-radio {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    cursor: pointer;
+    padding: .5rem;
+    border-radius: .5rem;
+    transition: background-color .2s ease;
+}
+
+.form-checkbox:hover,
+.form-radio:hover {
+    background-color: variables(--bg-secondary); /* Highlight on hover */
+}
+
+.checkbox-input,
+.radio-input {
+    appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--border-color);
+    background-color: variables(--bg-primary); /* Default background color */
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+.checkbox-input {
+    border-radius: .375rem; /* Square checkbox */
+}
+
+.radio-input {
+    border-radius: 50%; /* Circular radio button */
+}
+
+.checkbox-input:checked,
+.radio-input:checked {
+    border-color: variables(--accent-color); /* Highlight border on check */
+    background-color: variables(--accent-color); /* Fill color on check */
+}
+
+.checkbox-input:checked::after,
+.radio-input:checked::after { /* Checkmark or dot styling */
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.checkbox-input.checked::after { /* Checkmark for checkbox */
+    width: .75rem;
+    height: .75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M20,6L9,17l-5-5'/%3E%3C/svg%3E");
+}
+
+.radio-input.checked::after { /* Dot for radio button */
+    width: .5rem;
+    height: .5rem;
+    background-color: white;
+}
+
+/* Labels for Checkbox and Radio Inputs */
+.checkbox-label,
+.radio-label {
+    font-size: .875rem;
+    color: variables(--text-primary);
+}
+
+/* Form Validation Styles */
+.form-input.error {
+    border-color: variables(--danger-color); /* Highlight error state with red border */
+}
+
+.error-message {
+    color: variables(--danger-color); /* Error message color */
+    font-size: .75rem;
+    margin-top: .25rem;
+}
+
+/* Form Actions Styles */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Dark Theme Specific Styles */
+.root.dark .form-container {
+    background-color: variables(--bg-tertiary); /* Darker background for form container in dark theme */
+}
+
+.root.dark .input-group {
+    background-color: variables(--input-bg);
+    border-color: variables(--border-color);
+}
+
+.root.dark .form-input,
+.root.dark .checkbox-label,
+.root.dark .radio-label { /* Ensure text is visible in dark mode */
+    color: variables(--text-primary);
+}
+
+.root.dark .form-input::placeholder {
+    color: variables(--text-secondary);
+}
+
+.root.dark .input-icon {
+    color: variables(--text-secondary);
+}
+
+.root.dark .input-group:hover {
+    border-color: variables(--accent-light);
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 640px) {
+    .form-container {
+        padding: .75rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: .5rem;
+    }
+
+    .form-actions .btn {
+        width: auto;
+        padding: .75rem 1.25rem;
+        font-size: .875rem;
+        text-align: center;
+    }
+}

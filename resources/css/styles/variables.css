@@ -1,0 +1,531 @@
+:root {
+    /* Colors */
+    --primary: #2563eb;
+    --primary-light: #3b82f6;
+    --primary-dark: #1d4ed8;
+
+    --success: #059669;
+    --success-light: #10b981;
+    --success-dark: #047857;
+
+    --warning: #d97706;
+    --warning-light: #f59e0b;
+    --warning-dark: #b45309;
+
+    --danger: #dc2626;
+    --danger-light: #ef4444;
+    --danger-dark: #b91c1c;
+
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+
+    /* Text colors */
+    --text-inherit: inherit;
+    --text-current: currentColor;
+    --text-transparent: transparent;
+    --text-black: black;
+    --text-white: white;
+    --text-gray-100: var(--gray-100);
+    --text-gray-200: var(--gray-200);
+    --text-gray-300: var(--gray-300);
+    --text-gray-400: var(--gray-400);
+    --text-gray-500: var(--gray-500);
+    --text-gray-600: var(--gray-600);
+    --text-gray-700: var(--gray-700);
+    --text-gray-800: var(--gray-800);
+    --text-gray-900: var(--gray-900);
+    --text-zinc-50: rgba(250, 250, 250, 1);
+    --text-zinc-100: rgba(250, 250, 250, 0.1);
+    --text-zinc-200: rgba(250, 250, 250, 0.2);
+    --text-zinc-300: rgba(250, 250, 250, 0.3);
+    --text-zinc-400: rgba(250, 250, 250, 0.4);
+    --text-zinc-500: rgba(250, 250, 250, 0.5);
+    --text-zinc-600: rgba(250, 250, 250, 0.6);
+    --text-zinc-700: rgba(250, 250, 250, 0.7);
+    --text-zinc-800: rgba(250, 250, 250, 0.8);
+    --text-zinc-900: rgba(250, 250, 250, 0.9);
+    --text-zinc-950: rgba(250, 250, 250, 0.95);
+    --text-zinc-1000: rgba(250, 250, 250, 1);
+    --text-neutral-50: rgba(115, 115, 115, 1);
+    --text-neutral-100: rgba(115, 115, 115, 0.1);
+    --text-neutral-200: rgba(115, 115, 115, 0.2);
+    --text-neutral-300: rgba(115, 115, 115, 0.3);
+    --text-neutral-400: rgba(115, 115, 115, 0.4);
+    --text-neutral-500: rgba(115, 115, 115, 0.5);
+    --text-neutral-600: rgba(115, 115, 115, 0.6);
+    --text-neutral-700: rgba(115, 115, 115, 0.7);
+    --text-neutral-800: rgba(115, 115, 115, 0.8);
+    --text-neutral-900: rgba(115, 115, 115, 0.9);
+    --text-neutral-950: rgba(115, 115, 115, 0.95);
+    --text-neutral-1000: rgba(115, 115, 115, 1);
+    --text-stone-50: rgba(18, 18, 18, 1);
+    --text-stone-100: rgba(18, 18, 18, 0.1);
+    --text-stone-200: rgba(18, 18, 18, 0.2);
+    --text-stone-300: rgba(18, 18, 18, 0.3);
+    --text-stone-400: rgba(18, 18, 18, 0.4);
+    --text-stone-500: rgba(18, 18, 18, 0.5);
+    --text-stone-600: rgba(18, 18, 18, 0.6);
+    --text-stone-700: rgba(18, 18, 18, 0.7);
+    --text-stone-800: rgba(18, 18, 18, 0.8);
+    --text-stone-900: rgba(18, 18, 18, 0.9);
+    --text-stone-950: rgba(18, 18, 18, 0.95);
+    --text-stone-1000: rgba(18, 18, 18, 1);
+    --text-red-50: rgba(239, 68, 68, 1);
+    --text-red-100: rgba(239, 68, 68, 0.1);
+    --text-red-200: rgba(239, 68, 68, 0.2);
+    --text-red-300: rgba(239, 68, 68, 0.3);
+    --text-red-400: rgba(239, 68, 68, 0.4);
+    --text-red-500: rgba(239, 68, 68, 0.5);
+    --text-red-600: rgba(239, 68, 68, 0.6);
+    --text-red-700: rgba(239, 68, 68, 0.7);
+    --text-red-800: rgba(239, 68, 68, 0.8);
+    --text-red-900: rgba(239, 68, 68, 0.9);
+    --text-red-950: rgba(239, 68, 68, 0.95);
+    --text-red-1000: rgba(239, 68, 68, 1);
+    --text-orange-50: rgba(255, 182, 100, 1);
+    --text-orange-100: rgba(255, 182, 100, 0.1);
+    --text-orange-200: rgba(255, 182, 100, 0.2);
+    --text-orange-300: rgba(255, 182, 100, 0.3);
+    --text-orange-400: rgba(255, 182, 100, 0.4);
+    --text-orange-500: rgba(255, 182, 100, 0.5);
+    --text-orange-600: rgba(255, 182, 100, 0.6);
+    --text-orange-700: rgba(255, 182, 100, 0.7);
+    --text-orange-800: rgba(255, 182, 100, 0.8);
+    --text-orange-900: rgba(255, 182, 100, 0.9);
+    --text-orange-950: rgba(255, 182, 100, 0.95);
+    --text-orange-1000: rgba(255, 182, 100, 1);
+    --text-amber-50: rgba(245, 158, 11, 1);
+    --text-amber-100: rgba(245, 158, 11, 0.1);
+    --text-amber-200: rgba(245, 158, 11, 0.2);
+    --text-amber-300: rgba(245, 158, 11, 0.3);
+    --text-amber-400: rgba(245, 158, 11, 0.4);
+    --text-amber-500: rgba(245, 158, 11, 0.5);
+    --text-amber-600: rgba(245, 158, 11, 0.6);
+    --text-amber-700: rgba(245, 158, 11, 0.7);
+    --text-amber-800: rgba(245, 158, 11, 0.8);
+    --text-amber-900: rgba(245, 158, 11, 0.9);
+    --text-amber-950: rgba(245, 158, 11, 0.95);
+    --text-amber-1000: rgba(245, 158, 11, 1);
+    --text-yellow-50: rgba(251, 191, 36, 1);
+    --text-yellow-100: rgba(251, 191, 36, 0.1);
+    --text-yellow-200: rgba(251, 191, 36, 0.2);
+    --text-yellow-300: rgba(251, 191, 36, 0.3);
+    --text-yellow-400: rgba(251, 191, 36, 0.4);
+    --text-yellow-500: rgba(251, 191, 36, 0.5);
+    --text-yellow-600: rgba(251, 191, 36, 0.6);
+    --text-yellow-700: rgba(251, 191, 36, 0.7);
+    --text-yellow-800: rgba(251, 191, 36, 0.8);
+    --text-yellow-900: rgba(251, 191, 36, 0.9);
+    --text-yellow-950: rgba(251, 191, 36, 0.95);
+    --text-yellow-1000: rgba(251, 191, 36, 1);
+    --text-lime-50: rgba(77, 175, 124, 1);
+    --text-lime-100: rgba(77, 175, 124, 0.1);
+    --text-lime-200: rgba(77, 175, 124, 0.2);
+    --text-lime-300: rgba(77, 175, 124, 0.3);
+    --text-lime-400: rgba(77, 175, 124, 0.4);
+    --text-lime-500: rgba(77, 175, 124, 0.5);
+    --text-lime-600: rgba(77, 175, 124, 0.6);
+    --text-lime-700: rgba(77, 175, 124, 0.7);
+    --text-lime-800: rgba(77, 175, 124, 0.8);
+    --text-lime-900: rgba(77, 175, 124, 0.9);
+    --text-lime-950: rgba(77, 175, 124, 0.95);
+    --text-lime-1000: rgba(77, 175, 124, 1);
+    --text-green-50: rgba(34, 197, 94, 1);
+    --text-green-100: rgba(34, 197, 94, 0.1);
+    --text-green-200: rgba(34, 197, 94, 0.2);
+    --text-green-300: rgba(34, 197, 94, 0.3);
+    --text-green-400: rgba(34, 197, 94, 0.4);
+    --text-green-500: rgba(34, 197, 94, 0.5);
+    --text-green-600: rgba(34, 197, 94, 0.6);
+    --text-green-700: rgba(34, 197, 94, 0.7);
+    --text-green-800: rgba(34, 197, 94, 0.8);
+    --text-green-900: rgba(34, 197, 94, 0.9);
+    --text-green-950: rgba(34, 197, 94, 0.95);
+    --text-green-1000: rgba(34, 197, 94, 1);
+    --text-emerald-50: rgba(16, 185, 129, 1);
+    --text-emerald-100: rgba(16, 185, 129, 0.1);
+    --text-emerald-200: rgba(16, 185, 129, 0.2);
+    --text-emerald-300: rgba(16, 185, 129, 0.3);
+    --text-emerald-400: rgba(16, 185, 129, 0.4);
+    --text-emerald-500: rgba(16, 185, 129, 0.5);
+    --text-emerald-600: rgba(16, 185, 129, 0.6);
+    --text-emerald-700: rgba(16, 185, 129, 0.7);
+    --text-emerald-800: rgba(16, 185, 129, 0.8);
+    --text-emerald-900: rgba(16, 185, 129, 0.9);
+    --text-emerald-950: rgba(16, 185, 129, 0.95);
+    --text-emerald-1000: rgba(16, 185, 129, 1);
+    --text-teal-50: rgba(20, 185, 128, 1);
+    --text-teal-100: rgba(20, 185, 128, 0.1);
+    --text-teal-200: rgba(20, 185, 128, 0.2);
+    --text-teal-300: rgba(20, 185, 128, 0.3);
+    --text-teal-400: rgba(20, 185, 128, 0.4);
+    --text-teal-500: rgba(20, 185, 128, 0.5);
+    --text-teal-600: rgba(20, 185, 128, 0.6);
+    --text-teal-700: rgba(20, 185, 128, 0.7);
+    --text-teal-800: rgba(20, 185, 128, 0.8);
+    --text-teal-900: rgba(20, 185, 128, 0.9);
+    --text-teal-950: rgba(20, 185, 128, 0.95);
+    --text-teal-1000: rgba(20, 185, 128, 1);
+    --text-cyan-50: rgba(22, 185, 128, 1);
+    --text-cyan-100: rgba(22, 185, 128, 0.1);
+    --text-cyan-200: rgba(22, 185, 128, 0.2);
+    --text-cyan-300: rgba(22, 185, 128, 0.3);
+    --text-cyan-400: rgba(22, 185, 128, 0.4);
+    --text-cyan-500: rgba(22, 185, 128, 0.5);
+    --text-cyan-600: rgba(22, 185, 128, 0.6);
+    --text-cyan-700: rgba(22, 185, 128, 0.7);
+    --text-cyan-800: rgba(22, 185, 128, 0.8);
+    --text-cyan-900: rgba(22, 185, 128, 0.9);
+    --text-cyan-950: rgba(22, 185, 128, 0.95);
+    --text-cyan-1000: rgba(22, 185, 128, 1);
+    --text-sky-50: rgba(14, 185, 128, 1);
+    --text-sky-100: rgba(14, 185, 128, 0.1);
+    --text-sky-200: rgba(14, 185, 128, 0.2);
+    --text-sky-300: rgba(14, 185, 128, 0.3);
+    --text-sky-400: rgba(14, 185, 128, 0.4);
+    --text-sky-500: rgba(14, 185, 128, 0.5);
+    --text-sky-600: rgba(14, 185, 128, 0.6);
+    --text-sky-700: rgba(14, 185, 128, 0.7);
+    --text-sky-800: rgba(14, 185, 128, 0.8);
+    --text-sky-900: rgba(14, 185, 128, 0.9);
+    --text-sky-950: rgba(14, 185, 128, 0.95);
+    --text-sky-1000: rgba(14, 185, 128, 1);
+    --text-blue-50: rgba(9, 129, 156, 1);
+    --text-blue-100: rgba(9, 129, 156, 0.1);
+    --text-blue-200: rgba(9, 129, 156, 0.2);
+    --text-blue-300: rgba(9, 129, 156, 0.3);
+    --text-blue-400: rgba(9, 129, 156, 0.4);
+    --text-blue-500: rgba(9, 129, 156, 0.5);
+    --text-blue-600: rgba(9, 129, 156, 0.6);
+    --text-blue-700: rgba(9, 129, 156, 0.7);
+    --text-blue-800: rgba(9, 129, 156, 0.8);
+    --text-blue-900: rgba(9, 129, 156, 0.9);
+    --text-blue-950: rgba(9, 129, 156, 0.95);
+    --text-blue-1000: rgba(9, 129, 156, 1);
+    --text-indigo-50: rgba(63, 81, 181, 1);
+    --text-indigo-100: rgba(63, 81, 181, 0.1);
+    --text-indigo-200: rgba(63, 81, 181, 0.2);
+    --text-indigo-300: rgba(63, 81, 181, 0.3);
+    --text-indigo-400: rgba(63, 81, 181, 0.4);
+    --text-indigo-500: rgba(63, 81, 181, 0.5);
+    --text-indigo-600: rgba(63, 81, 181, 0.6);
+    --text-indigo-700: rgba(63, 81, 181, 0.7);
+    --text-indigo-800: rgba(63, 81, 181, 0.8);
+    --text-indigo-900: rgba(63, 81, 181, 0.9);
+    --text-indigo-950: rgba(63, 81, 181, 0.95);
+    --text-indigo-1000: rgba(63, 81, 181, 1);
+    --text-violet-50: rgba(124, 58, 237, 1);
+    --text-violet-100: rgba(124, 58, 237, 0.1);
+    --text-violet-200: rgba(124, 58, 237, 0.2);
+    --text-violet-300: rgba(124, 58, 237, 0.3);
+    --text-violet-400: rgba(124, 58, 237, 0.4);
+    --text-violet-500: rgba(124, 58, 237, 0.5);
+    --text-violet-600: rgba(124, 58, 237, 0.6);
+    --text-violet-700: rgba(124, 58, 237, 0.7);
+    --text-violet-800: rgba(124, 58, 237, 0.8);
+    --text-violet-900: rgba(124, 58, 237, 0.9);
+    --text-violet-950: rgba(124, 58, 237, 0.95);
+    --text-violet-1000: rgba(124, 58, 237, 1);
+    --text-purple-50: rgba(129, 38, 192, 1);
+    --text-purple-100: rgba(129, 38, 192, 0.1);
+    --text-purple-200: rgba(129, 38, 192, 0.2);
+    --text-purple-300: rgba(129, 38, 192, 0.3);
+    --text-purple-400: rgba(129, 38, 192, 0.4);
+    --text-purple-500: rgba(129, 38, 192, 0.5);
+    --text-purple-600: rgba(129, 38, 192, 0.6);
+    --text-purple-700: rgba(129, 38, 192, 0.7);
+    --text-purple-800: rgba(129, 38, 192, 0.8);
+    --text-purple-900: rgba(129, 38, 192, 0.9);
+    --text-purple-950: rgba(129, 38, 192, 0.95);
+    --text-purple-1000: rgba(129, 38, 192, 1);
+    --text-fuchsia-50: rgba(192, 38, 129, 1);
+    --text-fuchsia-100: rgba(192, 38, 129, 0.1);
+    --text-fuchsia-200: rgba(192, 38, 129, 0.2);
+    --text-fuchsia-300: rgba(192, 38, 129, 0.3);
+    --text-fuchsia-400: rgba(192, 38, 129, 0.4);
+    --text-fuchsia-500: rgba(192, 38, 129, 0.5);
+    --text-fuchsia-600: rgba(192, 38, 129, 0.6);
+    --text-fuchsia-700: rgba(192, 38, 129, 0.7);
+    --text-fuchsia-800: rgba(192, 38, 129, 0.8);
+    --text-fuchsia-900: rgba(192, 38, 129, 0.9);
+    --text-fuchsia-950: rgba(192, 38, 129, 0.95);
+    --text-fuchsia-1000: rgba(192, 38, 129, 1);
+    --text-pink-50: rgba(236, 72, 153, 1);
+    --text-pink-100: rgba(236, 72, 153, 0.1);
+    --text-pink-200: rgba(236, 72, 153, 0.2);
+    --text-pink-300: rgba(236, 72, 153, 0.3);
+    --text-pink-400: rgba(236, 72, 153, 0.4);
+    --text-pink-500: rgba(236, 72, 153, 0.5);
+    --text-pink-600: rgba(236, 72, 153, 0.6);
+    --text-pink-700: rgba(236, 72, 153, 0.7);
+    --text-pink-800: rgba(236, 72, 153, 0.8);
+    --text-pink-900: rgba(236, 72, 153, 0.9);
+    --text-pink-950: rgba(236, 72, 153, 0.95);
+    --text-pink-1000: rgba(236, 72, 153, 1);
+    --text-rose-50: rgba(244, 114, 182, 1);
+    --text-rose-100: rgba(244, 114, 182, 0.1);
+    --text-rose-200: rgba(244, 114, 182, 0.2);
+    --text-rose-300: rgba(244, 114, 182, 0.3);
+    --text-rose-400: rgba(244, 114, 182, 0.4);
+    --text-rose-500: rgba(244, 114, 182, 0.5);
+    --text-rose-600: rgba(244, 114, 182, 0.6);
+    --text-rose-700: rgba(244, 114, 182, 0.7);
+    --text-rose-800: rgba(244, 114, 182, 0.8);
+    --text-rose-900: rgba(244, 114, 182, 0.9);
+    --text-rose-950: rgba(244, 114, 182, 0.95);
+    --text-rose-1000: rgba(244, 114, 182, 1);
+
+    --accent-color-alpha: rgba(37, 99, 235, 0.1);
+
+    /* Light Theme */
+    --bg-primary: var(--gray-50);
+    --bg-secondary: var(--gray-100);
+    --bg-tertiary: var(--gray-200);
+    --text-primary: var(--gray-900);
+    --text-secondary: var(--gray-600);
+    --border-color: var(--gray-200);
+    --shadow-color: rgba(0, 0, 0, 0.1);
+
+    /* Component Colors */
+    --card-bg: white;
+    --input-bg: white;
+    --button-bg: var(--primary);
+    --button-text: white;
+
+    /* Status Colors */
+    --status-pending-bg: var(--warning-light);
+    --status-pending-text: var(--warning-dark);
+    --status-processing-bg: var(--primary-light);
+    --status-processing-text: var(--primary-dark);
+    --status-completed-bg: var(--success-light);
+    --status-completed-text: var(--success-dark);
+    --status-cancelled-bg: var(--danger-light);
+    --status-cancelled-text: var(--danger-dark);
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+    --bg-light: var(--bg-primary);
+    --bg-dark: var(--bg-secondary);
+
+}
+
+/* Dark Theme */
+:root.dark {
+    --bg-primary: var(--gray-900);
+    --bg-secondary: var(--gray-800);
+    --bg-tertiary: var(--gray-700);
+    --text-primary: var(--gray-50);
+    --text-secondary: var(--gray-400);
+    --border-color: var(--gray-700);
+    --shadow-color: rgba(0, 0, 0, 0.3);
+
+    --card-bg: var(--gray-800);
+    --input-bg: var(--gray-700);
+
+    /* Card colors */
+    --card-border: var(--border-color);
+    --card-header-bg: var(--bg-tertiary);
+    --card-footer-bg: var(--bg-secondary);
+
+    /* step colors */
+    --step-bg: var(--bg-secondary);
+    --step-text: var(--text-primary);
+    --step-active-bg: var(--accent-color);
+    --step-active-text: var(--text-primary-inverted);
+}
+
+:root {
+    /* Base colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --bg-tertiary: #f3f4f6;
+    --text-primary: #1f2937;
+    --text-primary-inverted: #ffffff;
+    --text-secondary: #6b7280;
+    --text-secondary-inverted: #ffffff;
+    --border-color: #e5e7eb;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+
+    /* Component colors */
+    --card-bg: var(--bg-primary);
+    --input-bg: var(--bg-primary);
+    --button-bg: var(--accent-color);
+    --button-text: #ffffff;
+
+    /* Accent colors */
+    --accent-color: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-light: rgba(37, 99, 235, 0.1);
+
+    /* Status colors */
+    --success-color: #059669;
+    --success-hover: #047857;
+    --success-light: rgba(5, 150, 105, 0.1);
+
+    --warning-color: #d97706;
+    --warning-hover: #b45309;
+    --warning-light: rgba(217, 119, 6, 0.1);
+
+    --danger-color: #dc2626;
+    --danger-hover: #b91c1c;
+    --danger-light: rgba(220, 38, 38, 0.1);
+
+    /* Status badge colors */
+    --status-pending-bg: #fff3cd;
+    --status-pending-text: #856404;
+    --status-processing-bg: #cce5ff;
+    --status-processing-text: #004085;
+    --status-completed-bg: #d4edda;
+    --status-completed-text: #155724;
+    --status-cancelled-bg: #f8d7da;
+    --status-cancelled-text: #721c24;
+
+    /* Overlay colors */
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+    /* Form colors */
+    --input-border: var(--border-color);
+    --input-focus-border: var(--accent-color);
+    --input-focus-shadow: 0 0 0 3px var(--accent-light);
+    --placeholder-color: var(--text-secondary);
+
+    /* Table colors */
+    --table-header-bg: var(--bg-secondary);
+    --table-stripe-bg: var(--bg-tertiary);
+    --table-hover-bg: var(--bg-secondary);
+
+    /* Navigation colors */
+    --nav-bg: var(--bg-primary);
+    --nav-border: var(--border-color);
+    --nav-link-hover: var(--bg-tertiary);
+
+    /* Dropdown colors */
+    --dropdown-bg: var(--bg-primary);
+    --dropdown-border: var(--border-color);
+    --dropdown-hover-bg: var(--bg-secondary);
+    --dropdown-divider: var(--border-color);
+    --dropdown-header-bg: var(--bg-secondary);
+    --dropdown-item-hover: var(--bg-tertiary);
+    --dropdown-item-active: var(--accent-color);
+    --dropdown-item-active-text: #ffffff;
+}
+
+:root.dark {
+    /* Base colors */
+    --bg-primary: #1f2937;
+    --bg-secondary: #111827;
+    --bg-tertiary: #374151;
+    --text-primary: #f9fafb;
+    --text-secondary: #d1d5db;
+    --border-color: #374151;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+
+    /* Component colors */
+    --card-bg: var(--bg-primary);
+    --input-bg: var(--bg-tertiary);
+    --button-bg: var(--accent-color);
+    --button-text: var(--text-primary);
+
+    /* Accent colors */
+    --accent-color: #3b82f6;
+    --accent-hover: #2563eb;
+    --accent-light: rgba(59, 130, 246, 0.1);
+
+    /* Status colors */
+    --success-color: #10b981;
+    --success-hover: #059669;
+    --success-light: rgba(16, 185, 129, 0.1);
+
+    --warning-color: #f59e0b;
+    --warning-hover: #d97706;
+    --warning-light: rgba(245, 158, 11, 0.1);
+
+    --danger-color: #ef4444;
+    --danger-hover: #dc2626;
+    --danger-light: rgba(239, 68, 68, 0.1);
+
+    /* Status badge colors */
+    --status-pending-bg: var(--warning-color);
+    --status-pending-text: #fff;
+    --status-processing-bg: var(--accent-color);
+    --status-processing-text: #fff;
+    --status-completed-bg: var(--success-color);
+    --status-completed-text: #fff;
+    --status-cancelled-bg: var(--danger-color);
+    --status-cancelled-text: #fff;
+
+    /* Overlay colors */
+    --modal-overlay: rgba(0, 0, 0, 0.5);
+    --dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+
+    /* Form colors */
+    --input-border: var(--border-color);
+    --input-focus-border: var(--accent-color);
+    --input-focus-shadow: 0 0 0 3px var(--accent-light);
+    --placeholder-color: var(--text-secondary);
+
+    /* Table colors */
+    --table-header-bg: var(--bg-tertiary);
+    --table-stripe-bg: var(--bg-secondary);
+    --table-hover-bg: var(--bg-tertiary);
+
+    /* Navigation colors */
+    --nav-bg: var(--bg-primary);
+    --nav-border: var(--border-color);
+    --nav-link-hover: var(--bg-tertiary);
+
+    /* Dropdown colors */
+    --dropdown-bg: var(--bg-primary);
+    --dropdown-border: var(--border-color);
+    --dropdown-hover-bg: var(--bg-tertiary);
+    --dropdown-divider: var(--border-color);
+    --dropdown-header-bg: var(--bg-tertiary);
+    --dropdown-item-hover: var(--bg-secondary);
+    --dropdown-item-active: var(--accent-color);
+    --dropdown-item-active-text: #ffffff;
+    --secondary:var(--gray-200);
+
+    /* Button colors */
+    --btn-primary-bg: var(--primary);
+    --btn-primary-text: var(--text-primary-inverted);
+    --btn-secondary-bg: var(--secondary);
+    --btn-secondary-text: var(--text-primary-inverted);
+    --btn-success-bg: var(--success);
+    --btn-success-text: var(--text-primary-inverted);
+    --btn-warning-bg: var(--warning);
+    --btn-warning-text: var(--text-primary-inverted);
+    --btn-danger-bg: var(--danger);
+    --btn-danger-text: var(--text-primary-inverted);
+    --btn-info-bg: var(--info);
+    --info : var(--info);
+    --dark : var(--dark);
+    --light : var(--light);
+    --btn-info-text: var(--text-primary-inverted);
+    --btn-light-bg: var(--light);
+    --btn-light-text: var(--text-primary-inverted);
+    --btn-dark-bg: var(--dark);
+    --btn-dark-text: var(--text-primary-inverted);
+
+    /* Card colors */
+    --card-border: var(--border-color);
+    --card-header-bg: var(--bg-secondary);
+    --card-footer-bg: var(--bg-tertiary);
+
+    /* step colors */
+    --step-bg: var(--bg-tertiary);
+    --step-text: var(--text-secondary);
+    --step-active-bg: var(--accent-color);
+    --step-active-text: var(--text-primary-inverted);
+}

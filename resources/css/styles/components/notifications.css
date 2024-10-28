@@ -1,0 +1,80 @@
+/* Notification Button Styles */
+.nav-btn {
+  display: flex;
+  align-items: center;
+  position: relative; /* For positioning the badge */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px; /* Adjusted for better visibility */
+  right: -10px; /* Adjusted for better visibility */
+  background-color: #dc2626; /* Red for notification count */
+  color: white;
+  border-radius: 50%;
+  padding: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* Notification Styles */
+.notification {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  padding: 1rem;
+  border-radius: .5rem;
+  background-color: var(--bg-primary); /* Use theme variable */
+  box-shadow: var(--shadow-lg); /* Use a larger shadow for depth */
+  z-index: 1000;
+  max-width: calc(100% - 2rem); /* Responsive width */
+}
+
+.notification.success {
+   border-left: .25rem solid #059669; /* Thicker left border for success */
+}
+
+.notification.error {
+   border-left: .25rem solid #dc2626; /* Thicker left border for error */
+}
+
+.notification-message {
+   margin-right: .5rem; /* Reduced margin for better spacing */
+   color: var(--text-primary); /* Use theme variable */
+}
+
+.notification-close {
+   background: none;
+   border: none;
+   color: var(--text-secondary);
+   cursor: pointer;
+   padding: .25rem;
+}
+
+.notification-close:hover {
+   color: var(--text-primary); /* Change color on hover */
+}
+
+@keyframes slideIn {
+   from {
+      transform: translateX(100%);
+      opacity: .5; /* Slightly transparent on enter */
+   }
+   to {
+      transform: translateX(0);
+      opacity: 1; /* Fully visible on end */
+   }
+}
+
+/* Light Theme Styles */
+.light .notification {
+   background-color: white; /* Light background for light theme */
+}
+
+/* Dark Theme Styles */
+.dark .notification {
+   background-color: #333; /* Dark background for dark theme */
+   color: white; /* Text color for dark theme */
+}

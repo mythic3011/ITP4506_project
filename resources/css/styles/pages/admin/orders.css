@@ -1,0 +1,253 @@
+/* View Controls */
+.view-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.view-btn {
+  padding: 0.5rem;
+  background: var(--bg-secondary);
+  border: none;
+  border-radius: 0.375rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-btn.active {
+  background: var(--accent-color);
+  color: white;
+}
+
+/* Orders Container */
+.orders-container {
+  display: grid;
+  gap: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.orders-container.grid-view {
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+}
+
+.orders-container.list-view {
+  grid-template-columns: 1fr;
+}
+
+/* Order Card */
+.order-card {
+  background: var(--bg-primary);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px var(--shadow-color);
+  overflow: hidden;
+  transition: all 0.2s ease;
+  border-left: 4px solid transparent;
+}
+
+.order-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px var(--shadow-color);
+}
+
+.order-card.pending { border-left-color: var(--warning-color); }
+.order-card.processing { border-left-color: var(--accent-color); }
+.order-card.completed { border-left-color: var(--success-color); }
+.order-card.cancelled { border-left-color: var(--danger-color); }
+
+/* Order Header */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.order-id {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.order-number {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.order-number h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.order-date {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.quick-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Order Content */
+.order-content {
+  padding: 1.5rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid-view .order-content {
+  grid-template-columns: 1fr;
+}
+
+.list-view .order-content {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+/* Info Sections */
+.info-section {
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-radius: 0.5rem;
+}
+
+.info-section h4 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.info-section p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.info-section strong {
+  color: var(--text-primary);
+}
+
+/* Status Badge */
+.status-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-badge.pending {
+  background: var(--warning-color);
+  color: white;
+}
+
+.status-badge.processing {
+  background: var(--accent-color);
+  color: white;
+}
+
+.status-badge.completed {
+  background: var(--success-color);
+  color: white;
+}
+
+.status-badge.cancelled {
+  background: var(--danger-color);
+  color: white;
+}
+
+/* Payment Status */
+.payment-status {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.payment-status.paid {
+  background: var(--success-color);
+  color: white;
+}
+
+.payment-status.pending {
+  background: var(--warning-color);
+  color: white;
+}
+
+/* Order Footer */
+.order-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.order-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* Status Select */
+.status-select {
+  padding: 0.5rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.375rem;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.status-message {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  background: var(--bg-primary);
+  border-radius: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.empty-state svg {
+  width: 3rem;
+  height: 3rem;
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
+
+.empty-state p {
+  font-size: 1.125rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .orders-container {
+    grid-template-columns: 1fr;
+  }
+
+  .order-content {
+    grid-template-columns: 1fr;
+  }
+
+  .order-header {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .quick-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+}
