@@ -89,11 +89,27 @@ input[type="password"] {
 }
 
 form .form-select {
+    position: relative;
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ccc;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.form-select-label {
+    top: 0;
+    left: 0;
+    transition: 0.2s all;
+    color: black;
+}
+
+
+.form-select-label.dark-mode {
+    top: 0;
+    left: 0;
+    transition: 0.2s all;
+    color: white;
 }
 
 form .form-select:focus {
@@ -104,6 +120,7 @@ form .form-select:focus {
 
 form .form-select option {
     color: #111;
+    background-color: transparent;
 }
 
 form .form-select option:hover {
@@ -229,6 +246,13 @@ footer.dark-mode {
 
 .dark-mode #darkModeToggle svg {
     fill: #ecc94b;
+}
+
+.dark-mode .form-select-label {
+    top: 0;
+    left: 0;
+    transition: 0.2s all;
+    color: white;
 }
 
 /* switch theme animation */

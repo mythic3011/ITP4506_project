@@ -1,85 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Registration Page | Legend Motor Limited</title>
-    <meta name="author" content="Legend Motor Limited"/>
-    <meta name="robots" content="noindex, nofollow"/>
-    <meta name="generator" content="Legend Motor Limited"/>
-        <link
-            rel="icon"
-            href="resources/image/LMC_login.png"
-            type="image/x-icon"
-    />
+    <meta name="author" content="Legend Motor Limited" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="generator" content="Legend Motor Limited" />
+    <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon" />
     <meta
-            name="copyright"
-            content="Copyright &copy; 2024 Legend Motor Limited"
+      name="copyright"
+      content="Copyright &copy; 2024 Legend Motor Limited"
     />
-    <meta name="revisit-after" content="1 days"/>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <meta name="revisit-after" content="1 days" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="resources/css/registration.css">
+    <link rel="stylesheet" href="resources/css/registration.css" />
     <script src="resources/js/registration.js"></script>
-</head>
-<body>
-
-<div class="container" id="registrationContainer">
-    <h2>User Registration</h2>
-    <form id="registrationForm">
+  </head>
+  <body>
+    <div class="container" id="registrationContainer">
+      <h2>User Registration</h2>
+      <form id="registrationForm">
         <div class="form-group">
-            <label for="fullName">Full Name</label>
-            <i class="fas fa-user icon"></i>
-            <input id="fullName" name="fullName" required type="text">
-            <p class="error" id="fullNameError" style="display:none;">Please enter your full name.</p>
+          <label for="fullName">Full Name</label>
+          <i class="fas fa-user icon"></i>
+          <input id="fullName" name="fullName" required type="text" />
+          <p class="error" id="fullNameError" style="display: none">
+            Please enter your full name.
+          </p>
         </div>
 
         <div class="form-group">
-            <label for="email">Email Address</label>
-            <i class="fas fa-envelope icon"></i>
-            <input id="email" name="email" required type="email">
-            <p class="error" id="emailError" style="display:none;">Please enter a valid email address.</p>
+          <label for="email">Email Address</label>
+          <i class="fas fa-envelope icon"></i>
+          <input id="email" name="email" required type="email" />
+          <p class="error" id="emailError" style="display: none">
+            Please enter a valid email address.
+          </p>
         </div>
 
         <!-- Password Field -->
         <div class="form-group">
-            <label for="password">Password</label>
-            <i class="fas fa-lock icon"></i>
-            <input id="password" name="password" required type="password">
-            <p class="error" id="passwordError" style="display:none;">Please enter a password.</p>
+          <label for="password">Password</label>
+          <i class="fas fa-lock icon"></i>
+          <input id="password" name="password" required type="password" />
+          <p class="error" id="passwordError" style="display: none">
+            Please enter a password.
+          </p>
         </div>
 
         <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <i class="fas fa-phone icon"></i>
-            <input id="phone" name="phone" required type="tel">
-            <p class="error" id="phoneError" style="display:none;">Please enter a valid phone number.</p>
+          <label for="phone">Phone Number</label>
+          <i class="fas fa-phone icon"></i>
+          <input id="phone" name="phone" required type="tel" />
+          <p class="error" id="phoneError" style="display: none">
+            Please enter a valid phone number.
+          </p>
         </div>
 
         <div class="form-group">
-            <label for="staffNumber">Staff Number (if applicable)</label>
-            <input id="staffNumber" name="staffNumber" type="text">
+          <label for="staffNumber">Staff Number (if applicable)</label>
+          <input id="staffNumber" name="staffNumber" type="text" />
         </div>
 
         <div class="form-group">
-            <input id="terms" required type="checkbox">
-            I agree to the Terms and Conditions
+          <input id="terms" required type="checkbox" />
+          I agree to the Terms and Conditions
         </div>
-        <div id="LoadingSpinner" class="hidden justify-center items-center my-4" style="display: none;">
-            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+        <div
+          id="LoadingSpinner"
+          class="hidden justify-center items-center my-4"
+          style="display: none"
+        >
+          <div
+            class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"
+          ></div>
         </div>
         <button type="submit">Register</button>
-        <div id="errorMessage" class="text-red-500 text-center mt-4" style="display: none;">
-            An error occurred while registering. Please try again later.
+        <div
+          id="errorMessage"
+          class="text-red-500 text-center mt-4"
+          style="display: none"
+        >
+          An error occurred while registering. Please try again later.
         </div>
-    </form>
-    <p id="successMessage" style="color :green ;display:none;">Registration successful!</p>
-</div>
-<button id="darkModeToggle" title="Toggle dark mode">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#333">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
-    </svg>
-</button>
-</body>
+      </form>
+      <p id="successMessage" style="color: green; display: none">
+        Registration successful!
+      </p>
+    </div>
+    <button id="darkModeToggle" title="Toggle dark mode">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="#333"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        />
+      </svg>
+    </button>
+  </body>
 </html>
