@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Progress | Legend Motor Limited</title>
+    <meta name="author" content="Legend Motor Limited"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="icon" href="../../../resources/image/icon.png" type="image/x-icon"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
+    <script src="../../../resources/js/customer.js"></script>
+    <script src="../../../resources/js/script.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+</head>
+<style>
+    .insurance-type-container {
+        display: flex;
+        gap: 1rem;
+        margin: 2rem 0;
+    }
+
+    .insurance-type-button {
+        flex: 1;
+        padding: 2rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        background-color: white;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .insurance-type-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .insurance-type-button.selected {
+        border-color: #00bcd4;
+        background-color: #e1f5fe;
+    }
+
+    .insurance-type-button.selected::before {
+        content: '✓';
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: #00bcd4;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        animation: scaleIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .insurance-type-button .icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #00bcd4;
+        transition: transform 0.3s ease;
+    }
+
+    .insurance-type-button:hover .icon {
+        transform: scale(1.1);
+    }
+
+    .insurance-type-button h3 {
+        margin: 0;
+        font-size: 1.25rem;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+    }
+
+    .insurance-type-button p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.4;
+    }
+
+
+</style>
+<script>
+    function showLeaveConfirmation(destinationUrl) {
+        const popup = document.createElement('div');
+        popup.className = 'popup-overlay';
+        popup.style.display = 'flex';
+
+        popup.innerHTML = `
+            <div class="popup-content">
+                <h2>Save Your Progress?</h2>
+                <p><strong>Would you like to save your application progress before leaving? Saved applications are retained for one week.</strong></p>
+                <div class="popup-buttons">
+                    <button class="popup-button save-button" onclick="saveAndLeave('${destinationUrl}')">
+                        Save & Leave
+                    </button>
+                    <button class="popup-button leave-button" onclick="leavePage('${destinationUrl}')">
+                        Leave Without Saving
+                    </button>
+                    <button class="popup-button stay-button" onclick="stayOnPage()">
+                        Stay on Page
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(popup);
+        setTimeout(() => popup.classList.add('show'), 10);
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .save-notice { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+            .popup-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+            .popup-button { display: flex; flex-direction: column; align-items: center; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
+            .popup-button small { font-size: 0.8rem; font-weight: normal; margin-top: 0.25rem; opacity: 0.8; }
+            .save-button { background-color: #4CAF50; color: white; }
+            .leave-button { background-color: #f44336; color: white; }
+            .stay-button { background-color: #00bcd4; color: white; }
+        `;
+        document.head.appendChild(style);
+    }
+
+    function saveAndLeave(destinationUrl) {
+        const formData = {
+            timestamp: new Date().getTime(),
+            expiryDate: new Date().getTime() + (7 * 24 * 60 * 60 * 1000),
+            data: {
+                Save_selected_option: localStorage.getItem('Save_selected_option'),
+                Save_selected_option_2: localStorage.getItem('Save_selected_option_2'),
+                Save_selected_option_3: localStorage.getItem('Save_selected_option_3')
+            }
+        };
+        localStorage.setItem('savedApplication', JSON.stringify(formData));
+        leavePage(destinationUrl);
+    }
+
+    function stayOnPage() {
+        const popup = document.querySelector('.popup-overlay');
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 300);
+    }
+
+    function leavePage(destinationUrl) {
+        window.location.href = destinationUrl;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('a:not([href="process.html"])');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const isSpecialButton = e.target.classList.contains('buy-button') ||
+                    e.target.classList.contains('estimate-button') ||
+                    e.target.id === 'btn_quote';
+
+                if (!isSpecialButton) {
+                    e.preventDefault();
+                    showLeaveConfirmation(this.getAttribute('href'));
+                }
+            });
+        });
+
+        const estimateButton = document.getElementById('btn_quote');
+        if (estimateButton) {
+            estimateButton.addEventListener('click', function() {
+                save_selected_option();
+                window.location.href = 'estimate.html';
+            });
+        }
+
+        const savedApplication = localStorage.getItem('savedApplication');
+        if (savedApplication) {
+            const { expiryDate } = JSON.parse(savedApplication);
+            if (Date.now() > expiryDate) {
+                localStorage.removeItem('savedApplication');
+            }
+        }
+    });
+
+    function animateProgressBar() {
+        $('#progressBar').animate({ width: '35%' }, 1000);
+    }
+
+    function rollback(id) {
+        $('#progressBar').animate({ width: '15%' }, 1000);
+    $(`#${id}`).fadeOut(100, function () {
+        save_selected_option();
+        document.getElementById(id).innerHTML = s1;
+
+        $(`#${id}`).fadeIn(100);
+    });
+}
+    var s1;
+    function selectOption(id) {
+        let options = document.getElementsByClassName("option");
+        for (let i = 0; i < options.length; i++) {
+            options[i].classList.remove("selected");
+        }
+        document.getElementById(id).classList.add("selected");
+    }
+
+    function selectInsuranceType(type) {
+        const buttons = document.querySelectorAll('.insurance-type-button');
+        buttons.forEach(button => {
+            button.classList.remove('selected');
+            button.style.animation = '';
+        });
+
+        const selectedButton = document.getElementById(`${type}-insurance`);
+        selectedButton.classList.add('selected');
+        selectedButton.style.animation = 'slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
+
+        // Update the hidden input
+        document.getElementById('selected-insurance-type').value = type;
+    }
+
+    function Save_selected_option(option){
+        Save_selected_option.append(option.value);
+        alert(Save_selected_option);
+    }
+    const models = {
+        "Toyota": ["Corolla", "Camry", "RAV4"],
+        "Volkswagen": ["Golf", "Passat", "Tiguan"],
+        "Honda": ["Civic", "Accord", "CR-V"],
+        "Ford": ["Fiesta", "Focus", "Mustang"],
+        "Hyundai": ["Elantra", "Santa Fe", "Tucson"],
+        "Chevrolet": ["Spark", "Malibu", "Tahoe"],
+        "Nissan": ["Sentra", "Altima", "Rogue"],
+        "BMW": ["3 Series", "5 Series", "X3"],
+        "Mercedes-Benz": ["C-Class", "E-Class", "GLA"],
+        "Audi": ["A3", "A4", "Q5"]
+    };
+
+    function car_model() {
+        const brand = document.getElementById("car-brand").value;
+
+        const modelSelect = $('#car-model');
+
+        modelSelect.empty();
+        modelSelect.append('<option value="" disabled selected>Car Model - Please Select</option>');
+
+        if (models[brand]) {
+            models[brand].forEach(function (model) {
+                modelSelect.append(`<option value="${model}">${model}</option>`);
+            });
+        }
+    }
+
+
+    function disappear(id, step) {
+        if (step === '2') {
+            $(`#${id}`).fadeOut(100, function () {
+                s1 = document.getElementById(id).innerHTML;
+                this.innerHTML =
+                    "<div style=\"height: 700px;width: auto\">\n" +
+                    "    <div style=\"height: 500px; width: 100%; display: flex; justify-content: center; \">\n" +
+                    "        <div style=\"width: 600px; height: 100%; margin-top: 2%;\">\n" +
+                    "            <div class=\"form-container\">\n" +
+                    "                <p style=\"text-align: center; font-size: 25px\">I am looking for</p>\n" +
+                    "<div class=\"insurance-type-container\">\n" +
+                    "    <button id=\"full-insurance\" class=\"insurance-type-button selected\" onclick=\"selectInsuranceType('full')\">\n" +
+                    "        <div class=\"icon\"><img src='../../../resources/image/shield.svg'></div>\n" +
+                    "        <h3>Full Coverage</h3>\n" +
+                    "        <p>Comprehensive protection for your vehicle including third-party liability, theft, and damage</p>\n" +
+                    "    </button>\n" +
+                    "    \n" +
+                    "    <button id=\"third-party-insurance\" class=\"insurance-type-button\" onclick=\"selectInsuranceType('third-party')\">\n" +
+                    "        <div class=\"icon\"><img src='../../../resources/image/user-heart.svg'></div>\n" +
+                    "        <h3>Third Party</h3>\n" +
+                    "        <p>Basic coverage for damage or injury to other people and their property</p>\n" +
+                    "    </button>\n" +
+                    "</div>\n" +
+                    "<input type=\"hidden\" id=\"selected-insurance-type\" name=\"insurance_type\" value=\"full\">" +
+                    "\n" +
+                    "<div style=\"display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px;\">\n" +
+                    "    <div style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">Car Brand<br>" +
+                    "<select id=\"car-brand\" onchange='car_model()' style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">\n" +
+                    "        <option value=\"\" disabled selected>Please Select</option>\n" +
+                    "        <option value=\"Toyota\">Toyota</option>\n" +
+                    "        <option value=\"Volkswagen\">Volkswagen</option>\n" +
+                    "        <option value=\"Honda\">Honda</option>\n" +
+                    "        <option value=\"Ford\">Ford</option>\n" +
+                    "        <option value=\"Hyundai\">Hyundai</option>\n" +
+                    "        <option value=\"Chevrolet\">Chevrolet</option>\n" +
+                    "        <option value=\"Nissan\">Nissan</option>\n" +
+                    "        <option value=\"BMW\">BMW</option>\n" +
+                    "        <option value=\"Mercedes-Benz\">Mercedes-Benz</option>\n" +
+                    "        <option value=\"Audi\">Audi</option>\n" +
+                    "        \n" +
+                    "    </select></div>\n" +
+                    "    <div style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">Car Model<br><select id=\"car-model\" style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">\n" +
+                    "        <option value=\"\" disabled selected>Please Select</option>\n" +
+                    "    </select>\n</div>\n" +
+                    "    <div style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">Manufacturing Year<br><select  id=\"manufacturing-year\" style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">\n" +
+                    "    <option value=\"\" disabled selected>Please Select</option>\n" +
+                    "    <option value=\"2024\">2024</option>\n" +
+                    "    <option value=\"2023\">2023</option>\n" +
+                    "    <option value=\"2022\">2022</option>\n" +
+                    "    <option value=\"2021\">2021</option>\n" +
+                    "    <option value=\"2020\">2020</option>\n" +
+                    "    <option value=\"2019\">2019</option>\n" +
+                    "    <option value=\"2018\">2018</option>\n" +
+                    "    <option value=\"2017\">2017</option>\n" +
+                    "    <option value=\"2016\">2016</option>\n" +
+                    "    <option value=\"2015\">2015</option>\n" +
+                    "</select></div>\n" +
+                    "    <div style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">Car Engine CC<br><select id=\"car-engine-cc\" style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">\n" +
+                    "        <option value=\"\" disabled selected>Please Select</option>\n" +
+                    "        <option value=\"<1651\">&lt; 1,651 c.c.</option>\n" +
+                    "        <option value=\"1651-3500\">1,651 to 3,500 c.c.</option>\n" +
+                    "        <option value=\">3500\">&gt; 3,500 c.c.</option>\n" +
+                    "    </select></div>\n" +
+                    "    <div style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">Type of car<br><select  id=\"type_of_car\" style=\"flex: 1 1 calc(50% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">\n" +
+                    "    <option value=\"\" disabled selected>Please Select</option>\n" +
+                    "    <option value=\"diesel\">diesel</option>\n" +
+                    "    <option value=\"hybrid\">hybrid</option>\n" +
+                    "    <option value=\"Electric\">Electric</option>\n" +
+                    "    <option value=\"gasoline-gas\">gasoline/gas</option>\n" +
+                    "</select></div>\n" +
+
+                    "    <div style=\"flex: 1 1 calc(100% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">Estimated Car Value ($HK)<br><input style='width: 95%' id='car-value' placeholder='Please enter car value.'></div>\n" +
+                    "</div>\n" +
+                    "    <div style=\"flex: 1 1 calc(100% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">First registration of your car<br><input style='width: 95%' id='first-registration-date' type='date' max=\"${new Date().toISOString().split('T')[0]}\">\n" +
+                    "</div>\n" +
+                    "\n" +
+                    "                <button type=\"button\" class=\"submit-button\" style=\"float: left;\" onclick=\"rollback('step1')\">Back\n" +
+                    "                </button>\n" +
+                    "                <button id='btn_quote' type=\"submit\" class=\"submit-button\" style=\"float: right; background-color: #4a5568\" disabled onclick=\"save_selected_option(); window.location.href='estimate.html'\">Estimate\n" +
+                    "                </button>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "</div>";
+                $(`#${id}`).fadeIn(100);
+                if (Save_selected_option.carBrand) {
+                    if (Save_selected_option.insuranceType === 'full') {
+    document.getElementById('full_insurance').style.backgroundColor = '#fff8e1';
+    document.getElementById('third_party_insurance').style.backgroundColor = '';
+} else {
+    document.getElementById('third_party_insurance').style.backgroundColor = '#fff8e1';
+    document.getElementById('full_insurance').style.backgroundColor = '';
+}
+                    $('#car-brand').val(Save_selected_option.carBrand);
+                    $('#car-model').val(Save_selected_option.carModel);
+                    $('#manufacturing-year').val(Save_selected_option.manufacturingYear);
+                    $('#car-engine-cc').val(Save_selected_option.carEngineCC);
+                    $('#car-value').val(Save_selected_option.carValue);
+                    $(`#${Save_selected_option.insuranceType}`).addClass('selected');
+                    $(`input[name="commercial input"][value="${Save_selected_option.commercialUse}"]`).prop('checked', true);
+                }
+            });
+
+        }
+    }
+
+    function save_selected_option(){
+        Save_selected_option = {
+            insuranceType: document.getElementById('selected-insurance-type').value === 'full' ? 'Full Coverage' : document.getElementById('selected-insurance-type').value === 'third-party' ? 'Third Party' : '',
+            carBrand: $('#car-brand').val(),
+            carModel: $('#car-model').val(),
+            manufacturingYear: $('#manufacturing-year').val(),
+            carEngineCC: $('#car-engine-cc').val(),
+            carValue: $('#car-value').val(),
+            commercialUse: $('input[name="commercial input"]:checked').val(),
+            carType: $('#type_of_car').val(),
+            firstRegistrationDate: $('#first-registration-date').val()
+
+        };
+        localStorage.setItem("Save_selected_option", JSON.stringify(Save_selected_option));
+    }
+
+$(document).on('change input', '#car-brand, #car-model, #manufacturing-year, #car-engine-cc, #car-value, #type_of_car, #first-registration-date', function() {
+    if ($('#car-brand').val() && $('#car-model').val() && $('#manufacturing-year').val() && $('#type_of_car').val() && $('#car-engine-cc').val() && $('#car-value').val() && $('#first-registration-date').val()) {
+        btn_quote.disabled = false;
+        $('#btn_quote').css('background-color', '#00bcd4');
+    } else {
+        btn_quote.disabled = true;
+        $('#btn_quote').css('background-color', '#4a5568');
+
+    }
+});
+
+
+</script>
+
+<body>
+<div class="navbar">
+    <a href="index.html" style="display: flex; align-items: center; padding: 1rem;">
+        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited"
+             style="position: absolute; margin-top: 0.75rem;height: 3rem; width: 3rem;">
+        <span style="display: flex; margin-left: 0.75rem; align-items: center; align-self: center; padding-left: 2.5rem; font-size: 1.5rem; line-height: 2rem; font-weight: 600; white-space: nowrap;">LMC</span>
+    </a>
+    <div class="nav-links">
+        <a class="navbar_a" href="index.html">Home</a>
+        <a class="navbar_a" href="progress.html" style="color: orange">Apply</a>
+        <a class="navbar_a" href="ordersIndex.html">Your Application</a>
+        <a class="navbar_a" href="js/">About Us</a>
+    </div>
+</div>
+<div style="padding-top: 4rem;">
+    <div class="progress_bar_container">
+        <div class="progress_bar" id="progressBar" style="width:15%"></div>
+    </div>
+</div>
+
+<div style="height: 1000px;width: auto;">
+    <div style="height: 500px; width: 100%; display: flex; justify-content: center; " id="step1">
+        <div style="width: 600px; height: 100%; margin-top: 2%">
+            <div class="form-container">
+                <p style="text-align: center; font-size: 25px">Is the car already insured in your name?</p>
+                <div id="R1" class="option" onclick="selectOption('R1')">
+                    <p style="font-size: 17px">Yes, with LMC</p>
+                </div>
+
+                <div id="R2" class="option selected" onclick="selectOption('R2')">
+                    <p style="font-size: 17px">Yes, with another insurance</p>
+                </div>
+
+                <div id="R3" class="option" onclick="selectOption('R3')">
+                    <p style="font-size: 17px">No, the car is still being registered or re-registered</p>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+    <h4>Do you use your vehicle commercially?</h4>
+    <div>
+        <input type="radio" id="commercial-yes" name="commercial_use" value="yes"><span>Yes</span>
+        <input type="radio" id="commercial-no" name="commercial_use" value="no" checked><span>No</span>
+    </div>
+</div>
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h4>Is the car new?</h4>
+    <div>
+        <input type="radio" id="new-car-yes" name="new_car" value="yes"><span>Yes</span>
+        <input type="radio" id="new-car-no" name="new_car" value="no" checked><span>No</span>
+    </div>
+</div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h4>Is the car financed or leased?</h4>
+                    <div>
+                        <input type="radio" id="financed-or-leased-yes" name="commercial input" value="yes"><span>Yes</span>
+                        <input type="radio" id="financed-or-leased-no" name="commercial input" value="no"  checked><span>No</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button" style="float: right;" onclick="animateProgressBar(); disappear('step1', '2')">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<footer class="pin-footer">
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
+<button id="darkModeToggle" title="Toggle dark mode" style="z-index: 10">
+    <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="#333"
+    >
+        <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        />
+    </svg>
+</button>
+</html>

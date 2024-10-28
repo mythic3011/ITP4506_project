@@ -1,0 +1,216 @@
+.payment-section {
+    background: white;
+    padding: 30px;
+    margin-top: 50px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.back-button {
+    background: #919191;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: all 0.2s ease;
+}
+
+.back-button:hover {
+    background: #e0e0e0;
+    transform: translateX(-2px);
+}
+
+.payment-header {
+    margin-bottom: 30px;
+}
+
+.payment-header h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 1.75rem;
+    font-weight: 600;
+}
+
+.card-types {
+    display: flex;
+    gap: 20px;
+}
+
+.card-icon {
+    height: 100px;
+    width: auto;
+    padding: 8px;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    opacity: 0.5;
+}
+
+.card-icon.selected {
+    border-color: #00bcd4;
+    background-color: rgba(0, 188, 212, 0.1);
+    opacity: 1;
+}
+
+.payment-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 24px;
+    position: relative;
+}
+
+.form-row {
+    display: flex;
+    gap: 20px;
+}
+
+.half {
+    flex: 1;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2d3748;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #fff;
+    transition: all 0.2s ease;
+    outline: none;
+}
+
+.input-field:hover {
+    border-color: #cbd5e0;
+}
+
+.input-field:focus {
+    border-color: #00bcd4;
+    box-shadow: 0 0 0 3px rgba(0, 188, 212, 0.1);
+}
+
+.input-field::placeholder {
+    color: #a0aec0;
+}
+
+.input-field.error {
+    border-color: #f56565;
+}
+
+.input-error {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    color: #f56565;
+    font-size: 0.75rem;
+    display: none;
+}
+
+.input-field.error + .input-error {
+    display: block;
+}
+
+.cvv-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.cvv-help {
+    width: 20px;
+    height: 20px;
+    background: #f0f0f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 8px;
+    cursor: help;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.cvv-help:hover {
+    background: #e2e8f0;
+}
+
+.payment-info {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.company {
+    font-weight: 600;
+    margin: 5px 0;
+    color: #2d3748;
+}
+
+.address {
+    font-size: 0.875rem;
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+.consent {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 30px;
+    align-items: flex-start;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+}
+
+.consent input[type="checkbox"] {
+    margin-top: 4px;
+    width: 16px;
+    height: 16px;
+    accent-color: #00bcd4;
+}
+
+.consent label {
+    font-size: 0.875rem;
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+.submit-button {
+    width: 100%;
+    padding: 16px;
+    background-color: #00bcd4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-button:disabled {
+    background-color: #4a5568;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.submit-button:not(:disabled):hover {
+    background-color: #00acc1;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+

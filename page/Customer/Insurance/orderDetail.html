@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Estimate | Legend Motor Limited</title>
+    <meta name="author" content="Legend Motor Limited"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="icon" href="../../../resources/image/icon.png" type="image/x-icon"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
+    <script src="../../../resources/js/customer.js"></script>
+    <script src="../../../resources/js/script.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+</head>
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+    }
+
+
+    .status-container {
+        background: white;
+        border-radius: 12px;
+        padding: 2rem;
+        padding-top: 100px;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .status-grid {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .status-left {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .status-divider {
+        width: 1px;
+        background: #e0e0e0;
+        margin: 0 1rem;
+    }
+
+    .status-right {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .status-timeline {
+        margin-top: 2rem;
+    }
+
+    .status-step {
+        display: flex;
+        position: relative;
+        margin-bottom: 2rem;
+    }
+
+    .status-step:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        left: 1.5rem;
+        top: 3rem;
+        bottom: -1rem;
+        width: 2px;
+        background: #e0e0e0;
+    }
+
+    .step-icon {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background: #e0e0e0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        color: white;
+    }
+
+    .completed .step-icon {
+        background: #4CAF50;
+    }
+
+    .active .step-icon {
+        background: orange;
+    }
+
+    .step-content h3 {
+        margin: 0;
+        color: #333;
+    }
+
+    .step-content p {
+        margin: 0.5rem 0;
+        color: #666;
+    }
+
+    .timestamp {
+        font-size: 0.9rem;
+        color: #999;
+    }
+
+    .info-content {
+        margin-top: 2rem;
+    }
+
+    .info-item {
+        margin-bottom: 1.5rem;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .info-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .info-item h4 {
+        color: #2196F3;
+        margin: 0 0 0.5rem 0;
+        font-size: 1.1rem;
+    }
+
+    .info-item p {
+        color: #666;
+        margin: 0;
+        line-height: 1.6;
+    }
+
+    .details-container {
+        background: white;
+        border-radius: 12px;
+        padding: 2.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .details-container h2 {
+        font-size: 1.8rem;
+        color: #2c3e50;
+        margin-bottom: 2rem;
+    }
+
+    .details-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .detail-section {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .detail-section h3 {
+        color: #2196F3;
+        font-size: 1.4rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 2px solid #e0e0e0;
+    }
+
+    .detail-content {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .detail-row {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1.2rem;
+        padding-bottom: 1.2rem;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .detail-row:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+    }
+
+    .detail-label {
+        color: #666;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+
+    .detail-value {
+        color: #2c3e50;
+        font-weight: 600;
+        font-size: 1.15rem;
+    }
+
+    .reference-number {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 1.5rem;
+        text-align: center;
+        margin-top: 2rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .reference-number h3 {
+        margin: 0;
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    .reference-number p {
+        margin: 0.5rem 0 0;
+        color: #2c3e50;
+        font-size: 1.4rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+    }
+
+    @media (max-width: 1024px) {
+        .details-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .status-grid {
+            flex-direction: column;
+        }
+
+        .status-divider {
+            height: 1px;
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+
+        .details-container {
+            padding: 1.5rem;
+        }
+
+        .detail-section {
+            padding: 1.5rem;
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id') || localStorage.getItem('currentViewingPolicy');
+
+        if (!orderId) {
+            window.location.href = 'ordersIndex.html';
+            return;
+        }
+
+        const pendingInsurance = findInsuranceById(orderId);
+        if (!pendingInsurance) {
+            window.location.href = 'ordersIndex.html';
+            return;
+        }
+        function findInsuranceById(id) {
+            const policy = localStorage.getItem(`pendingInsurance-${id}`);
+            return policy ? JSON.parse(policy) : null;
+        }
+
+
+        const insuranceData = pendingInsurance.Save_selected_option;
+        const policyData = pendingInsurance.Save_selected_option_2;
+        const customerData = pendingInsurance.Save_selected_option_3;
+
+        if (!insuranceData || !policyData || !customerData) {
+            window.location.href = 'ordersIndex.html';
+            return;
+        }
+
+        document.getElementById('referenceNumber').textContent = pendingInsurance.referenceNumber;
+
+        const insurancePlanHtml = `
+        <div class="detail-row">
+            <span class="detail-label">Insurance Type</span>
+            <span class="detail-value">${insuranceData.insuranceType}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Payment Method</span>
+            <span class="detail-value">${formatPaymentMethod(policyData.paymentMethod)} | ${customerData.mainDriver.paymentMethod}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Fees</span>
+            <span class="detail-value">${policyData.checkoutPrice}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">No Claims Discount</span>
+            <span class="detail-value">${customerData.mainDriver.ncd || 'None'}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Car Type</span>
+            <span class="detail-value">${formatCarType(insuranceData.carType)}</span>
+        </div>
+    `;
+        document.getElementById('insurancePlan').innerHTML = insurancePlanHtml;
+
+        const policyInfoHtml = `
+        <div class="detail-row">
+            <span class="detail-label">Effective Date</span>
+            <span class="detail-value">${formatDate(policyData.policyEffectiveDate)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">End Date</span>
+            <span class="detail-value">${formatDate(customerData.mainDriver.policyEndDate)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Number of Drivers</span>
+            <span class="detail-value">${customerData.vehicle.insuredDrivers || policyData.insuredDrivers}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Driving Experience of Main Driver</span>
+            <span class="detail-value">${formatDrivingExperience(customerData.mainDriver.drivingExperience || policyData.drivingExperience)}</span>
+        </div>
+
+    `;
+        document.getElementById('policyInfo').innerHTML = policyInfoHtml;
+
+        const vehicleHtml = `
+        <div class="detail-row">
+            <span class="detail-label">Vehicle</span>
+            <span class="detail-value">${customerData.vehicle.carModel || `${insuranceData.carBrand} ${insuranceData.carModel}`}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Manufacturing Year</span>
+            <span class="detail-value">${customerData.vehicle.manufacturingYear || insuranceData.manufacturingYear}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Registration Number</span>
+            <span class="detail-value">${customerData.vehicle.registrationNumber}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">First Registration Date</span>
+            <span class="detail-value">${formatDate(insuranceData.firstRegistrationDate)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Engine Capacity</span>
+            <span class="detail-value">${customerData.vehicle.cylinderCapacity}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Market Value</span>
+            <span class="detail-value">HK$ ${customerData.vehicle.marketValue}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Chassis Number</span>
+            <span class="detail-value">${customerData.vehicle.chassisNumber}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Engine Number</span>
+            <span class="detail-value">${customerData.vehicle.engineNumber}</span>
+        </div>
+    `;
+        document.getElementById('vehicleDetails').innerHTML = vehicleHtml;
+
+        const driverHtml = `
+        <div class="detail-row">
+            <span class="detail-label">Full Name</span>
+            <span class="detail-value">${customerData.mainDriver.title} ${customerData.mainDriver.firstName} ${customerData.mainDriver.lastName}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Gender</span>
+            <span class="detail-value">${formatGender(customerData.mainDriver.gender)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">HKID</span>
+            <span class="detail-value">${customerData.mainDriver.hkid}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Date of Birth</span>
+            <span class="detail-value">${formatDate(customerData.mainDriver.dob)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Contact</span>
+            <span class="detail-value">Email: ${customerData.mainDriver.email}<br>Mobile: ${customerData.mainDriver.mobile}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Occupation</span>
+            <span class="detail-value">${formatOccupation(customerData.mainDriver.occupation)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Address</span>
+            <span class="detail-value">${formatAddress(customerData.address)}</span>
+        </div>
+    `;
+        document.getElementById('driverDetails').innerHTML = driverHtml;
+
+        if (customerData.additionalDrivers && customerData.additionalDrivers.length > 0) {
+            const additionalDriversSection = document.createElement('div');
+            additionalDriversSection.className = 'detail-section';
+            additionalDriversSection.innerHTML = `
+            <h3>Additional Drivers</h3>
+            <div class="detail-content" id="additionalDrivers">
+                ${customerData.additionalDrivers.map((driver, index) => `
+                    <div class="detail-row">
+                        <span class="detail-label">Driver ${index + 2}</span>
+                        <span class="detail-value">
+                            ${driver.title} ${driver.firstName} ${driver.lastName}<br>
+                            HKID: ${driver.hkid}<br>
+                            DOB: ${formatDate(driver.dob)}<br>
+                            Occupation: ${formatOccupation(driver.occupation)}<br>
+                            Experience: ${formatDrivingExperience(driver.drivingExperience)}<br>
+                            Relation: ${formatRelation(driver.relation)}
+                        </span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+            document.querySelector('.details-grid').appendChild(additionalDriversSection);
+        }
+    });
+
+    function generateReferenceNumber() {
+        const timestamp = new Date().getTime();
+        return `LMC-${timestamp}`;
+    }
+
+    function formatDate(dateString) {
+        if (!dateString) return 'N/A';
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+    function formatPaymentMethod(method) {
+        const methods = {
+            'yearly': 'Yearly',
+            'everySixMonth': 'Every Six Month',
+            'quarterly': 'Quarterly',
+            'monthly': 'Monthly'
+        };
+        return methods[method] || method;
+    }
+
+    function formatDrivingExperience(experience) {
+        const experiences = {
+            'more_than_5_years': 'More than 5 years',
+            'less_than_5_years': 'Less than 5 years',
+            'within_1_year': 'Less than 1 year'
+        };
+        return experiences[experience] || experience;
+    }
+
+    function findNewestPendingInsurance() {
+        const keys = Object.keys(localStorage).filter(key => key.startsWith('pendingInsurance-'));
+        let newestItem = null;
+        let latestDate = 0;
+
+        keys.forEach(key => {
+            const item = JSON.parse(localStorage.getItem(key));
+            if (item && item.createdAt) {
+                const itemDate = new Date(item.createdAt).getTime();
+                if (itemDate > latestDate) {
+                    latestDate = itemDate;
+                    newestItem = item;
+                }
+            }
+        });
+
+        return newestItem;
+    }
+
+    function formatOccupation(occupation) {
+        return occupation.split('_').map(word =>
+            word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' ');
+    }
+
+    function formatGender(gender) {
+        return gender.charAt(0).toUpperCase() + gender.slice(1);
+    }
+
+    function formatCarType(type) {
+        return type.charAt(0).toUpperCase() + type.slice(1);
+    }
+
+    function formatAddress(address) {
+        if (!address) return 'N/A';
+        return `Room ${address.room}, Floor ${address.floor}, Block ${address.block},
+            ${address.building}, ${address.street},
+            ${formatArea(address.area)}, ${formatDistrict(address.district)}`.replace(/\s+/g, ' ').trim();
+    }
+
+    function formatArea(area) {
+        return area.split('-').map(word =>
+            word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' ');
+    }
+
+    function formatDistrict(district) {
+        return district.charAt(0).toUpperCase() + district.slice(1);
+    }
+
+    function formatRelation(relation) {
+        return relation.split('_').map(word =>
+            word.charAt(0).toUpperCase() + word.slice(1)
+        ).join(' ');
+    }
+</script>
+<body>
+<div class="navbar">
+    <a href="www.google.com" style="display: flex; align-items: center; padding: 1rem;">
+        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited"
+             style="position: absolute; margin-top: 0.75rem;height: 3rem; width: 3rem;">
+        <span style="display: flex; margin-left: 0.75rem; align-items: center; align-self: center; padding-left: 2.5rem; font-size: 1.5rem; line-height: 2rem; font-weight: 600; white-space: nowrap;">LMC</span>
+    </a>
+    <div class="nav-links">
+        <a class="navbar_a" href="index.html">Home</a>
+        <a class="navbar_a" href="progress.html" >Apply</a>
+        <a class="navbar_a" href="ordersIndex.html" style="color: orange">Your Application</a>
+        <a class="navbar_a" href="js/">About Us</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="status-container">
+        <button onclick="window.location.href='ordersIndex.html'" class="back-button">
+            ← All Appllication
+        </button>
+        <div class="status-grid">
+            <div class="status-left">
+                <div class="reference-number">
+                    <h3>Application Reference Number:</h3>
+                    <p id="referenceNumber"></p>
+                </div>
+                <h2>Application Status</h2>
+                <div class="status-timeline">
+                    <div class="status-step completed">
+                        <div class="step-icon">✓</div>
+                        <div class="step-content">
+                            <h3>Application Submitted</h3>
+                            <p>Your application has been received</p>
+                            <span class="timestamp">Just now</span>
+                        </div>
+                    </div>
+                    <div class="status-step active">
+                        <div class="step-icon">⋯</div>
+                        <div class="step-content">
+                            <h3>Under Review</h3>
+                            <p>Estimated processing time: 1-2 business days</p>
+                        </div>
+                    </div>
+                    <div class="status-step">
+                        <div class="step-icon">○</div>
+                        <div class="step-content">
+                            <h3>Final Approval</h3>
+                            <p>Application approval and policy issuance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="status-divider"></div>
+
+            <div class="status-right">
+                <h2>Important Information</h2>
+                <div class="info-content">
+                    <div class="info-item">
+                        <h4>Processing Time</h4>
+                        <p>Normal processing time is 1-2 business days. We'll notify you via email once your application is approved.</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Next Steps</h4>
+                        <p>Our team will review your application and may contact you if additional information is needed.</p>
+                    </div>
+                    <div class="info-item">
+                        <h4>Contact Support</h4>
+                        <p>For any queries, contact us at:<br>
+                            Email: support@lmc.com<br>
+                            Phone: (852) 2xxx xxxx</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="details-container">
+        <h2>Application Details</h2>
+        <div class="details-grid">
+            <div class="detail-section">
+                <h3>Insurance Plan</h3>
+                <div class="detail-content" id="insurancePlan"></div>
+            </div>
+            <div class="detail-section">
+                <h3>Policy Information</h3>
+                <div class="detail-content" id="policyInfo"></div>
+            </div>
+            <div class="detail-section">
+                <h3>Vehicle Details</h3>
+                <div class="detail-content" id="vehicleDetails"></div>
+            </div>
+            <div class="detail-section">
+                <h3>Main Driver Details</h3>
+                <div class="detail-content" id="driverDetails"></div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+<footer>
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
+</html>

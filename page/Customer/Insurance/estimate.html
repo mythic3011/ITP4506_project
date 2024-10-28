@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Estimate | Legend Motor Limited</title>
+    <meta name="author" content="Legend Motor Limited"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="icon" href="../../../resources/image/icon.png" type="image/x-icon"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
+    <script src="../../../resources/js/customer.js"></script>
+    <script src="../../../resources/js/script.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+</head>
+<script>
+    function showNcdInfo() {
+        const modal = document.getElementById('ncdModal');
+        modal.style.display = 'flex';
+        modal.offsetHeight;
+        modal.classList.add('show');
+    }
+
+    function closeNcdModal() {
+        const modal = document.getElementById('ncdModal');
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+        }, 300); // Match the transition duration
+    }
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('ncdModal');
+        if (event.target === modal) {
+            closeNcdModal();
+        }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeNcdModal();
+        }
+    });
+    function checkMaxDrivers() {
+        const noOfDrivers = document.getElementById('no-of-insured-driver').value;
+        const warning = document.getElementById('maxDriversWarning');
+        if (noOfDrivers == 5) {
+            warning.style.display = 'inline';
+        } else {
+            warning.style.display = 'none';
+        }
+    }
+    let Save_selected_option = JSON.parse(localStorage.getItem("Save_selected_option"));
+    function save_selected_option(){
+        Save_selected_option_2 = {
+            policyEffectiveDate: document.getElementById('policyEffectiveDate').value,
+            applyingAge: document.getElementById('driverAge').value,
+            drivingExperience: document.getElementById('drivingExperience').value,
+            paymentMethod: document.getElementById('paymentMethod').value,
+            insuredDrivers: document.getElementById('no-of-insured-driver').value,
+            checkoutPrice: document.getElementById('price').innerText,
+            ncd: document.getElementById("ncd").value
+        };
+        localStorage.setItem("Save_selected_option_2", JSON.stringify(Save_selected_option_2));
+    }
+
+    function showInsuranceComparison() {
+        const modal = document.getElementById('insuranceModal');
+        modal.style.display = 'flex';
+        modal.offsetHeight; // Force reflow
+        modal.classList.add('show');
+        document.body.classList.add('modal-open');
+    }
+
+    function closeInsuranceModal() {
+        const modal = document.getElementById('insuranceModal');
+        modal.classList.remove('show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            document.body.classList.remove('modal-open');
+        }, 300); // Match the transition duration
+    }
+
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+        const modal = document.getElementById('insuranceModal');
+        if (event.target === modal) {
+            closeInsuranceModal();
+        }
+    }
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeInsuranceModal();
+        }
+    });
+
+    // Prevent modal content clicks from closing the modal
+    document.querySelector('.insurance-modal-content')?.addEventListener('click', function(event) {
+        event.stopPropagation();
+    });
+
+    if (Save_selected_option === null) {
+        window.location.href = 'progress.html';
+    }
+
+    let insuranceData = null;
+
+    $(document).ready(function () {
+        $.ajax({
+            url: '../../../resources/json/Insurance.json',
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                insuranceData = data;
+                initializeForm();
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading insurance data:', error);
+                showError('Failed to load insurance data. Please try again later.');
+            }
+        });
+        if(Save_selected_option.insuranceType==="Third Party"){
+            document.getElementById("insuranceDetail").innerHTML = `
+    <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 0.375rem;">
+    <h3 style="color: #1a237e; text-align: left;">Third Party Insurance Overview</h3>
+    <ul style="list-style-type: none; padding: 0;">
+        <li style="margin-bottom: 0.5rem; text-align: left;">
+    <span style="color: orange;">&#10003;</span> Third Party Property Damage:
+    <span style="float: right;">HK$2,000,000</span>
+</li>
+<li style="margin-bottom: 0.5rem; text-align: left;">
+    <span style="color: orange;">&#10003;</span> Third Party Bodily Injury:
+    <span style="float: right;">HK$100,000,000</span>
+</li>
+<li style="margin-bottom: 0.5rem; text-align: left;">
+    <span style="color: orange;">&#10003;</span> Hospital Income:
+    <span style="float: right;">-</span>
+</li>
+<li style="margin-bottom: 0.5rem; text-align: left;">
+    <span style="color: orange;">&#10003;</span> Personal Accident*:
+    <span style="float: right;">-</span>
+</li>
+    </ul>
+      <p>*The <strong>statutory compulsory insurance</strong> covers the damage you cause to <strong> other people’s vehicles and persons </strong>.</p>
+</div>`;
+}else{
+            document.getElementById("insuranceDetail").innerHTML = `
+    <div style="background-color: #f8f9fa; padding: 1rem; border-radius: 0.375rem;">
+    <h3 style="color: #1a237e; text-align: left;">Full Coverage Insurance Overview</h3>
+    <ul style="list-style-type: none; padding: 0;">
+        <li style="margin-bottom: 0.5rem; text-align: left;">
+    <span style="color: orange;">&#10003;</span> Third Party Property Damage:
+    <span style="float: right;">HK$8,000,000</span>
+</li>
+<li style="margin-bottom: 0.5rem; text-align: left;">
+    <span style="color: orange;">&#10003;</span> Third Party Bodily Injury:
+    <span style="float: right;">HK$100,000,000</span>
+</li>
+<li style="margin-bottom: 0.5rem; text-align: left;">
+    <span style="color: orange;">&#10003;</span> Hospital Income:
+    <span style="float: right;">HK$2,000</span>
+</li>
+<li style="margin-bottom: 0.5rem; text-align: left;">
+    <span style="color: orange;">&#10003;</span> Personal Accident*:
+    <span style="float: right;">HK$100,000</span>
+</li>
+    </ul>
+    <p>*Comprehensive <strong>insurance</strong> provides you with <strong>comprehensive</strong> protection against damage to your <strong>own car</strong> , including damage that you <strong>yourself caused</strong>.</p>
+</div>`;
+        }
+    });
+
+    function showError(message) {
+        $('#price').html(`<span style="color: red">${message}</span>`);
+    }
+
+    function calculateBasePrice(age, drivingExperience, insuranceType, carBrand) {
+        // Find exact match
+        const exactMatch = insuranceData.carInsuranceQuotes.find(q =>
+            q.carBrand === carBrand &&
+            q.insuranceType === insuranceType &&
+            Math.abs(q.driverAge - age) <= 2 &&
+            q.drivingExperience === drivingExperience
+        );
+
+        if (exactMatch) {
+            return exactMatch.premiumEstimate;
+        }
+
+        // Find closest match by age and brand
+        const similarQuotes = insuranceData.carInsuranceQuotes.filter(q =>
+            q.carBrand === carBrand &&
+            q.insuranceType === insuranceType
+        );
+
+        if (similarQuotes.length > 0) {
+            // Sort by age difference and return the closest match
+            return similarQuotes.sort((a, b) =>
+                Math.abs(a.driverAge - age) - Math.abs(b.driverAge - age)
+            )[0].premiumEstimate;
+        }
+
+        // Fallback to average price for insurance type
+        const averagePrice = insuranceData.carInsuranceQuotes
+                .filter(q => q.insuranceType === insuranceType)
+                .reduce((sum, q) => sum + q.premiumEstimate, 0) /
+            insuranceData.carInsuranceQuotes.filter(q => q.insuranceType === insuranceType).length;
+
+        return averagePrice;
+    }
+
+    function applyAgeMultiplier(age, basePrice) {
+        if (age < 25) {
+            return basePrice * 1.3; // 30% higher for young drivers
+        } else if (age > 65) {
+            return basePrice * 1.2; // 20% higher for senior drivers
+        }
+        return basePrice;
+    }
+
+    function applyExperienceMultiplier(experience, basePrice) {
+        const multipliers = {
+            'within_1_year': 1.4,
+            'less_than_5_years': 1.2,
+            'more_than_5_years': 1.0
+        };
+        return basePrice * multipliers[experience];
+    }
+
+    function updatePrice() {
+        const age = parseInt($('#driverAge').val());
+        const drivingExperience = $('#drivingExperience').val();
+        const insuranceType = Save_selected_option.insuranceType;
+        const paymentMethod = $('#paymentMethod').val();
+        const carBrand = Save_selected_option.carBrand;
+
+
+        if (!age || age < 18) {
+            showError('Please enter a valid age (18 or above)');
+            return;
+        }
+
+        let basePrice = calculateBasePrice(age, drivingExperience, insuranceType, carBrand);
+        let adjustedPrice = applyAgeMultiplier(age, basePrice);
+        adjustedPrice = applyExperienceMultiplier(drivingExperience, adjustedPrice);
+        switch(String(paymentMethod)) {
+            case 'yearly':
+                adjustedPrice = adjustedPrice * 12;
+                break;
+            case 'everySixMonth':
+                adjustedPrice = adjustedPrice * 6;
+                break;
+            case 'quarterly':
+                adjustedPrice = adjustedPrice * 3;
+                break;
+            case 'monthly':
+                break;
+        }
+        adjustedPrice = (document.getElementById('no-of-insured-driver').value * 1000) + adjustedPrice;
+
+        // Format price with commas and two decimal places
+        const formattedPrice = adjustedPrice.toLocaleString('en-HK', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        $('#price').html(`<strong>HK$${formattedPrice}*</strong>`);
+
+        // Show relevant warnings
+        if (age < 25) {
+            $('#ageWarning').text('Note: Drivers under 25 have higher premiums').show();
+        } else if (age > 65) {
+            $('#ageWarning').text('Note: Drivers over 65 may have higher premiums').show();
+        } else {
+            $('#ageWarning').hide();
+        }
+    }
+
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('insuranceModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    function initializeForm() {
+        updatePrice();
+
+        const minDate = new Date();
+        minDate.setDate(minDate.getDate() + 10);
+        const formattedMinDate = minDate.toISOString().split('T')[0];
+
+        document.getElementById('policyEffectiveDate').value = formattedMinDate;
+        document.getElementById('policyEffectiveDate').setAttribute('min', formattedMinDate);
+
+        document.getElementById('insuranceType').innerText = Save_selected_option.insuranceType + " Insurance";
+        document.getElementById('Car_Brand_and_model').innerText = Save_selected_option.manufacturingYear + " " + Save_selected_option.carBrand + " " + Save_selected_option.carModel;
+        document.getElementById('Car_Detail').innerText = Save_selected_option.firstRegistrationDate +  "\nCC: " + Save_selected_option.carEngineCC + "  " + Save_selected_option.carType;
+
+
+        $('#driverAge, #drivingExperience, #paymentMethod, #no-of-insured-driver').on('change', updatePrice);
+        $('#driverAge').on('input', function() {
+            updatePrice();
+            checkMaxDrivers();
+        });
+    }
+
+    function showLeaveConfirmation(destinationUrl) {
+        const popup = document.createElement('div');
+        popup.className = 'popup-overlay';
+        popup.style.display = 'flex';
+
+        popup.innerHTML = `
+            <div class="popup-content">
+                <h2>Save Your Progress?</h2>
+                <p><strong>Would you like to save your application progress before leaving? Saved applications are retained for one week.</strong></p>
+                <div class="popup-buttons">
+                    <button class="popup-button save-button" onclick="saveAndLeave('${destinationUrl}')">
+                        Save & Leave
+                    </button>
+                    <button class="popup-button leave-button" onclick="leavePage('${destinationUrl}')">
+                        Leave Without Saving
+                    </button>
+                    <button class="popup-button stay-button" onclick="stayOnPage()">
+                        Stay on Page
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(popup);
+        setTimeout(() => popup.classList.add('show'), 10);
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .save-notice { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+            .popup-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+            .popup-button { display: flex; flex-direction: column; align-items: center; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
+            .popup-button small { font-size: 0.8rem; font-weight: normal; margin-top: 0.25rem; opacity: 0.8; }
+            .save-button { background-color: #4CAF50; color: white; }
+            .leave-button { background-color: #f44336; color: white; }
+            .stay-button { background-color: #00bcd4; color: white; }
+        `;
+        document.head.appendChild(style);
+    }
+
+    function saveAndLeave(destinationUrl) {
+        const formData = {
+            timestamp: new Date().getTime(),
+            expiryDate: new Date().getTime() + (7 * 24 * 60 * 60 * 1000),
+            data: {
+                Save_selected_option: localStorage.getItem('Save_selected_option'),
+                Save_selected_option_2: localStorage.getItem('Save_selected_option_2'),
+                Save_selected_option_3: localStorage.getItem('Save_selected_option_3')
+            }
+        };
+        localStorage.setItem('savedApplication', JSON.stringify(formData));
+        leavePage(destinationUrl);
+    }
+
+    function stayOnPage() {
+        const popup = document.querySelector('.popup-overlay');
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 300);
+    }
+
+    function leavePage(destinationUrl) {
+        window.location.href = destinationUrl;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('a:not([href="process.html"])');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const isSpecialButton = e.target.classList.contains('buy-button') ||
+                    e.target.classList.contains('estimate-button') ||
+                    e.target.id === 'btn_quote';
+
+                if (!isSpecialButton) {
+                    e.preventDefault();
+                    showLeaveConfirmation(this.getAttribute('href'));
+                }
+            });
+        });
+
+        const estimateButton = document.getElementById('btn_quote');
+        if (estimateButton) {
+            estimateButton.addEventListener('click', function() {
+                save_selected_option();
+                window.location.href = 'estimate.html';
+            });
+        }
+
+        const savedApplication = localStorage.getItem('savedApplication');
+        if (savedApplication) {
+            const { expiryDate } = JSON.parse(savedApplication);
+            if (Date.now() > expiryDate) {
+                localStorage.removeItem('savedApplication');
+            }
+        }
+    });
+</script>
+<body>
+<div class="navbar">
+    <a href="index.html" style="display: flex; align-items: center; padding: 1rem;">
+        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited"
+             style="position: absolute; margin-top: 0.75rem;height: 3rem; width: 3rem;">
+        <span style="display: flex; margin-left: 0.75rem; align-items: center; align-self: center; padding-left: 2.5rem; font-size: 1.5rem; line-height: 2rem; font-weight: 600; white-space: nowrap;">LMC</span>
+    </a>
+    <div class="nav-links">
+        <a class="navbar_a" href="index.html">Home</a>
+        <a class="navbar_a" href="progress.html" style="color: orange">Apply</a>
+        <a class="navbar_a" href="ordersIndex.html">Your Application</a>
+        <a class="navbar_a" href="js/">About Us</a>
+    </div>
+</div>
+<div style="padding-top: 4rem;">
+    <div class="progress_bar_container">
+        <div class="progress_bar" id="progressBar" style="width:55%"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="estimateContainer">
+        <div class="estimateSidebar">
+            <div class="car-info">
+                <div class="car-icon"><img src="../../../resources/image/car-svg.svg"></div>
+                <div class="car-details">
+                    <h2 id="Car_Brand_and_model"></h2>
+                    <p id="Car_Detail"></p>
+                </div>
+            </div>
+            <div class="estimateSection">
+                <div class="estimateTitle">Policy effective date</div>
+                <div><input style="width: 95%" type="date" id="policyEffectiveDate"></div>
+            </div>
+            <div class="estimateSection">
+                <div class="estimateTitle">Age of applying driver</div>
+                <div><input style="width: 50%; font-size: 15px" type="number" id="driverAge" min="18" value="25"></div>
+                <div id="ageWarning" style="color: red; display: none;">Note: Drivers under 25 may have higher
+                    premiums.
+                </div>
+            </div>
+            <div class="estimateSection">
+                <div class="estimateTitle">No. of insured drivers</div>
+                <input style="width: 50%; font-size: 15px" type="number" id="no-of-insured-driver" min="1" max="5" value="1" oninput="checkMaxDrivers()">
+                <span id="maxDriversWarning" style="color: red; display: none;"><br>Max 5 drivers allowed</span>            </div>
+            <div class="estimateSection">
+                <div class="estimateTitle">Driving experience of main driver</div>
+                <select id="drivingExperience">
+                    <option value="more_than_5_years">More than 5 years</option>
+                    <option value="less_than_5_years">Less than 5 years</option>
+                    <option value="within_1_year">Started driving within 1 year</option>
+                </select>
+            </div>
+
+            <div class="estimateSection">
+                <div class="estimateTitle">Payment Method</div>
+                <select id="paymentMethod">
+                    <option value="yearly" selected>yearly</option>
+                    <option value="everySixMonth">every six month</option>
+                    <option value="quarterly">quarterly</option>
+                    <option value="monthly">monthly</option>
+                </select>
+            </div>
+            <div class="estimateSection">
+                <div class="estimateTitle">
+                    No Claim Discount
+                    <button type="button" class="question-button" onclick="showNcdInfo()" aria-label="More information about No Claim Discount">?</button>
+                </div>
+                <select id="ncd">
+                    <option value="0%" selected>0%</option>
+                    <option value="10%">No claims for 1 year</option>
+                    <option value="25%">No claims for 2 - 4 year</option>
+                    <option value="50%">No claims for 5 - 7 year</option>
+                    <option value="60%">No claims for 7 year or above</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="estimateMainContent">
+            <p style="font-size: 35px" id="insuranceType"></p>
+            <p id="price" class="price" style="text-align: left"><strong></strong></p>
+            <div id="insuranceDetail"></div><br>
+            <button onclick="showInsuranceComparison()" class="question-button">
+                Show Insurance Comparison
+            </button>
+            <div id="comparisonContent">
+                <h2>Cost Breakdown in HKD</h2>
+                <h3>Third-Party Insurance Costs</h3>
+
+
+                <h3>Comparison of Third-Party vs. Full Coverage Insurance</h3>
+                <table border="1">
+                    <tr>
+                        <th>Cost Type</th>
+                        <th>Third-Party Insurance</th>
+                        <th>Full Coverage Insurance</th>
+                    </tr>
+                    <tr>
+                        <td>Repair Costs</td>
+                        <td>$111,337</td>
+                        <td>$42,932</td>
+                    </tr>
+                    <tr>
+                        <td>Medical Costs</td>
+                        <td>$127,994</td>
+                        <td>$205,835</td>
+                    </tr>
+                    <tr>
+                        <td>Legal Fees</td>
+                        <td>$91,296</td>
+                        <td>$53,882</td>
+                    </tr>
+                    <tr>
+                        <td>Settlement Amount</td>
+                        <td>$237,824</td>
+                        <td>$174,003</td>
+                    </tr>
+                    <tr>
+                        <th>Total Cost</th>
+                        <th>$568,450</th>
+                        <th>$476,652</th>
+                    </tr>
+                </table>
+
+                <h3>Key Differences</h3>
+
+                <ul>
+                    <li><strong>Coverage:</strong></li>
+                    <ul>
+                        <li><em>Third-Party Insurance:</em></li>
+                        <ul>
+                            <li>Covers damages and injuries caused to third parties only.</li>
+                            <li>Does not cover any damage to your own vehicle or injuries you sustain.</li>
+                        </ul>
+
+                        <li><em>Full Coverage Insurance:</em></li>
+                        <ul>
+                            <li>Covers both third-party liabilities and damages to your own vehicle.</li>
+                            <li>Protects against a wider range of incidents including theft, fire, and natural disasters.</li>
+                        </ul>
+                    </ul>
+
+                    <li><strong>Cost:</strong></li>
+                    <ul>
+                        <li>Full Coverage insurance is generally more expensive due to its broader coverage but provides better financial protection in case of accidents or unforeseen events.</li>
+                    </ul>
+
+                    <li><strong>Customization:</strong></li>
+                    <ul>
+                        <li>Full Coverage policies often allow for add-ons (like zero depreciation cover), enhancing coverage options.</li>
+                        <li>Third-party policies are usually standard with no customization options available.</li>
+                    </ul>
+
+                    <li><strong>Legal Requirements:</strong></li>
+                    <ul>
+                        <li>Third-party insurance is legally mandatory for driving in Hong Kong.</li>
+                        <li>Full Coverage insurance is optional but recommended for better protection.</li>
+                    </ul>
+
+                </ul>
+
+            </div>
+
+            <h4>Product Overview</h4>
+
+
+            <ul class="estimateDetails">
+                <li>Third Party Property Damage HK$2,000,000</li>
+                <li>Third Party Bodily Injury HK$100,000,000</li>
+                <li>* Accidental Death & Permanent Disablement</li>
+            </ul>
+            <button onclick="window.history.back()" class="back-button" style="border: none;padding: 20px 40px;margin-top: 15px; border-radius: 5px;cursor: pointer;">
+                ← Back to Estimate
+            </button>
+            <button onclick="save_selected_option(); $(window).off('beforeunload'); window.location.href='checkout.html'" class="submit-button" style="align-self: end; float: right;">Apply now &rarr;</button>
+
+        </div>
+</div>
+</div>
+<div id="insuranceModal" class="insurance-modal">
+    <div class="insurance-modal-content">
+        <span class="insurance-close" onclick="closeInsuranceModal()">&times;</span>
+        <h2>Insurance Comparison</h2>
+        <table>
+            <tr>
+                <th>Cost Type</th>
+                <th>Third-Party Insurance</th>
+                <th>Full Coverage Insurance</th>
+            </tr>
+            <tr>
+                <td>Repair Costs</td>
+                <td>$111,337</td>
+                <td>$42,932</td>
+            </tr>
+            <tr>
+                <td>Medical Costs</td>
+                <td>$127,994</td>
+                <td>$205,835</td>
+            </tr>
+            <tr>
+                <td>Legal Fees</td>
+                <td>$91,296</td>
+                <td>$53,882</td>
+            </tr>
+            <tr>
+                <td>Settlement Amount</td>
+                <td>$237,824</td>
+                <td>$174,003</td>
+            </tr>
+            <tr>
+                <th>Total Cost</th>
+                <th>$568,450</th>
+                <th>$476,652</th>
+            </tr>
+        </table>
+
+        <h2>Key Differences</h2>
+
+        <article>
+            <h3><strong>Coverage:</strong></h3>
+            <h4><em>Third-Party Insurance:</em></h4>
+            Covers damages and injuries caused to third parties only.
+            Does not cover any damage to your own vehicle or injuries you sustain.
+
+            <h4><em>Full Coverage Insurance:</em></h4>
+            Covers both third-party liabilities and damages to your own vehicle.
+            Protects against a wider range of incidents including theft, fire, and natural disasters.
+        </article>
+
+        <article>
+            <h3><strong>Cost:</strong></h3><br />
+            Full Coverage insurance is generally more expensive due to its broader coverage but provides better financial protection in case of accidents or unforeseen events.<br /><br />
+        </article>
+
+        <article>
+            <h3><strong>Customization:</strong></h3><br />
+            Full Coverage policies often allow for add-ons (like zero depreciation cover), enhancing coverage options.<br />
+            Third-party policies are usually standard with no customization options available.<br /><br />
+        </article>
+
+        <article>
+            <h3><strong>Legal Requirements:</strong></h3><br />
+            Third-party insurance is legally mandatory for driving in Hong Kong.<br />
+            Full Coverage insurance is optional but recommended for better protection.<br /><br />
+        </article>
+
+    </div>
+</div>
+<div id="ncdModal" class="ncd-modal">
+    <div class="ncd-modal-content">
+        <span class="ncd-close" onclick="closeNcdModal()">&times;</span>
+        <h2>No Claim Discount (NCD) Information</h2>
+        <p>A No Claim Discount (NCD) is a reward for safe driving. The longer you go without making a claim, the higher your discount can be.</p>
+
+        <h3>NCD Levels and Discounts:</h3>
+        <ul>
+            <li><strong>1 year without claims:</strong> 10% discount</li>
+            <li><strong>2-4 years without claims:</strong> 25% discount</li>
+            <li><strong>5-7 years without claims:</strong> 50% discount</li>
+            <li><strong>7+ years without claims:</strong> 60% discount</li>
+        </ul>
+
+        <h3>Important Notes:</h3>
+        <ul>
+            <li>Your NCD is transferable between insurance companies</li>
+            <li>Making a claim may affect your NCD percentage</li>
+            <li>You can opt for NCD protection to maintain your discount even after a claim</li>
+        </ul>
+    </div>
+</div>
+</body>
+
+<footer class="pin-footer">
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
+<button id="darkModeToggle" title="Toggle dark mode" style="z-index: 10">
+    <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="#333"
+    >
+        <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        />
+    </svg>
+</button>
+</html>

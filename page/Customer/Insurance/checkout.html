@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Estimate | Legend Motor Limited</title>
+    <meta name="author" content="Legend Motor Limited"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="icon" href="../../../resources/image/icon.png" type="image/x-icon"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
+    <script src="../../../resources/js/customer.js"></script>
+    <script src="../../../resources/js/script.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+</head>
+<script>
+    function showLeaveConfirmation(destinationUrl) {
+        const popup = document.createElement('div');
+        popup.className = 'popup-overlay';
+        popup.style.display = 'flex';
+
+        popup.innerHTML = `
+            <div class="popup-content">
+                <h2>Save Your Progress?</h2>
+                <p><strong>Would you like to save your application progress before leaving? Saved applications are retained for one week.</strong></p>
+                <div class="popup-buttons">
+                    <button class="popup-button save-button" onclick="saveAndLeave('${destinationUrl}')">
+                        Save & Leave
+                    </button>
+                    <button class="popup-button leave-button" onclick="leavePage('${destinationUrl}')">
+                        Leave Without Saving
+                    </button>
+                    <button class="popup-button stay-button" onclick="stayOnPage()">
+                        Stay on Page
+                    </button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(popup);
+        setTimeout(() => popup.classList.add('show'), 10);
+
+        const style = document.createElement('style');
+        style.textContent = `
+            .save-notice { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+            .popup-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+            .popup-button { display: flex; flex-direction: column; align-items: center; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
+            .popup-button small { font-size: 0.8rem; font-weight: normal; margin-top: 0.25rem; opacity: 0.8; }
+            .save-button { background-color: #4CAF50; color: white; }
+            .leave-button { background-color: #f44336; color: white; }
+            .stay-button { background-color: #00bcd4; color: white; }
+        `;
+        document.head.appendChild(style);
+    }
+
+    function saveAndLeave(destinationUrl) {
+        const formData = {
+            timestamp: new Date().getTime(),
+            expiryDate: new Date().getTime() + (7 * 24 * 60 * 60 * 1000),
+            data: {
+                Save_selected_option: localStorage.getItem('Save_selected_option'),
+                Save_selected_option_2: localStorage.getItem('Save_selected_option_2'),
+                Save_selected_option_3: localStorage.getItem('Save_selected_option_3')
+            }
+        };
+        localStorage.setItem('savedApplication', JSON.stringify(formData));
+        leavePage(destinationUrl);
+    }
+
+    function generateReferenceNumber() {
+        const timestamp = new Date().getTime();
+        return `LMC-${timestamp}`;
+    }
+
+    function stayOnPage() {
+        const popup = document.querySelector('.popup-overlay');
+        popup.classList.remove('show');
+        setTimeout(() => popup.remove(), 300);
+    }
+
+    function leavePage(destinationUrl) {
+        window.location.href = destinationUrl;
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const links = document.querySelectorAll('a:not([href="process.html"])');
+        links.forEach(link => {
+            link.addEventListener('click', function(e) {
+                const isSpecialButton = e.target.classList.contains('buy-button') ||
+                    e.target.classList.contains('estimate-button') ||
+                    e.target.id === 'btn_quote';
+
+                if (!isSpecialButton) {
+                    e.preventDefault();
+                    showLeaveConfirmation(this.getAttribute('href'));
+                }
+            });
+        });
+
+        const estimateButton = document.getElementById('btn_quote');
+        if (estimateButton) {
+            estimateButton.addEventListener('click', function() {
+                save_selected_option();
+                window.location.href = 'estimate.html';
+            });
+        }
+
+        const savedApplication = localStorage.getItem('savedApplication');
+        if (savedApplication) {
+            const { expiryDate } = JSON.parse(savedApplication);
+            if (Date.now() > expiryDate) {
+                localStorage.removeItem('savedApplication');
+            }
+        }
+    });
+    function validateAdditionalDrivers() {
+        const numDrivers = parseInt(document.getElementById('insuredDrivers').value);
+        if (numDrivers <= 1) return true;
+
+        for (let i = 1; i < numDrivers; i++) {
+            const driverFields = [
+                `driver-${i}-title`,
+                `driver-${i}-firstName`,
+                `driver-${i}-lastName`,
+                `driver-${i}-hkid`,
+                `driver-${i}-dob`,
+                `driver-${i}-occupation`,
+                `-${i}-DrivingExperience`,
+                `driver-${i}-relation`
+            ];
+
+            for (const fieldId of driverFields) {
+                const field = document.getElementById(fieldId);
+                if (!field || !validateField(field)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function validateForm() {
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
+        const buyButton = document.querySelector('.buy-button');
+        let isValid = true;
+        let hasEmptyRequired = false;
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                hasEmptyRequired = true;
+                field.classList.add('invalid');
+                field.classList.remove('valid');
+                field.title = MESSAGES.required;
+            }
+        });
+
+        requiredFields.forEach(field => {
+            if (!validateField(field)) {
+                isValid = false;
+            }
+        });
+
+        if (!validateAddress()) {
+            isValid = false;
+        }
+
+        if (!validateAdditionalDrivers()) {
+            isValid = false;
+        }
+
+        const licensePlateField = document.getElementById('registrationNumber');
+        if (licensePlateField && licensePlateField.value) {
+            const value = licensePlateField.value.toUpperCase();
+            if (PATTERNS.licensePlate.test(value)) {
+                const formatted = value.replace(/^([A-Z]{1,2})([0-9])/, '$1 $2');
+                licensePlateField.value = formatted;
+            }
+        }
+        const shouldEnableButton = isValid && !hasEmptyRequired;
+        buyButton.disabled = !shouldEnableButton;
+        buyButton.style.opacity = shouldEnableButton ? '1' : '0.5';
+        buyButton.style.cursor = shouldEnableButton ? 'pointer' : 'not-allowed';
+
+        return shouldEnableButton;
+    }
+
+    function addValidationListeners(field) {
+        ['input', 'change', 'blur', 'keyup'].forEach(eventType => {
+            field.addEventListener(eventType, () => {
+                validateField(field);
+                validateForm();
+            });
+        });
+    }
+
+    $(document).ready(function() {
+        const allFields = document.querySelectorAll('input, select');
+        allFields.forEach(field => addValidationListeners(field));
+
+        const numDrivers = parseInt(Save_selected_option_2.insuredDrivers);
+        if (numDrivers > 1) {
+            const driversContainer = $('#driversContainer');
+            for (let i = 1; i < numDrivers; i++) {
+                driversContainer.append(createDriverForm(i));
+            }
+            driversContainer.find('input, select').each(function() {
+                addValidationListeners(this);
+            });
+        }
+        validateForm();
+    });
+
+    const PATTERNS = {
+        email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        hkid: /^[A-Z]{1,2}[0-9]{6}([0-9A])?$/,
+        mobile: /^[0-9]{8}$/,
+        licensePlate: /^[A-Z]{1,2}\s?[0-9]{1,4}$/,
+        buildingName: /^[\w\s\-.']{2,50}$/,
+        street: /^[\w\s\-.']{2,50}$/,
+        room: /^[\w\-]{1,10}$/,
+        floor: /^[\w\-]{1,10}$/,
+        block: /^[\w\-]{1,10}$/
+    };
+
+    const MESSAGES = {
+        email: "Please enter a valid email address",
+        hkid: "Please enter a valid HKID (e.g., A123456)",
+        mobile: "Please enter a valid 8-digit mobile number",
+        licensePlate: "Please enter a valid HK license plate (e.g., AA 1234)",
+        buildingName: "Building name must be between 2 and 50 characters",
+        street: "Street name must be between 2 and 50 characters",
+        room: "Room number is required",
+        floor: "Floor number is required",
+        block: "Block number is required",
+        required: "This field is required"
+    };
+
+    function validateField(field) {
+        const value = field.value.trim();
+        let isValid = true;
+        let message = "";
+
+        if (field.hasAttribute('required') && !value) {
+            isValid = false;
+            message = MESSAGES.required;
+        } else if (value) {
+            if (field.id.includes('-hkid')) {
+                isValid = PATTERNS.hkid.test(value);
+                message = MESSAGES.hkid;
+            } else if (field.id.includes('-firstName') || field.id.includes('-lastName')) {
+                isValid = value.length >= 2;
+                message = "Name must be at least 2 characters long";
+            } else if (field.id.includes('-dob')) {
+                const dobDate = new Date(value);
+                const today = new Date();
+                const age = today.getFullYear() - dobDate.getFullYear();
+                isValid = age >= 18;
+                message = "Driver must be at least 18 years old";
+            } else {
+                switch (field.id) {
+                    case 'email':
+                        isValid = PATTERNS.email.test(value);
+                        message = MESSAGES.email;
+                        break;
+                    case 'hkid':
+                        isValid = PATTERNS.hkid.test(value);
+                        message = MESSAGES.hkid;
+                        break;
+                    case 'mobile':
+                        isValid = PATTERNS.mobile.test(value);
+                        message = MESSAGES.mobile;
+                        break;
+                    case 'registrationNumber':
+                        isValid = PATTERNS.licensePlate.test(value.toUpperCase());
+                        message = MESSAGES.licensePlate;
+                        break;
+                    case 'building':
+                        isValid = PATTERNS.buildingName.test(value);
+                        message = MESSAGES.buildingName;
+                        break;
+                    case 'street':
+                        isValid = PATTERNS.street.test(value);
+                        message = MESSAGES.street;
+                        break;
+                    case 'room':
+                        isValid = PATTERNS.room.test(value);
+                        message = MESSAGES.room;
+                        break;
+                    case 'floor':
+                        isValid = PATTERNS.floor.test(value);
+                        message = MESSAGES.floor;
+                        break;
+                    case 'block':
+                        isValid = PATTERNS.block.test(value);
+                        message = MESSAGES.block;
+                        break;
+                }
+            }
+        }
+
+        if (!isValid) {
+            field.classList.add('invalid');
+            field.classList.remove('valid');
+            field.title = message;
+        } else {
+            field.classList.remove('invalid');
+            field.classList.add('valid');
+            field.title = '';
+        }
+
+        if (isValid) {
+            saveFormData();
+        }
+
+        return isValid;
+    }
+
+    function addValidationListeners(field) {
+        ['input', 'change', 'blur'].forEach(eventType => {
+            field.addEventListener(eventType, () => {
+                validateField(field);
+                validateForm();
+            });
+        });
+        validateField(field);
+    }
+
+
+    function validateForm() {
+        const requiredFields = document.querySelectorAll('input[required], select[required]');
+        const buyButton = document.querySelector('.buy-button');
+        let isValid = true;
+        let hasEmptyRequired = false;
+
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                hasEmptyRequired = true;
+                field.classList.add('invalid');
+                field.classList.remove('valid');
+                field.title = MESSAGES.required;
+            }
+        });
+
+        requiredFields.forEach(field => {
+            if (!validateField(field)) {
+                isValid = false;
+            }
+        });
+
+        const shouldEnableButton = isValid && !hasEmptyRequired;
+        buyButton.disabled = !shouldEnableButton;
+        buyButton.style.opacity = shouldEnableButton ? '1' : '0.5';
+        buyButton.style.cursor = shouldEnableButton ? 'pointer' : 'not-allowed';
+
+        return shouldEnableButton;
+    }
+
+
+    // Add event listeners when document is ready
+    document.addEventListener('DOMContentLoaded', function() {
+        ['room', 'floor', 'block'].forEach(fieldId => {
+            const field = document.getElementById(fieldId);
+            if (field) {
+                field.required = true;
+                field.setAttribute('placeholder', 'Required');
+            }
+        });
+        const allFields = document.querySelectorAll('input, select');
+        allFields.forEach(field => {
+            ['input', 'change', 'blur', 'keyup'].forEach(eventType => {
+                field.addEventListener(eventType, () => {
+                    validateField(field);
+                    validateForm();
+                });
+            });
+        });
+        validateForm();
+    });
+    let Save_selected_option = JSON.parse(localStorage.getItem("Save_selected_option"));
+    let Save_selected_option_2 = JSON.parse(localStorage.getItem("Save_selected_option_2"));
+
+    if (Save_selected_option === null || Save_selected_option_2 === null) {
+        window.location.href = 'progress.html';
+    }
+
+    function calculateCharges(subTotal) {
+        const amount = parseFloat(subTotal.replace(/[^0-9.]/g, ''));
+        const insuranceLevy = amount * 0.0004;
+        const mibCharge = amount * 0.0025;
+
+        const ncdSelect = document.getElementById('claimsDiscount');
+        const ncdValue = ncdSelect.value;
+        let discount = 0;
+
+        if (ncdValue) {
+            discount = amount * (parseFloat(ncdValue) / 100);
+        }
+
+        return {
+            insuranceLevy: insuranceLevy.toFixed(2),
+            mibCharge: mibCharge.toFixed(2),
+            ncdDiscount: discount.toFixed(2),
+            total: (amount + insuranceLevy + mibCharge - discount).toFixed(2)
+        };
+    }
+
+
+    function updatePrices() {
+        const subTotal = Save_selected_option_2.checkoutPrice;
+        const charges = calculateCharges(subTotal);
+
+        // Update the display
+        $('#insuranceLevy').text(`HK$${charges.insuranceLevy}`);
+        $('#mibCharge').text(`HK$${charges.mibCharge}`);
+        $('#totalPrice').text(`HK$ ${charges.total}*`);
+
+        $('#ncd').text(document.getElementById('claimsDiscount').value);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        const ncdSelect = document.getElementById('claimsDiscount');
+        ncdSelect.addEventListener('change', updatePrices);
+
+        // Initialize prices with current NCD value
+        updatePrices();
+    });
+
+
+    // Calculate end date based on effective date
+    function calculateEndDate(startDate, paymentMethod) {
+
+        const date = new Date(startDate);
+
+        switch (paymentMethod) {
+            case 'yearly':
+                date.setFullYear(date.getFullYear() + 1);
+                break;
+            case 'everySixMonth':
+                date.setMonth(date.getMonth() + 6);
+                break;
+            case 'quarterly':
+                date.setMonth(date.getMonth() + 3);
+                break;
+            case 'monthly':
+                date.setMonth(date.getMonth() + 1);
+                break;
+        }
+        date.setDate(date.getDate() - 1);
+        return date.toLocaleDateString('en-US', {
+            weekday: 'short',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+    }
+
+    // Format the effective date
+    function formatEffectiveDate(dateString) {
+        return new Date(dateString).toLocaleDateString('en-US', {
+            weekday: 'short',
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
+    }
+
+    function createDriverForm(index) {
+        return `
+            <div class="driver-section" id="driver-${index}">
+            <hr style="margin-top: 30px; margin-bottom: 30px">
+                <h1>Driver ${index + 1} Details</h1>
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="driver-${index}-title">Title *</label>
+                        <select id="driver-${index}-title" required>
+                            <option value="MR">MR</option>
+                            <option value="MS">MS</option>
+                            <option value="MRS">MRS</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="driver-${index}-firstName">First name *</label>
+                        <input type="text" id="driver-${index}-firstName" placeholder="(In English, e.g. Tai Man)" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="driver-${index}-lastName">Last name *</label>
+                        <input type="text" id="driver-${index}-lastName" placeholder="(In English, e.g. Chan)" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="driver-${index}-hkid">HKID Card No. *</label>
+                        <input type="text" id="driver-${index}-hkid" placeholder="EG: A1234567" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="driver-${index}-dob">Date of Birth *</label>
+                        <input type="date" id="driver-${index}-dob" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="driver-${index}-occupation">Occupation *</label>
+                        <select id="driver-${index}-occupation" required>
+                            <option value="">Select occupation</option>
+                                    <option value="accountant">Account/ Accountant</option>
+                                    <option value="engineer">Engineer</option>
+                                    <option value="teacher">Teacher</option>
+                                    <option value="doctor">Doctor</option>
+                                    <option value="nurse">Nurse</option>
+                                    <option value="lawyer">Lawyer</option>
+                                    <option value="software_developer">Software Developer</option>
+                                    <option value="designer">Designer</option>
+                                    <option value="salesperson">Salesperson</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="scientist">Scientist</option>
+                                    <option value="marketing_specialist">Marketing Specialist</option>
+                                    <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                                <label for="-${index}-DrivingExperience">Driving experience *</label>
+                                <select id="-${index}-DrivingExperience" required>
+                                    <option value="more_than_5_years">More than 5 years</option>
+                                    <option value="less_than_5_years">Less than 5 years</option>
+                                    <option value="within_1_year">Started driving within 1 year</option>
+                                </select>
+                            </div>
+                    <div class="input-group">
+                        <label for="driver-${index}-occupation">Driver Relationship with Policy Holder</label>
+                        <select id="driver-${index}-relation" required>
+        <option value="">Select occupation</option>
+        <option value="accountant">Account/ Accountant</option>
+        <option value="policyholder">Policyholder</option>
+        <option value="named_driver">Named Driver</option>
+        <option value="main_driver">Main Driver</option>
+        <option value="additional_driver">Additional Driver</option>
+        <option value="temporary_driver">Temporary Driver</option>
+        <option value="spouse_or_partner">Spouse or Partner</option>
+        <option value="teen_driver">Teen Driver</option>
+        <option value="roommate">Roommate</option>
+        <option value="friend">Friend</option>
+    </select>
+                    </div>
+                </div>
+            </div>
+
+        `;
+    }
+
+    // Update order summary when document is ready
+    $(document).ready(function () {
+        // Update insurance type and details
+        $('.insurance-type h3').text(Save_selected_option.insuranceType + ' Insurance');
+        $('#planName').text('LMC ' + Save_selected_option.insuranceType);
+        let paymentMethod = Save_selected_option_2.paymentMethod;
+        document.getElementById('claimsDiscount').value = Save_selected_option_2.ncd;
+        updatePrices();
+        const numDrivers = parseInt(Save_selected_option_2.insuredDrivers);
+        const driversContainer = $('#driversContainer');
+        driversContainer.empty();
+
+        $('#insuredDrivers').on('change', function() {
+            const numDrivers = parseInt($(this).val());
+            const driversContainer = $('#driversContainer');
+            driversContainer.empty();
+
+            if (numDrivers > 1) {
+                for (let i = 1; i < numDrivers; i++) {
+                    driversContainer.append(createDriverForm(i));
+                    // Immediately add validation to the newly added driver fields
+                    setTimeout(() => {
+                        const driverSection = document.getElementById(`driver-${i}`);
+                        if (driverSection) {
+                            const fields = driverSection.querySelectorAll('input[required], select[required]');
+                            fields.forEach(field => {
+                                addValidationListeners(field);
+                            });
+                        }
+                        validateForm();
+                    }, 0);
+                }
+            }
+            validateForm();
+        });
+
+        if (numDrivers > 1) {
+            for (let i = 1; i < numDrivers; i++) {
+                driversContainer.append(createDriverForm(i));
+            }
+        }
+        switch (paymentMethod) {
+            case 'yearly':
+                paymentMethod = "Yearly";
+                break;
+            case 'everySixMonth':
+                paymentMethod = "Every Six Month";
+                break;
+            case 'quarterly':
+                paymentMethod = "Quarterly";
+                break;
+            case 'monthly':
+                paymentMethod = "Monthly";
+                break;
+        }
+
+
+        // Update policy dates
+        const effectiveDate = formatEffectiveDate(Save_selected_option_2.policyEffectiveDate);
+        const endDate = calculateEndDate(Save_selected_option_2.policyEffectiveDate, Save_selected_option_2.paymentMethod);
+        // Update policy details
+        $('.policy-details').html(`
+            <div class="detail-row">
+                <span>Plan Name</span>
+                <span>LMC ${Save_selected_option.insuranceType}</span>
+            </div>
+            <div class="detail-row">
+                <span>Policy effective date</span>
+                <span>${effectiveDate}</span>
+            </div>
+            <div class="detail-row">
+                <span>Policy end date</span>
+                <span>${endDate}</span>
+            </div>
+            <div class="detail-row">
+                <span>Vehicle</span>
+                <span>${Save_selected_option.manufacturingYear} ${Save_selected_option.carBrand} ${Save_selected_option.carModel}</span>
+            </div>
+            <div class="detail-row">
+                <span>Payment Method</span>
+                <span>${paymentMethod}</span>
+            </div>
+            <hr style="margin-top: 40px">
+        `);
+
+        document.getElementById('subTotal').textContent = `${Save_selected_option_2.checkoutPrice}`;
+        document.getElementById('insuredDrivers').value = Save_selected_option_2.insuredDrivers;
+        document.getElementById('mainDrivingExperience').value = Save_selected_option_2.drivingExperience;
+        document.getElementById('carModel').value = `${Save_selected_option.carBrand} ${Save_selected_option.carModel}`;
+        document.getElementById('manufacturingYear').value = Save_selected_option.manufacturingYear;
+        document.getElementById('marketValue').value = Save_selected_option.carValue;
+
+    });
+    let Save_selected_option_3 = {
+        mainDriver: {},
+        address: {},
+        vehicle: {},
+        additionalDrivers: []
+    };
+
+    function saveFormData() {
+        Save_selected_option_3.mainDriver = {
+            email: document.getElementById('email').value,
+            mobile: document.getElementById('mobile').value,
+            gender: document.querySelector('input[name="gender"]:checked').value,
+            title: document.getElementById('title').value,
+            firstName: document.getElementById('firstName').value,
+            lastName: document.getElementById('lastName').value,
+            hkid: document.getElementById('hkid').value,
+            dob: document.getElementById('dob').value,
+            occupation: document.getElementById('occupation').value,
+            drivingExperience: document.getElementById('mainDrivingExperience').value,
+            paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
+            ncd: document.getElementById('claimsDiscount').value,
+            policyEndDate: calculateEndDate(Save_selected_option_2.policyEffectiveDate, Save_selected_option_2.paymentMethod)
+        };
+
+        Save_selected_option_3.address = {
+            room: document.getElementById('room').value,
+            floor: document.getElementById('floor').value,
+            block: document.getElementById('block').value,
+            building: document.getElementById('building').value,
+            street: document.getElementById('street').value,
+            area: document.getElementById('area').value,
+            district: document.getElementById('district').value
+        };
+
+        Save_selected_option_3.vehicle = {
+            carModel: document.getElementById('carModel').value,
+            manufacturingYear: document.getElementById('manufacturingYear').value,
+            marketValue: document.getElementById('marketValue').value,
+            insuredDrivers: document.getElementById('insuredDrivers').value,
+            claimsDiscount: document.getElementById('claimsDiscount').value,
+            isRegistered: document.querySelector('input[name="registered"]:checked').value,
+            registrationNumber: document.getElementById('registrationNumber').value,
+            carModelCode: document.getElementById('carModelCode').value,
+            cylinderCapacity: document.getElementById('cylinderCapacity').value,
+            chassisNumber: document.getElementById('chassisNumber').value,
+            engineNumber: document.getElementById('engineNumber').value
+        };
+
+        Save_selected_option_3.additionalDrivers = [];
+        const numDrivers = parseInt(document.getElementById('insuredDrivers').value);
+
+        for (let i = 1; i < numDrivers; i++) {
+            const driverData = {
+                title: document.getElementById(`driver-${i}-title`).value,
+                firstName: document.getElementById(`driver-${i}-firstName`).value,
+                lastName: document.getElementById(`driver-${i}-lastName`).value,
+                hkid: document.getElementById(`driver-${i}-hkid`).value,
+                dob: document.getElementById(`driver-${i}-dob`).value,
+                occupation: document.getElementById(`driver-${i}-occupation`).value,
+                drivingExperience: document.getElementById(`-${i}-DrivingExperience`).value,
+                relation: document.getElementById(`driver-${i}-relation`).value
+            };
+            Save_selected_option_3.additionalDrivers.push(driverData);
+        }
+
+        localStorage.setItem('Save_selected_option_3', JSON.stringify(Save_selected_option_3));
+        return Save_selected_option_3;
+    }
+    function closePopupAndNavigate(url) {
+        const popup = document.querySelector('.popup-overlay');
+        popup.classList.remove('show');
+
+        setTimeout(() => {
+            window.location.href = url;
+        }, 300);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        function showThankYouPopup(referenceNumber) {
+            const popup = document.createElement('div');
+            popup.className = 'popup-overlay';
+            popup.style.display = 'flex';
+
+            popup.innerHTML = `
+            <div class="popup-content">
+                <h2>Thank You For Your Quote!</h2>
+                <p>Our staff will review your application as soon as possible. We appreciate your trust in our services.</p>
+                <div class="popup-buttons">
+                    <button class="popup-button details-button" onclick="closePopupAndNavigate('orderDetail.html?id=${referenceNumber}')">Check Details</button>
+                    <button class="popup-button end-button" onclick="closePopupAndNavigate('index.html')">End</button>
+                </div>
+            </div>
+        `;
+
+            document.body.appendChild(popup);
+
+            setTimeout(() => {
+                popup.classList.add('show');
+            }, 10);
+        }
+
+        document.querySelector('.buy-button').addEventListener('click', function(e) {
+            if (validateForm()) {
+                e.preventDefault();
+                const formData = saveFormData();
+                console.log('Saved:', formData);
+                const Save_selected_option = JSON.parse(localStorage.getItem('Save_selected_option'));
+                const Save_selected_option_2 = JSON.parse(localStorage.getItem('Save_selected_option_2'));
+                const Save_selected_option_3 = JSON.parse(localStorage.getItem('Save_selected_option_3'));
+                const referenceNumber = generateReferenceNumber();
+
+                localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify({
+                    Save_selected_option,
+                    Save_selected_option_2,
+                    Save_selected_option_3,
+                    referenceNumber,
+                    status: 'pending',
+                    createdAt: new Date().toISOString()
+                }));
+
+                showThankYouPopup(referenceNumber);
+            } else {
+                e.preventDefault();
+                const invalidFields = document.querySelectorAll('.invalid');
+                if (invalidFields.length > 0) {
+                    invalidFields[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    invalidFields[0].focus();
+                    alert('Please fill in all required fields correctly.');
+                }
+            }
+        });
+    });
+
+</script>
+<body>
+<div class="navbar">
+    <a href="www.google.com" style="display: flex; align-items: center; padding: 1rem;">
+        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited"
+             style="position: absolute; margin-top: 0.75rem;height: 3rem; width: 3rem;">
+        <span style="display: flex; margin-left: 0.75rem; align-items: center; align-self: center; padding-left: 2.5rem; font-size: 1.5rem; line-height: 2rem; font-weight: 600; white-space: nowrap;">LMC</span>
+    </a>
+    <div class="nav-links">
+        <a class="navbar_a" href="index.html">Home</a>
+        <a class="navbar_a" href="progress.html" style="color: orange">Apply</a>
+        <a class="navbar_a" href="ordersIndex.html">Your Application</a>
+        <a class="navbar_a" href="js/">About Us</a>
+    </div>
+</div>
+<div style="padding-top: 4rem;">
+    <div class="progress_bar_container">
+        <div class="progress_bar" id="progressBar" style="width:75%"></div>
+    </div>
+</div>
+
+<div class="container" style="min-width: 1400px">
+    <div style="display: flex; min-height: 100vh; padding: 2rem; gap: 2rem;">
+        <div class="checkout_container">
+            <div class="section">
+                <div class="section-header">
+                    <div class="header-left">
+                        <img src="../../../resources/image/user-icon.svg" alt="User" class="section-icon">
+                        <h1>Applicant Details</h1>
+                    </div>
+                </div>
+
+                <div id="applicantDetails" class="section-content">
+                    <div class="notice">
+                        <p style="font-size: large; color: darkred">* The applicant must be over 18 years old and the registered owner of the insured vehicle.</p>
+                    </div>
+                    <button onclick="window.history.back()" class="back-button">
+                        ← Back to Estimate
+                    </button>
+                    <form id="applicantForm" class="form-section">
+                        <h1>Main Driver Details</h1>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="mobile">Mobile Number *</label>
+                                <input type="tel" id="mobile" placeholder="A valid 8 digit phone number"
+                                       pattern="[0-9]{8}" required>
+                            </div>
+                        </div>
+
+                        <h2>Personal Details</h2>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label>Gender *</label>
+                                <div class="radio-group">
+                                    <label class="radio-container">
+                                        <input type="radio" name="gender" value="male" checked>
+                                        <span class="radio-label">Male</span>
+                                    </label>
+                                    <label class="radio-container">
+                                        <input type="radio" name="gender" value="female">
+                                        <span class="radio-label">Female</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="title">Title *</label>
+                                <select id="title" required>
+                                    <option value="MR">MR</option>
+                                    <option value="MS">MS</option>
+                                    <option value="MRS">MRS</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="firstName">First name *</label>
+                                <input type="text" id="firstName" placeholder="(In English, e.g. Tai Man)" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="lastName">Last name *</label>
+                                <input type="text" id="lastName" placeholder="(In English, e.g. Chan)" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="hkid">HKID Card No. *</label>
+                                <input type="text" id="hkid" placeholder="EG: A1234567" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="dob">Date of Birth *</label>
+                                <input type="date" id="dob" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="occupation">Occupation *</label>
+                                <select id="occupation" required>
+                                    <option value="">Select occupation</option>
+                                    <option value="accountant">Account/ Accountant</option>
+                                    <option value="engineer">Engineer</option>
+                                    <option value="teacher">Teacher</option>
+                                    <option value="doctor">Doctor</option>
+                                    <option value="nurse">Nurse</option>
+                                    <option value="lawyer">Lawyer</option>
+                                    <option value="software_developer">Software Developer</option>
+                                    <option value="designer">Designer</option>
+                                    <option value="salesperson">Salesperson</option>
+                                    <option value="manager">Manager</option>
+                                    <option value="scientist">Scientist</option>
+                                    <option value="marketing_specialist">Marketing Specialist</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="occupation">Occupation *</label>
+                                <select id="mainDrivingExperience" required>
+                                    <option value="more_than_5_years">More than 5 years</option>
+                                    <option value="less_than_5_years">Less than 5 years</option>
+                                    <option value="within_1_year">Started driving within 1 year</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <h2>Address</h2>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="room">Room *</label>
+                                <input type="text" id="room">
+                            </div>
+                            <div class="input-group">
+                                <label for="floor">Floor *</label>
+                                <input type="text" id="floor">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="block">Block *</label>
+                                <input type="text" id="block">
+                            </div>
+                            <div class="input-group">
+                                <label for="building">Building / Estate *</label>
+                                <input type="text" id="building" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="street">Street *</label>
+                                <input type="text" id="street" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="area">Area *</label>
+                                <select id="area" required>
+                                    <option value="">Select area</option>
+                                    <option value="hong-kong">Hong Kong</option>
+                                    <option value="kowloon">Kowloon</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="driversContainer"></div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <label for="district">District *</label>
+                                <select id="district" required>
+                                    <option value="">Select district</option>
+                                    <option value="aberdeen">Aberdeen</option>
+                                    <option value="central">Central</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="claimsDiscount">No Claims Discount *</label>
+                                <select id="claimsDiscount" required>
+                                    <option value="0%">0%</option>
+                                    <option value="10%">No claims for 1 year (10%)</option>
+                                    <option value="25%">No claims for 2 - 4 year (25%)</option>
+                                    <option value="50%">No claims for 5 - 7 year (50%)</option>
+                                    <option value="60%">No claims for 7 year or above (60%)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="section-header">
+                        <div class="header-left">
+                            <img src="../../../resources/image/car-svg.svg" alt="Car" class="section-icon">
+                            <h1>Insured Vehicle</h1>
+                        </div>
+                    </div>
+
+                    <div id="vehicleDetails" class="section-content">
+                        <form id="vehicleForm" class="form-section">
+                            <h2>Vehicle Details</h2>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label for="carModel">Car Model *</label>
+                                    <input type="text" id="carModel" value="BMW X4" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="manufacturingYear">Manufacturing Year *</label>
+                                    <input type="number" id="manufacturingYear" value="2024" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label for="marketValue">Estimated Car Market Value *</label>
+                                    <input type="text" id="marketValue" placeholder="HK$" required>
+                                </div>
+                                <div class="input-group">
+                                    <label for="insuredDrivers">Insured Drivers *</label>
+                                    <input type="number" id="insuredDrivers" value="1" min="1" max="5" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <label>Has the car already been registered? *</label>
+                                    <div class="radio-group">
+                                        <label class="radio-container">
+                                            <input type="radio" name="registered" value="yes" checked>
+                                            <span class="radio-label">Yes</span>
+                                        </label>
+                                        <label class="radio-container">
+                                            <input type="radio" name="registered" value="no">
+                                            <span class="radio-label">No</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="registrationDetails" class="registration-details">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="registrationNumber">Registration Number *</label>
+                                        <input type="text" id="registrationNumber" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="carModelCode">Car Model *</label>
+                                        <input type="text" id="carModelCode" placeholder="e.g. XDRIVE351A (E70)"
+                                               required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="cylinderCapacity">Cylinder capacity (c.c) *</label>
+                                        <input type="text" id="cylinderCapacity" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="chassisNumber">Chassis Number *</label>
+                                        <input type="text" id="chassisNumber" required>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label for="engineNumber">Engine Number *</label>
+                                        <input type="text" id="engineNumber" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="order-summary">
+                <div class="summary-header">Review Your Order</div>
+                <div class="summary-content">
+                    <div class="insurance-type">
+                        <img src="../../../resources/image/seat-belt-svg.svg" alt="Car Insurance">
+                        <div>
+                            <h3></h3>
+                        </div>
+                    </div>
+
+                    <div class="policy-details">
+                        <div class="detail-row">
+                            <span>Plan Name</span>
+                            <span id="planName"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Policy effective date</span>
+                            <span id="effectiveDate"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Policy end date</span>
+                            <span id="endDate"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span>Maintenance Period</span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="price-breakdown">
+                        <div class="detail-row">
+                            <span>SUB-TOTAL</span>
+                            <span id="subTotal"></span>
+                        </div>
+                        <div class="detail-row">
+                            <span>+ Insurance Levy (0.04%)*</span>
+                            <span id="insuranceLevy">-</span>
+                        </div>
+                        <div class="detail-row">
+                            <span>+ MIB (0.25%)*</span>
+                            <span id="mibCharge">-</span>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>- NCD*</span>
+                            <span id="ncd"></span>
+                        </div>
+                    </div>
+
+                    <div class="total">
+                        <span>Customer Total</span>
+                        <span id="totalPrice" class="total-amount"></span>
+                    </div>
+
+                    <div class="payment-method-section">
+                        <h3>Select Payment Method</h3>
+                        <div class="payment-options">
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="Credit Card" checked>
+                                <span class="payment-label">
+                                    <img style="margin-top: 22px" src="../../../resources/image/credit-card.svg" alt="Credit Card">
+                                    Credit Card Payment
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="Online Bank Transfer">
+                                <span class="payment-label">
+                                    <img style="margin-top: 22px" src="../../../resources/image/bank-transfer.svg" alt="Bank Transfer">
+                                    Online Bank Transfer
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="Check Payment">
+                                <span class="payment-label">
+                                    <img style="margin-top: 22px" src="../../../resources/image/check.svg" alt="Check">
+                                    Check Payment
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="Cash Payment at Convenience Stores">
+                                <span class="payment-label">
+                                    <img style="margin-top: 22px" src="../../../resources/image/store.svg" alt="Convenience Store">
+                                    Cash Payment at Convenience Stores
+                                </span>
+                            </label>
+                            <label class="payment-option">
+                                <input type="radio" name="paymentMethod" value="ATM Payments">
+                                <span class="payment-label">
+                                    <img style="margin-top: 22px" src="../../../resources/image/atm.svg" alt="ATM">
+                                    ATM Payments
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+
+                    <button class="buy-button" id="buy-button">Request a quote</button>
+
+                    <p class="payment-note">* Our staff will process your order as soon as possible.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+
+<footer>
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
+<button id="darkModeToggle" title="Toggle dark mode" style="z-index: 10">
+    <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="#333"
+    >
+        <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        />
+    </svg>
+</button>
+</html>

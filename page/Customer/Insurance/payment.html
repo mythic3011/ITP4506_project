@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Estimate | Legend Motor Limited</title>
+    <meta name="author" content="Legend Motor Limited"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="icon" href="../../../resources/image/icon.png" type="image/x-icon"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
+    <link rel="stylesheet" href="../../../resources/css/payment-styles.css">
+    <script src="../../../resources/js/customer.js"></script>
+    <script src="../../../resources/js/script.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('paymentForm');
+        const paymentButton = document.getElementById('paymentButton');
+        const requiredFields = form.querySelectorAll('input[required]');
+        const cardIcons = document.querySelectorAll('.card-icon');
+
+        // Function to detect card type from number
+        function detectCardType(number) {
+            const cleanNumber = number.replace(/\s/g, '');
+
+            // Visa: Starts with 4
+            if (/^4/.test(cleanNumber)) {
+                return 'visa';
+            }
+            // Mastercard: Starts with 51-55 or 2221-2720
+            else if (/^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[0-1]|2720)/.test(cleanNumber)) {
+                return 'mastercard';
+            }
+            // UnionPay: Starts with 62
+            else if (/^62/.test(cleanNumber)) {
+                return 'unionpay';
+            }
+            return null;
+        }
+
+        // Function to update selected card icon
+        function updateSelectedCard(cardType) {
+            cardIcons.forEach(icon => {
+                icon.classList.remove('selected');
+                if (cardType && icon.alt.toLowerCase() === cardType) {
+                    icon.classList.add('selected');
+                }
+            });
+        }
+
+        // Function to validate input field
+        function validateInput(input) {
+            const isValid = input.checkValidity();
+            input.classList.toggle('error', !isValid);
+            return isValid;
+        }
+
+        // Format credit card number and detect type
+        const cardNumber = document.getElementById('cardNumber');
+        cardNumber.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            value = value.replace(/\D/g, '');
+            value = value.replace(/(\d{4})/g, '$1 ').trim();
+            e.target.value = value;
+
+            const cardType = detectCardType(value);
+            updateSelectedCard(cardType);
+            validateInput(this);
+            validateForm();
+        });
+
+        // Format expiry date
+        const expiryDate = document.getElementById('expiryDate');
+        expiryDate.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0,2) + '/' + value.slice(2);
+            }
+            e.target.value = value;
+            validateInput(this);
+        });
+
+        // Format CVV
+        const cvv = document.getElementById('cvv');
+        cvv.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+            validateInput(this);
+        });
+
+        // Add focus effects for all input fields
+        const inputFields = document.querySelectorAll('.input-field');
+        inputFields.forEach(input => {
+            input.addEventListener('focus', () => {
+                input.parentElement.querySelector('.input-label').style.color = '#00bcd4';
+            });
+
+            input.addEventListener('blur', () => {
+                input.parentElement.querySelector('.input-label').style.color = '#2d3748';
+                validateInput(input);
+            });
+        });
+
+        // CVV tooltip
+        const cvvHelp = document.querySelector('.cvv-help');
+        cvvHelp.addEventListener('mouseover', function(e) {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'cvv-tooltip';
+            tooltip.textContent = 'The CVV is the 3-digit security code on the back of your card';
+            this.appendChild(tooltip);
+        });
+
+        cvvHelp.addEventListener('mouseout', function(e) {
+            const tooltip = this.querySelector('.cvv-tooltip');
+            if (tooltip) {
+                tooltip.remove();
+            }
+        });
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            requiredFields.forEach(field => {
+                if (!validateInput(field)) {
+                    isValid = false;
+                }
+            });
+
+            // Check if a payment method is detected
+            const cardType = detectCardType(cardNumber.value);
+            if (!cardType) {
+                isValid = false;
+            }
+
+            paymentButton.disabled = !isValid;
+        }
+
+        requiredFields.forEach(field => {
+            field.addEventListener('input', validateForm);
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (form.checkValidity()) {
+                // Add your payment processing logic here
+                console.log('Processing payment...');
+            }
+        });
+    });
+</script>
+<body>
+<div class="navbar">
+    <a href="www.google.com" style="display: flex; align-items: center; padding: 1rem;">
+        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited"
+             style="position: absolute; margin-top: 0.75rem;height: 3rem; width: 3rem;">
+        <span style="display: flex; margin-left: 0.75rem; align-items: center; align-self: center; padding-left: 2.5rem; font-size: 1.5rem; line-height: 2rem; font-weight: 600; white-space: nowrap;">LMC</span>
+    </a>
+    <div class="nav-links">
+        <a class="navbar_a" href="/html/" style="color: #e84ed8">HTML</a>
+        <a class="navbar_a" href="/css/">About Us</a>
+        <a class="navbar_a" href="/js/">Insurance Plan</a>
+        <a class="navbar_a" href="/js/">Contact Us</a>
+    </div>
+</div>
+
+<div style="height: 1000px; width: auto; padding-top: 50px;">
+    <div style="height: 500px; width: 100%; display: flex; justify-content: center;">
+        <div style="width: 800px;">
+            <div class="form-container payment-section">
+                <button onclick="window.history.back()" class="back-button">
+                    ← Back to Details
+                </button>
+
+                <div class="payment-header">
+                    <h2>Payment Details</h2>
+                    <div class="card-types">
+                        <img src="../../../resources/image/visa.svg" alt="Visa" class="card-icon">
+                        <img src="../../../resources/image/mastercard.svg" alt="Mastercard" class="card-icon">
+                        <img src="../../../resources/image/unionpay.svg" alt="UnionPay" class="card-icon">
+                    </div>
+                </div>
+
+                <form id="paymentForm" class="payment-form">
+                    <div class="form-group">
+                        <label for="cardName">Cardholder Name *</label>
+                        <input type="text" id="cardName" placeholder="Name on card" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cardNumber">Card Number *</label>
+                        <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="expiryDate">Expiry Date *</label>
+                            <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                        </div>
+                        <div class="form-group half">
+                            <label for="cvv">Security Code (CVV) *</label>
+                            <div class="cvv-container">
+                                <input type="text" id="cvv" placeholder="000" maxlength="3" required>
+                                <div class="cvv-help">?</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="payment-info">
+                        <p>Payment will be made to:</p>
+                        <p class="company">Legend Motor Limited</p>
+                        <p class="address">9/F, 308 Central Des Voeux, No. 308 Des Voeux Road Central, Sheung Wan, Hong Kong</p>
+                    </div>
+
+                    <div class="consent">
+                        <input type="checkbox" id="consent" required>
+                        <label for="consent">I hereby authorize Legend Motor Limited to charge my designated credit card account for the insurance premium, premium levy, and HKIB levy.</label>
+                    </div>
+
+                    <button type="submit" class="submit-button" id="paymentButton" disabled>Complete Payment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<footer>
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
+<button id="darkModeToggle" title="Toggle dark mode" style="z-index: 10">
+    <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="#333"
+    >
+        <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+        />
+    </svg>
+</button>
+</html>

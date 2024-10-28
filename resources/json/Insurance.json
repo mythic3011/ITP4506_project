@@ -1,0 +1,106 @@
+{
+  "carInsuranceQuotes": [
+    {
+      "carBrand": "Toyota",
+      "driverAge": 18,
+      "drivingExperience": "within_1_year",
+      "insuranceType": "Third Party",
+      "premiumEstimate": 5000.00
+    },
+    {
+      "carBrand": "Volkswagen",
+      "driverAge": 19,
+      "drivingExperience": "less_than_5_years",
+      "insuranceType": "Third Party",
+      "premiumEstimate": 4800.00
+    },
+    {
+      "carBrand": "Honda",
+      "driverAge": 20,
+      "drivingExperience": "more_than_5_years",
+      "insuranceType": "Full Coverage",
+      "premiumEstimate": 4500.00
+    },
+    {
+      "carBrand": "Ford",
+      "driverAge": 21,
+      "drivingExperience": "within_1_year",
+      "insuranceType": "Full Coverage",
+      "premiumEstimate": 5200.00
+    },
+    {
+      "carBrand": "Hyundai",
+      "driverAge": 22,
+      "drivingExperience": "less_than_5_years",
+      "insuranceType": "Third Party",
+      "premiumEstimate": 4700.00
+    },
+    {
+      "carBrand": "Chevrolet",
+      "driverAge": 23,
+      "drivingExperience": "more_than_5_years",
+      "insuranceType": "Full Coverage",
+      "premiumEstimate": 4400.00
+    },
+    {
+      "carBrand": "Nissan",
+      "driverAge": 24,
+      "drivingExperience": "within_1_year",
+      "insuranceType": "Third Party",
+      "premiumEstimate": 5300.00
+    },
+    {
+      "carBrand": "BMW",
+      "driverAge": 25,
+      "drivingExperience": "less_than_5_years",
+      "insuranceType": "Full Coverage",
+      "premiumEstimate": 6000.00
+    },
+    {
+      "carBrand": "Mercedes-Benz",
+      "driverAge": 26,
+      "drivingExperience": "more_than_5_years",
+      "insuranceType": "Full Coverage",
+      "premiumEstimate": 5800.00
+    },
+    {
+      "carBrand": "Audi",
+      "driverAge": 27,
+      "drivingExperience": "within_1_year",
+      "insuranceType": "Third Party",
+      "premiumEstimate": 6200.00
+    },
+    {
+      "carBrand": "Toyota",
+      "driverAge": 28,
+      "drivingExperience": "less_than_5_years",
+      "insuranceType": "Third Party",
+      "premiumEstimate": 4900.00
+    },
+    {
+      "carBrand": "Volkswagen",
+      "driverAge": 29,
+      "drivingExperience": "more_than_5_years",
+      "insuranceType":"Full Coverage",
+      "premiumEstimate" :4600.00
+    },
+    {"carBrand":"Honda","driverAge" :30,"drivingExperience":"within_1_year","insuranceType":"Third Party","premiumEstimate" :5300.00},
+    {"carBrand":"Ford","driverAge" :31,"drivingExperience":"less_than_5_years","insuranceType":"Full Coverage","premiumEstimate" :5100.00},
+    {"carBrand":"Hyundai","driverAge" :32,"drivingExperience":"more_than_5_years","insuranceType":"Third Party","premiumEstimate" :4800.00},
+    {"carBrand":"Chevrolet","driverAge" :33,"drivingExperience":"within_1_year","insuranceType":"Full Coverage","premiumEstimate" :5500.00},
+    {"carBrand":"Nissan","driverAge" :34,"drivingExperience":"less_than_5_years","insuranceType":"Third Party","premiumEstimate" :4900.00},
+    {"carBrand":"BMW","driverAge" :35,"drivingExperience":"more_than_5_years","insuranceType":"Full Coverage","premiumEstimate" :6000.00},
+    {"carBrand":"Mercedes-Benz","driverAge" :36,"drivingExperience":"within_1_year","insuranceType":"Third Party","premiumEstimate" :5700.00},
+    {"carBrand":"Audi","driverAge" :37,"drivingExperience":"less_than_5_years","insuranceType":"Full Coverage","premiumEstimate" :6400.00},
+    {"carBrand":"Toyota","driverAge" :38,"drivingExperience":"more_than_5_years","insuranceType":"Third Party","premiumEstimate" :5100.00},
+    {"carBrand":"Volkswagen","driverAge" :39,"drivingExperience":"within_1_year","insuranceType":"Full Coverage","premiumEstimate" :5300.00},
+    {"carBrand":"Honda","driverAge" :40,"drivingExperience":"less_than_5_years","insuranceType":"Third Party","premiumEstimate" :4700.00},
+    {"carBrand":"Ford","driverAge" :41,"drivingExperience":"more_than_5_years","insuranceType":"Full Coverage","premiumEstimate" :4900.00},
+    {"carBrand":"Hyundai","driverAge" :42,"drivingExperience":"within_1_year","insuranceType":"Third Party","premiumEstimate" :5500.00},
+    {"carBrand":"Chevrolet","driverAge" :43,"drivingExperience":"less_than_5_years","insuranceType":"Full Coverage","premiumEstimate" :4800.00},
+    {"carBrand":"Nissan","driverAge" :44,"drivingExperience":"more_than_5_years","insuranceType":"Third Party","premiumEstimate" :6000.00},
+    {"carBrand":"BMW","driverAge" :45,"drivingExperience":"within_1_year","insuranceType":"Full Coverage","premiumEstimate" :6200.00},
+    {"carBrand":"Mercedes-Benz","driverAge" :46,"drivingExperience":"less_than_5_years","insuranceType":"Third Party","premiumEstimate" :5800.00},
+    {"carBrand":"Audi","driverAge" :47,"drivingExperience":"more_than_5_years","insuranceType":"Full Coverage","premiumEstimate" :6400.00}
+  ]
+}
