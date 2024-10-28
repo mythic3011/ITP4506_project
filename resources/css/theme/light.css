@@ -1,0 +1,75 @@
+:root {
+  /* Base colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --border-color: #e5e7eb;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+
+  /* Component colors */
+  --card-bg: var(--bg-primary);
+  --input-bg: var(--bg-primary);
+  --button-bg: var(--accent-color);
+  --button-text: #ffffff;
+
+  /* Accent colors */
+  --accent-color: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-light: rgba(37, 99, 235, 0.1);
+
+  /* Status colors */
+  --success-color: #059669;
+  --success-hover: #047857;
+  --success-light: rgba(5, 150, 105, 0.1);
+
+  --warning-color: #d97706;
+  --warning-hover: #b45309;
+  --warning-light: rgba(217, 119, 6, 0.1);
+
+  --danger-color: #dc2626;
+  --danger-hover: #b91c1c;
+  --danger-light: rgba(220, 38, 38, 0.1);
+
+  /* Status badge colors */
+  --status-pending-bg: #fff3cd;
+  --status-pending-text: #856404;
+  --status-processing-bg: #cce5ff;
+  --status-processing-text: #004085;
+  --status-completed-bg: #d4edda;
+  --status-completed-text: #155724;
+  --status-cancelled-bg: #f8d7da;
+  --status-cancelled-text: #721c24;
+
+  /* Overlay colors */
+  --modal-overlay: rgba(0, 0, 0, 0.5);
+  --dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+  /* Form colors */
+  --input-border: var(--border-color);
+  --input-focus-border: var(--accent-color);
+  --input-focus-shadow: 0 0 0 3px var(--accent-light);
+  --placeholder-color: var(--text-secondary);
+
+  /* Table colors */
+  --table-header-bg: var(--bg-secondary);
+  --table-stripe-bg: var(--bg-tertiary);
+  --table-hover-bg: var(--bg-secondary);
+
+  /* Navigation colors */
+  --nav-bg: var(--bg-primary);
+  --nav-border: var(--border-color);
+  --nav-link-hover: var(--bg-tertiary);
+
+  /* Dropdown colors */
+  --dropdown-bg: var(--bg-primary);
+  --dropdown-border: var(--border-color);
+  --dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --dropdown-hover-bg: var(--bg-secondary);
+  --dropdown-divider: var(--border-color);
+  --dropdown-header-bg: var(--bg-secondary);
+  --dropdown-item-hover: var(--bg-tertiary);
+  --dropdown-item-active: var(--accent-color);
+  --dropdown-item-active-text: #ffffff;
+}

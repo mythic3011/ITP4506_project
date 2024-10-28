@@ -1,0 +1,65 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "email": "admin@legendmotor.com",
+      "firstName": "Admin",
+      "lastName": "User",
+      "phone": "+1234567890",
+      "createdAt": "2024-01-01T00:00:00Z",
+      "lastLogin": "2024-01-15T10:30:00Z",
+      "preferences": {
+        "theme": "light",
+        "notifications": true
+      },
+      "permissions": [
+        "manage_vehicles",
+        "manage_orders",
+        "manage_inquiries",
+        "view_analytics"
+      ]
+    },
+    {
+      "id": 2,
+      "username": "customer",
+      "password": "customer123",
+      "role": "customer",
+      "email": "customer@example.com",
+      "firstName": "John",
+      "lastName": "Doe",
+      "phone": "+1987654321",
+      "createdAt": "2024-01-02T00:00:00Z",
+      "lastLogin": "2024-01-16T15:45:00Z",
+      "preferences": {
+        "theme": "light",
+        "notifications": true
+      },
+      "orders": [1, 2],
+      "inquiries": [1]
+    },
+    {
+      "id": 3,
+      "username": "sales",
+      "password": "sales123",
+      "role": "sales",
+      "email": "sales@legendmotor.com",
+      "firstName": "Jane",
+      "lastName": "Smith",
+      "phone": "+1122334455",
+      "createdAt": "2024-01-03T00:00:00Z",
+      "lastLogin": "2024-01-17T09:15:00Z",
+      "preferences": {
+        "theme": "dark",
+        "notifications": true
+      },
+      "permissions": [
+        "view_vehicles",
+        "manage_orders",
+        "manage_inquiries"
+      ]
+    }
+  ]
+}

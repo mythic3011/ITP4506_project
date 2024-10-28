@@ -1,0 +1,31 @@
+{
+  "inquiries": [
+    {
+      "id": 1,
+      "customerName": "John Doe",
+      "email": "john@example.com",
+      "subject": "Vehicle Availability",
+      "message": "Is the 2024 Toyota Camry still available?",
+      "status": "pending",
+      "date": "2024-01-15T10:30:00Z"
+    },
+    {
+      "id": 2,
+      "customerName": "Jane Smith",
+      "email": "jane@example.com",
+      "subject": "Test Drive Request",
+      "message": "I would like to schedule a test drive for the Honda CR-V",
+      "status": "responded",
+      "date": "2024-01-14T15:45:00Z"
+    },
+    {
+      "id": 3,
+      "customerName": "Mike Wilson",
+      "email": "mike@example.com",
+      "subject": "Financing Options",
+      "message": "What financing options are available for the BMW 3 Series?",
+      "status": "pending",
+      "date": "2024-01-16T09:15:00Z"
+    }
+  ]
+}
