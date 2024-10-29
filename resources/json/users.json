@@ -3,7 +3,7 @@
     {
       "id": 1,
       "username": "admin",
-      "password": "admin123",
+      "hashedPassword": "hashed_admin123",
       "role": "admin",
       "email": "admin@legendmotor.com",
       "firstName": "Admin",
@@ -13,19 +13,22 @@
       "lastLogin": "2024-01-15T10:30:00Z",
       "preferences": {
         "theme": "light",
-        "notifications": true
+        "notifications": true,
+        "language": "en",
+        "timezone": "UTC"
       },
       "permissions": [
         "manage_vehicles",
         "manage_orders",
         "manage_inquiries",
         "view_analytics"
-      ]
+      ],
+      "status": "active"
     },
     {
       "id": 2,
       "username": "customer",
-      "password": "customer123",
+      "hashedPassword": "hashed_customer123",
       "role": "customer",
       "email": "customer@example.com",
       "firstName": "John",
@@ -35,15 +38,18 @@
       "lastLogin": "2024-01-16T15:45:00Z",
       "preferences": {
         "theme": "light",
-        "notifications": true
+        "notifications": true,
+        "language": "en",
+        "timezone": "UTC"
       },
       "orders": [1, 2],
-      "inquiries": [1]
+      "inquiries": [1],
+      "status": "active"
     },
     {
       "id": 3,
       "username": "sales",
-      "password": "sales123",
+      "hashedPassword": "hashed_sales123",
       "role": "sales",
       "email": "sales@legendmotor.com",
       "firstName": "Jane",
@@ -53,13 +59,12 @@
       "lastLogin": "2024-01-17T09:15:00Z",
       "preferences": {
         "theme": "dark",
-        "notifications": true
+        "notifications": true,
+        "language": null,
+        "timezone": null
       },
-      "permissions": [
-        "view_vehicles",
-        "manage_orders",
-        "manage_inquiries"
-      ]
+      "permissions": ["view_vehicles", "manage_orders", "manage_inquiries"],
+      "status": null
     }
   ]
 }

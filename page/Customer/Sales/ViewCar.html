@@ -1,18 +1,12 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Vehicle </title>
-    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
-    <meta content="Vehicle page for the Legend Motor Company" name="Description"/>
-    <meta content="noindex, nofollow" name="robots"/>
-    <meta content="Legend Motor Company" name="generator"/>
-    <meta content="Copyright &copy; 2024 Legend Motor Company" name="copyright"/>
-    <meta content="1 days" name="revisit-after"/>
-    <link href="../../../resources/image/SLMC_Icon_DM.png" rel="icon" type="image/x-icon"/>
-    <script type="module" src="../../../resources/js/cartApi.js"></script>
-    <script type="module" src="../../../resources/js/viewVehicle.js"></script>
+    <title>Vehicle</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="../../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon"/>
+    <!--    <script type="module" src="../../../resources/js/Wishlist.js"></script>-->
+    <script type="module" src="../../../resources/js/viewVehicles.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
     <script>
         tailwind.config = {
@@ -21,154 +15,340 @@
                 extend: {
                     colors: {
                         primary: {
-                            "50": "#eff6ff",
-                            "100": "#dbeafe",
-                            "200": "#bfdbfe",
-                            "300": "#93c5fd",
-                            "400": "#60a5fa",
                             "500": "#3b82f6",
-                            "600": "#2563eb",
-                            "700": "#1d4ed8",
-                            "800": "#1e40af",
-                            "900": "#1e3a8a",
-                            "950": "#172554"
                         }
                     }
-                },
-                fontFamily: {
-                    'body': [
-                        'Inter',
-                        'ui-sans-serif',
-                        'system-ui',
-                        '-apple-system',
-                        'system-ui',
-                        'Segoe UI',
-                        'Roboto',
-                        'Helvetica Neue',
-                        'Arial',
-                        'Noto Sans',
-                        'sans-serif',
-                        'Apple Color Emoji',
-                        'Segoe UI Emoji',
-                        'Segoe UI Symbol',
-                        'Noto Color Emoji'
-                    ],
-                    'sans': [
-                        'Inter',
-                        'ui-sans-serif',
-                        'system-ui',
-                        '-apple-system',
-                        'system-ui',
-                        'Segoe UI',
-                        'Roboto',
-                        'Helvetica Neue',
-                        'Arial',
-                        'Noto Sans',
-                        'sans-serif',
-                        'Apple Color Emoji',
-                        'Segoe UI Emoji',
-                        'Segoe UI Symbol',
-                        'Noto Color Emoji'
-                    ]
                 }
             }
         }
     </script>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
-<div class="flex h-screen">
+<div class="flex h-screen flex-col">
+
     <!-- Navigation -->
-    <nav class="bg-white border-gray-200 dark:bg-gray-900 w-64 flex-shrink-0 hidden md:flex md:flex-col">
-        <div class="flex flex-col items-center p-4">
-            <a class="flex items-center space-x-3 rtl:space-x-reverse mb-6" href="#">
-                <div class="h-8 w-8 relative">
-                    <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-                         src="../../resources/image/SLMC_LOGO.png"/>
-                    <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block"
-                         src="../../resources/image/SLMC_LOGO_DM.png"/>
-                </div>
-                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
+    <nav class="bg-white border-gray-200 dark:bg-gray-900">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+                <img alt="LMC Logo" class="h-8 w-8" src="../../../resources/image/icon-removebg.png"/>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">LMC</span>
             </a>
 
-            <ul class="font-medium flex flex-col space-y-2">
-                <li>
-                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="viewOrderRecord.html">Order Record</a>
-                </li>
-                <li>
-                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="viewVehicle.html">Vehicle</a>
-                </li>
-                <li>
-                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="shoppingCart.html">Cart</a>
-                </li>
-                <li>
-                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="profile.html">Profile</a>
-                </li>
-                <li>
-                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="../../logout.html" onclick="logout()">Log Out</a>
-                </li>
-            </ul>
+            <div class="flex items-center md:order-2">
+                <button id="darkModeToggle"
+                        class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">
+                    <!-- Dark mode icon -->
+                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>
+                    </svg>
+                </button>
 
-            <!-- Dark mode toggle button -->
-            <button class="mt-6 p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                    id="darkModeToggle">
-                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
-                    </path>
-                </svg>
-            </button>
+                <button id="mobile-menu-button" aria-controls="navbar-default" aria-expanded="false"
+                        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700">
+                    <!-- Mobile menu icon -->
+                </button>
+            </div>
+
+            <div class="hidden w-full md:flex md:w-auto md:order-1" id="navbar-default">
+                <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 dark:bg-gray-800 md:dark:bg-gray-900">
+                    <!-- Navigation Links -->
+                    <li>
+                        <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-tranCarnt md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-tranCarnt"
+                           href="viewOrderRecord.html">Order Record</a>
+                    </li>
+                    <li>
+                        <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-tranCarnt md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-tranCarnt"
+                           href="viewVehicles.html">Vehicles</a>
+                    </li>
+                    <li>
+                        <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-tranCarnt md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-tranCarnt"
+                           href="shoppingWishlist.html">Wishlist</a>
+                    </li>
+                    <li>
+                        <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-tranCarnt md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-tranCarnt"
+                           href="profile.html">Profile</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
-    <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
-    <main>
-        <div class="container mx-auto px-4 py-8">
-            <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Vehicles</h1>
 
+    <!-- Main Content -->
+    <main class="content bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 min-h-screen p-8">
+        <div class="container mx-auto">
+            <h1 class="text-3xl font-bold mb-6">Vehicles</h1>
+
+            <!-- Search and Sort Section -->
             <div class="mb-4 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <!-- Search Bar -->
-                <div class="w-full sm:w-1/3">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="VehicleSearch">Search
-                        Vehicles:</label>
-                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           id="VehicleSearch"
-                           placeholder="Enter Vehicle name or ID"
-                           type="text">
+                <div class="relative w-full sm:w-1/3">
+                    <label for="VehicleSearch" class="block mb-2">Search Vehicles:</label>
+                    <div class="relative">
+                        <input id="VehicleSearch" type="text"
+                               placeholder="Enter Vehicle name or ID"
+                               class="w-full p-2 pl-10 border rounded"/>
+                        <svg class="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400"
+                             xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
                 </div>
+
 
                 <!-- Sort By Dropdown -->
                 <div class="w-full sm:w-1/3">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="VehicleSorting">Sort
-                        By:</label>
-                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            id="VehicleSorting">
+                    <label for="VehicleSorting" class="block mb-2">Sort By:</label>
+                    <select id="VehicleSorting" class="w-full p-2 border rounded">
                         <option value="None">None</option>
                         <option value="Price-Low-to-High">Price - Low to High</option>
                         <option value="Price-High-to-Low">Price - High to Low</option>
-                        <option value="Category">Category</option>
+                        <option value="make">make</option>
                     </select>
                 </div>
 
-                <!-- Specify Category Dropdown -->
-                <div class="w-full sm:w-1/3" id="CategoryFilterContainer" style="display: none;">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="CategoryFilter">Specify
-                        Category:</label>
-                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            id="CategoryFilter">
-                        <option value="All">All Categories</option>
-
+                <!-- Specify make Dropdown -->
+                <div class="w-full sm:w-1/3 hidden" id="makeFilterContainer">
+                    <label for="makeFilter" class="block mb-2">Specify Brand:</label>
+                    <select id="makeFilter" class="w-full p-2 border rounded">
+                        <option value="All">All</option>
                     </select>
                 </div>
             </div>
-            <div id="VehicleList"></div>
+
+            <!-- Vehicle List -->
+            <div id="VehicleList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+            <div id="noVehiclesMessage" class="flex justify-center items-center h-full">
+                <div class="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg p-6 shadow-md flex flex-col items-center">
+                    <svg class="w-12 h-12 mb-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor" stroke-width="2">
+                        <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                        <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+                        <path d="M5 17h-2v-6l2-5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6"></path>
+                    </svg>
+                    <h2 class="text-xl font-semibold">No Vehicles Found</h2>
+                    <p class="text-gray-400">There are no vehicles to display at this time.
+                        Or Try adjusting your search
+                        or filters</p>
+                </div>
+            </div>
+
             <!-- Footer -->
             <footer class="text-center py-4">
-                <p class="text-gray-700 dark:text-gray-300">© 2024 Legend Motor Company. All rights reserved.</p>
+                <p>© 2024 Legend Motor Company. All rights reserved.</p>
             </footer>
         </div>
     </main>
-    </body>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", async function () {
+        let vehicles = [];
+
+        const vehicleListContainer = document.getElementById("VehicleList");
+        const noVehiclesMessage = document.getElementById("noVehiclesMessage");
+
+        await fetchVehicles();
+        setupEventListeners();
+        renderVehicles(vehicles);
+
+        async function fetchVehicles() {
+            try {
+                const response = await fetch("../../../resources/json/vehicles.json");
+                const data = await response.json();
+
+                vehicles = data.map(vehicle => ({
+                    id: vehicle.id,
+                    make: vehicle.make,
+                    model: vehicle.model,
+                    year: vehicle.year,
+                    price: vehicle.price,
+                    images: vehicle.images,
+                    colors: vehicle.colors.map(color => ({
+                        name: color.name,
+                        hex: color.hex
+                    })),
+                    upgradeOptions: {
+                        interior: vehicle.upgradeOptions.interior.map(option => ({
+                            name: option.name,
+                            price: option.price
+                        })),
+                        performance: vehicle.upgradeOptions.performance.map(option => ({
+                            name: option.name,
+                            price: option.price
+                        })),
+                        technology: vehicle.upgradeOptions.technology.map(option => ({
+                            name: option.name,
+                            price: option.price
+                        }))
+                    },
+                    insuranceOptions: vehicle.insuranceOptions.map(option => ({
+                        planName: option.planName,
+                        pricePerYear: option.pricePerYear
+                    })),
+                    specs: {
+                        engine: vehicle.specs.engine,
+                        transmission: vehicle.specs.transmission,
+                        mileage: vehicle.specs.mileage,
+                        colorOptions: vehicle.specs.colorOptions
+                    }
+                }));
+
+                console.log(vehicles);
+            } catch (error) {
+                console.error("Error fetching vehicles:", error);
+            }
+        }
+
+        function setupEventListeners() {
+            document.getElementById("VehicleSorting").addEventListener("change", applyFiltersAndSort);
+            document.getElementById("makeFilter").addEventListener("change", applyFiltersAndSort);
+            document.getElementById("VehicleSearch").addEventListener("input", applyFiltersAndSort);
+        }
+
+        function applyFiltersAndSort() {
+            const searchTerm = document.getElementById("VehicleSearch").value.toLowerCase();
+            const sortBy = document.getElementById("VehicleSorting").value;
+            const makeFilter = document.getElementById("makeFilter").value;
+
+            let filteredVehicles = vehicles.filter(vehicle =>
+                (vehicle.name.toLowerCase().includes(searchTerm) || vehicle.id.toString().includes(searchTerm)) &&
+                (makeFilter === "All" || vehicle.make === makeFilter)
+            );
+
+            filteredVehicles = sortVehicles(filteredVehicles, sortBy);
+            renderVehicles(filteredVehicles);
+        }
+
+        function sortVehicles(vehicles, sortBy) {
+            switch (sortBy) {
+                case "Price-Low-to-High":
+                    return vehicles.sort((a, b) => a.price - b.price);
+                case "Price-High-to-Low":
+                    return vehicles.sort((a, b) => b.price - a.price);
+                case "make":
+                    return vehicles.sort((a, b) => a.make.localeCompare(b.make));
+                default:
+                    return vehicles;
+            }
+        }
+
+        function renderVehicles(vehicles) {
+            vehicleListContainer.innerHTML = ""; // Clear previous content
+
+            if (vehicles.length === 0) {
+                noVehiclesMessage.classList.remove("hidden");
+            } else {
+                noVehiclesMessage.classList.add("hidden");
+
+                const fragment = document.createDocumentFragment();
+
+                vehicles.forEach(vehicle => {
+                    const card = createVehicleCard(vehicle);
+                    fragment.appendChild(card);
+                });
+                vehicleListContainer.appendChild(fragment);
+            }
+        }
+
+        function createVehicleCard(vehicle) {
+            const card = document.createElement('div');
+            card.className = "bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden";
+
+            const sliderContainer = document.createElement('div');
+            sliderContainer.className = "image-slider relative";
+
+            const prevButton = document.createElement('button');
+            prevButton.className = "prev absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-1";
+            prevButton.innerHTML = "❮";
+            prevButton.onclick = () => changeSlide(-1);
+
+            const nextButton = document.createElement('button');
+            nextButton.className = "next absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-200 rounded-full p-1";
+            nextButton.innerHTML = "❯";
+            nextButton.onclick = () => changeSlide(1);
+
+            sliderContainer.appendChild(prevButton);
+            sliderContainer.appendChild(nextButton);
+
+            const slidesContainer = document.createElement('div');
+            slidesContainer.className = "slides";
+
+            const fallbackSvg = 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500';
+
+            vehicle.images.forEach((url, index) => {
+                const img = document.createElement('img');
+                img.src = url;
+
+                img.onerror = () => {
+                    img.src = fallbackSvg;
+                };
+
+                img.alt = vehicle.make + ' ' + vehicle.model;
+                img.className = "slide" + (index === 0 ? '' : ' hidden');
+                slidesContainer.appendChild(img);
+            });
+
+            sliderContainer.appendChild(slidesContainer);
+            card.appendChild(sliderContainer);
+
+            const content = document.createElement('div');
+            content.className = "p-4";
+
+            const title = document.createElement('h3');
+            title.className = "text-lg font-semibold mb-2 text-gray-900 dark:text-white";
+            title.textContent = `${vehicle.make} ${vehicle.model}`;
+
+            const priceInfo = document.createElement('p');
+            priceInfo.textContent = `Price: $${vehicle.price}`;
+
+            content.appendChild(title);
+            content.appendChild(priceInfo);
+
+            // create a button for adding to wishlist aka cart
+            const addToWishListButton = document.createElement('button');
+            addToWishListButton.className = "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-flex items-center";
+            addToWishListButton.innerHTML = "Add to Wishlist";
+            addToWishListButton.value = vehicle.id;
+            addToWishListButton.onclick = () => {
+                // ShowNotification('Added to Wishlist', 'success');
+                addToWishListButton.innerHTML = "Added to Wishlist";
+                addToWishListButton.className = "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded inline-flex items-center";
+                // and redirect to the ViewDetailsNRequest page
+                window.location.href = `ViewDetailsNRequest.html?id=${addToWishListButton.value}`;
+            }
+            content.appendChild(addToWishListButton);
+            card.appendChild(content);
+
+            let slideIndex = 0;
+
+            function showSlides(n) {
+                const slides = slidesContainer.getElementsByClassName("slide");
+                if (n >= slides.length) {
+                    slideIndex = 0;
+                }
+                if (n < 0) {
+                    slideIndex = slides.length - 1;
+                }
+                for (let i = 0; i < slides.length; i++) {
+                    slides[i].classList.add("hidden");
+                }
+                slides[slideIndex].classList.remove("hidden");
+            }
+
+            function changeSlide(n) {
+                slideIndex += n;
+                showSlides(slideIndex);
+            }
+
+            showSlides(slideIndex);
+            return card;
+        }
+
+    });
+</script>
+</body>
+</html>

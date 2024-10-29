@@ -1,14 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
   let Vehicless = [];
-  const csrfToken = getCookie("csrf_token");
-  const Token = getCookie("token");
-  let cart = [];
-  let categoryHashMap = {
-    A: "Sheet Metal",
-    B: "Major Asssemblies",
-    C: "Light Components",
-    D: "Accessories",
-  };
+  let categoryHashMap = {};
+
+  function createCategoryHashMap() {
+    // Create a hash map for category names based on json data get the vehicles band
+    const vehicles = getVehicles();
+    vehicles.forEach(vehicle => {
+      categoryHashMap[vehicle.id] = vehicle.make + " " + vehicle.model;
+    });
+  }
 
   function getCategory(category) {
     if (Number.isInteger(category) && category >= 1 && category <= 26) {
@@ -29,11 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Fetch Product data
-  fetch("../../resources/json/Product.json", {
-    method: "POST",
+  fetch("../../resources/json/vehicles.json", {
+    method: "GET",
     headers: {
-      "Content-Type": "application/json",
-      "X-Requested-With": "XMLHttpRequest",
     },
     body: JSON.stringify({
     }),
@@ -256,7 +254,7 @@ document.addEventListener("DOMContentLoaded", function () {
     return card;
   }
 
-  function createQuantityControl(partId) {
+  function createQuantityControl(CarId) {
     const container = document.createElement("div");
     container.className = "flex items-center space-x-2";
 
@@ -267,40 +265,40 @@ document.addEventListener("DOMContentLoaded", function () {
     const decrementBtn = document.createElement("button");
     decrementBtn.className =
       "bg-gray-200 text-gray-800 w-8 h-8 flex items-center justify-center hover:bg-gray-300 transition duration-300";
-    decrementBtn.onclick = () => decrementQuantity(partId);
+    decrementBtn.onclick = () => decrementQuantity(CarId);
     decrementBtn.innerHTML = '<span class="text-lg font-bold">-</span>';
     quantityWrapper.appendChild(decrementBtn);
 
     const input = document.createElement("input");
     input.type = "number";
-    input.id = `quantity-${partId}`;
+    input.id = `quantity-${CarId}`;
     input.value = "0";
     input.min = "0";
     input.className =
       "w-12 h-8 text-center text-sm border-x border-gray-300 dark:bg-gray-700 dark:text-white appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none moz-appearance:textfield";
-    input.onchange = (e) => updateQuantity(partId, e.target.value);
+    input.onchange = (e) => updateQuantity(CarId, e.target.value);
     quantityWrapper.appendChild(input);
 
     const incrementBtn = document.createElement("button");
     incrementBtn.className =
       "bg-gray-200 text-gray-800 w-8 h-8 flex items-center justify-center hover:bg-gray-300 transition duration-300";
-    incrementBtn.onclick = () => incrementQuantity(partId);
+    incrementBtn.onclick = () => incrementQuantity(CarId);
     incrementBtn.innerHTML = '<span class="text-lg font-bold">+</span>';
     quantityWrapper.appendChild(incrementBtn);
 
     container.appendChild(quantityWrapper);
 
     const addToCartBtn = document.createElement("button");
-    addToCartBtn.onclick = () => addToCart(partId);
-    addToCartBtn.id = `addToCartBtn-${partId}`;
+    addToCartBtn.onclick = () => addToCart(CarId);
+    addToCartBtn.id = `addToCartBtn-${CarId}`;
     addToCartBtn.className =
       "bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition duration-300 text-sm";
     addToCartBtn.textContent = "Add to Cart";
     container.appendChild(addToCartBtn);
 
     const removeFromCartBtn = document.createElement("button");
-    removeFromCartBtn.onclick = () => removeFromCart(partId);
-    removeFromCartBtn.id = `removeFromCartBtn-${partId}`;
+    removeFromCartBtn.onclick = () => removeFromCart(CarId);
+    removeFromCartBtn.id = `removeFromCartBtn-${CarId}`;
     removeFromCartBtn.className =
       "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition duration-300 text-sm hidden";
     removeFromCartBtn.textContent = "Remove from Cart";
@@ -315,18 +313,18 @@ document.addEventListener("DOMContentLoaded", function () {
   let CART_ID = localStorage.getItem("cartId");
   const userId = localStorage.getItem("username");
 
-  function decrementQuantity(partId) {
-    const input = document.getElementById(`quantity-${partId}`);
+  function decrementQuantity(CarId) {
+    const input = document.getElementById(`quantity-${CarId}`);
     if (input.value > 0) {
       input.value = parseInt(input.value) - 1;
-      updateQuantity(partId, input.value);
+      updateQuantity(CarId, input.value);
     }
   }
 
-  function incrementQuantity(partId) {
-    const input = document.getElementById(`quantity-${partId}`);
+  function incrementQuantity(CarId) {
+    const input = document.getElementById(`quantity-${CarId}`);
     input.value = parseInt(input.value) + 1;
-    updateQuantity(partId, input.value);
+    updateQuantity(CarId, input.value);
   }
 
   async function fetchApi(action, data = {}) {
@@ -355,28 +353,21 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  async function addToCart(partId) {
-    const quantity = parseInt(
-      document.getElementById(`quantity-${partId}`).value
-    );
-    if (quantity > 0) {
-      await updateQuantity(partId, quantity);
-    } else {
-      alert("Please select a quantity greater than 0");
-    }
+  async function addToCart(CarId) {
+
   }
 
-  async function removeFromCart(partId) {
+  async function removeFromCart(CarId) {
     try {
-      const result = await fetchApi("remove", { partId });
+      const result = await fetchApi("remove", { CarId });
       console.log("Item removed from cart", result);
       updateLocalCart(result.cartItems);
-      updateUIAfterCartChange(partId, false);
-      document.getElementById(`quantity-${partId}`).value = "0";
-      alert("Item removed successfully");
+      updateUIAfterCartChange(CarId, false);
+      document.getElementById(`quantity-${CarId}`).value = "0";
+
       return result;
     } catch (error) {
-      console.error(`Failed to remove item ${partId} from cart:`, error);
+      console.error(`Failed to remove item ${CarId} from cart:`, error);
       alert(error.message);
     }
   }
@@ -389,52 +380,6 @@ document.addEventListener("DOMContentLoaded", function () {
         cartItems: cartItems,
       })
     );
-  }
-
-  function updateUIAfterCartChange(partId, isInCart) {
-    const addBtn = document.getElementById(`addToCartBtn-${partId}`);
-    const removeBtn = document.getElementById(`removeFromCartBtn-${partId}`);
-    const quantityInput = document.getElementById(`quantity-${partId}`);
-
-    if (isInCart) {
-      addBtn.classList.add("hidden");
-      removeBtn.classList.remove("hidden");
-      quantityInput.disabled = false;
-    } else {
-      addBtn.classList.remove("hidden");
-      removeBtn.classList.add("hidden");
-      quantityInput.disabled = true;
-      quantityInput.value = "0";
-    }
-  }
-
-  async function updateQuantity(partId, newQuantity) {
-    if (!CART_ID || !partId) {
-      console.error("Cart ID and Item ID are required");
-      return;
-    }
-
-    try {
-      const cart = await getCart();
-      const itemInCart = cart.cartItems.some((item) => item.id === partId);
-
-      if (newQuantity > 0) {
-        const result = itemInCart
-          ? await fetchApi("update", { partId, quantity: newQuantity })
-          : await fetchApi("add", { partId, quantity: newQuantity });
-        console.log("Cart updated", result);
-        updateLocalCart(result.cartItems);
-        updateUIAfterCartChange(partId, true);
-        return result;
-      } else if (itemInCart) {
-        return await removeFromCart(partId);
-      } else {
-        updateUIAfterCartChange(partId, false);
-      }
-    } catch (error) {
-      console.error(`Failed to update quantity for part ${partId}:`, error);
-      alert(error.message);
-    }
   }
 
   async function getCart() {
@@ -545,8 +490,8 @@ document.addEventListener("DOMContentLoaded", function () {
   function initializeQuantityControls() {
     const productElements = document.querySelectorAll("[data-part-id]");
     productElements.forEach((element) => {
-      const partId = element.dataset.partId;
-      const quantityControl = createQuantityControl(partId);
+      const CarId = element.dataset.CarId;
+      const quantityControl = createQuantityControl(CarId);
       element.appendChild(quantityControl);
     });
   }

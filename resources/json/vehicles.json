@@ -1,60 +1,1040 @@
-{
-  "vehicles": [
+[
     {
-      "id": 1,
-      "make": "Toyota",
-      "model": "Camry",
-      "year": 2024,
-      "price": 25999,
-      "image": "https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500",
-      "specs": {
-        "engine": "2.5L 4-Cylinder",
-        "transmission": "8-Speed Automatic",
-        "mileage": "New",
-        "color": "Celestial Silver Metallic"
-      }
+        "id": 1,
+        "make": "Toyota",
+        "model": "C-Class",
+        "modelCode": "hN938",
+        "manufacturingYear": 2023,
+        "carType": "Truck",
+        "fuelType": "Diesel",
+        "year": 2015,
+        "specifications": {
+            "engine": {
+                "type": "1.6L",
+                "cylinderCount": 6,
+                "horsepower": 355,
+                "torque": 323,
+                "drivetrain": "FWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 13645,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 1
+        },
+        "price": 36360,
+        "images": [
+            {
+                "url": "https://picsum.photos/500/300"
+            },
+            {
+                "url": "https://dummyimage.com/500x300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "Pink",
+                "hexCode": "#910f22"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Underinsured Motorist Coverage",
+                "annualPremium": 3072,
+                "coverageLimit": 88253,
+                "deductible": 1000
+            },
+            {
+                "planName": "Zero Depreciation Cover",
+                "annualPremium": 2059,
+                "coverageLimit": 116363,
+                "deductible": 500
+            }
+        ]
     },
     {
-      "id": 2,
-      "make": "Honda",
-      "model": "CR-V",
-      "year": 2024,
-      "price": 28999,
-      "image": "https://images.unsplash.com/photo-1568844293986-8d0400bd4745?w=500",
-      "specs": {
-        "engine": "1.5L Turbo 4-Cylinder",
-        "transmission": "CVT",
-        "mileage": "New",
-        "color": "Platinum White Pearl"
-      }
+        "id": 2,
+        "make": "Honda",
+        "model": "Camry",
+        "modelCode": "Wa108",
+        "manufacturingYear": 2021,
+        "carType": "SUV",
+        "fuelType": "Diesel",
+        "year": 2018,
+        "specifications": {
+            "engine": {
+                "type": "1.5L",
+                "cylinderCount": 6,
+                "horsepower": 373,
+                "torque": 458,
+                "drivetrain": "RWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 21796,
+                "unit": "miles"
+            },
+            "safetyRating": 2,
+            "warrantyYears": 5
+        },
+        "price": 38105,
+        "images": [
+            {
+                "url": "https://dummyimage.com/500x300"
+            },
+            {
+                "url": "https://picsum.photos/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "LightBlue",
+                "hexCode": "#80c4fc"
+            },
+            {
+                "name": "SkyBlue",
+                "hexCode": "#658995"
+            },
+            {
+                "name": "MediumPurple",
+                "hexCode": "#7cc66a"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Gap Insurance",
+                "annualPremium": 4101,
+                "coverageLimit": 154982,
+                "deductible": 250
+            }
+        ]
     },
     {
-      "id": 3,
-      "make": "BMW",
-      "model": "3 Series",
-      "year": 2024,
-      "price": 43999,
-      "image": "https://images.unsplash.com/photo-1523983388277-336a66bf9bcd?w=500",
-      "specs": {
-        "engine": "2.0L TwinPower Turbo",
-        "transmission": "8-Speed Sport Automatic",
-        "mileage": "New",
-        "color": "Black Sapphire Metallic"
-      }
+        "id": 3,
+        "make": "Volkswagen",
+        "model": "Sentra",
+        "modelCode": "Ox965",
+        "manufacturingYear": 2021,
+        "carType": "SUV",
+        "fuelType": "Gasoline",
+        "year": 2015,
+        "specifications": {
+            "engine": {
+                "type": "4.9L",
+                "cylinderCount": 6,
+                "horsepower": 286,
+                "torque": 242,
+                "drivetrain": "FWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 41235,
+                "unit": "miles"
+            },
+            "safetyRating": 2,
+            "warrantyYears": 3
+        },
+        "price": 33744,
+        "images": [
+            {
+                "url": "https://picsum.photos/500/300"
+            },
+            {
+                "url": "https://picsum.photos/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "MistyRose",
+                "hexCode": "#056204"
+            },
+            {
+                "name": "DarkGoldenRod",
+                "hexCode": "#2c5998"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                },
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Gap Insurance",
+                "annualPremium": 1606,
+                "coverageLimit": 104065,
+                "deductible": 500
+            },
+            {
+                "planName": "Underinsured Motorist Coverage",
+                "annualPremium": 1752,
+                "coverageLimit": 75241,
+                "deductible": 500
+            },
+            {
+                "planName": "Basic Liability Coverage",
+                "annualPremium": 2394,
+                "coverageLimit": 72390,
+                "deductible": 250
+            }
+        ]
     },
     {
-      "id": 4,
-      "make": "Tesla",
-      "model": "Model 3",
-      "year": 2024,
-      "price": 41999,
-      "image": "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=500",
-      "specs": {
-        "engine": "Dual Motor All-Wheel Drive",
-        "transmission": "Single-Speed Fixed Gear",
-        "mileage": "New",
-        "color": "Pearl White Multi-Coat"
-      }
+        "id": 4,
+        "make": "Volkswagen",
+        "model": "Sentra",
+        "modelCode": "Pd084",
+        "manufacturingYear": 2021,
+        "carType": "SUV",
+        "fuelType": "Diesel",
+        "year": 2020,
+        "specifications": {
+            "engine": {
+                "type": "5.1L",
+                "cylinderCount": 4,
+                "horsepower": 143,
+                "torque": 257,
+                "drivetrain": "RWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 12662,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 3
+        },
+        "price": 30872,
+        "images": [
+            {
+                "url": "https://placekitten.com/500/300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "DodgerBlue",
+                "hexCode": "#b29bbc"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Basic Liability Coverage",
+                "annualPremium": 3502,
+                "coverageLimit": 126447,
+                "deductible": 500
+            },
+            {
+                "planName": "Collision Coverage",
+                "annualPremium": 1298,
+                "coverageLimit": 100907,
+                "deductible": 1000
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "make": "Mercedes-Benz",
+        "model": "Z4",
+        "modelCode": "Cu668",
+        "manufacturingYear": 2023,
+        "carType": "SUV",
+        "fuelType": "Gasoline",
+        "year": 2011,
+        "specifications": {
+            "engine": {
+                "type": "3.4L",
+                "cylinderCount": 4,
+                "horsepower": 108,
+                "torque": 332,
+                "drivetrain": "RWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 36274,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 4
+        },
+        "price": 36176,
+        "images": [
+            {
+                "url": "https://dummyimage.com/500x300"
+            },
+            {
+                "url": "https://picsum.photos/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "WhiteSmoke",
+                "hexCode": "#b76407"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                },
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Uninsured Motorist Protection",
+                "annualPremium": 4156,
+                "coverageLimit": 68770,
+                "deductible": 250
+            },
+            {
+                "planName": "Collision Coverage",
+                "annualPremium": 2104,
+                "coverageLimit": 94424,
+                "deductible": 250
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "make": "Honda",
+        "model": "Sentra",
+        "modelCode": "Uj208",
+        "manufacturingYear": 2020,
+        "carType": "Truck",
+        "fuelType": "Diesel",
+        "year": 2022,
+        "specifications": {
+            "engine": {
+                "type": "5.1L",
+                "cylinderCount": 6,
+                "horsepower": 326,
+                "torque": 256,
+                "drivetrain": "FWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 29294,
+                "unit": "miles"
+            },
+            "safetyRating": 3,
+            "warrantyYears": 4
+        },
+        "price": 34324,
+        "images": [
+            {
+                "url": "https://picsum.photos/500/300"
+            },
+            {
+                "url": "https://dummyimage.com/500x300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "FloralWhite",
+                "hexCode": "#b9c2ad"
+            },
+            {
+                "name": "YellowGreen",
+                "hexCode": "#88ac3f"
+            },
+            {
+                "name": "Lime",
+                "hexCode": "#233d54"
+            },
+            {
+                "name": "Lime",
+                "hexCode": "#bbd2ca"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                },
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Basic Liability Coverage",
+                "annualPremium": 1454,
+                "coverageLimit": 84864,
+                "deductible": 250
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "make": "Chevrolet",
+        "model": "Malibu",
+        "modelCode": "Tx366",
+        "manufacturingYear": 2024,
+        "carType": "SUV",
+        "fuelType": "Gasoline",
+        "year": 2019,
+        "specifications": {
+            "engine": {
+                "type": "2.2L",
+                "cylinderCount": 4,
+                "horsepower": 268,
+                "torque": 148,
+                "drivetrain": "RWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 47919,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 1
+        },
+        "price": 32633,
+        "images": [
+            {
+                "url": "https://placekitten.com/500/300"
+            },
+            {
+                "url": "https://picsum.photos/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "DarkKhaki",
+                "hexCode": "#0c386c"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Medical Payments Coverage (MedPay)",
+                "annualPremium": 1562,
+                "coverageLimit": 110544,
+                "deductible": 250
+            },
+            {
+                "planName": "Medical Payments Coverage (MedPay)",
+                "annualPremium": 2060,
+                "coverageLimit": 74911,
+                "deductible": 1000
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "make": "Nissan",
+        "model": "Camry",
+        "modelCode": "eU481",
+        "manufacturingYear": 2022,
+        "carType": "Sedan",
+        "fuelType": "Gasoline",
+        "year": 2010,
+        "specifications": {
+            "engine": {
+                "type": "4.6L",
+                "cylinderCount": 4,
+                "horsepower": 365,
+                "torque": 112,
+                "drivetrain": "AWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 22316,
+                "unit": "miles"
+            },
+            "safetyRating": 5,
+            "warrantyYears": 2
+        },
+        "price": 32016,
+        "images": [
+            {
+                "url": "https://dummyimage.com/500x300"
+            },
+            {
+                "url": "https://dummyimage.com/500x300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "BurlyWood",
+                "hexCode": "#7904e5"
+            },
+            {
+                "name": "Lime",
+                "hexCode": "#0811a2"
+            },
+            {
+                "name": "Brown",
+                "hexCode": "#5738e7"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Comprehensive Coverage",
+                "annualPremium": 2266,
+                "coverageLimit": 66059,
+                "deductible": 250
+            },
+            {
+                "planName": "Roadside Assistance Plan",
+                "annualPremium": 3608,
+                "coverageLimit": 50188,
+                "deductible": 250
+            },
+            {
+                "planName": "Emergency Medical Expenses Coverage",
+                "annualPremium": 2513,
+                "coverageLimit": 48472,
+                "deductible": 250
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "make": "BMW",
+        "model": "GLA",
+        "modelCode": "yD892",
+        "manufacturingYear": 2021,
+        "carType": "Truck",
+        "fuelType": "Diesel",
+        "year": 2012,
+        "specifications": {
+            "engine": {
+                "type": "5.7L",
+                "cylinderCount": 6,
+                "horsepower": 234,
+                "torque": 415,
+                "drivetrain": "FWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 2247,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 2
+        },
+        "price": 41285,
+        "images": [
+            {
+                "url": "https://picsum.photos/500/300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "MediumTurquoise",
+                "hexCode": "#6f5ef4"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Personal Injury Protection (PIP)",
+                "annualPremium": 4597,
+                "coverageLimit": 73971,
+                "deductible": 1000
+            },
+            {
+                "planName": "Basic Liability Coverage",
+                "annualPremium": 2341,
+                "coverageLimit": 89004,
+                "deductible": 250
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "make": "Chevrolet",
+        "model": "CR-V",
+        "modelCode": "PW631",
+        "manufacturingYear": 2023,
+        "carType": "SUV",
+        "fuelType": "Diesel",
+        "year": 2019,
+        "specifications": {
+            "engine": {
+                "type": "4.7L",
+                "cylinderCount": 6,
+                "horsepower": 296,
+                "torque": 316,
+                "drivetrain": "FWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 9165,
+                "unit": "miles"
+            },
+            "safetyRating": 3,
+            "warrantyYears": 3
+        },
+        "price": 38069,
+        "images": [
+            {
+                "url": "https://picsum.photos/500/300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "OldLace",
+                "hexCode": "#15e069"
+            },
+            {
+                "name": "DarkOrange",
+                "hexCode": "#50f26b"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                },
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                }
+            ]
+        },
+        "insurancePlans": [
+            {
+                "planName": "Gap Insurance",
+                "annualPremium": 3354,
+                "coverageLimit": 81311,
+                "deductible": 1000
+            }
+        ]
     }
-  ]
-}
+]
