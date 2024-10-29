@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Vehicle </title>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="Vehicle page for the Legend Motor Company" name="Description"/>
+    <meta content="noindex, nofollow" name="robots"/>
+    <meta content="Legend Motor Company" name="generator"/>
+    <meta content="Copyright &copy; 2024 Legend Motor Company" name="copyright"/>
+    <meta content="1 days" name="revisit-after"/>
+    <link href="../../../resources/image/SLMC_Icon_DM.png" rel="icon" type="image/x-icon"/>
+    <script type="module" src="../../../resources/js/cartApi.js"></script>
+    <script type="module" src="../../../resources/js/viewVehicle.js"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            "50": "#eff6ff",
+                            "100": "#dbeafe",
+                            "200": "#bfdbfe",
+                            "300": "#93c5fd",
+                            "400": "#60a5fa",
+                            "500": "#3b82f6",
+                            "600": "#2563eb",
+                            "700": "#1d4ed8",
+                            "800": "#1e40af",
+                            "900": "#1e3a8a",
+                            "950": "#172554"
+                        }
+                    }
+                },
+                fontFamily: {
+                    'body': [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'system-ui',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'Noto Sans',
+                        'sans-serif',
+                        'Apple Color Emoji',
+                        'Segoe UI Emoji',
+                        'Segoe UI Symbol',
+                        'Noto Color Emoji'
+                    ],
+                    'sans': [
+                        'Inter',
+                        'ui-sans-serif',
+                        'system-ui',
+                        '-apple-system',
+                        'system-ui',
+                        'Segoe UI',
+                        'Roboto',
+                        'Helvetica Neue',
+                        'Arial',
+                        'Noto Sans',
+                        'sans-serif',
+                        'Apple Color Emoji',
+                        'Segoe UI Emoji',
+                        'Segoe UI Symbol',
+                        'Noto Color Emoji'
+                    ]
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white">
+<div class="flex h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white border-gray-200 dark:bg-gray-900 w-64 flex-shrink-0 hidden md:flex md:flex-col">
+        <div class="flex flex-col items-center p-4">
+            <a class="flex items-center space-x-3 rtl:space-x-reverse mb-6" href="#">
+                <div class="h-8 w-8 relative">
+                    <img alt="SLMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
+                         src="../../resources/image/SLMC_LOGO.png"/>
+                    <img alt="SLMC Logo" class="absolute inset-0 object-contain hidden dark:block"
+                         src="../../resources/image/SLMC_LOGO_DM.png"/>
+                </div>
+                <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SLMC</span>
+            </a>
+
+            <ul class="font-medium flex flex-col space-y-2">
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="viewOrderRecord.html">Order Record</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="viewVehicle.html">Vehicle</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="shoppingCart.html">Cart</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="profile.html">Profile</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                       href="../../logout.html" onclick="logout()">Log Out</a>
+                </li>
+            </ul>
+
+            <!-- Dark mode toggle button -->
+            <button class="mt-6 p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+                    id="darkModeToggle">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </nav>
+    <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
+    <main>
+        <div class="container mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold mb-6 text-gray-900 dark:text-white">Vehicles</h1>
+
+            <div class="mb-4 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <!-- Search Bar -->
+                <div class="w-full sm:w-1/3">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="VehicleSearch">Search
+                        Vehicles:</label>
+                    <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           id="VehicleSearch"
+                           placeholder="Enter Vehicle name or ID"
+                           type="text">
+                </div>
+
+                <!-- Sort By Dropdown -->
+                <div class="w-full sm:w-1/3">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="VehicleSorting">Sort
+                        By:</label>
+                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            id="VehicleSorting">
+                        <option value="None">None</option>
+                        <option value="Price-Low-to-High">Price - Low to High</option>
+                        <option value="Price-High-to-Low">Price - High to Low</option>
+                        <option value="Category">Category</option>
+                    </select>
+                </div>
+
+                <!-- Specify Category Dropdown -->
+                <div class="w-full sm:w-1/3" id="CategoryFilterContainer" style="display: none;">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="CategoryFilter">Specify
+                        Category:</label>
+                    <select class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            id="CategoryFilter">
+                        <option value="All">All Categories</option>
+
+                    </select>
+                </div>
+            </div>
+            <div id="VehicleList"></div>
+            <!-- Footer -->
+            <footer class="text-center py-4">
+                <p class="text-gray-700 dark:text-gray-300">© 2024 Legend Motor Company. All rights reserved.</p>
+            </footer>
+        </div>
+    </main>
+    </body>
+</div>

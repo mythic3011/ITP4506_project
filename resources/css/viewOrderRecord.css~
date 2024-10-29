@@ -1,16 +1,17 @@
 /* For Copy and Paste */
 
-body {
+body{
     margin: 0px;
     background-color: rgb(240, 240, 240);
     overflow: auto;
 }
 
 
+
 /*---------Menu-------------*/
-.menu {
+.menu{
     height: 75px;
-    background-color: rgb(185, 209, 233);
+    background-color: rgb(185, 209 , 233);
     display: flex;
     flex-direction: row;
     text-transform: uppercase;
@@ -21,12 +22,12 @@ body {
     z-index: 1;
 }
 
-.menu a {
+.menu a{
     text-decoration: none;
 
 }
 
-.menu_tag a::before {
+.menu_tag a::before{
     position: absolute;
     content: '';
     bottom: 0;
@@ -39,52 +40,53 @@ body {
 }
 
 
-.menu_tag a:hover::before {
+.menu_tag a:hover::before{
     transform: scale(1);
     transform-origin: left;
 }
 
-.menu_left {
+.menu_left{
     height: 100%;
     width: 20%;
     display: flex;
     flex-direction: row;
     align-items: center; /* align vertically */
-    justify-content: center;
+    justify-content: center; 
 }
 
-.menu_left img {
+.menu_left img{
     height: 80%;
 }
 
-.menu_center {
+.menu_center{
     height: 100%;
     width: 40%;
     display: flex;
     flex-direction: row;
     align-items: center; /* align vertically */
-    justify-content: space-between;
+    justify-content: space-between; 
 }
 
-.menu_right {
+.menu_right{
     height: 100%;
     width: 20%;
     display: flex;
     flex-direction: row;
     align-items: center; /* align vertically */
-    justify-content: center;
+    justify-content: center; 
 }
 
-.menu_tag {
+.menu_tag{
     font-size: 19px;
     font-family: KippaxCondensed, sans-serif;
     text-align: center;
-    font-weight: 800;;
+    font-weight: 800;
+    ;
     position: relative;
-    float: left;
+    float:left;
 }
 
-.hidden {
+.hidden{
     font-family: KippaxCondensed, sans-serif;
     height: 40px;
     width: 150px;
@@ -96,27 +98,27 @@ body {
     display: none;
 }
 
-.hidden a {
+.hidden a{
     text-decoration: none;
 
 }
 
-.hidden_menu_icon {
+.hidden_menu_icon{
     display: none;
     height: 24px;
 }
 
-.hidden_menu {
+.hidden_menu{
     display: none;
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: rgb(185, 209, 233);
+    background-color: rgb(185, 209 , 233);
     z-index: 10;
     top: 0px;
 }
 
-.hidden_menu_body {
+.hidden_menu_body{
     margin-left: 3%;
     margin-right: 3%;
     margin-top: 1px;
@@ -124,7 +126,7 @@ body {
     height: 99%;
 }
 
-.hidden_menu_body_top {
+.hidden_menu_body_top{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -132,28 +134,28 @@ body {
     height: 60px;
 }
 
-.hidden_menu_logo {
+.hidden_menu_logo{
     height: 50px;
 }
 
-.hidden_menu_x_icon {
+.hidden_menu_x_icon{
     height: 40px;
 }
 
-.hidden_menu_body_main {
+.hidden_menu_body_main{
     display: flex;
     flex-direction: column;
     justify-content: center;
     height: 90%;
     overflow: scroll;
-    scrollbar-width: none; /*hide the scroll bar*/
+    scrollbar-width: none;  /*hide the scroll bar*/
 }
 
-.hidden_menu_body_main ::-webkit-scrollbar { /*hide the scroll bar*/ /*found on w3school*/
+.hidden_menu_body_main ::-webkit-scrollbar{ /*hide the scroll bar*/ /*found on w3school*/
     display: none;
 }
 
-.hidden_menu_tag {
+.hidden_menu_tag{
     height: 50px;
     margin: 2px;
     border-bottom: 1px solid black;
@@ -162,81 +164,82 @@ body {
     align-items: center;
 }
 
-.hidden_menu_tag_last {
+.hidden_menu_tag_last{
     border-bottom: 0px;
 }
 
-.hidden_menu_tag a {
+.hidden_menu_tag a{
     font-family: KippaxCondensed, sans-serif;
     font-weight: 800;
     font-size: 20px;
-    text-decoration: none;;
+    text-decoration: none;
+    ;
     text-transform: uppercase;
 }
 
-.hidden_menu_tag a:hover {
+.hidden_menu_tag a:hover{
     text-decoration: underline;
 }
 
-@media only screen and (max-width: 1098px) {
-    .menu_left {
+@media only screen and (max-width: 1098px){
+    .menu_left{
         width: 15%;
     }
 
-    .menu_right {
+    .menu_right{
         width: 15%;
     }
 
-    .menu_center {
+    .menu_center{
         width: 50%;
     }
 
 }
 
-@media only screen and (max-width: 905px) {
-    .menu_left {
+@media only screen and (max-width: 905px){
+    .menu_left{
         width: 12.5%;
     }
 
-    .menu_right {
+    .menu_right{
         width: 12.5%;
     }
 
-    .menu_center {
+    .menu_center{
         width: 55%;
     }
 
 }
 
-@media only screen and (max-width: 825px) {
-    .menu_tag {
+@media only screen and (max-width: 825px){
+    .menu_tag{
         font-size: 17px;
     }
 
 }
 
-@media only screen and (max-width: 720px) {
-    .menu {
+@media only screen and (max-width: 720px){
+    .menu{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
     }
 
-    .menu_tag {
+    .menu_tag{
         display: none;
     }
 
-    .menu_logo {
+    .menu_logo{
         padding-top: 0px;
     }
 
-    .hidden_menu_icon {
+    .hidden_menu_icon{
         display: block;
         padding-right: 10px;
     }
 
-    .menu_left img {
+    .menu_left img{
         height: 70%;
         margin-left: 40px;
     }
@@ -246,14 +249,14 @@ body {
 
 /*---------Order-------------*/
 
-.order {
+.order{
     margin-left: 10%;
     margin-right: 10%;
     margin-top: 10px;
     font-family: KippaxCondensed, sans-serif;
 }
 
-.order_heading {
+.order_heading{
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -264,16 +267,16 @@ body {
     font-weight: 600;
 }
 
-.total_order {
+.total_order{
     width: 100%;
     font-size: 20px;
     margin-left: 68px;
     margin-top: 20px;
 }
 
-.table-wrapper {
+.table-wrapper{
     margin: 10px 70px 70px;
-    box-shadow: 0px 35px 50px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 35px 50px rgba( 0, 0, 0, 0.2 );
 }
 
 .fl-table {
@@ -313,7 +316,7 @@ body {
     background: #F8F8F8;
 }
 
-.td a {
+.td a{
     text-decoration: underline;
 }
 
@@ -321,7 +324,7 @@ body {
 
 @media (max-width: 1161px) {
 
-    .table-wrapper {
+    .table-wrapper{
         position: relative;
         right: 50px;
     }
@@ -330,7 +333,7 @@ body {
 
 @media (max-width: 1006px) {
 
-    .table-wrapper {
+    .table-wrapper{
         position: relative;
         right: 80px;
     }
@@ -339,14 +342,14 @@ body {
 
 @media (max-width: 937px) {
 
-    .order {
+    .order{
         margin-left: 5%;
         margin-right: 5%;
         margin-top: 10px;
         font-family: KippaxCondensed, sans-serif;
     }
 
-    .table-wrapper {
+    .table-wrapper{
         position: relative;
         right: 50px;
     }
@@ -355,14 +358,14 @@ body {
 
 @media (max-width: 900px) {
 
-    .order {
+    .order{
         margin-left: 3%;
         margin-right: 3%;
         margin-top: 10px;
         font-family: KippaxCondensed, sans-serif;
     }
 
-    .table-wrapper {
+    .table-wrapper{
         position: relative;
         right: 40px;
     }
@@ -374,8 +377,7 @@ body {
         display: block;
         width: 100%;
     }
-
-    .table-wrapper:before {
+    .table-wrapper:before{
         content: "Scroll horizontally >";
         display: block;
         text-align: right;
@@ -383,25 +385,20 @@ body {
         color: white;
         padding: 0 0 10px;
     }
-
     .fl-table thead, .fl-table tbody, .fl-table thead th {
         display: block;
     }
-
-    .fl-table thead th:last-child {
+    .fl-table thead th:last-child{
         border-bottom: none;
     }
-
     .fl-table thead {
         float: left;
     }
-
     .fl-table tbody {
         width: auto;
         position: relative;
         overflow-x: auto;
     }
-
     .fl-table td, .fl-table th {
         padding: 20px .625em .625em .625em;
         height: 60px;
@@ -413,33 +410,26 @@ body {
         font-size: 13px;
         text-overflow: ellipsis;
     }
-
     .fl-table thead th {
         text-align: left;
         border-bottom: 1px solid #f7f7f9;
     }
-
     .fl-table tbody tr {
         display: table-cell;
     }
-
     .fl-table tbody tr:nth-child(odd) {
         background: none;
     }
-
     .fl-table tr:nth-child(even) {
         background: transparent;
     }
-
     .fl-table tr td:nth-child(odd) {
         background: #F8F8F8;
         border-right: 1px solid #E6E4E4;
     }
-
     .fl-table tr td:nth-child(even) {
         border-right: 1px solid #E6E4E4;
     }
-
     .fl-table tbody td {
         display: block;
         text-align: center;

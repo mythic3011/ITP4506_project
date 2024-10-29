@@ -16,7 +16,6 @@ footer.dark-mode {
     color: #e0e0e0;
     box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
 }
-
 body {
     background-color: #ffffff;
     color: #111;
@@ -44,7 +43,6 @@ body.dark-mode {
         border-width: 1px;
         border-style: solid;
     }
-
     .navbar_a {
         padding: 0;
         color: #1D4ED8;
@@ -181,9 +179,8 @@ li {
     color: #444342;
     text-align: center;
     height: 50%;
-    width: 60%;
+    width :60%;
 }
-
 li:hover {
     background-color: #f3eded;
 }
@@ -198,7 +195,7 @@ li.dark-mode {
     background-color: #171717;
     color: #afaead;
     text-align: center;
-    width: 60%;
+    width :60%;
 }
 
 footer {
@@ -267,6 +264,8 @@ nav {
     background-color: #f7f5f4;
 }
 
+
+
 a {
     display: block;
     padding-top: 0.5rem;
@@ -276,6 +275,7 @@ a {
     border-radius: 0.25rem;
     color: #111827;
 }
+
 
 a.dark-mode {
     display: block;
@@ -315,7 +315,7 @@ a:hover.dark-mode {
     color: black;
 }
 
-.navbar_a {
+.navbar_a{
     display: block;
     font-size: 1.2rem;
     padding-top: 0.5rem;
@@ -383,6 +383,8 @@ td {
     color: #999;
 }
 
+
+
 .close {
     color: #aaa;
     float: right;
@@ -390,7 +392,6 @@ td {
     font-weight: bold;
     cursor: pointer;
 }
-
 .form-container {
     background-color: white;
     padding: 40px;
@@ -398,7 +399,6 @@ td {
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-
 .option {
     display: flex;
     align-items: center;
@@ -407,28 +407,22 @@ td {
     margin-bottom: 10px;
     border: 1px solid #ddd;
 }
-
 .option.selected {
     background-color: #fff8e1;
     border-color: #ffc107;
 }
-
 .option input {
     margin-right: 10px;
 }
-
 .option label {
     font-weight: bold;
 }
-
 .highlight {
     color: #ffc107;
 }
-
 .commercial-use {
     margin-top: 20px;
 }
-
 .submit-button {
     background-color: #00bcd4;
     color: white;
@@ -439,7 +433,7 @@ td {
     cursor: pointer;
 }
 
-.progress_bar_container {
+.progress_bar_container{
     border-radius: 9999px;
     width: 100%;
     height: 0.325rem;
@@ -449,11 +443,10 @@ td {
     z-index: 999;
 
 }
-
-.progress_bar {
+.progress_bar{
     border-radius: 9999px;
     height: 0.325rem;
-    background-color: orange;
+    background-color:orange;
 }
 
 input[type="radio"] {
@@ -489,7 +482,6 @@ input[type="radio"]:checked::before {
     text-decoration: none;
     color: #666;
 }
-
 .dropdown-container {
     margin-top: 20px;
 }
@@ -561,7 +553,7 @@ select {
     align-items: flex-end;
 }
 
-.details div span {
+.details div span{
     font-size: 25px;
     color: #3c3c3c;
 }
@@ -585,7 +577,6 @@ button {
     background-color: #00bcd4;
     color: white;
 }
-
 #insurance_container {
     max-width: 600px;
     margin: auto;
@@ -723,40 +714,33 @@ button {
     font-size: 16px;
     color: #000080;
 }
-
 .estimateContainer {
     display: flex;
     font-family: Arial, sans-serif;
     margin-top: 40px;
     padding: 50px;
 }
-
 .estimateSidebar {
     width: 30%;
     padding-right: 20px;
 }
-
 .estimateMainContent {
     width: 70%;
     border-left: 1px solid #ccc;
     padding-left: 20px;
 }
-
 .estimateSection {
     margin-bottom: 20px;
 }
-
 .estimateTitle {
     font-weight: bold;
     margin-bottom: 10px;
 }
-
 .estimateDetails {
     background-color: #f9f9f9;
     padding: 10px;
     border-radius: 5px;
 }
-
 .estimateButton {
     background-color: #007bff;
     color: white;
@@ -1008,8 +992,7 @@ input:focus, select:focus {
     font-size: 0.875rem;
 }
 
-<!--
--->
+<!---->
 
 .section {
     margin-bottom: 20px;
@@ -1185,18 +1168,15 @@ input::placeholder {
     max-width: 600px;
     margin: 20px auto;
 }
-
 .car-icon {
     font-size: 40px;
     color: #f9a825; /* Yellow color */
     margin-right: 16px;
 }
-
 .car-details h2 {
     margin: 0;
     font-size: 18px;
 }
-
 .car-details p {
     margin: 4px 0 0;
     color: #666;
@@ -1216,7 +1196,6 @@ input::placeholder {
 .close-button:hover {
     color: #000;
 }
-
 .estimateTitle {
     display: flex;
     align-items: center;
@@ -1230,7 +1209,7 @@ input::placeholder {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0,0,0,0);
     transition: background-color 0.3s ease;
     display: flex;
     align-items: center;
@@ -1240,7 +1219,7 @@ input::placeholder {
 }
 
 .ncd-modal.show {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.5);
     opacity: 1;
     pointer-events: auto;
 }
@@ -1339,14 +1318,13 @@ input::placeholder {
     color: #444;
     margin-top: 1.5rem;
 }
-
 .insurance-modal {
     position: fixed;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0,0,0,0);
     transition: background-color 0.3s ease;
     display: flex;
     z-index: 1500;
@@ -1357,7 +1335,7 @@ input::placeholder {
 }
 
 .insurance-modal.show {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.5);
     opacity: 1;
     pointer-events: auto;
 }
@@ -1525,9 +1503,8 @@ input:focus,
 select:focus {
     outline: none;
     border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
 }
-
 .invalid {
     border-color: #ff4444 !important;
     background-color: #fff8f8;
@@ -1557,7 +1534,7 @@ input:focus,
 select:focus {
     outline: none;
     border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 2px rgba(0,123,255,0.25);
 }
 
 /* Required field indicator */

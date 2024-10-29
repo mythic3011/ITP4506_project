@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // if (getURLParameter('id') == null || localStorage.getItem('userToken') == null) {
     //     window.location.href = "../../error/403.html";
     // }
+
     showLoading();
     fetchOrderData()
         .then((orderData) => {
