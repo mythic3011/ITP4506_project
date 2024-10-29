@@ -1,18 +1,19 @@
 <!doctype html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
     <title>Vehicle </title>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
-    <meta content="Vehicle page for the Legend Motor Company" name="Description"/>
+    <meta content="Vehicle page for the Smart & Luxury Motor Company" name="Description"/>
+    <meta content="mythic3011, Hwhstudent, wailim0506" name="Author"/>
     <meta content="noindex, nofollow" name="robots"/>
-    <meta content="Legend Motor Company" name="generator"/>
-    <meta content="Copyright &copy; 2024 Legend Motor Company" name="copyright"/>
+    <meta content="Smart & Luxury Motor Company" name="generator"/>
+    <meta content="Copyright &copy; 2024 Smart & Luxury Motor Company" name="copyright"/>
     <meta content="1 days" name="revisit-after"/>
-    <link href="../../../resources/image/SLMC_Icon_DM.png" rel="icon" type="image/x-icon"/>
-    <script type="module" src="../../../resources/js/cartApi.js"></script>
-    <script type="module" src="../../../resources/js/viewVehicle.js"></script>
+    <link href="../../resources/image/SLMC_Icon_DM.png" rel="icon" type="image/x-icon"/>
+    <script type="module" src="../../resources/js/cartApi.js"></script>
+    <script type="module" src="../../resources/js/viewVehicle.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
     <script>
         tailwind.config = {
