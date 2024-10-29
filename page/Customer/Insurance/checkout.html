@@ -324,6 +324,22 @@
         });
         validateField(field);
     }
+    function saveChangesAndRedirect(referenceNumber) {
+        const formData = saveFormData();
+        const existingData = JSON.parse(localStorage.getItem(`pendingInsurance-${referenceNumber}`));
+
+        // Update only the form data while preserving other fields
+        existingData.Save_selected_option_3 = formData;
+        localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify(existingData));
+
+        // Clear edit mode flags
+        localStorage.removeItem('editMode');
+        localStorage.removeItem('editOrderId');
+
+        // Redirect back to order detail page
+        window.location.href = `orderDetail.html?id=${referenceNumber}`;
+    }
+
 
 
     function validateForm() {
@@ -716,50 +732,157 @@
         }, 300);
     }
 
+
     document.addEventListener('DOMContentLoaded', function() {
-        function showThankYouPopup(referenceNumber) {
+        const editMode = localStorage.getItem('editMode') === 'true';
+        const editOrderId = localStorage.getItem('editOrderId');
+
+        if (editMode && editOrderId) {
+            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
+            if (pendingInsurance) {
+                // Set the form data from existing insurance
+                localStorage.setItem('Save_selected_option', JSON.stringify(pendingInsurance.Save_selected_option));
+                localStorage.setItem('Save_selected_option_2', JSON.stringify(pendingInsurance.Save_selected_option_2));
+                localStorage.setItem('Save_selected_option_3', JSON.stringify(pendingInsurance.Save_selected_option_3));
+
+                // Update button text
+                const buyButton = document.querySelector('.buy-button');
+                if (buyButton) {
+                    buyButton.textContent = 'Save Changes';
+                }
+
+                // Populate form fields
+                populateFormFields(pendingInsurance.Save_selected_option_3);
+            }
+        }
+        function populateFormFields(data) {
+            if (!data) return;
+
+            // Populate main driver details
+            if (data.mainDriver) {
+                document.getElementById('email').value = data.mainDriver.email || '';
+                document.getElementById('mobile').value = data.mainDriver.mobile || '';
+                document.getElementById('title').value = data.mainDriver.title || '';
+                document.getElementById('firstName').value = data.mainDriver.firstName || '';
+                document.getElementById('lastName').value = data.mainDriver.lastName || '';
+                document.getElementById('hkid').value = data.mainDriver.hkid || '';
+                document.getElementById('dob').value = data.mainDriver.dob || '';
+                document.getElementById('occupation').value = data.mainDriver.occupation || '';
+                document.getElementById('mainDrivingExperience').value = data.mainDriver.drivingExperience || '';
+
+                // Set gender radio button
+                const genderInput = document.querySelector(`input[name="gender"][value="${data.mainDriver.gender}"]`);
+                if (genderInput) genderInput.checked = true;
+            }
+
+            // Populate address details
+            if (data.address) {
+                document.getElementById('room').value = data.address.room || '';
+                document.getElementById('floor').value = data.address.floor || '';
+                document.getElementById('block').value = data.address.block || '';
+                document.getElementById('building').value = data.address.building || '';
+                document.getElementById('street').value = data.address.street || '';
+                document.getElementById('area').value = data.address.area || '';
+                document.getElementById('district').value = data.address.district || '';
+            }
+
+            // Populate vehicle details
+            if (data.vehicle) {
+                document.getElementById('carModel').value = data.vehicle.carModel || '';
+                document.getElementById('manufacturingYear').value = data.vehicle.manufacturingYear || '';
+                document.getElementById('marketValue').value = data.vehicle.marketValue || '';
+                document.getElementById('insuredDrivers').value = data.vehicle.insuredDrivers || '1';
+                document.getElementById('registrationNumber').value = data.vehicle.registrationNumber || '';
+                document.getElementById('carModelCode').value = data.vehicle.carModelCode || '';
+                document.getElementById('cylinderCapacity').value = data.vehicle.cylinderCapacity || '';
+                document.getElementById('chassisNumber').value = data.vehicle.chassisNumber || '';
+                document.getElementById('engineNumber').value = data.vehicle.engineNumber || '';
+
+                // Set registered radio button
+                const registeredInput = document.querySelector(`input[name="registered"][value="${data.vehicle.isRegistered}"]`);
+                if (registeredInput) registeredInput.checked = true;
+            }
+
+            // Handle additional drivers
+            if (data.additionalDrivers && data.additionalDrivers.length > 0) {
+                const driversContainer = document.getElementById('driversContainer');
+                data.additionalDrivers.forEach((driver, index) => {
+                    const driverNumber = index + 1;
+                    driversContainer.innerHTML += createDriverForm(driverNumber);
+
+                    // Populate driver fields
+                    document.getElementById(`driver-${driverNumber}-title`).value = driver.title || '';
+                    document.getElementById(`driver-${driverNumber}-firstName`).value = driver.firstName || '';
+                    document.getElementById(`driver-${driverNumber}-lastName`).value = driver.lastName || '';
+                    document.getElementById(`driver-${driverNumber}-hkid`).value = driver.hkid || '';
+                    document.getElementById(`driver-${driverNumber}-dob`).value = driver.dob || '';
+                    document.getElementById(`driver-${driverNumber}-occupation`).value = driver.occupation || '';
+                    document.getElementById(`-${driverNumber}-DrivingExperience`).value = driver.drivingExperience || '';
+                    document.getElementById(`driver-${driverNumber}-relation`).value = driver.relation || '';
+                });
+            }
+        }
+
+        function showThankYouPopup(referenceNumber, isEdit) {
             const popup = document.createElement('div');
             popup.className = 'popup-overlay';
             popup.style.display = 'flex';
-
-            popup.innerHTML = `
-            <div class="popup-content">
-                <h2>Thank You For Your Quote!</h2>
-                <p>Our staff will review your application as soon as possible. We appreciate your trust in our services.</p>
-                <div class="popup-buttons">
-                    <button class="popup-button details-button" onclick="closePopupAndNavigate('orderDetail.html?id=${referenceNumber}')">Check Details</button>
-                    <button class="popup-button end-button" onclick="closePopupAndNavigate('index.html')">End</button>
+            localStorage.removeItem('editMode');
+            localStorage.removeItem('editOrderId');
+            if (isEdit) {
+                popup.innerHTML = `
+                <div class="popup-content">
+                    <h2>Confirm Changes</h2>
+                    <p>Are you sure you want to save these changes to your application?</p>
+                    <div class="popup-buttons">
+                        <button class="popup-button details-button" onclick="saveChangesAndRedirect('${referenceNumber}')">Save Changes</button>
+                        <button class="popup-button end-button" onclick="closePopupAndNavigate('orderDetail.html?id=${referenceNumber}')">Cancel</button>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
+            } else {
+                popup.innerHTML = `
+                <div class="popup-content">
+                    <h2>Thank You For Your Quote!</h2>
+                    <p>Our staff will review your application as soon as possible. We appreciate your trust in our services.</p>
+                    <div class="popup-buttons">
+                        <button class="popup-button details-button" onclick="closePopupAndNavigate('orderDetail.html?id=${referenceNumber}')">Check Details</button>
+                        <button class="popup-button end-button" onclick="closePopupAndNavigate('index.html')">End</button>
+                    </div>
+                </div>
+            `;
+            }
 
             document.body.appendChild(popup);
-
-            setTimeout(() => {
-                popup.classList.add('show');
-            }, 10);
+            setTimeout(() => popup.classList.add('show'), 10);
         }
+
 
         document.querySelector('.buy-button').addEventListener('click', function(e) {
             if (validateForm()) {
                 e.preventDefault();
-                const formData = saveFormData();
-                console.log('Saved:', formData);
-                const Save_selected_option = JSON.parse(localStorage.getItem('Save_selected_option'));
-                const Save_selected_option_2 = JSON.parse(localStorage.getItem('Save_selected_option_2'));
-                const Save_selected_option_3 = JSON.parse(localStorage.getItem('Save_selected_option_3'));
-                const referenceNumber = generateReferenceNumber();
+                const isEditMode = this.textContent === 'Save Changes';
 
-                localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify({
-                    Save_selected_option,
-                    Save_selected_option_2,
-                    Save_selected_option_3,
-                    referenceNumber,
-                    status: 'pending',
-                    createdAt: new Date().toISOString()
-                }));
+                if (isEditMode) {
+                    const editOrderId = localStorage.getItem('editOrderId');
+                    if (editOrderId) {
+                        showThankYouPopup(editOrderId, true);
+                    }
+                } else {
+                    const formData = saveFormData();
+                    const referenceNumber = generateReferenceNumber();
 
-                showThankYouPopup(referenceNumber);
+                    localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify({
+                        Save_selected_option: JSON.parse(localStorage.getItem('Save_selected_option')),
+                        Save_selected_option_2: JSON.parse(localStorage.getItem('Save_selected_option_2')),
+                        Save_selected_option_3: formData,
+                        referenceNumber,
+                        status: 'pending',
+                        createdAt: new Date().toISOString()
+                    }));
+
+                    showThankYouPopup(referenceNumber, false);
+                }
             } else {
                 e.preventDefault();
                 const invalidFields = document.querySelectorAll('.invalid');

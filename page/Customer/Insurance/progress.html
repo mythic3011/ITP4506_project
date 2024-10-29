@@ -151,10 +151,10 @@
         window.location.href = destinationUrl;
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const links = document.querySelectorAll('a:not([href="process.html"])');
         links.forEach(link => {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', function (e) {
                 const isSpecialButton = e.target.classList.contains('buy-button') ||
                     e.target.classList.contains('estimate-button') ||
                     e.target.id === 'btn_quote';
@@ -168,7 +168,7 @@
 
         const estimateButton = document.getElementById('btn_quote');
         if (estimateButton) {
-            estimateButton.addEventListener('click', function() {
+            estimateButton.addEventListener('click', function () {
                 save_selected_option();
                 window.location.href = 'estimate.html';
             });
@@ -176,7 +176,7 @@
 
         const savedApplication = localStorage.getItem('savedApplication');
         if (savedApplication) {
-            const { expiryDate } = JSON.parse(savedApplication);
+            const {expiryDate} = JSON.parse(savedApplication);
             if (Date.now() > expiryDate) {
                 localStorage.removeItem('savedApplication');
             }
@@ -184,19 +184,21 @@
     });
 
     function animateProgressBar() {
-        $('#progressBar').animate({ width: '35%' }, 1000);
+        $('#progressBar').animate({width: '35%'}, 1000);
     }
 
     function rollback(id) {
-        $('#progressBar').animate({ width: '15%' }, 1000);
-    $(`#${id}`).fadeOut(100, function () {
-        save_selected_option();
-        document.getElementById(id).innerHTML = s1;
+        $('#progressBar').animate({width: '15%'}, 1000);
+        $(`#${id}`).fadeOut(100, function () {
+            save_selected_option();
+            document.getElementById(id).innerHTML = s1;
 
-        $(`#${id}`).fadeIn(100);
-    });
-}
+            $(`#${id}`).fadeIn(100);
+        });
+    }
+
     var s1;
+
     function selectOption(id) {
         let options = document.getElementsByClassName("option");
         for (let i = 0; i < options.length; i++) {
@@ -220,10 +222,11 @@
         document.getElementById('selected-insurance-type').value = type;
     }
 
-    function Save_selected_option(option){
+    function Save_selected_option(option) {
         Save_selected_option.append(option.value);
         alert(Save_selected_option);
     }
+
     const models = {
         "Toyota": ["Corolla", "Camry", "RAV4"],
         "Volkswagen": ["Golf", "Passat", "Tiguan"],
@@ -252,6 +255,33 @@
         }
     }
 
+    function validateCarValue() {
+        const carValueInput = document.getElementById('car-value');
+        const alertMessage = document.getElementById('car-value-alert');
+        const value = parseInt(carValueInput.value, 10);
+
+        if (value < 10000 || value > 1000000) {
+            alertMessage.style.display = 'block';
+        } else {
+            alertMessage.style.display = 'none';
+        }
+    }
+
+    function validateDate() {
+        const dateInput = document.getElementById('first-registration-date');
+        const alertMessage = document.getElementById('date-alert');
+        const dateValue = new Date(dateInput.value);
+        const currentDate = new Date();
+
+        if (isNaN(dateValue.getTime()) || dateValue > currentDate) {
+            alertMessage.style.display = 'block';
+            btn_quote.disabled = true;
+            $('#btn_quote').css('background-color', '#4a5568');
+        } else {
+            alertMessage.style.display = 'none';
+            validateForm();
+        }
+    }
 
     function disappear(id, step) {
         if (step === '2') {
@@ -320,14 +350,12 @@
                     "    <option value=\"\" disabled selected>Please Select</option>\n" +
                     "    <option value=\"diesel\">diesel</option>\n" +
                     "    <option value=\"hybrid\">hybrid</option>\n" +
-                    "    <option value=\"Electric\">Electric</option>\n" +
                     "    <option value=\"gasoline-gas\">gasoline/gas</option>\n" +
                     "</select></div>\n" +
 
-                    "    <div style=\"flex: 1 1 calc(100% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">Estimated Car Value ($HK)<br><input style='width: 95%' id='car-value' placeholder='Please enter car value.'></div>\n" +
+                    "<div style=\"flex: 1 1 calc(100% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">Estimated Car Value ($HK)<br><input type=\"number\" min=\"10000\" max=\"1000000\" style=\"width: 95%\" id=\"car-value\" placeholder=\"Please enter car value.\"  oninput=\"validateCarValue()\"></div>    <p id=\"car-value-alert\" style=\"color: red; display: none;\">Value must be between $10,000 and $1,000,000</p>\n\n" +
                     "</div>\n" +
-                    "    <div style=\"flex: 1 1 calc(100% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">First registration of your car<br><input style='width: 95%' id='first-registration-date' type='date' max=\"${new Date().toISOString().split('T')[0]}\">\n" +
-                    "</div>\n" +
+                    "    <div style=\"flex: 1 1 calc(100% - 10px); padding: 15px; background-color: #f5f5f5; border-radius: 5px;\">First registration of your car<br><input style='width: 95%' id='first-registration-date' type='date' oninput='validateDate()'><p id='date-alert' style='color: red; display: none;'>Invalid date. Please enter a valid date.</p>\n" + "</div>\n" +
                     "\n" +
                     "                <button type=\"button\" class=\"submit-button\" style=\"float: left;\" onclick=\"rollback('step1')\">Back\n" +
                     "                </button>\n" +
@@ -340,12 +368,12 @@
                 $(`#${id}`).fadeIn(100);
                 if (Save_selected_option.carBrand) {
                     if (Save_selected_option.insuranceType === 'full') {
-    document.getElementById('full_insurance').style.backgroundColor = '#fff8e1';
-    document.getElementById('third_party_insurance').style.backgroundColor = '';
-} else {
-    document.getElementById('third_party_insurance').style.backgroundColor = '#fff8e1';
-    document.getElementById('full_insurance').style.backgroundColor = '';
-}
+                        document.getElementById('full_insurance').style.backgroundColor = '#fff8e1';
+                        document.getElementById('third_party_insurance').style.backgroundColor = '';
+                    } else {
+                        document.getElementById('third_party_insurance').style.backgroundColor = '#fff8e1';
+                        document.getElementById('full_insurance').style.backgroundColor = '';
+                    }
                     $('#car-brand').val(Save_selected_option.carBrand);
                     $('#car-model').val(Save_selected_option.carModel);
                     $('#manufacturing-year').val(Save_selected_option.manufacturingYear);
@@ -359,7 +387,7 @@
         }
     }
 
-    function save_selected_option(){
+    function save_selected_option() {
         Save_selected_option = {
             insuranceType: document.getElementById('selected-insurance-type').value === 'full' ? 'Full Coverage' : document.getElementById('selected-insurance-type').value === 'third-party' ? 'Third Party' : '',
             carBrand: $('#car-brand').val(),
@@ -375,16 +403,20 @@
         localStorage.setItem("Save_selected_option", JSON.stringify(Save_selected_option));
     }
 
-$(document).on('change input', '#car-brand, #car-model, #manufacturing-year, #car-engine-cc, #car-value, #type_of_car, #first-registration-date', function() {
-    if ($('#car-brand').val() && $('#car-model').val() && $('#manufacturing-year').val() && $('#type_of_car').val() && $('#car-engine-cc').val() && $('#car-value').val() && $('#first-registration-date').val()) {
-        btn_quote.disabled = false;
-        $('#btn_quote').css('background-color', '#00bcd4');
-    } else {
-        btn_quote.disabled = true;
-        $('#btn_quote').css('background-color', '#4a5568');
+    $(document).on('change input', '#car-brand, #car-model, #manufacturing-year, #car-engine-cc, #car-value, #type_of_car, #first-registration-date', function () {
+        validateForm();
+    });
 
+    function validateForm() {
+        const dateAlert = document.getElementById('date-alert').style.display === 'none';
+        if ($('#car-brand').val() && $('#car-model').val() && $('#manufacturing-year').val() && $('#type_of_car').val() && $('#car-engine-cc').val() && $('#car-value').val() && $('#first-registration-date').val() && dateAlert) {
+            btn_quote.disabled = false;
+            $('#btn_quote').css('background-color', '#00bcd4');
+        } else {
+            btn_quote.disabled = true;
+            $('#btn_quote').css('background-color', '#4a5568');
+        }
     }
-});
 
 
 </script>
@@ -427,30 +459,32 @@ $(document).on('change input', '#car-brand, #car-model, #manufacturing-year, #ca
                 </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
-    <h4>Do you use your vehicle commercially?</h4>
-    <div>
-        <input type="radio" id="commercial-yes" name="commercial_use" value="yes"><span>Yes</span>
-        <input type="radio" id="commercial-no" name="commercial_use" value="no" checked><span>No</span>
-    </div>
-</div>
+                    <h4>Do you use your vehicle commercially?</h4>
+                    <div>
+                        <input type="radio" id="commercial-yes" name="commercial_use" value="yes"><span>Yes</span>
+                        <input type="radio" id="commercial-no" name="commercial_use" value="no" checked><span>No</span>
+                    </div>
+                </div>
 
-<div style="display: flex; justify-content: space-between; align-items: center;">
-    <h4>Is the car new?</h4>
-    <div>
-        <input type="radio" id="new-car-yes" name="new_car" value="yes"><span>Yes</span>
-        <input type="radio" id="new-car-no" name="new_car" value="no" checked><span>No</span>
-    </div>
-</div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h4>Is the car new?</h4>
+                    <div>
+                        <input type="radio" id="new-car-yes" name="new_car" value="yes"><span>Yes</span>
+                        <input type="radio" id="new-car-no" name="new_car" value="no" checked><span>No</span>
+                    </div>
+                </div>
 
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h4>Is the car financed or leased?</h4>
                     <div>
-                        <input type="radio" id="financed-or-leased-yes" name="commercial input" value="yes"><span>Yes</span>
-                        <input type="radio" id="financed-or-leased-no" name="commercial input" value="no"  checked><span>No</span>
+                        <input type="radio" id="financed-or-leased-yes" name="commercial input"
+                               value="yes"><span>Yes</span>
+                        <input type="radio" id="financed-or-leased-no" name="commercial input" value="no" checked><span>No</span>
                     </div>
                 </div>
 
-                <button type="submit" class="submit-button" style="float: right;" onclick="animateProgressBar(); disappear('step1', '2')">
+                <button type="submit" class="submit-button" style="float: right;"
+                        onclick="animateProgressBar(); disappear('step1', '2')">
                     Continue
                 </button>
             </div>
