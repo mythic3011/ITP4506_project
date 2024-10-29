@@ -374,6 +374,12 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        if(localStorage.getItem('editMode') === 'true') {
+            const editItem = JSON.parse(localStorage.getItem('editData'));
+            localStorage.getItem('Save_selected_option') === editItem.Save_selected_option;
+            localStorage.getItem('Save_selected_option_2') === editItem.Save_selected_option_2;
+            localStorage.getItem('Save_selected_option_3') === editItem.Save_selected_option_3;
+        }
         const links = document.querySelectorAll('a:not([href="process.html"])');
         links.forEach(link => {
             link.addEventListener('click', function(e) {

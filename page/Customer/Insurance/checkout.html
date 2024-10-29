@@ -395,9 +395,7 @@
     let Save_selected_option = JSON.parse(localStorage.getItem("Save_selected_option"));
     let Save_selected_option_2 = JSON.parse(localStorage.getItem("Save_selected_option_2"));
 
-    if (Save_selected_option === null || Save_selected_option_2 === null) {
-        window.location.href = 'progress.html';
-    }
+
 
     function calculateCharges(subTotal) {
         const amount = parseFloat(subTotal.replace(/[^0-9.]/g, ''));
@@ -931,7 +929,7 @@
                     <div class="notice">
                         <p style="font-size: large; color: darkred">* The applicant must be over 18 years old and the registered owner of the insured vehicle.</p>
                     </div>
-                    <button onclick="window.history.back()" class="back-button">
+                    <button onclick="location.href = 'estimate.html'" class="back-button">
                         ← Back to Estimate
                     </button>
                     <form id="applicantForm" class="form-section">
