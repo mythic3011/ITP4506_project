@@ -370,6 +370,10 @@
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('id');
             EditModeManager.setEditMode(orderId);
+            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+            localStorage.setItem('Save_selected_option', JSON.stringify(pendingInsurance.Save_selected_option));
+            localStorage.setItem('Save_selected_option_2', JSON.stringify(pendingInsurance.Save_selected_option_2));
+            localStorage.setItem('Save_selected_option_3', JSON.stringify(pendingInsurance.Save_selected_option_3));
             window.location.href = 'checkout.html';
         }
     }
@@ -557,6 +561,10 @@
         return new Date(dateString).toLocaleDateString('en-US', options);
     }
 
+    function findInsuranceById(id) {
+        const policy = localStorage.getItem(`pendingInsurance-${id}`);
+        return policy ? JSON.parse(policy) : null;
+    }
     function formatPaymentMethod(method) {
         const methods = {
             'yearly': 'Yearly',
@@ -652,7 +660,7 @@
         <button onclick="window.location.href='ordersIndex.html'" class="back-button">
             ← All Appllication
         </button>
-        <button onclick="window.location.href='ordersIndex.html'" class="back-button" style="background-color: orange">
+        <button class="back-button" style="background-color: orange">
             Edit Appllication &rAarr;
         </button>
         <div class="status-grid">
