@@ -88,6 +88,7 @@
 
 </style>
 <script>
+    let commerciallySave, newCarSave, financedOrLeasedSave, insuredOrNotSave;
     function showLeaveConfirmation(destinationUrl) {
         const popup = document.createElement('div');
         popup.className = 'popup-overlay';
@@ -205,6 +206,7 @@
             options[i].classList.remove("selected");
         }
         document.getElementById(id).classList.add("selected");
+        insuredOrNotSave = id;
     }
 
     function selectInsuranceType(type) {
@@ -283,8 +285,13 @@
         }
     }
 
+
     function disappear(id, step) {
+        commerciallySave = $('input[name="commercial_use"]:checked').val();
+        newCarSave = $('input[name="new_car"]:checked').val();
+        financedOrLeasedSave =  $('input[name="financed_or_leased"]:checked').val();
         if (step === '2') {
+
             $(`#${id}`).fadeOut(100, function () {
                 s1 = document.getElementById(id).innerHTML;
                 this.innerHTML =
@@ -397,8 +404,11 @@
             carValue: $('#car-value').val(),
             commercialUse: $('input[name="commercial input"]:checked').val(),
             carType: $('#type_of_car').val(),
-            firstRegistrationDate: $('#first-registration-date').val()
-
+            firstRegistrationDate: $('#first-registration-date').val(),
+            newCar: newCarSave,
+            financedOrLeased: financedOrLeasedSave,
+            commercially: commerciallySave,
+            insuredOrNot: insuredOrNotSave
         };
         localStorage.setItem("Save_selected_option", JSON.stringify(Save_selected_option));
     }
@@ -477,9 +487,9 @@
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                     <h4>Is the car financed or leased?</h4>
                     <div>
-                        <input type="radio" id="financed-or-leased-yes" name="commercial input"
+                        <input type="radio" id="financed-or-leased-yes" name="financed_or_leased"
                                value="yes"><span>Yes</span>
-                        <input type="radio" id="financed-or-leased-no" name="commercial input" value="no" checked><span>No</span>
+                        <input type="radio" id="financed-or-leased-no" name="financed_or_leased" value="no" checked><span>No</span>
                     </div>
                 </div>
 
