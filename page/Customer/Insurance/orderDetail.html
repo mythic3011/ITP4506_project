@@ -13,6 +13,8 @@
     <script src="../../../resources/js/customer.js"></script>
     <script src="../../../resources/js/script.js"></script>
     <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+    <link rel="stylesheet" href="../../../resources/css/payment-styles.css">
+
 </head>
 <style>
     body {
@@ -292,6 +294,44 @@
         letter-spacing: 1px;
     }
 
+    .payment-modal {
+        display: none;
+        position: fixed;
+        z-index: 2000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        overflow-y: auto;
+    }
+
+    .payment-modal-content {
+        background-color: #fefefe;
+        margin: 50px auto;
+        padding: 40px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 800px;
+        position: relative;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .payment-modal-close {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        color: #666;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .payment-modal-close:hover {
+        color: #000;
+    }
+
+
     @media (max-width: 1024px) {
         .details-grid {
             grid-template-columns: 1fr;
@@ -320,6 +360,153 @@
     }
 </style>
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const payButton = document.querySelector('button[style*="background-color: green"]');
+        const modal = document.getElementById('paymentModal');
+        const closeBtn = document.querySelector('.payment-modal-close');
+        const form = document.getElementById('paymentForm');
+        const paymentButton = document.getElementById('paymentButton');
+        const requiredFields = form.querySelectorAll('input[required]');
+        const cardIcons = document.querySelectorAll('.card-icon');
+
+        // Show modal when pay button is clicked
+        payButton.onclick = function() {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close modal when X is clicked
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Card type detection
+        function detectCardType(number) {
+            const cleanNumber = number.replace(/\s/g, '');
+            if (/^4/.test(cleanNumber)) return 'visa';
+            if (/^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[0-1]|2720)/.test(cleanNumber)) return 'mastercard';
+            if (/^62/.test(cleanNumber)) return 'unionpay';
+            return null;
+        }
+
+        // Update selected card icon
+        function updateSelectedCard(cardType) {
+            cardIcons.forEach(icon => {
+                icon.classList.remove('selected');
+                if (cardType && icon.alt.toLowerCase() === cardType) {
+                    icon.classList.add('selected');
+                }
+            });
+        }
+
+        // Validate input field
+        function validateInput(input) {
+            const isValid = input.checkValidity();
+            input.classList.toggle('error', !isValid);
+            return isValid;
+        }
+
+        // Format credit card number
+        const cardNumber = document.getElementById('cardNumber');
+        cardNumber.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            value = value.replace(/\D/g, '');
+            value = value.replace(/(\d{4})/g, '$1 ').trim();
+            e.target.value = value;
+
+            const cardType = detectCardType(value);
+            updateSelectedCard(cardType);
+            validateInput(this);
+            validateForm();
+        });
+
+        // Format expiry date
+        const expiryDate = document.getElementById('expiryDate');
+        expiryDate.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.slice(0,2) + '/' + value.slice(2);
+            }
+            e.target.value = value;
+            validateInput(this);
+        });
+
+        // Format CVV
+        const cvv = document.getElementById('cvv');
+        cvv.addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+            validateInput(this);
+        });
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            requiredFields.forEach(field => {
+                if (!validateInput(field)) {
+                    isValid = false;
+                }
+            });
+
+            const cardType = detectCardType(cardNumber.value);
+            if (!cardType) {
+                isValid = false;
+            }
+
+            paymentButton.disabled = !isValid;
+        }
+
+        requiredFields.forEach(field => {
+            field.addEventListener('input', validateForm);
+        });
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (form.checkValidity()) {
+                const popup = document.createElement('div');
+                popup.className = 'popup-overlay';
+                popup.style.display = 'flex';
+
+                popup.innerHTML = `
+    <div class="popup-content">
+        <h2>Thank you your payment !</h2>
+        <p><strong>We will send a receipt to your email address.</strong></p>
+        <div class="popup-buttons">
+            <button class="popup-button save-button" onclick="document.querySelector('.popup-overlay').style.display='none'">
+                Close
+            </button>
+        </div>
+    </div>
+`;
+
+                document.body.appendChild(popup);
+                setTimeout(() => popup.classList.add('show'), 10);
+
+                const style = document.createElement('style');
+                style.textContent = `
+    .save-notice { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+    .popup-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+    .popup-button { display: flex; flex-direction: column; align-items: center; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
+    .popup-button small { font-size: 0.8rem; font-weight: normal; margin-top: 0.25rem; opacity: 0.8; }
+    .save-button { background-color: #4CAF50; color: white; }
+    .leave-button { background-color: #f44336; color: white; }
+    .stay-button { background-color: #00bcd4; color: white; }
+`;
+                document.head.appendChild(style);
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    });
     class EditModeManager {
         static setEditMode(orderId) {
             localStorage.setItem('editMode', 'true');
@@ -683,7 +870,7 @@
                         <div class="step-icon">⋯</div>
                         <div class="step-content">
                             <h3>Under Review</h3>
-                            <p>Estimated processing time: 1-2 business days</p>
+                            <p>Estimated processing time: <strong><u>1-2 business days</u></strong></p>
                         </div>
                     </div>
                     <div class="status-step">
@@ -699,7 +886,7 @@
             <div class="status-divider"></div>
 
             <div class="status-right">
-                <h2>Important Information</h2>
+                <h1>Important Information</h1>
                 <div class="info-content">
                     <div class="info-item">
                         <h4>Processing Time</h4>
@@ -720,8 +907,13 @@
         </div>
     </div>
 
+
     <div class="details-container">
+
         <h2>Application Details</h2>
+        <button class="back-button" style="background-color: green">
+            Pay
+        </button>
         <div class="details-grid">
             <div class="detail-section">
                 <h3>Insurance Plan</h3>
@@ -743,6 +935,59 @@
     </div>
 
 
+</div>
+
+<div class="payment-modal" id="paymentModal">
+    <div class="payment-modal-content">
+        <span class="payment-modal-close">&times;</span>
+        <div class="payment-header">
+            <h2>Payment Details</h2>
+            <div class="card-types">
+                <img src="../../../resources/image/visa.svg" alt="Visa" class="card-icon">
+                <img src="../../../resources/image/mastercard.svg" alt="Mastercard" class="card-icon">
+                <img src="../../../resources/image/unionpay.svg" alt="UnionPay" class="card-icon">
+            </div>
+        </div>
+
+        <form id="paymentForm" class="payment-form">
+            <div class="form-group">
+                <label for="cardName">Cardholder Name *</label>
+                <input type="text" id="cardName" placeholder="Name on card" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cardNumber">Card Number *</label>
+                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group half">
+                    <label for="expiryDate">Expiry Date *</label>
+                    <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
+                </div>
+                <div class="form-group half">
+                    <label for="cvv">Security Code (CVV) *</label>
+                    <div class="cvv-container">
+                        <input type="text" id="cvv" placeholder="000" maxlength="3" required>
+                        <div class="cvv-help">?</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="payment-info">
+                <p>Payment will be made to:</p>
+                <p class="company">Legend Motor Limited</p>
+                <p class="address">xxxx, Hong Kong</p>
+            </div>
+
+            <div class="consent">
+                <input type="checkbox" id="consent" required>
+                <label for="consent">I hereby authorize Legend Motor Limited to charge my designated credit card account for the insurance premium, premium levy, and HKIB levy.</label>
+            </div>
+
+            <button type="submit" class="submit-button" id="paymentButton" disabled>Complete Payment</button>
+        </form>
+    </div>
 </div>
 
 </body>

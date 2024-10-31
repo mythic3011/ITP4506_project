@@ -150,7 +150,55 @@
 
 </style>
 <script>
+    function redirect(type) {
+        const role = $('input[name="role"]:checked').val();
+        const department = $('#department').val();
+
+        if (role === 'staff') {
+            if (department === 'Sales') {
+                window.location.href = './page/Staff/Sales/Index.html';
+            } else if (department === 'Insurance') {
+                window.location.href = './page/Staff/Insurance/Index.html';
+            }
+        } else {
+            if (type === 'insurance') {
+                window.location.href = './page/Customer/Insurance/Index.html';
+            } else if (type === 'sales') {
+                window.location.href = './page/Customer/Sales/Index.html';
+            }
+        }
+    }
+
     $(document).ready(function() {
+
+        $('input[name="role"]').change(function() {
+            const staffFields = $('#staffFields');
+            if ($(this).val() === 'staff') {
+                if (!staffFields.length) {
+                    const staffFieldsHtml = `
+                    <br><div id="staffFields" class="form-group">
+                        <div class="input-group">
+                            <label for="department">Department*</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select Department</option>
+                                <option value="Sales">Sales</option>
+                                <option value="Insurance">Insurance</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="staffId">Staff ID*</label>
+                            <input type="text" id="staffId" name="staffId" required placeholder="Enter your staff ID">
+                        </div>
+                    </div>`;
+                    $(this).closest('.input-group').after(staffFieldsHtml);
+                } else {
+                    staffFields.show();
+                }
+            } else {
+                $('#staffFields').hide();
+            }
+            validateForm();
+        });
         const PATTERNS = {
             email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             mobile: /^[0-9]{8}$/,
@@ -171,13 +219,13 @@
             let message = "";
 
             if (field.type === 'checkbox' && !field.checked) {
-    isValid = false;
-    message = MESSAGES.required;
-}
+                isValid = false;
+                message = "This field is required";
+            }
 
             if (field.required && !value) {
                 isValid = false;
-                message = MESSAGES.required;
+                message = "This field is required";
             } else if (value) {
                 switch (field.name) {
                     case 'email':
@@ -202,6 +250,18 @@
                         isValid = value === password;
                         message = MESSAGES.passwordMatch;
                         break;
+                    case 'staffNumber':
+                        if (field.required) {
+                            isValid = PATTERNS.staffNumber.test(value);
+                            message = MESSAGES.staffNumber;
+                        }
+                        break;
+                    case 'department':
+                        if (field.required) {
+                            isValid = value !== '';
+                            message = MESSAGES.department;
+                        }
+                        break;
                 }
             }
 
@@ -221,8 +281,10 @@
             return isValid;
         }
 
+
+
         function validateForm() {
-            const fields = document.querySelectorAll('input[required]');
+            const fields = document.querySelectorAll('input[required], select[required]');
             let isValid = true;
 
             fields.forEach(field => {
@@ -230,11 +292,17 @@
                     isValid = false;
                 }
             });
+
             const submitButton = document.querySelector('#btn_quote');
             submitButton.disabled = !isValid;
 
             return isValid;
         }
+
+        $(document).on('input blur change', 'input[required], select[required]', function() {
+            validateField(this);
+            validateForm();
+        });
 
         // Toggle password visibility
         $('.toggle-password').click(function() {
@@ -268,22 +336,22 @@
                 localStorage.setItem('username', document.getElementById('email').value);
 
                 popup.innerHTML = `
-            <div class="popup-content">
-                <h2>Welcome</h2>
-                <p><strong>Would you like to visit out selling car? Or the car insurance?</strong></p>
-                <div class="popup-buttons">
-                    <button class="popup-button save-button" onclick="window.location.href='./page/Customer/Insurance/Index.html'">
-                        Selling Car
-                    </button>
-                    <button class="popup-button stay-button" onclick="window.location.href='./page/Customer/Sales/Index.html'">
-                        Car Insurance
-                    </button>
-                    <button class="popup-button leave-button" onclick="window.close()">
-                        Leave
-                    </button>
+                <div class="popup-content">
+                    <h2>Welcome</h2>
+                    <p><strong>Would you like to visit our selling car? Or the car insurance?</strong></p>
+                    <div class="popup-buttons">
+                        <button class="popup-button save-button" onclick="redirect('sales')">
+                            Selling Car
+                        </button>
+                        <button class="popup-button stay-button" onclick="redirect('insurance')">
+                            Car Insurance
+                        </button>
+                        <button class="popup-button leave-button" onclick="window.location.href='index.html'">
+                            Close
+                        </button>
+                    </div>
                 </div>
-            </div>
-        `;
+            `;
 
                 document.body.appendChild(popup);
                 setTimeout(() => popup.classList.add('show'), 10);
@@ -320,7 +388,7 @@
     </div>
 
     <div class="section-content">
-        <h2 style="text-align: center">With Legend Motor Company you can find the right car insurance for your vehicle.</h2>
+        <h4 style="text-align: center">With Legend Motor Company you can find the right car insurance and car for your vehicle.</h4>
         <form id="registrationForm" class="form-section">
             <div class="form-group">
                 <div class="input-group">
@@ -337,6 +405,20 @@
                         <label class="radio-container">
                             <input type="radio" name="salutation" value="no">
                             <span class="radio-label">No</span>
+                        </label>
+                    </div>
+                </div>
+                <br>
+                <div class="input-group">
+                    <label>Role*</label>
+                    <div class="radio-group">
+                        <label class="radio-container">
+                            <input type="radio" name="role" value="customer" checked>
+                            <span class="radio-label">Customer</span>
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="role" value="staff">
+                            <span class="radio-label">Staff</span>
                         </label>
                     </div>
                 </div>
