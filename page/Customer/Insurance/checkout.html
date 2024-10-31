@@ -81,6 +81,12 @@
 
     function leavePage(destinationUrl) {
         window.location.href = destinationUrl;
+        localStorage.removeItem('Save_selected_option');
+        localStorage.removeItem('Save_selected_option_2');
+        localStorage.removeItem('Save_selected_option_3');
+        localStorage.removeItem('editMode');
+        localStorage.removeItem('editData');
+        localStorage.removeItem('editOrderId');
     }
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -208,6 +214,7 @@
             });
         }
         validateForm();
+
     });
 
     const PATTERNS = {
@@ -556,12 +563,11 @@
                     </div>
                 </div>
             </div>
-
         `;
     }
 
-    // Update order summary when document is ready
     $(document).ready(function () {
+
         // Update insurance type and details
         $('.insurance-type h3').text(Save_selected_option.insuranceType + ' Insurance');
         $('#planName').text('LMC ' + Save_selected_option.insuranceType);
@@ -573,15 +579,44 @@
         driversContainer.empty();
 
         $('#insuredDrivers').on('change', function() {
-            const numDrivers = parseInt($(this).val());
+            const newNumDrivers = parseInt($(this).val());
             const driversContainer = $('#driversContainer');
-            driversContainer.empty();
+            const currentDrivers = driversContainer.children().length;
 
-            if (numDrivers > 1) {
-                for (let i = 1; i < numDrivers; i++) {
-                    driversContainer.append(createDriverForm(i));
-                    // Immediately add validation to the newly added driver fields
-                    setTimeout(() => {
+            // Store existing drivers' data before making any changes
+            const existingData = [];
+            for (let i = 1; i <= currentDrivers; i++) {
+                const driverSection = document.getElementById(`driver-${i}`);
+                if (driverSection) {
+                    const driverData = {
+                        title: $(`#driver-${i}-title`).val(),
+                        firstName: $(`#driver-${i}-firstName`).val(),
+                        lastName: $(`#driver-${i}-lastName`).val(),
+                        hkid: $(`#driver-${i}-hkid`).val(),
+                        dob: $(`#driver-${i}-dob`).val(),
+                        occupation: $(`#driver-${i}-occupation`).val(),
+                        drivingExperience: $(`#-${i}-DrivingExperience`).val(),
+                        relation: $(`#driver-${i}-relation`).val()
+                    };
+                    existingData.push(driverData);
+                }
+            }
+
+            if (newNumDrivers > 1) {
+                // If we're decreasing the number of drivers
+                if (currentDrivers > newNumDrivers - 1) {
+                    // Remove excess drivers from the end
+                    for (let i = currentDrivers; i >= newNumDrivers; i--) {
+                        $(`#driver-${i}`).remove();
+                    }
+                }
+                // If we're increasing the number of drivers
+                else if (currentDrivers < newNumDrivers - 1) {
+                    // Keep existing drivers and add new ones
+                    for (let i = currentDrivers + 1; i < newNumDrivers; i++) {
+                        driversContainer.append(createDriverForm(i));
+
+                        // Add validation to new fields
                         const driverSection = document.getElementById(`driver-${i}`);
                         if (driverSection) {
                             const fields = driverSection.querySelectorAll('input[required], select[required]');
@@ -589,16 +624,66 @@
                                 addValidationListeners(field);
                             });
                         }
-                        validateForm();
-                    }, 0);
+                    }
+                }
+
+                // Restore data for remaining drivers
+                existingData.forEach((data, index) => {
+                    if (index < newNumDrivers - 1) {
+                        const driverNum = index + 1;
+                        const driverSection = document.getElementById(`driver-${driverNum}`);
+                        if (driverSection) {
+                            $(`#driver-${driverNum}-title`).val(data.title);
+                            $(`#driver-${driverNum}-firstName`).val(data.firstName);
+                            $(`#driver-${driverNum}-lastName`).val(data.lastName);
+                            $(`#driver-${driverNum}-hkid`).val(data.hkid);
+                            $(`#driver-${driverNum}-dob`).val(data.dob);
+                            $(`#driver-${driverNum}-occupation`).val(data.occupation);
+                            $(`#-${driverNum}-DrivingExperience`).val(data.drivingExperience);
+                            $(`#driver-${driverNum}-relation`).val(data.relation);
+                        }
+                    }
+                });
+            } else {
+                // If reducing to 1 driver, clear the container
+                driversContainer.empty();
+            }
+
+            // If in edit mode, update the stored data
+            if (localStorage.getItem('editMode') === 'true') {
+                const savedData = JSON.parse(localStorage.getItem('Save_selected_option_3'));
+                if (savedData) {
+                    // Update the additionalDrivers array to match the new number of drivers
+                    savedData.additionalDrivers = existingData.slice(0, newNumDrivers - 1);
+                    localStorage.setItem('Save_selected_option_3', JSON.stringify(savedData));
                 }
             }
+
             validateForm();
         });
+
 
         if (numDrivers > 1) {
             for (let i = 1; i < numDrivers; i++) {
                 driversContainer.append(createDriverForm(i));
+            }
+            if(localStorage.getItem('editMode') === 'true') {
+                const savedData = JSON.parse(localStorage.getItem('Save_selected_option_3'));
+                if (savedData && savedData.additionalDrivers && savedData.additionalDrivers.length > 0) {
+                    savedData.additionalDrivers.forEach((driver, index) => {
+                        const driverNumber = index + 1;
+
+                        document.getElementById(`driver-${driverNumber}-title`).value = driver.title || '';
+                        document.getElementById(`driver-${driverNumber}-firstName`).value = driver.firstName || '';
+                        document.getElementById(`driver-${driverNumber}-lastName`).value = driver.lastName || '';
+                        document.getElementById(`driver-${driverNumber}-hkid`).value = driver.hkid || '';
+                        document.getElementById(`driver-${driverNumber}-dob`).value = driver.dob || '';
+                        document.getElementById(`driver-${driverNumber}-occupation`).value = driver.occupation || '';
+                        document.getElementById(`-${driverNumber}-DrivingExperience`).value = driver.drivingExperience || '';
+                        document.getElementById(`driver-${driverNumber}-relation`).value = driver.relation || '';
+                    });
+                }
+                validateAdditionalDrivers();
             }
         }
         switch (paymentMethod) {
@@ -749,8 +834,30 @@
                     buyButton.textContent = 'Save Changes';
                 }
 
-                // Populate form fields
+                // First set the number of insured drivers
+                if (pendingInsurance.Save_selected_option_3.vehicle &&
+                    pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers) {
+                    document.getElementById('insuredDrivers').value =
+                        pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers;
+                }
+
+                // Then create the driver forms
+                const numDrivers = parseInt(document.getElementById('insuredDrivers').value);
+                if (numDrivers > 1) {
+                    const driversContainer = document.getElementById('driversContainer');
+                    driversContainer.innerHTML = ''; // Clear existing forms
+
+                    for (let i = 1; i < numDrivers; i++) {
+                        driversContainer.innerHTML += createDriverForm(i);
+                    }
+                }
+
+                // Finally populate all form fields including additional drivers
                 populateFormFields(pendingInsurance.Save_selected_option_3);
+
+                // Add validation listeners to all fields after they're created and populated
+                const allFields = document.querySelectorAll('input, select');
+                allFields.forEach(field => addValidationListeners(field));
             }
         }
         function populateFormFields(data) {
@@ -789,7 +896,6 @@
                 document.getElementById('carModel').value = data.vehicle.carModel || '';
                 document.getElementById('manufacturingYear').value = data.vehicle.manufacturingYear || '';
                 document.getElementById('marketValue').value = data.vehicle.marketValue || '';
-                document.getElementById('insuredDrivers').value = data.vehicle.insuredDrivers || '1';
                 document.getElementById('registrationNumber').value = data.vehicle.registrationNumber || '';
                 document.getElementById('carModelCode').value = data.vehicle.carModelCode || '';
                 document.getElementById('cylinderCapacity').value = data.vehicle.cylinderCapacity || '';
@@ -803,20 +909,27 @@
 
             // Handle additional drivers
             if (data.additionalDrivers && data.additionalDrivers.length > 0) {
-                const driversContainer = document.getElementById('driversContainer');
                 data.additionalDrivers.forEach((driver, index) => {
                     const driverNumber = index + 1;
-                    driversContainer.innerHTML += createDriverForm(driverNumber);
 
-                    // Populate driver fields
-                    document.getElementById(`driver-${driverNumber}-title`).value = driver.title || '';
-                    document.getElementById(`driver-${driverNumber}-firstName`).value = driver.firstName || '';
-                    document.getElementById(`driver-${driverNumber}-lastName`).value = driver.lastName || '';
-                    document.getElementById(`driver-${driverNumber}-hkid`).value = driver.hkid || '';
-                    document.getElementById(`driver-${driverNumber}-dob`).value = driver.dob || '';
-                    document.getElementById(`driver-${driverNumber}-occupation`).value = driver.occupation || '';
-                    document.getElementById(`-${driverNumber}-DrivingExperience`).value = driver.drivingExperience || '';
-                    document.getElementById(`driver-${driverNumber}-relation`).value = driver.relation || '';
+                    // Ensure the elements exist before trying to set their values
+                    const titleElement = document.getElementById(`driver-${driverNumber}-title`);
+                    const firstNameElement = document.getElementById(`driver-${driverNumber}-firstName`);
+                    const lastNameElement = document.getElementById(`driver-${driverNumber}-lastName`);
+                    const hkidElement = document.getElementById(`driver-${driverNumber}-hkid`);
+                    const dobElement = document.getElementById(`driver-${driverNumber}-dob`);
+                    const occupationElement = document.getElementById(`driver-${driverNumber}-occupation`);
+                    const drivingExpElement = document.getElementById(`-${driverNumber}-DrivingExperience`);
+                    const relationElement = document.getElementById(`driver-${driverNumber}-relation`);
+
+                    if (titleElement) titleElement.value = driver.title || '';
+                    if (firstNameElement) firstNameElement.value = driver.firstName || '';
+                    if (lastNameElement) lastNameElement.value = driver.lastName || '';
+                    if (hkidElement) hkidElement.value = driver.hkid || '';
+                    if (dobElement) dobElement.value = driver.dob || '';
+                    if (occupationElement) occupationElement.value = driver.occupation || '';
+                    if (drivingExpElement) drivingExpElement.value = driver.drivingExperience || '';
+                    if (relationElement) relationElement.value = driver.relation || '';
                 });
             }
         }

@@ -1717,7 +1717,7 @@ label[for] select[required] ~ &::after {
 }
 
 .popup-content {
-    background: #cacaca;
+    background: #ffffff;
     padding: 3rem;
     border-radius: 12px;
     text-align: center;

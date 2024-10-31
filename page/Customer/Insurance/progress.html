@@ -139,6 +139,9 @@
             }
         };
         localStorage.setItem('savedApplication', JSON.stringify(formData));
+        localStorage.removeItem('editMode');
+        localStorage.removeItem('editOrderId');
+        localStorage.removeItem('editData');
         leavePage(destinationUrl);
     }
 
@@ -150,6 +153,12 @@
 
     function leavePage(destinationUrl) {
         window.location.href = destinationUrl;
+        localStorage.removeItem('Save_selected_option');
+        localStorage.removeItem('Save_selected_option_2');
+        localStorage.removeItem('Save_selected_option_3');
+        localStorage.removeItem('editMode');
+        localStorage.removeItem('editData');
+        localStorage.removeItem('editOrderId');
     }
 
     document.addEventListener('DOMContentLoaded', function () {

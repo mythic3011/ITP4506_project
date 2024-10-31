@@ -110,6 +110,7 @@
     let insuranceData = null;
 
     $(document).ready(function () {
+
         $.ajax({
             url: '../../../resources/json/Insurance.json',
             dataType: 'json',
@@ -360,6 +361,9 @@
             }
         };
         localStorage.setItem('savedApplication', JSON.stringify(formData));
+        localStorage.removeItem('editMode');
+        localStorage.removeItem('editOrderId');
+        localStorage.removeItem('editData');
         leavePage(destinationUrl);
     }
 
@@ -371,14 +375,30 @@
 
     function leavePage(destinationUrl) {
         window.location.href = destinationUrl;
+        localStorage.removeItem('Save_selected_option');
+        localStorage.removeItem('Save_selected_option_2');
+        localStorage.removeItem('Save_selected_option_3');
+        localStorage.removeItem('editMode');
+        localStorage.removeItem('editData');
+        localStorage.removeItem('editOrderId');
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        if(localStorage.getItem('editMode') === 'true') {
-            const editItem = JSON.parse(localStorage.getItem('editData'));
-            localStorage.getItem('Save_selected_option') === editItem.Save_selected_option;
-            localStorage.getItem('Save_selected_option_2') === editItem.Save_selected_option_2;
-            localStorage.getItem('Save_selected_option_3') === editItem.Save_selected_option_3;
+        if(localStorage.getItem('Save_selected_option_2')) {
+            if(localStorage.getItem("editMode") === true){
+                const editItem = JSON.parse(localStorage.getItem('editData'));
+                localStorage.getItem('Save_selected_option') === editItem.Save_selected_option;
+                localStorage.getItem('Save_selected_option_2') === editItem.Save_selected_option_2;
+                localStorage.getItem('Save_selected_option_3') === editItem.Save_selected_option_3;
+            }
+
+            a = JSON.parse(localStorage.getItem('Save_selected_option_2'));
+            document.getElementById('no-of-insured-driver').value = a.insuredDrivers;
+            document.getElementById('ncd').value = a.ncd;
+            document.getElementById('paymentMethod').value = a.paymentMethod;
+            document.getElementById('drivingExperience').value = a.drivingExperience;
+            document.getElementById('driverAge').value = a.applyingAge;
+
         }
         const links = document.querySelectorAll('a:not([href="process.html"])');
         links.forEach(link => {
@@ -582,7 +602,7 @@
                 <li>Third Party Bodily Injury HK$100,000,000</li>
                 <li>* Accidental Death & Permanent Disablement</li>
             </ul>
-            <button onclick="window.history.back()" class="back-button" style="border: none;padding: 20px 40px;margin-top: 15px; border-radius: 5px;cursor: pointer;">
+            <button onclick="window.location.href='progress.html'" class="back-button" style="border: none;padding: 20px 40px;margin-top: 15px; border-radius: 5px;cursor: pointer;">
                 ← Back to Estimate
             </button>
             <button onclick="save_selected_option(); $(window).off('beforeunload'); window.location.href='checkout.html'" class="submit-button" style="align-self: end; float: right;">Apply now &rarr;</button>
