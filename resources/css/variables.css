@@ -294,12 +294,6 @@
     --border-color: var(--gray-200);
     --shadow-color: rgba(0, 0, 0, 0.1);
 
-    /* Component Colors */
-    --card-bg: white;
-    --input-bg: white;
-    --button-bg: var(--primary);
-    --button-text: white;
-
     /* Status Colors */
     --status-pending-bg: var(--warning-light);
     --status-pending-text: var(--warning-dark);
@@ -317,48 +311,11 @@
 
     --bg-light: var(--bg-primary);
     --bg-dark: var(--bg-secondary);
-
-}
-
-/* Dark Theme */
-:root.dark {
-    --bg-primary: var(--gray-900);
-    --bg-secondary: var(--gray-800);
-    --bg-tertiary: var(--gray-700);
-    --text-primary: var(--gray-50);
-    --text-secondary: var(--gray-400);
-    --border-color: var(--gray-700);
-    --shadow-color: rgba(0, 0, 0, 0.3);
-
-    --card-bg: var(--gray-800);
-    --input-bg: var(--gray-700);
-
-    /* Card colors */
-    --card-border: var(--border-color);
-    --card-header-bg: var(--bg-tertiary);
-    --card-footer-bg: var(--bg-secondary);
-
-    /* step colors */
-    --step-bg: var(--bg-secondary);
-    --step-text: var(--text-primary);
-    --step-active-bg: var(--accent-color);
-    --step-active-text: var(--text-primary-inverted);
-}
-
-:root {
-    /* Base colors */
-    --bg-primary: #ffffff;
-    --bg-secondary: #f9fafb;
-    --bg-tertiary: #f3f4f6;
-    --text-primary: #1f2937;
     --text-primary-inverted: #ffffff;
-    --text-secondary: #6b7280;
     --text-secondary-inverted: #ffffff;
-    --border-color: #e5e7eb;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+
 
     /* Component colors */
-    --card-bg: var(--bg-primary);
     --input-bg: var(--bg-primary);
     --button-bg: var(--accent-color);
     --button-text: #ffffff;
@@ -381,18 +338,7 @@
     --danger-hover: #b91c1c;
     --danger-light: rgba(220, 38, 38, 0.1);
 
-    /* Status badge colors */
-    --status-pending-bg: #fff3cd;
-    --status-pending-text: #856404;
-    --status-processing-bg: #cce5ff;
-    --status-processing-text: #004085;
-    --status-completed-bg: #d4edda;
-    --status-completed-text: #155724;
-    --status-cancelled-bg: #f8d7da;
-    --status-cancelled-text: #721c24;
-
     /* Overlay colors */
-    --modal-overlay: rgba(0, 0, 0, 0.5);
     --dropdown-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
     /* Form colors */
@@ -422,15 +368,27 @@
     --dropdown-item-active-text: #ffffff;
 }
 
+/* Dark Theme */
 :root.dark {
-    /* Base colors */
-    --bg-primary: #1f2937;
-    --bg-secondary: #111827;
-    --bg-tertiary: #374151;
-    --text-primary: #f9fafb;
-    --text-secondary: #d1d5db;
-    --border-color: #374151;
+    --bg-primary: var(--gray-900);
+    --bg-secondary: var(--gray-800);
+    --bg-tertiary: var(--gray-700);
+    --text-primary: var(--gray-50);
+    --text-secondary: var(--gray-400);
+    --border-color: var(--gray-700);
     --shadow-color: rgba(0, 0, 0, 0.3);
+
+    /* Card colors */
+    --card-border: var(--border-color);
+    --card-header-bg: var(--bg-tertiary);
+    --card-footer-bg: var(--bg-secondary);
+
+    /* step colors */
+    --step-bg: var(--bg-secondary);
+    --step-text: var(--text-primary);
+    --step-active-bg: var(--accent-color);
+    --step-active-text: var(--text-primary-inverted);
+
 
     /* Component colors */
     --card-bg: var(--bg-primary);
@@ -517,15 +475,4 @@
     --btn-light-text: var(--text-primary-inverted);
     --btn-dark-bg: var(--dark);
     --btn-dark-text: var(--text-primary-inverted);
-
-    /* Card colors */
-    --card-border: var(--border-color);
-    --card-header-bg: var(--bg-secondary);
-    --card-footer-bg: var(--bg-tertiary);
-
-    /* step colors */
-    --step-bg: var(--bg-tertiary);
-    --step-text: var(--text-secondary);
-    --step-active-bg: var(--accent-color);
-    --step-active-text: var(--text-primary-inverted);
 }

@@ -1,0 +1,1054 @@
+[
+    {
+        "id": 1,
+        "make": "Volkswagen",
+        "model": "X5",
+        "modelCode": "Bf363",
+        "manufacturingYear": 2022,
+        "carType": "Sedan",
+        "fuelType": "Diesel",
+        "year": 2011,
+        "specifications": {
+            "engine": {
+                "type": "1.5L",
+                "cylinderCount": 4,
+                "horsepower": 347,
+                "torque": 263,
+                "drivetrain": "FWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 35360,
+                "unit": "miles"
+            },
+            "safetyRating": 5,
+            "warrantyYears": 5
+        },
+        "price": 29059,
+        "images": [
+            {
+                "url": "https://dummyimage.com/500x300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "LightSeaGreen",
+                "hexCode": "#b3e8e6"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                },
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                }
+            ]
+        }
+    },
+    {
+        "id": 2,
+        "make": "BMW",
+        "model": "C-Class",
+        "modelCode": "Lb993",
+        "manufacturingYear": 2024,
+        "carType": "Sedan",
+        "fuelType": "Gasoline",
+        "year": 2010,
+        "specifications": {
+            "engine": {
+                "type": "2.2L",
+                "cylinderCount": 4,
+                "horsepower": 270,
+                "torque": 356,
+                "drivetrain": "RWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 46814,
+                "unit": "miles"
+            },
+            "safetyRating": 2,
+            "warrantyYears": 2
+        },
+        "price": 44757,
+        "images": [
+            {
+                "url": "https://dummyimage.com/500x300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "Azure",
+                "hexCode": "#d0ac92"
+            },
+            {
+                "name": "LightCoral",
+                "hexCode": "#23768e"
+            },
+            {
+                "name": "Indigo",
+                "hexCode": "#d4af90"
+            },
+            {
+                "name": "OrangeRed",
+                "hexCode": "#5e867e"
+            },
+            {
+                "name": "Green",
+                "hexCode": "#1aab81"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                },
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                },
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                }
+            ]
+        }
+    },
+    {
+        "id": 3,
+        "make": "Volkswagen",
+        "model": "X5",
+        "modelCode": "WW954",
+        "manufacturingYear": 2020,
+        "carType": "Sedan",
+        "fuelType": "Gasoline",
+        "year": 2013,
+        "specifications": {
+            "engine": {
+                "type": "2.5L",
+                "cylinderCount": 6,
+                "horsepower": 243,
+                "torque": 471,
+                "drivetrain": "RWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 10196,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 1
+        },
+        "price": 42364,
+        "images": [
+            {
+                "url": "https://picsum.photos/500/300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "PaleGoldenRod",
+                "hexCode": "#a73389"
+            },
+            {
+                "name": "Coral",
+                "hexCode": "#259577"
+            },
+            {
+                "name": "SlateGray",
+                "hexCode": "#3f1b2f"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                }
+            ]
+        }
+    },
+    {
+        "id": 4,
+        "make": "Nissan",
+        "model": "CR-V",
+        "modelCode": "QQ513",
+        "manufacturingYear": 2022,
+        "carType": "SUV",
+        "fuelType": "Diesel",
+        "year": 2013,
+        "specifications": {
+            "engine": {
+                "type": "5.9L",
+                "cylinderCount": 6,
+                "horsepower": 210,
+                "torque": 453,
+                "drivetrain": "RWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 28141,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 3
+        },
+        "price": 39796,
+        "images": [
+            {
+                "url": "https://dummyimage.com/500x300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "GreenYellow",
+                "hexCode": "#544fe9"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                },
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                }
+            ]
+        }
+    },
+    {
+        "id": 5,
+        "make": "Chevrolet",
+        "model": "Z4",
+        "modelCode": "IB286",
+        "manufacturingYear": 2024,
+        "carType": "Truck",
+        "fuelType": "Diesel",
+        "year": 2010,
+        "specifications": {
+            "engine": {
+                "type": "4.9L",
+                "cylinderCount": 4,
+                "horsepower": 116,
+                "torque": 367,
+                "drivetrain": "FWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 2180,
+                "unit": "miles"
+            },
+            "safetyRating": 2,
+            "warrantyYears": 2
+        },
+        "price": 36480,
+        "images": [
+            {
+                "url": "https://placekitten.com/500/300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "Coral",
+                "hexCode": "#cdafe4"
+            },
+            {
+                "name": "PaleGoldenRod",
+                "hexCode": "#b051ef"
+            },
+            {
+                "name": "Khaki",
+                "hexCode": "#962ae8"
+            },
+            {
+                "name": "SeaShell",
+                "hexCode": "#467d3e"
+            },
+            {
+                "name": "MediumPurple",
+                "hexCode": "#57d109"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                }
+            ]
+        }
+    },
+    {
+        "id": 6,
+        "make": "Ford",
+        "model": "Corolla",
+        "modelCode": "KG199",
+        "manufacturingYear": 2023,
+        "carType": "Truck",
+        "fuelType": "Diesel",
+        "year": 2021,
+        "specifications": {
+            "engine": {
+                "type": "4.1L",
+                "cylinderCount": 6,
+                "horsepower": 225,
+                "torque": 427,
+                "drivetrain": "FWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 43282,
+                "unit": "miles"
+            },
+            "safetyRating": 5,
+            "warrantyYears": 2
+        },
+        "price": 32419,
+        "images": [
+            {
+                "url": "https://placekitten.com/500/300"
+            },
+            {
+                "url": "https://placekitten.com/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "DeepPink",
+                "hexCode": "#de86d2"
+            },
+            {
+                "name": "NavajoWhite",
+                "hexCode": "#442d81"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                },
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                }
+            ]
+        }
+    },
+    {
+        "id": 7,
+        "make": "Nissan",
+        "model": "Altima",
+        "modelCode": "IF247",
+        "manufacturingYear": 2021,
+        "carType": "Sedan",
+        "fuelType": "Gasoline",
+        "year": 2012,
+        "specifications": {
+            "engine": {
+                "type": "1.7L",
+                "cylinderCount": 4,
+                "horsepower": 276,
+                "torque": 285,
+                "drivetrain": "AWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 39918,
+                "unit": "miles"
+            },
+            "safetyRating": 2,
+            "warrantyYears": 5
+        },
+        "price": 38229,
+        "images": [
+            {
+                "url": "https://placekitten.com/500/300"
+            },
+            {
+                "url": "https://picsum.photos/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "Aqua",
+                "hexCode": "#c87dbe"
+            },
+            {
+                "name": "LawnGreen",
+                "hexCode": "#cad643"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                }
+            ]
+        }
+    },
+    {
+        "id": 8,
+        "make": "Ford",
+        "model": "Rogue",
+        "modelCode": "kh884",
+        "manufacturingYear": 2022,
+        "carType": "SUV",
+        "fuelType": "Diesel",
+        "year": 2019,
+        "specifications": {
+            "engine": {
+                "type": "4.3L",
+                "cylinderCount": 4,
+                "horsepower": 327,
+                "torque": 470,
+                "drivetrain": "AWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 9806,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 1
+        },
+        "price": 39071,
+        "images": [
+            {
+                "url": "https://placekitten.com/500/300"
+            },
+            {
+                "url": "https://picsum.photos/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "Chocolate",
+                "hexCode": "#69e3f1"
+            },
+            {
+                "name": "Blue",
+                "hexCode": "#aa1061"
+            },
+            {
+                "name": "LavenderBlush",
+                "hexCode": "#909ad6"
+            },
+            {
+                "name": "Wheat",
+                "hexCode": "#862eb4"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                },
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                },
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                }
+            ]
+        }
+    },
+    {
+        "id": 9,
+        "make": "Ford",
+        "model": "Jetta",
+        "modelCode": "XZ685",
+        "manufacturingYear": 2020,
+        "carType": "Sedan",
+        "fuelType": "Diesel",
+        "year": 2017,
+        "specifications": {
+            "engine": {
+                "type": "2.3L",
+                "cylinderCount": 4,
+                "horsepower": 144,
+                "torque": 439,
+                "drivetrain": "RWD"
+            },
+            "transmission": {
+                "type": "Automatic",
+                "gears": 6
+            },
+            "mileage": {
+                "value": 34651,
+                "unit": "miles"
+            },
+            "safetyRating": 2,
+            "warrantyYears": 4
+        },
+        "price": 47320,
+        "images": [
+            {
+                "url": "https://dummyimage.com/500x300"
+            },
+            {
+                "url": "https://dummyimage.com/500x300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "CornflowerBlue",
+                "hexCode": "#afe763"
+            },
+            {
+                "name": "HoneyDew",
+                "hexCode": "#d6aa04"
+            },
+            {
+                "name": "BlanchedAlmond",
+                "hexCode": "#c568b6"
+            },
+            {
+                "name": "LightSkyBlue",
+                "hexCode": "#684141"
+            },
+            {
+                "name": "Thistle",
+                "hexCode": "#ace6cf"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Bluetooth Connectivity",
+                    "additionalCost": 250
+                },
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Adaptive Cruise Control",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                }
+            ]
+        }
+    },
+    {
+        "id": 10,
+        "make": "Toyota",
+        "model": "Corolla",
+        "modelCode": "dT023",
+        "manufacturingYear": 2023,
+        "carType": "Truck",
+        "fuelType": "Diesel",
+        "year": 2015,
+        "specifications": {
+            "engine": {
+                "type": "1.4L",
+                "cylinderCount": 6,
+                "horsepower": 129,
+                "torque": 214,
+                "drivetrain": "AWD"
+            },
+            "transmission": {
+                "type": "Manual",
+                "gears": 5
+            },
+            "mileage": {
+                "value": 13282,
+                "unit": "miles"
+            },
+            "safetyRating": 4,
+            "warrantyYears": 4
+        },
+        "price": 41478,
+        "images": [
+            {
+                "url": "https://placekitten.com/500/300"
+            },
+            {
+                "url": "https://picsum.photos/500/300"
+            }
+        ],
+        "availableColors": [
+            {
+                "name": "Purple",
+                "hexCode": "#b9a5d3"
+            },
+            {
+                "name": "PeachPuff",
+                "hexCode": "#c443bc"
+            }
+        ],
+        "upgradeOptions": {
+            "interiorUpgrades": [
+                {
+                    "name": "Premium Upholstery",
+                    "additionalCost": 1500
+                },
+                {
+                    "name": "Ambient Lighting",
+                    "additionalCost": 300
+                },
+                {
+                    "name": "Ventilated Seats",
+                    "additionalCost": 950
+                },
+                {
+                    "name": "Leather Seats",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Heated Seats",
+                    "additionalCost": 787
+                },
+                {
+                    "name": "Sunroof",
+                    "additionalCost": 1172
+                }
+            ],
+            "performanceUpgrades": [
+                {
+                    "name": "Performance Tires",
+                    "additionalCost": 600
+                },
+                {
+                    "name": "Turbocharger",
+                    "additionalCost": 2771
+                },
+                {
+                    "name": "Enhanced Braking System",
+                    "additionalCost": 1200
+                },
+                {
+                    "name": "Cold Air Intake",
+                    "additionalCost": 400
+                },
+                {
+                    "name": "Sport Suspension",
+                    "additionalCost": 835
+                }
+            ],
+            "technologyUpgrades": [
+                {
+                    "name": "Navigation System",
+                    "additionalCost": 962
+                },
+                {
+                    "name": "Backup Camera",
+                    "additionalCost": 500
+                },
+                {
+                    "name": "Premium Sound System",
+                    "additionalCost": 672
+                }
+            ]
+        }
+    }
+]
