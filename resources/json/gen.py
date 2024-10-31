@@ -1,6 +1,7 @@
 import json
 import random
 from faker import Faker
+from functools import lru_cache
 
 # Initialize Faker
 fake = Faker()
@@ -46,18 +47,10 @@ technology_upgrades = [
 ]
 
 insurance_plan_names = [
-    "Basic Liability Coverage",
-    "Comprehensive Coverage",
-    "Collision Coverage",
-    "Uninsured Motorist Protection",
-    "Underinsured Motorist Coverage",
-    "Personal Injury Protection (PIP)",
-    "Medical Payments Coverage (MedPay)",
-    "Rental Car Reimbursement",
-    "Roadside Assistance Plan",
-    "Gap Insurance",
-    "Zero Depreciation Cover",
-    "Emergency Medical Expenses Coverage"
+    'Basic Liability Coverage',
+    'Comprehensive Coverage',
+    'Collision Coverage',
+    'Uninsured Motorist Protection',
 ]
 
 # Function to generate unique upgrade options
@@ -77,26 +70,43 @@ def generate_unique_upgrades():
         'technologyUpgrades': selected_technology,
     }
 
+
+@lru_cache(maxsize=128)  # Cache the random choices for models based on make
+def get_random_model(make):
+    return random.choice(models[make])
+
 # Function to create a vehicle entry
 
 
-def create_vehicle(id):
-    upgrades = generate_unique_upgrades()  # Generate upgrades once
+def create_vehicle(id, used_plan_names):
 
-    # Calculate total additional cost from upgrades
-    total_upgrade_cost = (
-        sum(item['additionalCost'] for item in upgrades['interiorUpgrades']) +
-        sum(item['additionalCost'] for item in upgrades['performanceUpgrades']) +
-        sum(item['additionalCost'] for item in upgrades['technologyUpgrades'])
-    )
+    upgrades = generate_unique_upgrades()  # Generate upgrades once
 
     # Base price can be adjusted based on vehicle type or other logic
     base_price = random.randint(20000, 35000)
 
+    # Generate unique insurance plans ensuring unique plan names
+    insurance_plans = []  # Use a list to store insurance plans
+
+    while len(insurance_plans) < random.randint(1, 3):
+        plan_name = random.choice(insurance_plan_names)
+
+        if plan_name not in used_plan_names:
+            used_plan_names.add(plan_name)  # Mark this plan name as used
+
+            insurance_plans.append({
+                'planName': plan_name,
+                'annualPremium': int(base_price * random.uniform(0.05, 0.15)),
+                'coverageLimit': int(base_price * random.uniform(2, 5)),
+                'deductible': random.choice([250, 500, 1000]),
+            })
+
+    chosen_make = random.choice(makes)
+
     return {
         'id': id,
-        'make': random.choice(makes),
-        'model': random.choice(models[random.choice(makes)]),
+        'make': chosen_make,
+        'model': get_random_model(chosen_make),  # Caching used here
         'modelCode': fake.bothify(text='??###'),
         'manufacturingYear': random.randint(2020, 2024),
         'carType': random.choice(["SUV", "Sedan", "Truck"]),
@@ -106,9 +116,8 @@ def create_vehicle(id):
             'engine': {
                 'type': f"{random.randint(1, 5)}.{random.randint(0, 9)}L",
                 'cylinderCount': random.choice([4, 6]),
-                'horsepower': random.randint(100, 400),  # Added horsepower
-                'torque': random.randint(100, 500),      # Added torque
-                # Added drivetrain type
+                'horsepower': random.randint(100, 400),
+                'torque': random.randint(100, 500),
                 'drivetrain': random.choice(['AWD', 'FWD', 'RWD']),
             },
             'transmission': {
@@ -122,8 +131,8 @@ def create_vehicle(id):
             'safetyRating': random.randint(1, 5),
             'warrantyYears': random.randint(1, 5),
         },
-        # Correctly calculate price now that upgrades are fixed
-        'price': base_price + total_upgrade_cost,
+        # Set price to base_price only
+        'price': base_price,
         # Generate two unique image URLs for each vehicle
         'images': [
             {'url': fake.image_url(width=500, height=300)},
@@ -136,42 +145,43 @@ def create_vehicle(id):
         # Include generated upgrade options in the vehicle data
         'upgradeOptions': upgrades,
         # Linked insurance plans for the vehicle with realistic values
-        'insurancePlans': [
-            {
-                # Randomly select a plan name from the list
-                'planName': random.choice(insurance_plan_names),
-                # Random annual premium between realistic ranges based on vehicle attributes
-                'annualPremium': int(base_price * random.uniform(0.05, 0.15)),
-                # Random coverage limit between realistic ranges based on price
-                'coverageLimit': int(base_price * random.uniform(2, 5)),
-                # Random deductible values that are common in insurance policies
-                'deductible': random.choice([250, 500, 1000]),
-            } for _ in range(random.randint(1, 3))
-        ],
+        'insurancePlans': insurance_plans,
     }
 
 # Generate a list of vehicles based on specified number of vehicles to create
 
 
 def generate_vehicles(num_vehicles):
-    vehicles = [create_vehicle(i + 1) for i in range(num_vehicles)]
+
+    used_plan_names = set()   # Set to keep track of used plan names
+
+    vehicles = [create_vehicle(i + 1, used_plan_names)
+                for i in range(num_vehicles)]
+
     return vehicles
 
 # Main function to write generated vehicle data to vehicles.json file
 
 
 def main():
-    num_of_vehicles = int(
-        input("Enter the number of vehicles to generate: ")) or 10
-    vehicles_data = generate_vehicles(num_of_vehicles)
 
     try:
-        with open('vehicles.json', 'w') as json_file:
+        num_of_vehicles = int(
+            input("Enter the number of vehicles to generate: ")) or 10
+
+        vehicles_data = generate_vehicles(num_of_vehicles)
+
+        with open('vehicles2.json', 'w') as json_file:
             json.dump(vehicles_data, json_file, indent=4)
             print(
                 f"Successfully generated {num_of_vehicles} vehicles in vehicles.json.")
+
+    except ValueError as ve:
+        print(f"Input error: {ve}. Please enter a valid number.")
     except IOError as e:
         print(f"Error writing to file: {e}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
 
 
 if __name__ == "__main__":
