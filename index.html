@@ -24,6 +24,256 @@
     <script type="module" src="resources/js/main.js"></script>
     <script src="resources/js/index.js"></script>
 </head>
+<style>
+    :root {
+        --primary-color: #4f46e5;
+        --primary-hover: #4338ca;
+        --text-color: #1f2937;
+        --error-color: #ef4444;
+        --success-color: #10b981;
+        --background-color: #f3f4f6;
+        --card-background: #ffffff;
+        --input-background: #f9fafb;
+        --input-border: #e5e7eb;
+        --input-focus: #e0e7ff;
+        --shadow-color: rgba(0, 0, 0, 0.1);
+    }
+
+    [data-theme="dark"] {
+        --text-color: #f3f4f6;
+        --background-color: #111827;
+        --card-background: #1f2937;
+        --input-background: #374151;
+        --input-border: #4b5563;
+        --input-focus: #312e81;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    body {
+        background-color: var(--background-color);
+        color: var(--text-color);
+        min-height: 100vh;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .container {
+        background-color: var(--card-background);
+        border-radius: 1rem;
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 480px;
+        box-shadow: 0 4px 6px var(--shadow-color);
+        transition: all 0.3s ease;
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .form-header h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: var(--text-color);
+        margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+        color: #6b7280;
+        font-size: 0.975rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        font-size: 0.875rem;
+    }
+
+    .input-wrapper {
+        position: relative;
+        display: flex;
+        align-items: center;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="tel"] {
+        width: 100%;
+        padding: 0.75rem 1rem 0.75rem 2.5rem;
+        border: 1px solid var(--input-border);
+        border-radius: 0.5rem;
+        background-color: var(--input-background);
+        color: var(--text-color);
+        font-size: 0.975rem;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        background-color: var(--input-focus);
+        box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+    }
+
+    input:focus + .icon {
+        color: var(--primary-color);
+    }
+
+    .error {
+        color: var(--error-color);
+        font-size: 0.875rem;
+        margin-top: 0.5rem;
+        display: none;
+    }
+
+    .terms-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        font-size: 0.875rem;
+        user-select: none;
+    }
+
+    .terms-text {
+        margin-left: 0.5rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 0.875rem;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+        background-color: var(--primary-hover);
+        transform: translateY(-1px);
+    }
+
+    .submit-btn:active {
+        transform: translateY(0);
+    }
+
+    .btn-icon {
+        width: 18px;
+        height: 18px;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .spinner-container {
+        display: none;
+        justify-content: center;
+        margin: 1rem 0;
+    }
+
+    .spinner {
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 3px solid #e5e7eb;
+        border-top-color: var(--primary-color);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    .message {
+        text-align: center;
+        padding: 1rem;
+        margin-top: 1rem;
+        border-radius: 0.5rem;
+        display: none;
+    }
+
+    .success-message {
+        background-color: #ecfdf5;
+        color: var(--success-color);
+    }
+
+    .error-message {
+        background-color: #fef2f2;
+        color: var(--error-color);
+    }
+
+    .theme-toggle {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        padding: 0.75rem;
+        border-radius: 50%;
+        background-color: var(--card-background);
+        border: 1px solid var(--input-border);
+        cursor: pointer;
+        box-shadow: 0 2px 4px var(--shadow-color);
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+        transform: scale(1.1);
+    }
+
+    .theme-toggle svg {
+        color: var(--text-color);
+    }
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+
+    @media (max-width: 640px) {
+        .container {
+            padding: 1.5rem;
+        }
+
+        .form-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .theme-toggle {
+            bottom: 1rem;
+            right: 1rem;
+        }
+    }
+</style>
 <body>
 <main class="container">
     <div class="text-center">
