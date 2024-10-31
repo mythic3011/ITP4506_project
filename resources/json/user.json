@@ -5,12 +5,12 @@
     "password": "a"
   },
   {
-    "email": "customer@a.com",
+    "email": "c1@a.com",
     "role": "Customer",
     "password": "a"
   },
   {
-    "email": "c@c.com",
+    "email": "c2@c.com",
     "role": "Customer",
     "password": "ccc"
   }

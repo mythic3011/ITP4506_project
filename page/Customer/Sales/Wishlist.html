@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Vehicle Sales | Legend Motor Limited</title>
+    <title>Wishlist | Legend Motor Limited</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../../../resources/image/icon.png" type="image/x-icon"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../../../resources/css/styles/components/forms.css">
+    <link rel="stylesheet" href="../../../resources/css/styles/components/index.css">
+    <link rel="stylesheet" href="../../../resources/css/styles/pages/login.css">
+    <link rel="stylesheet" href="../../../resources/css/styles/main.css">
 <body class="bg-gray-50 font-sans">
-
 <header class="navbar bg-white shadow-md sticky top-0 z-10">
     <div class="container mx-auto flex justify-between items-center p-4">
         <a href="#" class="flex items-center">
@@ -19,11 +22,14 @@
 
         <div class="relative">
             <label for="search-bar-vehicles" class="absolute left-2 top-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                 </svg>
             </label>
-            <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..." class="border rounded px-10 py-1"/>
+            <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
+                   class="border rounded px-10 py-1"/>
         </div>
 
         <div class="hamburger md:hidden flex flex-col cursor-pointer">
@@ -35,35 +41,32 @@
         <nav class="nav-links hidden md:flex space-x-4">
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="#">Home</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="./ViewCar.html">Vehicles</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="Wishlist.html">Wishlist</a>
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./Wishlist.html">Wishlist</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="./ordersRecord.html">Orders</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="./profile.html">Profile</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../../logout.html">Log Out</a>
         </nav>
     </div>
 </header>
-
 <!-- Notification Container -->
 <div id="notification-container" class="fixed top-4 right-4 z-50"></div>
-
 <main class="container mx-auto p-6">
-    <!-- Dashboard Section -->
-    <section id="dashboard-content">
+    <!-- Wishlist Section -->
+    <section id="wishlist-content">
         <!-- Dynamic content will be loaded here -->
         <noscript>
             Please enable JavaScript to view this page.
         </noscript>
     </section>
-    <!-- End of Dashboard Section -->
+    <!-- End of Wishlist Section -->
     <!-- Footer Section -->
-    <footer class="mt-auto py-4 text-center">
+    <footer class="mt-auto py-4 text-center bg-gray-50">
         <p>&copy; 2024 Legend Motor Company. All rights reserved.</p>
     </footer>
     <!-- End of Footer Section -->
 </main>
-
 <script src="../../../resources/js/Sales/CustomerDashboard.js"></script> <!-- External JS file for jQuery -->
 <script src="../../../resources/js/Sales/CustomerNavigation.js"></script> <!-- External JS file for jQuery -->
 <script src="../../../resources/js/Sales/Notifications.js"></script> <!-- External JS file for notifications -->
+<script src="../../../resources/js/Sales/CustomerWishlist.js"></script> <!-- External JS file for wishlist -->
 </body>
-</html>

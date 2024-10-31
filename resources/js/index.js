@@ -26,8 +26,12 @@ $(document).ready(function () {
 
                 // Store the user data in the session storage
                 sessionStorage.setItem('user', JSON.stringify(user));
-                sessionStorage.setItem('login-system', $systemSelect);
                 sessionStorage.setItem('logout', false);
+                sessionStorage.setItem('last-login', new Date().getTime());
+                sessionStorage.setItem('lml_notifications', JSON.stringify([
+                    {message: `Welcome Back! user ${username}`, type: 'success'},
+                    {message: 'You have successfully logged in.', type: 'success'}
+                ]));
 
                 // Redirect based on user role
                 setTimeout(() => {

@@ -1,7 +1,23 @@
-import { logout } from './module/auth.js';
-import { toggleDarkMode, setInitialDarkMode } from './module/darkMode.js';
-import { updatePageLanguage } from './module/language.js';
-import { initializeProfile } from './profile.js';
+import {toggleDarkMode, setInitialDarkMode} from './module/darkMode.js';
+import {updatePageLanguage} from './module/language.js';
+import {initRouter} from './router.js';
+import {initAuth} from './services/auth.js';
+import {initializeMockData} from './services/admin/mockData.js';
+import {initTheme} from './services/theme.js';
+
+$(document).ready(async () => {
+    try {
+        await initAuth();
+        await initializeMockData();
+        initTheme();
+        initRouter();
+
+        console.log("Main.js loaded");
+    } catch (error) {
+        console.error('Error initializing application:', error);
+    }
+});
+
 
 export function initializeMain() {
     const $ = id => document.getElementById(id);
@@ -40,4 +56,15 @@ export function initializeMain() {
     const historyArr = JSON.parse(sessionStorage.getItem('pageHistory')) || [];
     historyArr.push(window.location.href);
     sessionStorage.setItem('pageHistory', JSON.stringify(historyArr));
+}
+
+export function logout() {
+    localStorage.removeItem('userToken');
+    sessionStorage.removeItem('userToken');
+    sessionStorage.removeItem('logout');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('theme');
+    sessionStorage.removeItem('language');
+    sessionStorage.removeItem('pageHistory');
+    window.location.href = '../logout.html';
 }

@@ -5,7 +5,7 @@ import { validateEmail } from '../utils/validation.js';
 import { renderFormInput } from '../components/forms/FormInput.js';
 import { renderFormCheckbox } from '../components/forms/FormCheckbox.js';
 import { renderModal, initModal } from '../components/forms/Modal.js';
-import { getIcon } from '../components/icons/index.js';
+import { getIcon } from '../components/icons';
 
 export function renderLogin() {
   const rememberedUser = localStorage.getItem('lml_remember_user') || '';
