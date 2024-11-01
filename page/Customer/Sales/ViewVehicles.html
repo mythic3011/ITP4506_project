@@ -58,7 +58,7 @@
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="index.html">Home</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="ViewVehicles.html">Vehicles</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="./Wishlist.html">Wishlist</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./ordersRecord.html">Orders</a>
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./viewOrderRecord.html">Orders</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="./profile.html">Profile</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../../logout.html">Log Out</a>
         </nav>
@@ -109,7 +109,9 @@
     </div>
 
     <!-- Vehicle List -->
-    <div id="VehicleList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4"></div>
+    <div id="VehicleList"
+         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
+    ></div>
     <div id='noVehiclesMessage' class='flex justify-center items-center h-full hidden pt-4'>
         <div class='bg-gray100 text-gray900 rounded-lg p6 flex flex-col items-center'>
             <svg class="w-12 h-12 mb-4 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
@@ -265,7 +267,7 @@
         }
 
         function createVehicleCard(vehicle) {
-            const card = $('<div class="card bg-white rounded-lg shadow-lg overflow-hidden transition-transform transform hover:scale-105 max-w-sm mx-auto mb-4"></div>');
+            const card = $('<div class="card border-l-4 border-blue-500 bg-white border-l-4 border-orange-500 shadow-lg rounded-lg p-[30px] text-center hover:bg-gray-[100] transition duration-[200ms] ease-in-out delay-[0ms] "></div>');
 
             const sliderContainer = $('<div class="image-slider relative overflow-hidden"></div>');
 

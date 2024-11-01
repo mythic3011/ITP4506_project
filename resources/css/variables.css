@@ -316,7 +316,6 @@
     --text-secondary-inverted: #ffffff;
 
 
-
     /* Accent colors */
     --accent-color: #2563eb;
     --accent-hover: #1d4ed8;
@@ -532,16 +531,16 @@
     --bg-lime-50: var(--text-lime-50);
     --bg-lime-100: var(--text-lime-100);
     --bg-lime-200: var(--text-lime-200);
---bg-violet-50: var(--text-violet-50);
---bg-violet-100: var(--text-violet-100);
---bg-violet-200: var(--text-violet-200);
---bg-violet-300: var(--text-violet-300);
---bg-violet-400: var(--text-violet-400);
---bg-violet-500: var(--text-violet-500);
---bg-violet-600: var(--text-violet-600);
---bg-violet-700: var(--text-violet-700);
---bg-violet-800: var(--text-violet-800);
---bg-violet-900: var(--text-violet-900);
+    --bg-violet-50: var(--text-violet-50);
+    --bg-violet-100: var(--text-violet-100);
+    --bg-violet-200: var(--text-violet-200);
+    --bg-violet-300: var(--text-violet-300);
+    --bg-violet-400: var(--text-violet-400);
+    --bg-violet-500: var(--text-violet-500);
+    --bg-violet-600: var(--text-violet-600);
+    --bg-violet-700: var(--text-violet-700);
+    --bg-violet-800: var(--text-violet-800);
+    --bg-violet-900: var(--text-violet-900);
 
     --current-color: black;
 }
@@ -616,7 +615,7 @@
     --dropdown-item-hover: var(--bg-secondary);
     --dropdown-item-active: var(--accent-color);
     --dropdown-item-active-text: #ffffff;
-    --secondary:var(--gray-200);
+    --secondary: var(--gray-200);
 
     /* Button colors */
     --btn-primary-bg: var(--primary);
@@ -630,9 +629,9 @@
     --btn-danger-bg: var(--danger);
     --btn-danger-text: var(--text-primary-inverted);
     --btn-info-bg: var(--info);
-    --info : var(--info);
-    --dark : var(--dark);
-    --light : var(--light);
+    --info: var(--info);
+    --dark: var(--dark);
+    --light: var(--light);
     --btn-info-text: var(--text-primary-inverted);
     --btn-light-bg: var(--light);
     --btn-light-text: var(--text-primary-inverted);

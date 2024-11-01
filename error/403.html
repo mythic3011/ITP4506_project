@@ -24,76 +24,15 @@
       type="image/x-icon"
     />
     <link rel="stylesheet" href="../resources/css/index.css" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries
-"></script>
     <link
       rel="icon"
       href="/resources/image/icon_dark.png"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="/resources/css/index.css" />
     <script type="module" src="/resources/js/script.js"></script>
-    <script src="resources/js/403.js"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+<!--    <script src="resources/js/403.js"></script>-->
+    <style rel="../../../resources/css/main.css"></style>
     <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: "#eff6ff",
-                100: "#dbeafe",
-                200: "#bfdbfe",
-                300: "#93c5fd",
-                400: "#60a5fa",
-                500: "#3b82f6",
-                600: "#2563eb",
-                700: "#1d4ed8",
-                800: "#1e40af",
-                900: "#1e3a8a",
-                950: "#172554",
-              },
-            },
-          },
-          fontFamily: {
-            body: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "system-ui",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-            sans: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "system-ui",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-          },
-        },
-      };
     </script>
   </head>
   <body
@@ -102,7 +41,7 @@
   >
     <main>
       <div
-        class="container px-16 py-16 mt-20 mb-20 mx-auto dark:text-white shadow-none"
+        class="container px-16 py-16 mt-20 mb-20 mx-auto dark:text-white"
         onload="checkUserThemePreference()"
       >
         <div class="text-center">
@@ -117,7 +56,7 @@
         </div>
         <!-- Form for user login -->
         <p
-          class="mt-5 mb-5 p-4 pb-4 shadow-none rounded-2xl text-left flex flex-col 2xl:col-span-2 col:col-span-1 justify-center items-center dark:shadow-none dark:bg-shadow-8 dark:text-white"
+          class="mt-5 mb-5 p-4 pb-4 shadow-none rounded-2xl text-left "
         >
           <label
             class="text-sm font-bold mb-2 pr-2 pl-2 pt-2 mb-2 py-4 dark:text-white"

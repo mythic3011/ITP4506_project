@@ -1,25 +1,48 @@
 $(document).ready(function () {
     // Sample data for demonstration purposes
-    const salesHistory = [
-        {id: 1, date: 'Jan 15, 2024', amount: '$30K'},
-        {id: 2, date: 'Feb 20, 2024', amount: '$25K'},
-        {id: 3, date: 'Mar 10, 2024', amount: '$45K'}
-    ];
 
-    const orders = [
-        {id: 1, status: 'Shipped', vehicle: 'Toyota Camry'},
-        {id: 2, status: 'Processing', vehicle: 'Honda Accord'}
-    ];
+const orders = [
+    {id: 1, status: 'Picked Up', vehicle: 'Toyota Camry'},
+    {id: 2, status: 'Processing', vehicle: 'Honda Accord'},
+    {id: 3, status: 'Picked Up', vehicle: 'Ford Fusion'},
+    {id: 4, status: 'Processing', vehicle: 'Nissan Altima'},
+    {id: 5, status: 'Picked Up', vehicle: 'Chevrolet Malibu'},
+    {id: 6, status: 'Picked Up', vehicle: 'Hyundai Sonata'},
+    {id: 7, status: 'Processing', vehicle: 'Subaru Legacy'},
+    {id: 8, status: 'Shipped', vehicle: 'Kia Optima'},
+    {id: 9, status: 'Delivered', vehicle: 'Mazda 6'},
+    {id: 10, status: 'Cancelled', vehicle: 'Volkswagen Passat'},
+    {id: 11, status: 'Processing', vehicle: 'Chrysler 300'},
+];
 
-    const vehicles = [
-        {id: 1, name: 'Toyota Camry', price: '$25K'},
-        {id: 2, name: 'Honda Accord', price: '$22K'}
-    ];
+const vehicles = [
+    {id: 1, name: 'Toyota Camry', price: '$25000'},
+    {id: 2, name: 'Honda Accord', price: '$22000'},
+    {id: 3, name: 'Ford Fusion', price: '$24000'},
+    {id: 4, name: 'Nissan Altima', price: '$23000'},
+    {id: 5, name: 'Chevrolet Malibu', price: '$21000'},
+    {id: 6, name: 'Hyundai Sonata', price: '$22500'},
+    {id: 7, name: 'Subaru Legacy', price: '$23500'},
+    {id: 8, name: 'Kia Optima', price: '$21500'},
+    {id: 9, name: 'Mazda 6', price: '$26000'},
+    {id: 10, name: 'Volkswagen Passat', price: '$24000'},
+    {id: 11, name: 'Chrysler 300', price: '$29000'},
+];
 
-    const wishlist = [
-        {id: 1, name: 'Nissan Altima', price: '$23K'},
-        {id: 2, name: 'Ford Fusion', price: '$24K'}
-    ];
+
+
+
+const wishlist = [
+    {id: 1, name: 'Nissan Altima', price: '$23000', imageUrl: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'},
+    {id: 2, name: 'Ford Fusion', price: '$24000', imageUrl: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'},
+    {id: 3, name: 'Chevrolet Malibu', price: '$21000', imageUrl: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'},
+    {id: 4, name: 'Hyundai Sonata', price: '$22500', imageUrl: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'},
+    {id: 5, name: 'Subaru Legacy', price: '$23500', imageUrl: 'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'},
+    {id: 6, name:'Kia Optima', price:'$21500', imageUrl:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'},
+    {id: 7, name:'Mazda 6', price:'$26000', imageUrl:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'},
+    {id: 8, name:'Volkswagen Passat', price:'$24000', imageUrl:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'},
+    {id: 9, name:'Chrysler 300', price:'$29000', imageUrl:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=500'}
+];
 
     const svgIcons = {
         salesHistory: '<svg xmlns="http://www.w3.org/2000/svg" fill="green" viewBox="0 0 24 24" width="16" height="16"><path d="M12 0L9.5 5H0v7l12 12l12 -12V5h-9.5L12 0z"/></svg>',
@@ -31,11 +54,6 @@ $(document).ready(function () {
     // Function to render dashboard content
     function renderDashboard() {
         $('#dashboard-content').html(`
-            <section class="mb-8">
-                <h2 class="text-xl font-semibold mb-4">Sales History</h2>
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">${renderSalesHistory()}</div>
-            </section>
-
             <section class="mb-8">
                 <h2 class="text-xl font-semibold mb-4">Your Orders</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">${renderOrders()}</div>
@@ -53,18 +71,6 @@ $(document).ready(function () {
         `);
     }
 
-    // Render functions for each section
-    function renderSalesHistory() {
-        return salesHistory.map(sale => `
-        <div class='bg-white border-l-4 border-green-500 shadow-lg rounded-lg p-6 transition-transform transform hover:scale-[1.02] duration-200'>
-            ${svgIcons.salesHistory}
-            <h3 class='font-bold'>Sale #${sale.id}</h3>
-            <p>Date: ${sale.date}</p>
-            <p>Total Amount: ${sale.amount}</p>
-            <a href='#' class='text-blue-500 hover:underline mt-4 block'>View Details</a>
-        </div>`).join('');
-    }
-
     function renderOrders() {
         return orders.map(order => `
         <div class='bg-white ${getOrderCardClass(order.status)} shadow-lg rounded-lg p-6 transition-transform transform hover:scale-[1.02] duration-200'>
@@ -72,14 +78,13 @@ $(document).ready(function () {
             <h3 class='font-bold'>Order #${order.id}</h3>
             <p>Status: ${order.status}</p>
             <p>Vehicle: ${order.vehicle}</p>
-            <a href='./OrderDetails?id=${order.id}' class='text-blue-500 hover:underline mt-4 block'>Track Order</a>
+            <a href='./OrderDetails.html?id=${order.id}' class='text-blue-500 hover:underline mt-4 block'>Track Order</a>
         </div>`).join('');
     }
 
-
     function renderVehicles() {
         return vehicles.map(vehicle => `
-        <a href='./ViewCar.html' class='bg-white border-l-4 border-orange-500 shadow-lg rounded-lg p-[30px] text-center hover:bg-gray-[100] transition duration-[200ms] ease-in-out delay-[0ms]'>
+        <a href='./ViewVehicles.html' class='bg-white border-l-4 border-orange-500 shadow-lg rounded-lg p-[30px] text-center hover:bg-gray-[100] transition duration-[200ms] ease-in-out delay-[0ms]'>
             ${svgIcons.vehicles}
             <h3>${vehicle.name}</h3> 
             <p>Price: ${vehicle.price}</p> 
@@ -97,20 +102,26 @@ $(document).ready(function () {
 
 
     // Function to get order card classes based on status
-    function getOrderCardClass(status) {
-        switch (status) {
-            case 'paid':
-                return 'border-l-4 border-green-500'; // Green border for paid
-            case 'Pending':
-                return 'border-l-4 border-blue-500'; // Blue border for pending
-            case 'Shipped':
-                return 'border-l-4 border-green-500'; // Green border for shipped
-            case 'Processing':
-                return 'border-l-4 border-yellow-500'; // Yellow border for processing
-            default:
-                return '';
-        }
+function getOrderCardClass(status) {
+    switch (status) {
+        case 'paid':
+            return 'border-l-4 border-green-500'; // Green border for paid
+        case 'Pending':
+            return 'border-l-4 border-blue-500'; // Blue border for pending
+        case 'Picked Up':
+            return 'border-l-4 border-green-500'; // Green border for Picked Up
+        case 'Processing':
+            return 'border-l-4 border-yellow-500'; // Yellow border for processing
+        case 'Shipped':
+            return 'border-l-4 border-orange-500'; // Orange border for shipped
+        case 'Delivered':
+            return 'border-l-4 border-purple-500'; // Purple border for delivered
+        case 'Cancelled':
+            return 'border-l-4 border-red-500'; // Red border for cancelled
+        default:
+            return ''; // Default case for unknown status
     }
+}
 
     // Function to get status icon based on order status
     function getStatusIcon(status) {
