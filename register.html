@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration</title>
+    <title>Registration | Legend Motor Company</title>
     <link rel="stylesheet" href="resources/css/insurance_customer_style.css">
     <link rel="stylesheet" href="resources/css/payment-styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
 
 </head>
 <body>
 <style>
-    body{
+    body {
         background-color: rgb(243 244 246);
         background-size: cover;
     }
+
     .container {
         display: flex;
         justify-content: center;
@@ -24,24 +24,25 @@
         padding: 20px;
     }
 
-    .company{
+    .company {
         font-size: 1.2rem;
         font-weight: bold;
         color: #333;
     }
-    .address{
+
+    .address {
         font-size: 1rem;
         color: #333;
     }
 
     .section {
-    width: 100%;
-    max-width: 800px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    margin: 0 auto; /* Center align */
-}
+        width: 100%;
+        max-width: 800px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 0 auto; /* Center align */
+    }
 
     .subtitle {
         margin-bottom: 30px;
@@ -147,7 +148,6 @@
         color: #ff0000;
         font-size: 12px;
     }
-
 </style>
 <script>
     function redirect(type) {
@@ -169,9 +169,9 @@
         }
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
 
-        $('input[name="role"]').change(function() {
+        $('input[name="role"]').change(function () {
             const staffFields = $('#staffFields');
             if ($(this).val() === 'staff') {
                 if (!staffFields.length) {
@@ -282,7 +282,6 @@
         }
 
 
-
         function validateForm() {
             const fields = document.querySelectorAll('input[required], select[required]');
             let isValid = true;
@@ -299,22 +298,22 @@
             return isValid;
         }
 
-        $(document).on('input blur change', 'input[required], select[required]', function() {
+        $(document).on('input blur change', 'input[required], select[required]', function () {
             validateField(this);
             validateForm();
         });
 
         // Toggle password visibility
-        $('.toggle-password').click(function() {
+        $('.toggle-password').click(function () {
             const input = $(this).siblings('input');
             const type = input.attr('type') === 'password' ? 'text' : 'password';
             input.attr('type', type);
         });
 
         // Add validation listeners to all required fields
-        $('input[required]').each(function() {
+        $('input[required]').each(function () {
             ['input', 'blur', 'change'].forEach(event => {
-                $(this).on(event, function() {
+                $(this).on(event, function () {
                     validateField(this);
                     validateForm();
                 });
@@ -322,7 +321,7 @@
         });
 
         // Form submission
-        $('#registrationForm').submit(function(e) {
+        $('#registrationForm').submit(function (e) {
             e.preventDefault();
 
             if (validateForm()) {
@@ -334,6 +333,20 @@
                 popup.className = 'popup-overlay';
                 popup.style.display = 'flex';
                 localStorage.setItem('username', document.getElementById('email').value);
+                SubmitForm();
+
+                const newUser = {
+                    firstName: $('#firstName').val(),
+                    lastName: $('#lastName').val(),
+                    email: $('#email').val(),
+                    mobile: $('#mobile').val(),
+                    password: $('#password').val(),
+                    role: $('input[name="role"]:checked').val(),
+                    staffNumber: $('#staffId').val() || null,
+                };
+
+                // Add user to local storage
+                addUser(newUser);
 
                 popup.innerHTML = `
                 <div class="popup-content">
@@ -353,6 +366,7 @@
                 </div>
             `;
 
+
                 document.body.appendChild(popup);
                 setTimeout(() => popup.classList.add('show'), 10);
 
@@ -371,12 +385,83 @@
         });
 
         // Back button
-        $('.btn-back').click(function() {
+        $('.btn-back').click(function () {
             window.location.href = 'index.html';
         });
 
         // Initial form validation
         validateForm();
+
+
+        function SubmitForm() {
+            //gender: $('#gender').val(), -> get the value of the radio button to use if else to return
+            var formData = {
+                firstName: $('#firstName').val(),
+                lastName: $('#lastName').val(),
+                email: $('#email').val(),
+                mobile: $('#mobile').val(),
+                password: $('#password').val(),
+                role: $('input[name="role"]:checked').val(),
+                staffNumber: $('#staffId').val() || null,
+                orders: [] // Initialize with an empty orders array
+            };
+
+            if (formData.firstName == "" || formData.lastName == "" || formData.email == "" || formData.phone == "" || formData.password == "" || formData.staffNumber == "") {
+                console.log("Please fill in all required fields.");
+                return;
+            }
+
+            $.ajax({
+                url: "resources/json/user.json", type: "GET", dataType: "json", success: function (users) {
+                    let userExists = users.some(user => user.email === formData.email);
+
+                    if (userExists) {
+                        console.log("User already exists!");
+                    } else {
+                        users.push(formData);
+                        localStorage.setItem('username', formData.email);
+                        localStorage.setItem('user', JSON.stringify(users));
+                        addUser(formData);
+                        console.log("User added successfully");
+                    }
+                }
+            });
+        }
+
+        // Add user to the json file
+        function addUser(user) {
+            // Retrieve existing users from JSON file
+            $.getJSON("resources/json/user.json", function (users) {
+                // Check if user already exists
+                const userExists = users.some(existingUser => existingUser.email === user.email);
+                if (userExists) {
+                    console.log("User already exists!");
+                    return;
+                }
+
+                // Add new user to the array
+                users.push(user);
+
+                // Save updated users back to JSON file via AJAX
+                $.ajax({
+                    url: 'resources/json/user.json',
+                    type: 'PUT', // or 'POST' depending on your setup
+                    contentType: 'application/json',
+                    data: JSON.stringify(users),
+                    success: function (response) {
+                        console.log("Data updated successfully:", response);
+                        console.log("User added successfully!");
+                        // Optionally redirect or clear form here
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error updating data:", error);
+                        console.log("An error occurred while saving user data.");
+                    }
+                });
+            }).fail(function () {
+                console.log("Failed to retrieve users. Please try again later.");
+            });
+        }
     });
 </script>
 <div class="section">
@@ -388,21 +473,22 @@
     </div>
 
     <div class="section-content">
-        <h4 style="text-align: center">With Legend Motor Company you can find the right car insurance and car for your vehicle.</h4>
+        <h4 style="text-align: center">With Legend Motor Company you can find the right car insurance and car for your
+            vehicle.</h4>
         <form id="registrationForm" class="form-section">
             <div class="form-group">
                 <div class="input-group">
                     <label>Salutation*</label>
-                    <div class="radio-group">
-                        <label class="radio-container">
+                    <div class="radio-group" id="Gender">
+                        <label class="radio-container" id="Mr">
                             <input type="radio" name="salutation" value="mister" checked>
                             <span class="radio-label">Mister</span>
                         </label>
-                        <label class="radio-container">
+                        <label class="radio-container" id="Ms">
                             <input type="radio" name="salutation" value="woman">
                             <span class="radio-label">Woman</span>
                         </label>
-                        <label class="radio-container">
+                        <label class="radio-container" id="Mrs">
                             <input type="radio" name="salutation" value="no">
                             <span class="radio-label">No</span>
                         </label>
@@ -411,7 +497,7 @@
                 <br>
                 <div class="input-group">
                     <label>Role*</label>
-                    <div class="radio-group">
+                    <div class="radio-group" id="Role">
                         <label class="radio-container">
                             <input type="radio" name="role" value="customer" checked>
                             <span class="radio-label">Customer</span>
@@ -425,7 +511,7 @@
             </div>
             <p class="subtitle">Please enter your personal data here and choose a secure password for your login.</p>
 
-            <div class="form-group">
+            <div class="form-group" id="Name">
                 <div class="input-group">
                     <label for="firstName">First name*</label>
                     <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
@@ -436,7 +522,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="Contact">
                 <div class="input-group">
                     <label for="email">Email*</label>
                     <input type="email" id="email" name="email" required placeholder="Enter your email">
@@ -447,7 +533,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="Password-DIV">
                 <div class="input-group">
                     <label for="password">Password*</label>
                     <div class="password-input">
@@ -471,12 +557,15 @@
 
             <div class="consent">
                 <input type="checkbox" id="consent" required>
-                <label for="consent">By completing the registration you accept our <strong><u>terms and conditions</u></strong> . Please note our privacy policy .</label>
+                <label for="consent">By completing the registration you accept our <strong><u>terms and
+                    conditions</u></strong> . Please note our privacy policy .</label>
             </div>
             <div class="button-group">
-                <button id='btn_quote' type="submit" class="submit-button" style="float: right; " disabled>Join Us !</button>
-                <button type="button" class="submit-button btn-back" style="float: left; background-color: #d1d1d1">Back</button>
-
+                <button id='btn_quote' type="submit" class="submit-button" style="float: right; " disabled>Join Us !
+                </button>
+                <button type="button" class="submit-button btn-back" style="float: left; background-color: #d1d1d1">
+                    Back
+                </button>
             </div>
         </form>
 
@@ -485,8 +574,7 @@
             <p>Please use our frequently asked questions or our contact form.</p>
         </div>
     </div>
-
 </div>
-<script src="script.js"></script>
+<!--<script src="script.js"></script>-->
 </body>
 </html>

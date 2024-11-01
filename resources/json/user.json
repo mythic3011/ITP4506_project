@@ -1,17 +1,32 @@
 [
   {
+    "id": 1,
+    "firstName": "John",
+    "lastName": "Doe",
     "email": "is@a.com",
     "role": "Staff",
-    "password": "a"
+    "password": "a",
+    "mobile": "12345678",
+    "orders": []
   },
   {
+    "id": 2,
+    "firstName": "Jane",
+    "lastName": "Smith",
     "email": "c1@a.com",
     "role": "Customer",
-    "password": "a"
+    "password": "a",
+    "mobile": "87654321",
+    "orders": []
   },
   {
+    "id": 3,
+    "firstName": "Alice",
+    "lastName": "Johnson",
     "email": "c2@c.com",
     "role": "Customer",
-    "password": "a"
+    "password": "a",
+    "mobile": "23456789",
+    "orders": []
   }
 ]

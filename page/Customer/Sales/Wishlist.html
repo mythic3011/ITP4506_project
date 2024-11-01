@@ -52,6 +52,44 @@
     tbody tr:hover {
         background-color: #f9f9f9; /* Highlight row on hover */
     }
+
+    .item-list {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .item-list strong {
+        color: #333;
+    }
+
+    #orderSummary {
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .notification {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+    }
+
+    .success {
+        background-color: #dff0d8;
+        color: #3c763d;
+    }
+
+    .error {
+        background-color: #f2dede;
+        color: #a94442;
+    }
+
+    .info {
+        background-color: #d9edf7;
+        color: #31708f;
+    }
+
+    .hidden {
+        display: none;
+    }
 </style>
 
 <body class="bg-gray-50 font-sans">
@@ -60,8 +98,10 @@
 
         <div class="flex items-center">
             <!-- Back button -->
-            <button id="backBtn" class=" px-4 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <button id="backBtn"
+                    class=" px-4 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
                 </svg>
             </button>
@@ -152,12 +192,22 @@
             <div class="bg-white shadow overflow-hidden sm:rounded-lg p-6">
                 <!-- Request Summary -->
                 <div id="orderSummary" class="mb-6 border-b border-gray-200 pb-4">
-                    <h2 class="text-xl font-semibold mb-4">Request Summary</h2>
-                    <!-- JavaScript will insert Request summary details here -->
+                    <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                    <div class="border-t border-gray-200 pt-4" id="subtotalAmount">
+                        <!-- Subtotal amount will be inserted here by JavaScript -->
+                    </div>
+                    <div class="" id="totalAmount">
+                        <!-- Total amount will be inserted here by JavaScript -->
+                    </div>
+                    <div class="" id="DepositAmount">
+                        <!-- Deposit amount will be inserted here by JavaScript -->
+                    </div>
+                    <div class="mt-6 pb-2" id="EstimatedDelivery">
+                        <!-- Estimated delivery will be inserted here by JavaScript -->
+                    </div>
                 </div>
-
-                <h2 class="text-xl font-semibold mb-4">Payment Details</h2>
-                <form id="paymentForm">
+                <form id="paymentForm" aria-labelledby="paymentFormTitle">
+                    <h2 id="paymentFormTitle" class="text-xl font-semibold mb-4">Payment Details</h2>
                     <div class="mb-4">
                         <label class="block text-sm font-medium text-gray-700" for="paymentMethod">Payment
                             Method</label>
@@ -171,48 +221,53 @@
                             <option value="Check">Check</option>
                         </select>
                     </div>
+
                     <div id="CreditCard" class="mb-4 hidden">
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 " for="cardName">Name on
-                                Card</label>
-                            <input class="text-left pl-1 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 "
-                                   id="cardName" name="cardName"
-                                   type="text" required>
+                            <label class="block text-sm font-medium text-gray-700" for="cardName">Name on Card</label>
+                            <input class="text-left pl-1 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                   id="cardName" name="cardName" type="text" required aria-describedby="cardNameHelp">
+                            <p id="cardNameHelp" class="text-red-500 hidden">Please enter your name as it appears on the
+                                card.</p>
                         </div>
                         <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 " for="cardNumber">Card
-                                Number</label>
+                            <label class="block text-sm font-medium text-gray-700" for="cardNumber">Card Number</label>
                             <input class="text-left pl-1 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                                   id="cardNumber" name="cardNumber"
-                                   type="text" required>
+                                   id="cardNumber" name="cardNumber" type="text" required
+                                   aria-describedby="cardNumberHelp">
+                            <p id="cardNumberHelp" class="text-red-500 hidden">Please enter a valid card number.</p>
                         </div>
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 " for="expiryDate">Expiry
+                                <label class="block text-sm font-medium text-gray-700" for="expiryDate">Expiry
                                     Date</label>
-                                <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  "
-                                       id="expiryDate" name="expiryDate" placeholder="MM/YY"
-                                       type="text" required>
+                                <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                       id="expiryDate" name="expiryDate" placeholder="MM/YY" type="text" required
+                                       aria-describedby="expiryDateHelp">
+                                <p id="expiryDateHelp" class="text-red-500 hidden">Please enter a valid expiry date.</p>
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 "
-                                       for="cvv">CVV</label>
-                                <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50  "
-                                       id="cvv" name="cvv"
-                                       type="text" required>
+                                <label class="block text-sm font-medium text-gray-700" for="cvv">CVV</label>
+                                <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                       id="cvv" name="cvv" type="text" required aria-describedby="cvvHelp">
+                                <p id="cvvHelp" class="text-red-500 hidden">Please enter your CVV.</p>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-6" id="subtotalAmount">
-                        <!-- Subtotal amount will be inserted here by JavaScript -->
+
+                    <!-- Loading Indicator -->
+                    <div id="loadingIndicator" class="hidden text-center mb-4">
+                        <span>Loading...</span>
                     </div>
-                    <div class="mt-6" id="totalAmount">
-                        <!-- Total amount will be inserted here by JavaScript -->
-                    </div>
-                    <button class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+
+                    <button id="WishlistCheckout"
+                            class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                             type="submit">
                         Checkout →
                     </button>
+
+                    <!-- Notification Area -->
+                    <div id="notificationArea"></div>
                 </form>
             </div>
         </div>
