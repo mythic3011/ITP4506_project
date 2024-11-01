@@ -273,15 +273,111 @@
             right: 1rem;
         }
     }
+    .message {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-size: 0.875rem;
+    }
+
+    .error-message {
+        background-color: #fef2f2;
+        color: #ef4444;
+        border: 1px solid #fee2e2;
+    }
+
+    .success-message {
+        background-color: #ecfdf5;
+        color: #10b981;
+        border: 1px solid #d1fae5;
+    }
+
+    footer {
+        text-align: center;
+        padding: 1rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: var(--card-background);
+        color: var(--text-color);
+    }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const loginForm = document.getElementById('loginForm');
+        const messageDiv = document.getElementById('message');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+
+        let users = [];
+
+        // Fetch users data from JSON file
+        fetch('./resources/json/user.json')
+            .then(response => response.json())
+            .then(data => {
+                users = data;
+            })
+            .catch(error => {
+                console.error('Error loading user data:', error);
+                showMessage('Error loading user data. Please try again later.', 'error');
+            });
+
+        // Handle login form submission
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+
+            const $systemSelect = $('#system-select-form').val();
+
+            // Find user by email
+            const user = users.find(u => u.email === email);
+
+            if (!user) {
+                showMessage('Email not found. Please check your email address.', 'error');
+                return;
+            }
+
+            if (user.password !== password) {
+                showMessage('Invalid password. Please try again.', 'error');
+                return;
+            }
+
+            // Successful login
+            showMessage('Login successful! Redirecting...', 'success');
+            setTimeout(() => {
+                window.location.href = `./page/${user.role}/${$systemSelect}/index.html`;
+            }, 1500);
+        });
+
+        // Handle dark mode toggle
+        darkModeToggle.addEventListener('click', () => {
+            document.body.setAttribute(
+                'data-theme',
+                document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
+            );
+        });
+
+        // Function to show messages
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = 'message';
+            messageDiv.classList.add(`${type}-message`);
+            messageDiv.style.display = 'block';
+        }
+    });
+</script>
 <body>
 <main class="container">
     <div class="text-center">
         <img
-                src="resources/image/icon_dark.png"
+                src="resources/image/icon-removebg.png"
                 alt="Legend Motor Limited Logo"
         />
-        <h1>Sign in to System</h1>
+        <h1>Sign in to Legend Motor Limited</h1>
     </div>
     <div class="text-center">
         <p>
@@ -335,6 +431,7 @@
         <button type="submit">Login</button>
     </form>
     <div id="message" class="message"></div>
+    <br><br>
     <div id="forget-password" class="text-center hidden">
         <a href="./forget-password.html">Forgot Password?</a>
     </div>
