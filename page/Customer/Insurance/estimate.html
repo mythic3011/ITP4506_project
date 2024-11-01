@@ -269,7 +269,7 @@
             maximumFractionDigits: 2
         });
 
-        $('#price').html(`<strong>HK$${formattedPrice}*</strong>`);
+        $('#price').html(`<strong>HK$${formattedPrice}*</strong> (Reserve Price)`);
 
         // Show relevant warnings
         if (age < 25) {
@@ -595,13 +595,14 @@
 
             </div>
 
-            <h4>Product Overview</h4>
+
 
 
             <ul class="estimateDetails">
-                <li>Third Party Property Damage HK$2,000,000</li>
-                <li>Third Party Bodily Injury HK$100,000,000</li>
-                <li>* Accidental Death & Permanent Disablement</li>
+                <h3 style="color: #1a237e; margin-left: 8px">Additional Services</h3>
+                <p><input type="checkbox">Towing Services</p>
+                <p><input type="checkbox">Windscreen Protection</p>
+                <p><input type="checkbox">Claims Recovery Service</p>
             </ul>
             <button onclick="window.location.href='progress.html'" class="back-button" style="border: none;padding: 20px 40px;margin-top: 15px; border-radius: 5px;cursor: pointer;">
                 ← Back to Estimate
