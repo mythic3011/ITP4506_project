@@ -6,7 +6,7 @@ $(document).ready(async function () {
     }
 
     try {
-        const vehicle = await fetchVehicleDetails(vehicleId);
+        const vehicle = await fetchVehicleDetail(vehicleId);
         renderVehicle(vehicle);
     } catch (error) {
         console.error('Error loading vehicle:', error);
@@ -14,19 +14,20 @@ $(document).ready(async function () {
     }
 });
 
-let currentVehicleData = null;
-
 function getParameterByName(name) {
     const url = new URL(window.location.href);
     return url.searchParams.get(name) || null;
 }
 
-async function fetchVehicleDetails(vehicleId) {
-    const vehicle = await fetchVehicles();
+let CurrentVehicleData = null;
+
+async function fetchVehicleDetail(vehicleId) {
+    let vehicles = await fetchVehicles();
+    let vehicle = vehicles.find(v => v.id === parseInt(vehicleId));
+    CurrentVehicleData = vehicle;
     if (!vehicle) throw new Error('Vehicle not found');
 
-    currentVehicleData = vehicle;
-    return vehicle.find(v => v.id === vehicleId);
+    return vehicle;
 }
 
 async function fetchVehicles() {
@@ -34,22 +35,29 @@ async function fetchVehicles() {
         const data = await $.getJSON("../../../resources/json/vehicles.json");
         return data.map(vehicle => ({
             id: vehicle.id,
-            make: vehicle.make,
-            model: vehicle.model,
-            year: vehicle.year,
-            price: vehicle.price,
+            make: vehicle.make || 'Unknown',
+            model: vehicle.model || 'Unknown',
+            modelCode: vehicle.modelCode || 'N/A',
+            manufacturingYear: vehicle.manufacturingYear || 'N/A',
+            carType: vehicle.carType || 'N/A',
+            fuelType: vehicle.fuelType || 'N/A',
+            year: vehicle.year || 'N/A',
+            price: vehicle.price || 0,
             images: vehicle.images || [],
-            availableColors: vehicle.availableColors.map(color => ({
+            availableColors: Array.isArray(vehicle.availableColors) ? vehicle.availableColors.map(color => ({
                 name: color.name, hexCode: color.hexCode
-            })),
+            })) : [],
             upgradeOptions: {
-                interiorUpgrades: vehicle.upgradeOptions?.interior || [],
-                performanceUpgrades: vehicle.upgradeOptions?.performance || [],
-                technologyUpgrades: vehicle.upgradeOptions?.technology || []
+                interiorUpgrades: Array.isArray(vehicle.upgradeOptions?.interiorUpgrades) ? vehicle.upgradeOptions.interiorUpgrades : [],
+                performanceUpgrades: Array.isArray(vehicle.upgradeOptions?.performanceUpgrades) ? vehicle.upgradeOptions.performanceUpgrades : [],
+                technologyUpgrades: Array.isArray(vehicle.upgradeOptions?.technologyUpgrades) ? vehicle.upgradeOptions.technologyUpgrades : []
             },
-            insurancePlans: vehicle.insurancePlans.map(option => ({
-                planName: option.planName, annualPremium: option.annualPremium
-            })),
+            insurancePlans: Array.isArray(vehicle.insurancePlans) ? vehicle.insurancePlans.map(option => ({
+                planName: option.planName,
+                annualPremium: option.annualPremium,
+                coverageLimit: option.coverageLimit || null,
+                deductible: option.deductible || null
+            })) : [],
             specifications: {
                 engine: vehicle.specifications.engine,
                 transmission: vehicle.specifications.transmission,
@@ -60,20 +68,45 @@ async function fetchVehicles() {
         }));
     } catch (error) {
         console.error("Error fetching vehicles:", error);
+        return []; // Return an empty array on error to prevent further issues
     }
 }
 
 function renderVehicle(vehicle) {
-    document.title = `Vehicle - ${vehicle.make} ${vehicle.model}`;
-    const container = $('#VehicleContainer').empty(); // Clear previous content
+    if (!vehicle) {
+        console.error('No vehicle data available to render.');
+        return;
+    }
 
+    const make = vehicle.make || 'Unknown';
+    const model = vehicle.model || 'Unknown';
+
+    document.title = `Vehicle - ${make} ${model}`;
+
+    const container = $('#VehicleContainer').empty(); // Clear previous content
     const mainDiv = $('<div>', {class: 'bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto mt-8 p-6'});
+
     const mdFlexDiv = $('<div>', {class: 'md:flex'});
 
-    mdFlexDiv.append(createImageSlider(vehicle.images));
-    mdFlexDiv.append(createInfoSection(vehicle));
+    // Check if images exists and is an array
+    const imageUrls = Array.isArray(vehicle.images) ? vehicle.images.map(image => image.url) : [];
 
+    // Pass the extracted URLs to createImageSlider
+    mdFlexDiv.append(createImageSlider(imageUrls));
+
+    // Info Section
+    mdFlexDiv.append(createInfoSection(vehicle));
     mainDiv.append(mdFlexDiv);
+
+    const ButtonContainer = $('<div>', {class: 'flex justify-center mt-8 gap-4'});
+    const backButton = $('<button>', {
+        class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600', text: 'Back'
+    });
+    const wishlistButton = $('<button>', {
+        class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600', text: 'Add to Wishlist'
+    });
+    ButtonContainer.append(backButton, wishlistButton);
+    mainDiv.append(ButtonContainer);
     container.append(mainDiv);
 }
 
@@ -96,13 +129,17 @@ function createImageSlider(images) {
 
     const fallbackImageUrl = '../../../resources/image/car/fallback.jpg';
 
-    images.forEach((url, index) => {
-        $('<img>', {
-            src: url, alt: "Vehicle Image", class: `slide${index === 0 ? '' : ' hidden'}`, error() {
-                $(this).attr('src', fallbackImageUrl);
-            }
-        }).appendTo(slidesContainer);
-    });
+    if (Array.isArray(images)) {
+        images.forEach((url, index) => {
+            $('<img>', {
+                src: url, alt: "Vehicle Image", class: `slide${index === 0 ? '' : ' hidden'}`, error() {
+                    $(this).attr('src', fallbackImageUrl);
+                }
+            }).appendTo(slidesContainer);
+        });
+    } else {
+        console.error('Images is not an array:', images);
+    }
 
     sliderContainer.append(prevButton, slidesContainer, nextButton);
     imgSection.append(sliderContainer);
@@ -117,15 +154,15 @@ function createInfoSection(vehicle) {
         class: 'text-3xl font-bold text-gray-900 dark:text-white mb-4', text: `${vehicle.make} ${vehicle.model}`
     }));
 
-    infoSection.append(createDetailParagraph('Model Code:', vehicle.modelCode));
+    infoSection.append(createDetailParagraph('Model Code:', vehicle.modelCode || 'N/A'));
 
-    infoSection.append(createDetailParagraph('Manufacturing Year:', vehicle.manufacturingYear));
+    infoSection.append(createDetailParagraph('Manufacturing Year:', vehicle.manufacturingYear || 'N/A'));
 
-    infoSection.append(createDetailParagraph('Car Type:', vehicle.carType));
+    infoSection.append(createDetailParagraph('Car Type:', vehicle.carType || 'N/A'));
 
-    infoSection.append(createDetailParagraph('Fuel Type:', vehicle.fuelType));
+    infoSection.append(createDetailParagraph('Fuel Type:', vehicle.fuelType || 'N/A'));
 
-    infoSection.append(createDetailParagraph('Year:', vehicle.year));
+    infoSection.append(createDetailParagraph('Year:', vehicle.year || 'N/A'));
 
     // Price Section
     const priceDiv = $('<div>', {class: 'flex items-center mb-4'});
@@ -136,7 +173,7 @@ function createInfoSection(vehicle) {
         id: 'VehiclePrice',
         style: "font-weight:bold; font-size:1.5rem; color:#007BFF;",
         class: 'text-xl font-bold text-blue600 dark:text-blue400 ml2',
-        text: `$${vehicle.price}`
+        text: `$${vehicle.price || 0}`
     }));
 
     infoSection.append(priceDiv);
@@ -145,7 +182,12 @@ function createInfoSection(vehicle) {
     infoSection.append(createCustomizationOptions(vehicle));
 
     // Insurance Plans Section
-    infoSection.append(createInsurancePlans(vehicle.insurancePlans));
+    if (Array.isArray(vehicle.insurancePlans)) {
+        infoSection.append(createInsurancePlans(vehicle.insurancePlans));
+    } else {
+        console.warn('No insurance plans found for this vehicle.');
+        infoSection.append($('<div>', {text: 'No insurance plans available.', class: 'text-red-500'}));
+    }
 
     return infoSection;
 }
@@ -160,54 +202,150 @@ function createDetailParagraph(label, value) {
 function createCustomizationOptions(vehicle) {
     const customizationDiv = $('<div>', {class: 'mb-4'});
 
-    customizationDiv.append($('<label>', {text: "Select Color:", style: "display:block; margin-bottom:8px;"}));
+    // Section header for color selection
+    customizationDiv.append($('<h3>', {
+        text: "Select Color:",
+        class: 'text-lg font-medium text-gray-900 dark:text-white mb-2',
+        id: "CustomizationHeader"
+    }));
 
-    const colorOptionsDiv = $('<div>', {class: "flex space-x-3 mt-2"});
+    const colorOptionsDiv = $('<div>', {class: "flex flex-wrap space-x-3 mt-2", id: 'ColorOptions'});
 
-    vehicle.availableColors.forEach(color => {
-        colorOptionsDiv.append(createColorOption(color));
-    });
+    // Check if availableColors exists and is an array
+    if (Array.isArray(vehicle.availableColors)) {
+        vehicle.availableColors.forEach(color => {
+            colorOptionsDiv.append(createColorOption(color));
+        });
+    } else {
+        colorOptionsDiv.append($('<p>', {text: 'No colors available.', class: 'text-red-500'}));
+        console.warn('No available colors found for this vehicle.');
+    }
 
     customizationDiv.append(colorOptionsDiv);
+    customizationDiv.append($('<div>', {id: 'customization'}));
 
-    // Add upgrade options (interior, performance, technology)
+    // Section header for upgrade options
     ['interiorUpgrades', 'performanceUpgrades', 'technologyUpgrades'].forEach(type => {
-        customizationDiv.append($('<label>', {text: `Select ${type.replace(/([A-Z])/g, ' $1')} Upgrade:`}));
-        vehicle.upgradeOptions[type].forEach(option => {
-            customizationDiv.append(createUpgradeOption(option, type));
-        });
+        const upgradeSection = $('<div>', {class: 'mb-4', id: `upgrades-${type}`});
+        upgradeSection.append($('<h3>', {
+            text: `Select ${type.replace(/([A-Z])/g, ' $1')}:`,
+            class: 'text-lg font-medium text-gray-900 dark:text-white mb-2'
+        }));
+
+        const optionsDiv = $('<div>', {class: 'flex flex-col space-y-2', id: `upgrades-${type}-options`});
+
+        // Check if upgrade options exist and are arrays
+        const options = vehicle.upgradeOptions?.[type];
+        if (Array.isArray(options)) {
+            options.forEach(option => {
+                optionsDiv.append(createUpgradeOption(option, type));
+            });
+        } else {
+            optionsDiv.append($('<p>', {text: 'No upgrades available.', class: 'text-red-500'}));
+            console.warn(`No upgrades found for ${type}.`);
+        }
+
+        upgradeSection.append(optionsDiv);
+        customizationDiv.append(upgradeSection);
+        customizationDiv.append($('</div>'));
     });
+
+
+    // Add a cancel button to reset selections
+    const cancelButton = $('<button>', {
+        text: 'Cancel Selections',
+        class: 'bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700 mt-4',
+        click: CancelSelections
+    });
+
+    customizationDiv.append(cancelButton);
 
     return customizationDiv;
 }
 
+
+function CancelSelections() {
+    // Clear previously selected colors
+    $('input[type="radio"][name="colorOption"]:checked').each(function () {
+        $(this).prop('checked', false);
+    });
+
+    // Clear previously selected upgrades
+    $('input[type="checkbox"][name="interior"]:checked').each(function () {
+        $(this).prop('checked', false);
+    });
+    $('input[type="checkbox"][name="performanceUpgrades"]:checked').each(function () {
+        $(this).prop('checked', false);
+    });
+    $('input[type="checkbox"][name="technologyUpgrades"]:checked').each(function () {
+        $(this).prop('checked', false);
+    });
+}
+
+
 function createColorOption(color) {
-    const colorOptionDiv = $('<div>').css({display: "inline-block", position: "relative"});
+    const colorOptionDiv = $('<div>').css({
+        display: "inline-block", position: "relative", margin: "10px", cursor: "pointer", transition: "transform 0.2s"
+    });
 
     const radioInput = $('<input>', {
-        type: "radio", name: "colorOption", value: color.hexCode, css: {display: "none"}
+        type: "radio",
+        name: "colorOption",
+        id: `colorOption-${color.name}`,
+        value: color.name,
+        change: function () {
+            addSelectedColor(this.value);
+        },
     });
 
     const colorDisplay = $('<span>').css({
         display: "inline-block",
-        width: "40px",
-        height: "40px",
+        width: "60px", // Increased size for better visibility
+        height: "60px",
         backgroundColor: color.hexCode,
         borderRadius: "50%",
         border: "2px solid transparent",
-        cursor: "pointer",
-        transition: "border-color 0.2s"
-    });
-
+        transition: "border-color 0.2s, transform 0.2s",
+        cursor: "cursor"
+    })
+        .attr('title', color.name)
     colorOptionDiv.append(radioInput, colorDisplay);
+
     return colorOptionDiv;
 }
 
+
+function addSelectedColor(color) {
+    // Clear previously selected colors
+    $('input[type="radio"][name="colorOption"]:checked').each(function () {
+        if ($(this).val() !== color) $(this).prop('checked', false);
+    });
+
+    // Update selected colors display
+    $('#selectedColors').empty().append(`<span class="color-option" style="background-color:${color}; width: 20px; height: 20px; display:inline-block; border-radius: 50%; margin-right: 5px;"></span>`);
+
+    $('#ColorLabel').text(`Selected Color: ${color}`);
+}
+
 function createUpgradeOption(option, type) {
-    const upgradeOptionDiv = $('<div>').css({display: "flex", alignItems: "center", gap: "8px", padding: "8px"});
+    const upgradeOptionDiv = $('<div>').css({
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        padding: "8px",
+        borderRadius: "8px",
+        borderWidth: "1px",
+        borderColor: "#e5e7eb",
+        borderStyle: "solid",
+        transition: "background-color 0.2s"
+    }).hover(function () {
+        $(this).css('background-color', '#f3f4f6');
+    }, function () {
+        $(this).css('background-color', ''); // Reset on mouse leave
+    });
 
     const checkboxInput = $('<input>', {
-        type: "checkbox", id: `${type}-${option.name}`, value: `${option.additionalCost}`
+        type: "checkbox", id: `${option.name}`, value: `${option.additionalCost}`
     }).change(updateTotalPrice);
 
     const checkboxLabel = $('<label>').attr('for', `${type}-${option.name}`).text(` ${option.name} (+$${option.additionalCost})`);
@@ -217,6 +355,8 @@ function createUpgradeOption(option, type) {
 }
 
 function createInsurancePlans(plans) {
+    console.log('Creating insurance plans:', plans);
+
     const insuranceDiv = $('<div>').addClass('mb4');
 
     insuranceDiv.append($('<h4>').text('Insurance Plans').addClass('font-bold mb2'));
@@ -227,7 +367,7 @@ function createInsurancePlans(plans) {
             type: "checkbox",
             id: `insurance-${plan.planName}`,
             value: `${plan.annualPremium}`,
-            change: updateTotalPrice
+            change: updateTotalPrice,
         }), $('<label>').attr('for', `insurance-${plan.planName}`).text(`${plan.planName} (+$${plan.annualPremium})`)));
     });
 
@@ -236,68 +376,141 @@ function createInsurancePlans(plans) {
 
 function updateTotalPrice() {
     try {
-        let basePrice = parseFloat($('#VehiclePrice').val());
-        if (isNaN(basePrice)) throw new Error('Invalid base price');
+        let basePrice = parseFloat(CurrentVehicleData.price);
 
         let totalPrice = basePrice;
 
         $('input[type="checkbox"]:checked').each(function () {
             const price = parseFloat($(this).val());
-            if (isNaN(price)) throw new Error(`Invalid value for checkbox with id:${$(this).attr('id')}`);
             totalPrice += price;
         });
 
         $('#VehiclePrice').text(`$${totalPrice.toFixed(2)}`); // Update displayed price
+
     } catch (error) {
         console.error('Error updating total price:', error);
-        alert('An error occurred while updating the total price. Please try again.');
     }
 }
 
-// Function to save current selections to local storage
-function saveCurrentSelections() {
-    let currentSelections = {};
-
-    $('input[type="checkbox"]').each(function () {
-        currentSelections[$(this).attr('id')] = $(this).is(':checked'); // Store checked state
-    });
-
-    localStorage.setItem("currentSelections", JSON.stringify(currentSelections)); // Save selections to local storage
-}
-
-// Function to initialize selections from local storage on page load
-function initializeSelections() {
-    let savedSelections = JSON.parse(localStorage.getItem("currentSelections")) || {};
-
-    for (const [key, value] of Object.entries(savedSelections)) {
-        $(`#${key}`).prop('checked', value); // Check or uncheck based on saved state
-    }
-
-    updateTotalPrice(); // Update total price based on loaded state
-}
-
-function addSelectedColor(color) {
-    // If other colors are already selected, remove them to avoid duplicates
-    $('input[type="radio"][name="colorOption"]:checked').each(function () {
-        if ($(this).val() !== color.hexCode) $(this).prop('checked', false);
-    });
-
-    // Add this color to the list of selected colors
-    $('#selectedColors').append(`<span class="color-option" style="background-color:${color.hexCode};"></span>`);
-}
-
-// Call initializeSelections on page load to set up initial checkbox states and prices.
-$(document).ready(initializeSelections);
-
-// Add to Wishlist function
 function addToWishlist(vehicle) {
-    let wishlistItems = JSON.parse(localStorage.getItem("LMC_WishList")) || [];
-    wishlistItems.push(vehicle);
-    localStorage.setItem("LMC_WishList", JSON.stringify(wishlistItems));
-    alert(`${vehicle.make} ${vehicle.model} has been added to your wishlist!`);
+    // Retrieve existing wishlist from local storage or initialize an empty array
+    let wishlistItems = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
+
+    // Check if a color is selected
+    const selectedColor = $('input[name="colorOption"]:checked').val();
+    if (!selectedColor) {
+        showNotification('Please select a color for your vehicle', 'error');
+        return;
+    }
+
+    // Check if the vehicle is already in the wishlist
+    const existingItem = wishlistItems.find(item => item.id === vehicle.id);
+    if (existingItem) {
+        showNotification('This vehicle is already in your wishlist', 'info');
+        return;
+    }
+
+    // Gather selected upgrades (excluding insurance)
+    const selectedUpgrades = [];
+    $('input[type="checkbox"]:checked').each(function () {
+        const id = $(this).attr('id');
+        // Only add to upgrades if it does not contain 'insurance-'
+        if (!id.startsWith('insurance-')) {
+            selectedUpgrades.push(id); // Store the ID or name of the upgrade
+        }
+    });
+
+    // Gather selected insurance plans separately
+    const selectedInsurancePlans = [];
+    $('input[type="checkbox"][id^="insurance"]:checked').each(function () {
+        selectedInsurancePlans.push({
+            planName: $(this).attr('id').replace('insurance-', ''), // Extract plan name
+            annualPremium: parseFloat($(this).val()) // Extract premium cost
+        });
+    });
+
+    // Calculate total price based on upgrades and insurance plans
+    let totalPrice = vehicle.price;
+
+    // Add upgrade costs to total price
+    selectedUpgrades.forEach(upgradeId => {
+        const upgradeCost = parseFloat($(`#${upgradeId}`).val());
+        if (!isNaN(upgradeCost)) {
+            totalPrice += upgradeCost;
+        }
+    });
+
+    // Add insurance plan costs to total price
+    selectedInsurancePlans.forEach(plan => {
+        totalPrice += plan.annualPremium;
+    });
+
+    // Create a new wishlist item with selected options
+    const wishlistItem = {
+        id: vehicle.id,
+        make: vehicle.make,
+        model: vehicle.model,
+        color: selectedColor,
+        upgrades: selectedUpgrades,  // Only upgrades, no insurance here
+        insurancePlans: selectedInsurancePlans,  // Separate array for insurance plans
+        price: vehicle.price,
+        totalPrice: totalPrice,  // New field for total price
+        dateAdded: new Date().toISOString()  // Timestamp for when it was added
+    };
+
+    // Add new item to wishlist
+    wishlistItems.push(wishlistItem);
+
+    // Save updated wishlist back to local storage
+    localStorage.setItem('LMC_WishList', JSON.stringify(wishlistItems));
+
+    showNotification('Vehicle added to your wishlist!', 'success');
+
+    showNotification('Redirecting to Wishlist page...', 'info');
+
+    setTimeout(() => {
+        window.location.href = './Wishlist.html';
+    }, 3000);
 }
 
-// Buy Now function
-function buyNow() {
-    alert("Buy Now clicked!");
+
+$(document).on('click', '.bg-green-500', function () {
+    addToWishlist(CurrentVehicleData);
+});
+
+// Back button onClick event
+$(document).on('click', '.bg-blue-500', function () {
+    showNotification('Redirecting to Home page...', 'info');
+    window.location.href = './index.html';
+});
+
+let notificationTimeout;
+
+function showNotification(message, type = 'info') {
+    // Remove existing notification
+    $('.notification').remove();
+    clearTimeout(notificationTimeout);
+
+    // Create new notification
+    const notification = $(`
+        <div class="notification ${type} fixed top-[10%] right-[10%] bg-white border-l-[5px] border-${type === 'error' ? 'red' : 'green'}-500 shadow-lg p-4 rounded-lg transition-all duration-300 ease-in-out">
+            ${message}
+        </div>
+    `);
+
+    // Add to body
+    $('body').append(notification);
+
+    // Animate in
+    setTimeout(() => {
+        notification.addClass('show');
+    }, 100);
+
+    // Auto remove after 3 seconds
+    notificationTimeout = setTimeout(() => {
+        notification.removeClass('show');
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
 }
