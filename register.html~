@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration | Legend Motor Company</title>
+    <link rel="stylesheet" href="resources/css/insurance_customer_style.css">
+    <link rel="stylesheet" href="resources/css/payment-styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+<body>
+<style>
+    body {
+        background-color: rgb(243 244 246);
+        background-size: cover;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+    }
+
+    .company {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .address {
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .section {
+        width: 100%;
+        max-width: 800px;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        margin: 0 auto; /* Center align */
+    }
+
+    .subtitle {
+        margin-bottom: 30px;
+        text-align: center;
+        color: #666;
+    }
+
+    .password-input {
+        position: relative;
+    }
+
+    .toggle-password {
+        position: absolute;
+        right: 0px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        margin: 20px 0;
+    }
+
+    .terms {
+        margin: 20px 0;
+    }
+
+    .help-section {
+        margin-top: 40px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-color);
+        text-align: center;
+    }
+
+    .help-section h2 {
+        color: var(--text-color);
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .error-message {
+        color: #ff0000;
+        font-size: 0.875rem;
+        margin-top: 5px;
+        display: none;
+    }
+
+    .error-message.show {
+        display: block;
+    }
+
+    /* Override some insurance_customer_style.css styles for better form appearance */
+    .form-section {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .radio-container {
+        padding: 10px 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+    }
+
+    .radio-container:hover {
+        background-color: #f8f9fa;
+    }
+
+    .btn-submit {
+        background: var(--primary-color);
+        color: white;
+        flex: 1;
+    }
+
+    .btn-submit:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 20px;
+    }
+
+    .input-group input.invalid {
+        border-color: #ff0000;
+    }
+
+    .input-group .error-message {
+        position: absolute;
+        bottom: -20px;
+        left: 0;
+        width: 100%;
+        color: #ff0000;
+        font-size: 12px;
+    }
+</style>
+<script>
+    function redirect(type) {
+        const role = $('input[name="role"]:checked').val();
+        const department = $('#department').val();
+
+        if (role === 'staff') {
+            if (department === 'Sales') {
+                window.location.href = './page/Staff/Sales/Index.html';
+            } else if (department === 'Insurance') {
+                window.location.href = './page/Staff/Insurance/Index.html';
+            }
+        } else {
+            if (type === 'insurance') {
+                window.location.href = './page/Customer/Insurance/Index.html';
+            } else if (type === 'sales') {
+                window.location.href = './page/Customer/Sales/Index.html';
+            }
+        }
+    }
+
+    $(document).ready(function () {
+
+        $('input[name="role"]').change(function () {
+            const staffFields = $('#staffFields');
+            if ($(this).val() === 'staff') {
+                if (!staffFields.length) {
+                    const staffFieldsHtml = `
+                    <br><div id="staffFields" class="form-group">
+                        <div class="input-group">
+                            <label for="department">Department*</label>
+                            <select id="department" name="department" required>
+                                <option value="">Select Department</option>
+                                <option value="Sales">Sales</option>
+                                <option value="Insurance">Insurance</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="staffId">Staff ID*</label>
+                            <input type="text" id="staffId" name="staffId" required placeholder="Enter your staff ID">
+                        </div>
+                    </div>`;
+                    $(this).closest('.input-group').after(staffFieldsHtml);
+                } else {
+                    staffFields.show();
+                }
+            } else {
+                $('#staffFields').hide();
+            }
+            validateForm();
+        });
+        const PATTERNS = {
+            email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+            mobile: /^[0-9]{8}$/,
+            name: /^[A-Za-z\s]{2,}$/
+        };
+
+        const MESSAGES = {
+            email: "Please enter a valid email address",
+            mobile: "Please enter a valid 8-digit mobile number",
+            name: "Name must be at least 2 characters long and contain only letters",
+            password: "Password must be at least 8 characters long",
+            passwordMatch: "Passwords do not match",
+        };
+
+        function validateField(field) {
+            const value = field.value.trim();
+            let isValid = true;
+            let message = "";
+
+            if (field.type === 'checkbox' && !field.checked) {
+                isValid = false;
+                message = "This field is required";
+            }
+
+            if (field.required && !value) {
+                isValid = false;
+                message = "This field is required";
+            } else if (value) {
+                switch (field.name) {
+                    case 'email':
+                        isValid = PATTERNS.email.test(value);
+                        message = MESSAGES.email;
+                        break;
+                    case 'mobile':
+                        isValid = PATTERNS.mobile.test(value);
+                        message = MESSAGES.mobile;
+                        break;
+                    case 'firstName':
+                    case 'lastName':
+                        isValid = PATTERNS.name.test(value);
+                        message = MESSAGES.name;
+                        break;
+                    case 'password':
+                        isValid = value.length >= 8;
+                        message = MESSAGES.password;
+                        break;
+                    case 'passwordRepeat':
+                        const password = document.getElementById('password').value;
+                        isValid = value === password;
+                        message = MESSAGES.passwordMatch;
+                        break;
+                    case 'staffNumber':
+                        if (field.required) {
+                            isValid = PATTERNS.staffNumber.test(value);
+                            message = MESSAGES.staffNumber;
+                        }
+                        break;
+                    case 'department':
+                        if (field.required) {
+                            isValid = value !== '';
+                            message = MESSAGES.department;
+                        }
+                        break;
+                }
+            }
+
+            field.classList.toggle('invalid', !isValid);
+            field.classList.toggle('valid', isValid && value);
+
+            let errorElement = field.parentElement.querySelector('.error-message');
+            if (!errorElement) {
+                errorElement = document.createElement('div');
+                errorElement.className = 'error-message';
+                field.parentElement.appendChild(errorElement);
+            }
+
+            errorElement.textContent = message;
+            errorElement.classList.toggle('show', !isValid);
+
+            return isValid;
+        }
+
+
+        function validateForm() {
+            const fields = document.querySelectorAll('input[required], select[required]');
+            let isValid = true;
+
+            fields.forEach(field => {
+                if (!validateField(field)) {
+                    isValid = false;
+                }
+            });
+
+            const submitButton = document.querySelector('#btn_quote');
+            submitButton.disabled = !isValid;
+
+            return isValid;
+        }
+
+        $(document).on('input blur change', 'input[required], select[required]', function () {
+            validateField(this);
+            validateForm();
+        });
+
+        // Toggle password visibility
+        $('.toggle-password').click(function () {
+            const input = $(this).siblings('input');
+            const type = input.attr('type') === 'password' ? 'text' : 'password';
+            input.attr('type', type);
+        });
+
+        // Add validation listeners to all required fields
+        $('input[required]').each(function () {
+            ['input', 'blur', 'change'].forEach(event => {
+                $(this).on(event, function () {
+                    validateField(this);
+                    validateForm();
+                });
+            });
+        });
+
+        // Form submission
+        $('#registrationForm').submit(function (e) {
+            e.preventDefault();
+
+            if (validateForm()) {
+                // Here you would typically send the form data to your server
+                console.log('Form submitted successfully');
+
+                // Show success message or redirect
+                const popup = document.createElement('div');
+                popup.className = 'popup-overlay';
+                popup.style.display = 'flex';
+                localStorage.setItem('username', document.getElementById('email').value);
+                SubmitForm();
+
+                const newUser = {
+                    firstName: $('#firstName').val(),
+                    lastName: $('#lastName').val(),
+                    email: $('#email').val(),
+                    mobile: $('#mobile').val(),
+                    password: $('#password').val(),
+                    role: $('input[name="role"]:checked').val(),
+                    staffNumber: $('#staffId').val() || null,
+                };
+
+                // Add user to local storage
+                addUser(newUser);
+
+                popup.innerHTML = `
+                <div class="popup-content">
+                    <h2>Welcome</h2>
+                    <p><strong>Would you like to visit our selling car? Or the car insurance?</strong></p>
+                    <div class="popup-buttons">
+                        <button class="popup-button save-button" onclick="redirect('sales')">
+                            Selling Car
+                        </button>
+                        <button class="popup-button stay-button" onclick="redirect('insurance')">
+                            Car Insurance
+                        </button>
+                        <button class="popup-button leave-button" onclick="window.location.href='index.html'">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            `;
+
+
+                document.body.appendChild(popup);
+                setTimeout(() => popup.classList.add('show'), 10);
+
+                const style = document.createElement('style');
+                style.textContent = `
+            .save-notice { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
+            .popup-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
+            .popup-button { display: flex; flex-direction: column; align-items: center; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
+            .popup-button small { font-size: 0.8rem; font-weight: normal; margin-top: 0.25rem; opacity: 0.8; }
+            .save-button { background-color: #4CAF50; color: white; }
+            .leave-button { background-color: #f44336; color: white; }
+            .stay-button { background-color: #00bcd4; color: white; }
+        `;
+                document.head.appendChild(style);
+            }
+        });
+
+        // Back button
+        $('.btn-back').click(function () {
+            window.location.href = 'index.html';
+        });
+
+        // Initial form validation
+        validateForm();
+
+
+        function SubmitForm() {
+            //gender: $('#gender').val(), -> get the value of the radio button to use if else to return
+            var formData = {
+                firstName: $('#firstName').val(),
+                lastName: $('#lastName').val(),
+                email: $('#email').val(),
+                mobile: $('#mobile').val(),
+                password: $('#password').val(),
+                role: $('input[name="role"]:checked').val(),
+                staffNumber: $('#staffId').val() || null,
+                orders: [] // Initialize with an empty orders array
+            };
+
+            if (formData.firstName == "" || formData.lastName == "" || formData.email == "" || formData.phone == "" || formData.password == "" || formData.staffNumber == "") {
+                alert("Please fill in all required fields.");
+                return;
+            }
+
+            $.ajax({
+                url: "resources/json/user.json", type: "GET", dataType: "json", success: function (users) {
+                    let userExists = users.some(user => user.email === formData.email);
+
+                    if (userExists) {
+                        alert("User already exists!");
+                    } else {
+                        users.push(formData);
+                        localStorage.setItem('username', formData.email);
+                        localStorage.setItem('user', JSON.stringify(users));
+                        addUser(formData);
+                        console.log("User added successfully");
+                    }
+                }
+            });
+        }
+
+        // Add user to the json file
+        function addUser(user) {
+            // Retrieve existing users from JSON file
+            $.getJSON("resources/json/user.json", function (users) {
+                // Check if user already exists
+                const userExists = users.some(existingUser => existingUser.email === user.email);
+                if (userExists) {
+                    alert("User already exists!");
+                    return;
+                }
+
+                // Add new user to the array
+                users.push(user);
+
+                // Save updated users back to JSON file via AJAX
+                $.ajax({
+                    url: 'resources/json/user.json',
+                    type: 'PUT', // or 'POST' depending on your setup
+                    contentType: 'application/json',
+                    data: JSON.stringify(users),
+                    success: function (response) {
+                        console.log("Data updated successfully:", response);
+                        alert("User added successfully!");
+                        // Optionally redirect or clear form here
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error updating data:", error);
+                        alert("An error occurred while saving user data.");
+                    }
+                });
+            }).fail(function () {
+                alert("Failed to retrieve users. Please try again later.");
+            });
+        }
+    });
+</script>
+<div class="section">
+    <div class="section-header">
+        <div class="header-left">
+            <img src="/resources/image/user-icon.svg" alt="User" class="section-icon">
+            <h1>Registration</h1>
+        </div>
+    </div>
+
+    <div class="section-content">
+        <h4 style="text-align: center">With Legend Motor Company you can find the right car insurance and car for your
+            vehicle.</h4>
+        <form id="registrationForm" class="form-section">
+            <div class="form-group">
+                <div class="input-group">
+                    <label>Salutation*</label>
+                    <div class="radio-group" id="Gender">
+                        <label class="radio-container" id="Mr">
+                            <input type="radio" name="salutation" value="mister" checked>
+                            <span class="radio-label">Mister</span>
+                        </label>
+                        <label class="radio-container" id="Ms">
+                            <input type="radio" name="salutation" value="woman">
+                            <span class="radio-label">Woman</span>
+                        </label>
+                        <label class="radio-container" id="Mrs">
+                            <input type="radio" name="salutation" value="no">
+                            <span class="radio-label">No</span>
+                        </label>
+                    </div>
+                </div>
+                <br>
+                <div class="input-group">
+                    <label>Role*</label>
+                    <div class="radio-group" id="Role">
+                        <label class="radio-container">
+                            <input type="radio" name="role" value="customer" checked>
+                            <span class="radio-label">Customer</span>
+                        </label>
+                        <label class="radio-container">
+                            <input type="radio" name="role" value="staff">
+                            <span class="radio-label">Staff</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <p class="subtitle">Please enter your personal data here and choose a secure password for your login.</p>
+
+            <div class="form-group" id="Name">
+                <div class="input-group">
+                    <label for="firstName">First name*</label>
+                    <input type="text" id="firstName" name="firstName" required placeholder="Enter your first name">
+                </div>
+                <div class="input-group">
+                    <label for="lastName">Last name*</label>
+                    <input type="text" id="lastName" name="lastName" required placeholder="Enter your last name">
+                </div>
+            </div>
+
+            <div class="form-group" id="Contact">
+                <div class="input-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+                <div class="input-group">
+                    <label for="mobile">Mobile Number*</label>
+                    <input type="tel" id="mobile" name="mobile" required placeholder="Enter your mobile number">
+                </div>
+            </div>
+
+            <div class="form-group" id="Password-DIV">
+                <div class="input-group">
+                    <label for="password">Password*</label>
+                    <div class="password-input">
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="passwordRepeat">Repeat password*</label>
+                    <div class="password-input">
+                        <input type="password" id="passwordRepeat" name="passwordRepeat" required>
+                    </div>
+                </div>
+            </div>
+            <div class="payment-info">
+                <pre class="company">Legend Motor Limited </pre>
+                <pre class="address">Address：  Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong</pre>
+                <pre class="address">Email：    stcampus@vtc.edu.hk</pre>
+                <pre class="address">Tel：      2606 6227</pre>
+
+            </div>
+
+            <div class="consent">
+                <input type="checkbox" id="consent" required>
+                <label for="consent">By completing the registration you accept our <strong><u>terms and
+                    conditions</u></strong> . Please note our privacy policy .</label>
+            </div>
+            <div class="button-group">
+                <button id='btn_quote' type="submit" class="submit-button" style="float: right; " disabled>Join Us !
+                </button>
+                <button type="button" class="submit-button btn-back" style="float: left; background-color: #d1d1d1">
+                    Back
+                </button>
+            </div>
+        </form>
+
+        <div class="help-section">
+            <h2>Need help?</h2>
+            <p>Please use our frequently asked questions or our contact form.</p>
+        </div>
+    </div>
+</div>
+<!--<script src="script.js"></script>-->
+</body>
+</html>
