@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       const categoryTitle = document.createElement("h2");
       categoryTitle.className =
-        "text-2xl font-semibold mb-4 text-gray-900 dark:text-white";
+        "text-2xl font-semibold mb-4 text-gray-900 ";
       categoryTitle.textContent = `${category} - ${getCategoryName(category)}`;
       categoryElement.appendChild(categoryTitle);
 
@@ -220,7 +220,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const title = document.createElement("h3");
     title.className =
-      "text-lg font-semibold mb-2 text-gray-900 dark:text-white";
+      "text-lg font-semibold mb-2 text-gray-900 ";
     title.textContent = part.name;
     content.appendChild(title);
 
@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function () {
     input.value = "0";
     input.min = "0";
     input.className =
-      "w-12 h-8 text-center text-sm border-x border-gray-300 dark:bg-gray-700 dark:text-white appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none moz-appearance:textfield";
+      "w-12 h-8 text-center text-sm border-x border-gray-300 dark:bg-gray-700  appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none moz-appearance:textfield";
     input.onchange = (e) => updateQuantity(CarId, e.target.value);
     quantityWrapper.appendChild(input);
 

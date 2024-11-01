@@ -1,27 +1,2 @@
 @import 'variables.css';
-
-/*@import 'styles/components/alerts.css';*/
-/*@import 'styles/components/buttons.css';*/
-/*@import 'styles/components/cards.css';*/
-/*@import 'styles/components/forms.css';*/
-/*@import 'styles/components/index.css';*/
-/*@import 'styles/components/modal.css';*/
-/*@import 'styles/components/navigation.css';*/
-/*@import 'styles/components/notifications.css';*/
-/*@import 'styles/components/search.css';*/
-/*@import 'styles/components/tables.css';*/
-/*@import 'styles/components/tabs.css';*/
-/*@import 'styles/components/theme-switcher.css';*/
-
-/*@import 'styles/pages/admin/analytics.css';*/
-/*@import 'styles/pages/admin/common.css';*/
-/*@import 'styles/pages/admin/dashboard.css';*/
-/*@import 'styles/pages/admin/inquiries.css';*/
-/*@import 'styles/pages/admin/orders.css';*/
-/*@import 'styles/pages/admin/vehicles.css';*/
-
-/*@import 'styles/pages/error.css';*/
-/*@import 'styles/pages/login.css';*/
-/*@import 'styles/pages/purchase.css';*/
-/*@import 'styles/pages/register.css';*/
-/*@import 'styles/pages/vehicles.css';*/
+@import 'comon.css';
