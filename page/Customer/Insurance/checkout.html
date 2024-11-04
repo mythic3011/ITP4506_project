@@ -90,7 +90,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('email').value = localStorage.getItem('username');
+        document.getElementById('email').value = localStorage.getItem('loginUser');
         const links = document.querySelectorAll('a:not([href="process.html"])');
         links.forEach(link => {
             link.addEventListener('click', function(e) {
@@ -205,7 +205,7 @@
         allFields.forEach(field => addValidationListeners(field));
 
         const numDrivers = parseInt(Save_selected_option_2.insuredDrivers);
-        if (numDrivers > 1) {
+        if (numDrivers > 1  && localStorage.getItem('editMode') !== 'true') {
             const driversContainer = $('#driversContainer');
             for (let i = 1; i < numDrivers; i++) {
                 driversContainer.append(createDriverForm(i));
@@ -334,6 +334,7 @@
     }
     function saveChangesAndRedirect(referenceNumber) {
         const formData = saveFormData();
+
         const existingData = JSON.parse(localStorage.getItem(`pendingInsurance-${referenceNumber}`));
 
         // Update only the form data while preserving other fields
@@ -576,8 +577,14 @@
         document.getElementById('claimsDiscount').value = Save_selected_option_2.ncd;
         updatePrices();
         const numDrivers = parseInt(Save_selected_option_2.insuredDrivers);
+        if ((localStorage.getItem('editMode') === 'true')) {
+            const savedData = JSON.parse(localStorage.getItem('Save_selected_option_3'));
+            const numDrivers = savedData.additionalDrivers.length;
+        }else{
+            const numDrivers = parseInt(Save_selected_option_2.insuredDrivers);
+        }
         const driversContainer = $('#driversContainer');
-        driversContainer.empty();
+        //driversContainer.empty();
 
         $('#insuredDrivers').on('change', function() {
             const newNumDrivers = parseInt($(this).val());
@@ -664,9 +671,19 @@
         });
 
 
-        if (numDrivers > 1) {
-            for (let i = 1; i < numDrivers; i++) {
-                driversContainer.append(createDriverForm(i));
+        if (numDrivers > 1 ) {
+            if(localStorage.getItem('editMode') !== 'true')
+            {
+                for (let i = 1; i < numDrivers; i++) {
+                    //driversContainer.append(createDriverForm(i));
+                    const driverSection = document.getElementById(`driver-${i}`);
+                    if (driverSection && localStorage.getItem('editMode') !== 'true') {
+                        const fields = driverSection.querySelectorAll('input[required], select[required]');
+                        fields.forEach(field => {
+                            addValidationListeners(field);
+                        });
+                    }
+                }
             }
             if(localStorage.getItem('editMode') === 'true') {
                 const savedData = JSON.parse(localStorage.getItem('Save_selected_option_3'));
@@ -732,7 +749,15 @@
         `);
 
         document.getElementById('subTotal').textContent = `${Save_selected_option_2.checkoutPrice}`;
-        document.getElementById('insuredDrivers').value = Save_selected_option_2.insuredDrivers;
+        const editMode = localStorage.getItem('editMode') === 'true';
+        const editOrderId = localStorage.getItem('editOrderId');
+
+        if (editMode && editOrderId) {
+            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
+            document.getElementById('insuredDrivers').value = pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers;
+        }else {
+            document.getElementById('insuredDrivers').value = Save_selected_option_2.insuredDrivers;
+        }
         document.getElementById('mainDrivingExperience').value = Save_selected_option_2.drivingExperience;
         document.getElementById('carModel').value = `${Save_selected_option.carBrand} ${Save_selected_option.carModel}`;
         document.getElementById('manufacturingYear').value = Save_selected_option.manufacturingYear;
@@ -856,7 +881,7 @@
         const editMode = localStorage.getItem('editMode') === 'true';
         const editOrderId = localStorage.getItem('editOrderId');
 
-        if (editMode && editOrderId) {
+        if (editMode && editOrderId ) {
             const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
             if (pendingInsurance) {
                 // Set the form data from existing insurance
@@ -871,10 +896,8 @@
                 }
 
                 // First set the number of insured drivers
-                if (pendingInsurance.Save_selected_option_3.vehicle &&
-                    pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers) {
-                    document.getElementById('insuredDrivers').value =
-                        pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers;
+                if (pendingInsurance.Save_selected_option_3.vehicle && pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers) {
+                    document.getElementById('insuredDrivers').value = pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers;
                 }
 
                 // Then create the driver forms
@@ -1066,7 +1089,8 @@
             // Add proceed button event listener
             proceedButton.addEventListener('click', function() {
                 const formData = saveFormData();
-                const referenceNumber = generateReferenceNumber();
+                const editMode = localStorage.getItem('editMode') === 'true';
+                const referenceNumber = (editMode? editOrderId: generateReferenceNumber());
 
                 localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify({
                     Save_selected_option: JSON.parse(localStorage.getItem('Save_selected_option')),
@@ -1076,8 +1100,12 @@
                     status: 'pending',
                     createdAt: new Date().toISOString()
                 }));
+                if(editMode){
+                    showThankYouPopup(referenceNumber, true);
+                }else{
+                    showThankYouPopup(referenceNumber, false);
+                }
 
-                showThankYouPopup(referenceNumber, false);
                 closeTermsModal();
             });
         });
@@ -1471,21 +1499,4 @@
 <footer>
     <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
 </footer>
-<button id="darkModeToggle" title="Toggle dark mode" style="z-index: 10">
-    <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="#333"
-    >
-        <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-        />
-    </svg>
-</button>
 </html>

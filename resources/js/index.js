@@ -17,6 +17,7 @@ $(document).ready(function () {
             if (user) {
                 $message.text('Redirecting...').addClass('success').removeClass('error');
                 $loginButton.removeClass('loading').text('Login successful!');
+                localStorage.setItem('loginUser', username);
 
                 if ($('#remember-me').is(':checked')) {
                     localStorage.setItem('username', username);

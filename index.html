@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="resources/css/index.css"/>
     <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="module" src="resources/js/script.js"></script>
     <style rel="resources/css/styles/components/alerts.css"></style>
     <style rel="resources/css/styles/components/buttons.css"></style>
     <style rel="resources/css/styles/components/forms.css"></style>
@@ -37,16 +36,6 @@
         --input-border: #e5e7eb;
         --input-focus: #e0e7ff;
         --shadow-color: rgba(0, 0, 0, 0.1);
-    }
-
-    [data-theme="dark"] {
-        --text-color: #f3f4f6;
-        --background-color: #111827;
-        --card-background: #1f2937;
-        --input-background: #374151;
-        --input-border: #4b5563;
-        --input-focus: #312e81;
-        --shadow-color: rgba(0, 0, 0, 0.3);
     }
 
     * {
@@ -308,7 +297,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         const loginForm = document.getElementById('loginForm');
         const messageDiv = document.getElementById('message');
-        const darkModeToggle = document.getElementById('darkModeToggle');
 
         let users = [];
 
@@ -353,13 +341,6 @@
             }, 1500);
         });
 
-        // Handle dark mode toggle
-        darkModeToggle.addEventListener('click', () => {
-            document.body.setAttribute(
-                'data-theme',
-                document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'
-            );
-        });
 
         // Function to show messages
         function showMessage(text, type) {
@@ -440,22 +421,6 @@
 <footer>
     <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
 </footer>
-<button id="darkModeToggle" title="Toggle dark mode">
-    <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="#333"
-    >
-        <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-        />
-    </svg>
-</button>
+
 </body>
 </html>

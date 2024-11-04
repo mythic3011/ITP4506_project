@@ -4,7 +4,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginMessage = document.getElementById('loginMessage');
     const rememberMe = document.getElementById('remember-me');
     const usernameInput = document.getElementById('username');
-    const darkModeToggle = document.getElementById('darkModeToggle');
     const html = document.documentElement;
 
     if (!loginForm) console.error('Login form not found');
@@ -13,24 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!rememberMe) console.error('Remember me checkbox not found');
     if (!usernameInput) console.error('Username input not found');
 
-    // Check for saved theme preference or use system preference
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        html.classList.add('dark');
-    } else {
-        html.classList.remove('dark');
-    }
-
-    // Toggle dark mode
-    darkModeToggle.addEventListener('click', function() {
-        html.classList.toggle('dark');
-
-        // Save preference to localStorage
-        if (html.classList.contains('dark')) {
-            localStorage.theme = 'dark';
-        } else {
-            localStorage.theme = 'light';
-        }
-    });
 
     // Load remembered username if exists
     const rememberedUsername = localStorage.getItem('username');
