@@ -758,6 +758,25 @@
         }else {
             document.getElementById('insuredDrivers').value = Save_selected_option_2.insuredDrivers;
         }
+        if(localStorage.getItem('editModeInsuredNum') != null){
+            document.getElementById('insuredDrivers').value = localStorage.getItem('editModeInsuredNum');
+            const driversContainer = $('#driversContainer');
+            const s = JSON.parse(localStorage.getItem('Save_selected_option_3'));
+            alert(localStorage.getItem('editModeInsuredNum'));
+            for(let i = parseInt(s.additionalDrivers.length) + 1; i < parseInt(localStorage.getItem('editModeInsuredNum')); i++){
+                driversContainer.append(createDriverForm(i));
+                alert(i);
+                const driverSection = document.getElementById(`driver-${i}`);
+                if (driverSection) {
+                    const fields = driverSection.querySelectorAll('input[required], select[required]');
+                    fields.forEach(field => {
+                        addValidationListeners(field);
+                    });
+                }
+            }
+
+
+        }
         document.getElementById('mainDrivingExperience').value = Save_selected_option_2.drivingExperience;
         document.getElementById('carModel').value = `${Save_selected_option.carBrand} ${Save_selected_option.carModel}`;
         document.getElementById('manufacturingYear').value = Save_selected_option.manufacturingYear;
@@ -885,9 +904,9 @@
             const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
             if (pendingInsurance) {
                 // Set the form data from existing insurance
-                localStorage.setItem('Save_selected_option', JSON.stringify(pendingInsurance.Save_selected_option));
-                localStorage.setItem('Save_selected_option_2', JSON.stringify(pendingInsurance.Save_selected_option_2));
-                localStorage.setItem('Save_selected_option_3', JSON.stringify(pendingInsurance.Save_selected_option_3));
+                //localStorage.setItem('Save_selected_option', JSON.stringify(pendingInsurance.Save_selected_option));
+                //localStorage.setItem('Save_selected_option_2', JSON.stringify(pendingInsurance.Save_selected_option_2));
+                //localStorage.setItem('Save_selected_option_3', JSON.stringify(pendingInsurance.Save_selected_option_3));
 
                 // Update button text
                 const buyButton = document.querySelector('.buy-button');
@@ -898,6 +917,9 @@
                 // First set the number of insured drivers
                 if (pendingInsurance.Save_selected_option_3.vehicle && pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers) {
                     document.getElementById('insuredDrivers').value = pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers;
+                }
+                if(localStorage.getItem('editModeInsuredNum') != null){
+                    document.getElementById('insuredDrivers').value = localStorage.getItem('editModeInsuredNum');
                 }
 
                 // Then create the driver forms
