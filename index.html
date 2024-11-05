@@ -38,6 +38,16 @@
         --shadow-color: rgba(0, 0, 0, 0.1);
     }
 
+    [data-theme="dark"] {
+        --text-color: #f3f4f6;
+        --background-color: #111827;
+        --card-background: #1f2937;
+        --input-background: #374151;
+        --input-border: #4b5563;
+        --input-focus: #312e81;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
     * {
         margin: 0;
         padding: 0;
@@ -299,6 +309,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const loginForm = document.getElementById('loginForm');
         const messageDiv = document.getElementById('message');
+        const darkModeToggle = document.getElementById('darkModeToggle');
 
         let users = [];
 
@@ -419,8 +430,10 @@
         <a href="./forget-password.html">Forgot Password?</a>
     </div>
 </main>
+
 <footer>
     <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
 </footer>
+
 </body>
 </html>
