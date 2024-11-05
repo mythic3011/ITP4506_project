@@ -84,7 +84,7 @@ function renderVehicle(vehicle) {
     document.title = `Vehicle - ${make} ${model}`;
 
     const container = $('#VehicleContainer').empty(); // Clear previous content
-    const mainDiv = $('<div>', {class: 'bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto mt-8 p-6'});
+    const mainDiv = $('<div>', {class: 'bg-white shadow-lg rounded-lg overflow-hidden max-w-4xl mx-auto mt-8 p-6'});
 
     const mdFlexDiv = $('<div>', {class: 'md:flex'});
 
