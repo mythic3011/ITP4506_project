@@ -762,10 +762,10 @@
             document.getElementById('insuredDrivers').value = localStorage.getItem('editModeInsuredNum');
             const driversContainer = $('#driversContainer');
             const s = JSON.parse(localStorage.getItem('Save_selected_option_3'));
-            alert(localStorage.getItem('editModeInsuredNum'));
+            //alert(localStorage.getItem('editModeInsuredNum'));
             for(let i = parseInt(s.additionalDrivers.length) + 1; i < parseInt(localStorage.getItem('editModeInsuredNum')); i++){
                 driversContainer.append(createDriverForm(i));
-                alert(i);
+                //alert(i);
                 const driverSection = document.getElementById(`driver-${i}`);
                 if (driverSection) {
                     const fields = driverSection.querySelectorAll('input[required], select[required]');
