@@ -14,11 +14,11 @@
     <link rel="stylesheet" href="resources/css/index.css"/>
     <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style rel="resources/css/styles/components/alerts.css"></style>
-    <style rel="resources/css/styles/components/buttons.css"></style>
-    <style rel="resources/css/styles/components/forms.css"></style>
-    <style rel="resources/css/styles/components/index.css"></style>
-    <style rel="resources/css/styles/pages/login.css"></style>
+<!--    <style rel="resources/css/styles/components/alerts.css"></style>-->
+<!--    <style rel="resources/css/styles/components/buttons.css"></style>-->
+<!--    <style rel="resources/css/styles/components/forms.css"></style>-->
+<!--    <style rel="resources/css/styles/components/index.css"></style>-->
+<!--    <style rel="resources/css/styles/pages/login.css"></style>-->
     <style rel="resources/css/main.css"></style>
     <script type="module" src="resources/js/main.js"></script>
     <script src="resources/js/index.js"></script>
@@ -38,6 +38,16 @@
         --shadow-color: rgba(0, 0, 0, 0.1);
     }
 
+    [data-theme="dark"] {
+        --text-color: #f3f4f6;
+        --background-color: #111827;
+        --card-background: #1f2937;
+        --input-background: #374151;
+        --input-border: #4b5563;
+        --input-focus: #312e81;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+
     * {
         margin: 0;
         padding: 0;
@@ -46,7 +56,9 @@
     }
 
     body {
-        background-color: var(--background-color);
+        background-image: url('resources/image/Car/car1.jpg');
+        background-size: cover;
+        background-position: center;
         color: var(--text-color);
         min-height: 100vh;
         transition: background-color 0.3s, color 0.3s;
@@ -288,8 +300,8 @@
         position: fixed;
         bottom: 0;
         width: 100%;
-        background-color: var(--card-background);
-        color: var(--text-color);
+        background-color: transparent;
+        color: white;
     }
 </style>
 
@@ -297,6 +309,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const loginForm = document.getElementById('loginForm');
         const messageDiv = document.getElementById('message');
+        const darkModeToggle = document.getElementById('darkModeToggle');
 
         let users = [];
 
@@ -384,9 +397,9 @@
             </label>
         </div>
         <div class="form-group">
-            <label for="username">Username</label>
+            <label for="username">Username / Email</label>
             <input
-                    type="email"
+                    type="text"
                     id="username"
                     name="username"
                     required
