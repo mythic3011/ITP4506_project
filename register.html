@@ -376,13 +376,14 @@
 
                 popup.innerHTML = `
                 <div class="popup-content">
-                    <h2>Register Success!</h2>
-                    <p><strong>Would you like to visit our selling car? Or the car insurance?</strong></p>
+                    <h2 id="registerAfterShowMessage">Register Success!</h2>
+                    <p id="registerAfterShowEmail"></p>
+                    <p id="registerAfterShowMessage2"><strong>Would you like to visit our selling car? Or the car insurance?</strong></p>
                     <div class="popup-buttons">
-                        <button class="popup-button save-button" onclick="redirect('sales')">
+                        <button id="sellingCarPageBtn" class="popup-button save-button" onclick="redirect('sales')">
                             Selling Car
                         </button>
-                        <button class="popup-button stay-button" onclick="redirect('insurance')">
+                        <button id="carInsurancePageBtn"  class="popup-button stay-button" onclick="redirect('insurance')">
                             Car Insurance
                         </button>
                         <button class="popup-button leave-button" onclick="window.location.href='index.html'">
@@ -395,6 +396,16 @@
 
                 document.body.appendChild(popup);
                 setTimeout(() => popup.classList.add('show'), 10);
+                document.getElementById('registerAfterShowEmail').innerText = 'Register Email: ' + localStorage.getItem('username');
+                if(document.getElementById('department')){
+                    if(document.getElementById('department').value == 'Insurance'){
+                        document.getElementById('registerAfterShowMessage2').innerText = "After confirm your qualifications will send to your email.";
+                        document.getElementById('sellingCarPageBtn').style.display = 'none';
+                        document.getElementById('carInsurancePageBtn').style.display = 'none';
+                        document.getElementById('registerAfterShowMessage').innerText = 'Waiting for approval';
+                    }
+                }
+
 
                 const style = document.createElement('style');
                 style.textContent = `
