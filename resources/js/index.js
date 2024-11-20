@@ -18,6 +18,10 @@ $(document).ready(function () {
                 $message.text('Redirecting...').addClass('success').removeClass('error');
                 $loginButton.removeClass('loading').text('Login successful!');
                 localStorage.setItem('loginUser', username);
+                localStorage.setItem('loginUserName', user.firstName + " " + user.lastName);
+                if(user.InsuranceLicenseNumber){
+                    localStorage.setItem('loginUserLicense', user.InsuranceLicenseNumber);
+                }
 
                 if ($('#remember-me').is(':checked')) {
                     localStorage.setItem('username', username);

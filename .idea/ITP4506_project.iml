@@ -13,8 +13,8 @@
       <excludeFolder url="file://$MODULE_DIR$/Archive/php" />
       <excludeFolder url="file://$MODULE_DIR$/Archive/py" />
       <excludeFolder url="file://$MODULE_DIR$/resources/js/components" />
-      <excludeFolder url="file://$MODULE_DIR$/page/Staff" />
     </content>
+    <content url="file://$MODULE_DIR$/page/Staff/Insurance" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="api" level="application" />

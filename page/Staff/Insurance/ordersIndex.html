@@ -13,196 +13,8 @@
     <script src="../../../resources/js/customer.js"></script>
     <script src="../../../resources/js/script.js"></script>
     <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+    <link rel="stylesheet" href="css/ordersIndex.css">
 </head>
-<style>
-
-    .insurance-detail-container {
-        max-width: 1200px;
-        padding-left: 100px;
-    }
-
-
-    .header h1 {
-        color: #2c3e50;
-        margin: 0;
-    }
-
-    .policies-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 2rem;
-    }
-
-    .no-policies {
-        grid-column: 1 / -1;
-        background: white;
-        border-radius: 12px;
-        padding: 3rem;
-        text-align: center;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        animation: fadeIn 0.5s ease-out;
-    }
-
-    .no-policies img {
-        width: 120px;
-        height: 120px;
-        margin-bottom: 1.5rem;
-        opacity: 0.6;
-    }
-
-    .no-policies h2 {
-        color: #2c3e50;
-        font-size: 1.5rem;
-        margin-bottom: 1rem;
-    }
-
-    .no-policies p {
-        color: #666;
-        font-size: 1.1rem;
-        line-height: 1.6;
-        margin: 0.5rem 0;
-    }
-
-    .no-policies .cta-button {
-        display: inline-block;
-        background-color: #00bcd4;
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        text-decoration: none;
-        margin-top: 1.5rem;
-        font-weight: 600;
-        transition: all 0.3s ease;
-    }
-
-
-
-    .policy-card {
-        background: white;
-        border-radius: 12px;
-        padding: 1.5rem;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .policy-status {
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 0.5rem 1rem;
-        color: white;
-        font-size: 0.875rem;
-        font-weight: 600;
-    }
-
-    .status-active {
-        background-color: #4CAF50;
-    }
-
-    .status-pending {
-        background-color: #FFA726;
-    }
-
-    .status-expired {
-        background-color: #EF5350;
-    }
-
-    .policy-header {
-        margin-bottom: 1rem;
-        padding-right: 80px;
-    }
-
-    .policy-type {
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #2c3e50;
-        margin-bottom: 0.5rem;
-    }
-
-    .policy-vehicle {
-        font-size: 1rem;
-        color: #666;
-    }
-
-    .policy-details {
-        display: grid;
-        gap: 1rem;
-        margin-top: 1.5rem;
-    }
-
-    .detail-row {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid #f0f0f0;
-    }
-
-    .detail-row:last-child {
-        border-bottom: none;
-        padding-bottom: 0;
-    }
-
-    .detail-label {
-        color: #666;
-        font-size: 0.875rem;
-    }
-
-    .detail-value {
-        color: #2c3e50;
-        font-weight: 500;
-    }
-
-    .policy-footer {
-        margin-top: 1.5rem;
-        text-align: right;
-    }
-
-    .view-details-btn {
-        color: #00bcd4;
-        text-decoration: none;
-        font-weight: 600;
-        font-size: 0.875rem;
-    }
-
-    .view-details-btn:hover {
-        text-decoration: underline;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            padding: 1rem;
-        }
-
-        .header {
-            flex-direction: column;
-            gap: 1rem;
-            text-align: center;
-        }
-
-        .policies-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .no-policies {
-            padding: 2rem;
-        }
-    }
-</style>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const policies = getAllPolicies();
@@ -214,7 +26,7 @@
                 <h2>No Insurance Policies Found</h2>
                 <p>You currently don't have any active insurance policies.</p>
                 <p>Protect your vehicle today by getting a new insurance policy.</p>
-                <a href="progress.html" class="cta-button">Apply Now →</a>
+                <a href="./index.html" class="cta-button">&#8592; Back</a>
             </div>
         `;
             return;
@@ -346,6 +158,11 @@
     <div style="display: flex;justify-content: space-between;align-items: center;margin-bottom: 2rem;">
         <h1>My Insurance Policies</h1>
     </div>
+
+    <section class="tell-us">
+        <h2>Search By Policy Number</h2>
+        <input type="text" placeholder="Example: /" class="issue-input">
+    </section>
 
     <div class="policies-grid" id="policiesContainer">
     </div>

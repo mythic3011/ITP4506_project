@@ -169,6 +169,15 @@
         }
     }
 
+    function insuranceLicense() {
+        const department = $('#department').val();
+        if (department === 'Insurance') {
+            document.getElementById('insuranceLicenseNumberDiv').innerHTML = '<div class="input-group">\n                            <label for="insuranceLicenseNumber">Insurance License Number*</label>\n                            <input type="text" id="insuranceLicenseNumber" name="insuranceLicenseNumber" required placeholder="Enter your insurance License Number">\n                        </div>';
+        }else{
+            document.getElementById('insuranceLicenseNumberDiv').innerHTML = '';
+        }
+    }
+
     $(document).ready(function () {
 
         $('input[name="role"]').change(function () {
@@ -179,7 +188,7 @@
                     <br><div id="staffFields" class="form-group">
                         <div class="input-group">
                             <label for="department">Department*</label>
-                            <select id="department" name="department" required>
+                            <select id="department" name="department" required onchange="insuranceLicense()">
                                 <option value="">Select Department</option>
                                 <option value="Sales">Sales</option>
                                 <option value="Insurance">Insurance</option>
@@ -189,6 +198,10 @@
                             <label for="staffId">Staff ID*</label>
                             <input type="text" id="staffId" name="staffId" required placeholder="Enter your staff ID">
                         </div>
+
+                        <div id="insuranceLicenseNumberDiv"><div>
+
+
                     </div>`;
                     $(this).closest('.input-group').after(staffFieldsHtml);
                 } else {
@@ -199,16 +212,19 @@
             }
             validateForm();
         });
+
         const PATTERNS = {
             email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
             mobile: /^[0-9]{8}$/,
-            name: /^[A-Za-z\s]{2,}$/
+            name: /^[A-Za-z\s]{2,}$/,
+            insuranceLicenseNumber: /^[A-Za-z0-9]{6,}$/ // Example pattern, adjust as needed
         };
 
         const MESSAGES = {
             email: "Please enter a valid email address",
             mobile: "Please enter a valid 8-digit mobile number",
             name: "Name must be at least 2 characters long and contain only letters",
+            insuranceLicenseNumber: "Not a vaild Insurance Lincense Number",
             password: "Password must be at least 8 characters long",
             passwordMatch: "Passwords do not match",
         };
@@ -223,6 +239,8 @@
                 message = "This field is required";
             }
 
+
+
             if (field.required && !value) {
                 isValid = false;
                 message = "This field is required";
@@ -236,6 +254,14 @@
                         isValid = PATTERNS.mobile.test(value);
                         message = MESSAGES.mobile;
                         break;
+
+                    case 'insuranceLicenseNumber':
+                        if (field.required) {
+                            isValid = PATTERNS.insuranceLicenseNumber.test(value);
+                            message = MESSAGES.insuranceLicenseNumber;
+                        }
+                        break;
+
                     case 'firstName':
                     case 'lastName':
                         isValid = PATTERNS.name.test(value);
@@ -350,7 +376,7 @@
 
                 popup.innerHTML = `
                 <div class="popup-content">
-                    <h2>Welcome</h2>
+                    <h2>Register Success!</h2>
                     <p><strong>Would you like to visit our selling car? Or the car insurance?</strong></p>
                     <div class="popup-buttons">
                         <button class="popup-button save-button" onclick="redirect('sales')">
@@ -548,10 +574,7 @@
                 </div>
             </div>
             <div class="payment-info">
-                <pre class="company">Legend Motor Limited </pre>
-                <pre class="address">Address：  Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong</pre>
-                <pre class="address">Email：    stcampus@vtc.edu.hk</pre>
-                <pre class="address">Tel：      2606 6227</pre>
+                <pre class="company">/</pre>
 
             </div>
 
