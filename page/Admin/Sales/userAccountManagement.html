@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account Management | Legend Motor Limited</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        .accounts-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 1.1rem;
+        }
+
+        .accounts-table th,
+        .accounts-table td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #000000;
+        }
+
+        .accounts-table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .accounts-table tr:nth-child(odd) {
+            background-color: #e6e6e6;
+        }
+
+        .accounts-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .role-badge {
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .role-admin {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .role-staff-insurance {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .role-staff-sales {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        .role-customer {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .back-button:hover {
+            background-color: #555;
+        }
+
+        .activate-button {
+            color: black;
+            margin-left: 20px;
+            padding: 4px 8px;
+            background-color: #ff9100;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .activate-button:hover {
+            background-color: #fdb545;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+
+        .modal-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .modal-button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .modal-button.confirm {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .modal-button.cancel {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .modal-button.confirm:hover {
+            background-color: #218838;
+        }
+
+        .modal-button.cancel:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="index.html" class="back-button">← Back to Dashboard</a>
+    <h1>User Account Management</h1>
+    <table class="accounts-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>License Number</th>
+            <th>Mobile</th>
+        </tr>
+        </thead>
+        <tbody id="accountsTableBody">
+        </tbody>
+    </table>
+</div>
+
+<div id="confirmationModal" class="modal">
+    <div class="modal-content">
+        <h2 style="text-align: center">Confirmation</h2>
+        <span >Only after checking the insurance license of the staff can the relative account be activated. Are you sure all the information is correct?</span>
+        <div class="modal-buttons">
+            <button id="cancelButton" class="modal-button cancel">No</button>
+            <button id="confirmButton" class="modal-button confirm">Yes</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function activateAccount(userId) {
+        const modal = document.getElementById('confirmationModal');
+        const confirmButton = document.getElementById('confirmButton');
+        const cancelButton = document.getElementById('cancelButton');
+
+        modal.style.display = 'block';
+
+        confirmButton.onclick = async () => {
+            const response = await fetch('../../../resources/json/user.json');
+            const accounts = await response.json();
+            const account = accounts.find(acc => acc.id === userId);
+
+            if (account) {
+                account.status = 'Active';
+                document.querySelector(`#accountsTableBody tr[data-id="${userId}"] td:nth-child(5)`).innerHTML = 'Active';
+            }
+
+            modal.style.display = 'none';
+        };
+
+        cancelButton.onclick = () => {
+            modal.style.display = 'none';
+        };
+    }
+    async function loadAccounts() {
+        try {
+            const response = await fetch('../../../resources/json/user.json');
+            const accounts = await response.json();
+            const tableBody = document.getElementById('accountsTableBody');
+
+            accounts.forEach(account => {
+                const row = document.createElement('tr');
+
+                const getRoleBadgeClass = (role, hasLicense) => {
+                    switch(role.toLowerCase()) {
+                        case 'admin': return 'role-admin';
+                        case 'staff': return hasLicense ? 'role-staff-insurance' : 'role-staff-sales';
+                        case 'customer': return 'role-customer';
+                        default: return '';
+                    }
+                };
+
+                const activeAccount = (role) => {
+                    if(role === 'role-staff-insurance' && account.status === 'Inactive'){
+                        return 'Inactive <button class="activate-button" onclick="activateAccount(' + account.id + ')">Activate the Account</button>';
+                    }else{
+                        return 'Active';
+                    }
+                }
+
+                const getRoleDisplay = (role, hasLicense) => {
+                    if (role.toLowerCase() === 'staff') {
+                        return hasLicense ? 'Insurance Staff' : 'Sales Staff';
+                    }
+                    return role;
+                };
+
+                const hasLicense = !!account.InsuranceLicenseNumber;
+
+                row.setAttribute('data-id', account.id);
+                row.innerHTML = `
+    <td>${account.id}</td>
+    <td>${account.firstName} ${account.lastName}</td>
+    <td>${account.email}</td>
+    <td><span class="role-badge ${getRoleBadgeClass(account.role, hasLicense)}">${getRoleDisplay(account.role, hasLicense)}</span></td>
+    <td style="color: #b91c1c">${activeAccount(getRoleBadgeClass(account.role, hasLicense))}</td>
+    <td>${account.InsuranceLicenseNumber || '-'}</td>
+    <td>${account.mobile}</td>
+`;
+
+                tableBody.appendChild(row);
+            });
+        } catch (error) {
+            console.error('Error loading accounts:', error);
+        }
+    }
+
+    window.onload = loadAccounts;
+</script>
+</body>
+</html>
