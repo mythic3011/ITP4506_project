@@ -1,2 +1,21 @@
 @import 'variables.css';
 @import 'comon.css';
+@import 'navbar.css';
+
+
+.section-title {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.toggle-icon {
+    position: absolute;
+    right: 0;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+a:hover{
+    text-decoration: none;
+}

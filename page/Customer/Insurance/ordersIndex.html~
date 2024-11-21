@@ -15,10 +15,12 @@
     <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
 </head>
 <style>
+
     .insurance-detail-container {
         max-width: 1200px;
         padding-left: 100px;
     }
+
 
     .header h1 {
         color: #2c3e50;

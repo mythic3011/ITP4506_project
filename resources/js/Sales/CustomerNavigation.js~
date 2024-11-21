@@ -32,7 +32,7 @@ $(document).ready(function () {
         alert('You have new notifications!');
     });
 
-    $('#user-menu').on('mouseenter', function () {
+    $('#user-Submenu').on('mouseenter', function () {
         $('#user-Submenu').stop(true, true).fadeIn(200).css('display', 'block');
     });
 
