@@ -15,7 +15,7 @@ class ChatManager {
     createChatInterface() {
         const toggleBtn = document.createElement('button');
         toggleBtn.className = 'chat-toggle';
-        toggleBtn.innerHTML = '<img src="../../resources/image/icon/chat.svg">';
+        toggleBtn.innerHTML = '<img src="../../../resources/image/icon/chat.svg">';
         document.body.appendChild(toggleBtn);
 
         this.chatContainer = document.createElement('div');
