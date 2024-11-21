@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <title>Profile | Legend Motor Company</title>
     <!--    <link href="../../resources/css/profile.css" rel="stylesheet"/>-->
-    <link href="../../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon"/>
+    <link href="../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon"/>
 
-    <link rel="stylesheet" href="../../../resources/css/main.css">
+    <link rel="stylesheet" href="../../resources/css/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script type="module" src="../../../resources/js/script.js"></script>
-    <script type="module" src="../../../resources/js/profile.js"></script>
+    <script type="module" src="../../resources/js/script.js"></script>
+    <script type="module" src="../../resources/js/profile.js"></script>
     <script>
 function loadInfo() {
     const data = {
