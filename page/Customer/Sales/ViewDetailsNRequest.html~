@@ -1,0 +1,88 @@
+<!doctype html>
+<head>
+    <meta content="text/html; charset=utf-8"/>
+    <title>Vehicle - Title | Legend Motor Company</title>
+    <!--    <link href="../../../resources/css/VehiclePage.css" rel="stylesheet"/>-->
+    <meta content="noindex, nofollow" name="robots"/>
+    <meta content="Legend Motor Company" name="generator"/>
+    <meta content="Copyright &copy; 2024 Legend Motor Company" name="copyright"/>
+    <meta content="1 days" name="revisit-after"/>
+    <link href="../../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon"/>
+<!--    <link rel="stylesheet" href="../../../resources/css/main.css">-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .image-slider {
+            position: relative;
+        }
+
+        .image-slider .slide {
+            width: 100%;
+        }
+
+        .image-slider .prev,
+        .image-slider .next {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+        }
+
+        .color-option span:hover,
+        .color-option span.selected {
+            border: 2px solid #007BFF; /* Highlight selected color */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+<header class="navbar bg-white shadow-md sticky top-0 z-10">
+    <div class="container mx-auto flex justify-between items-center p-4">
+        <div class="flex items-center">
+            <!-- Back button -->
+            <button id="backBtn" class=" px-4 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
+                </svg>
+            </button>
+            <script>
+                $('#backBtn').on('click', function () {
+                    window.location.href = 'index.html';
+                });
+            </script>
+            <!-- Logo -->
+            <a href="#" class="flex items-center">
+                <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
+                <span class="ml-3 text-xl font-bold">LMC</span>
+            </a>
+        </div>
+
+
+        <div class="relative">
+            <label for="search-bar-vehicles" class="absolute left-2 top-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </label>
+            <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
+                   class="border rounded px-10 py-1"/>
+        </div>
+
+        <div class="hamburger md:hidden flex flex-col cursor-pointer">
+            <span class="w-6 h-0.5 bg-gray-700 mb-1"></span>
+            <span class="w-6 h-0.5 bg-gray-700 mb-1"></span>
+            <span class="w-6 h-0.5 bg-gray-700"></span>
+        </div>
+
+        <nav class="nav-links hidden md:flex space-x-4">
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="index.html">Home</a>
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="ViewVehicles.html">Vehicles</a>
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./Wishlist.html">Wishlist</a>
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./viewOrderRecord.html">Orders</a>
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../../logout.html">Log Out</a>
+        </nav>
+    </div>
+</header>
+<!--------------------Menu-------------------->
+
+<!--------------------Vehicle Detail and Request-------------------->
+<div class="container mx-auto px-4 py-8" id="VehicleContainer">
+    <script src="../../../resources/js/RequestDetails.js"></script>
+</div>

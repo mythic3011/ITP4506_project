@@ -1,0 +1,350 @@
+{
+    "application_reference_number": "LMC-5865507525128",
+    "application_status": "Rejected",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Comprehensive Coverage",
+            "insurance_type": "Third Party",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$69346.00",
+            "no_claims_discount": 89,
+            "car_type": "Electric"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "300",
+            "manufacturing_year": 2005,
+            "registration_number": "KUR-486",
+            "first_registration_date": "2021-10-03",
+            "engine_capacity": 2962,
+            "market_value": 25696,
+            "chassis_number": "336-53-1218",
+            "engine_number": "178-02-0542"
+        },
+        "main_driver_details": {
+            "full_name": "Caleb Harrison",
+            "gender": "Male",
+            "hkid": "NB245365(9)",
+            "date_of_birth": "1976-12-13",
+            "contact_email": "fgilbert@example.org",
+            "mobile": "208-741-8135",
+            "occupation": "Operational researcher",
+            "address": "881 Jordan Terrace Apt. 840\nMarytown, NH 03794"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-3692564014472",
+    "application_status": "Approved",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Uninsured Motorist Protection",
+            "insurance_type": "Third Party",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$74418.00",
+            "no_claims_discount": 63,
+            "car_type": "Diesel"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "F-150",
+            "manufacturing_year": 2014,
+            "registration_number": "471M6",
+            "first_registration_date": "2023-06-22",
+            "engine_capacity": 1990,
+            "market_value": 45338,
+            "chassis_number": "436-05-9203",
+            "engine_number": "245-33-7612"
+        },
+        "main_driver_details": {
+            "full_name": "Matthew Beck",
+            "gender": "Female",
+            "hkid": "B489014(0)",
+            "date_of_birth": "1945-09-09",
+            "contact_email": "vwang@example.org",
+            "mobile": "001-706-793-0908",
+            "occupation": "Scientist, biomedical",
+            "address": "61851 Kenneth Landing\nJonesville, FL 69064"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-5839553389859",
+    "application_status": "Cancelled",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Uninsured Motorist Protection",
+            "insurance_type": "Full Coverage",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$61222.00",
+            "no_claims_discount": 57,
+            "car_type": "Diesel"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "Camaro",
+            "manufacturing_year": 2010,
+            "registration_number": "YAY-5222",
+            "first_registration_date": "2023-03-26",
+            "engine_capacity": 2450,
+            "market_value": 27709,
+            "chassis_number": "542-67-8429",
+            "engine_number": "328-93-5641"
+        },
+        "main_driver_details": {
+            "full_name": "Melissa Sutton",
+            "gender": "Female",
+            "hkid": "D966875(A)",
+            "date_of_birth": "1912-06-26",
+            "contact_email": "brent02@example.com",
+            "mobile": "380.982.3212x23783",
+            "occupation": "Retail buyer",
+            "address": "Unit 1091 Box 8162\nDPO AE 34080"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-9744268063337",
+    "application_status": "Cancelled",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Uninsured Motorist Protection",
+            "insurance_type": "Third Party",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$67332.00",
+            "no_claims_discount": 4,
+            "car_type": "Diesel"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "E-Class",
+            "manufacturing_year": 2000,
+            "registration_number": "6BQ35",
+            "first_registration_date": "2020-07-10",
+            "engine_capacity": 2577,
+            "market_value": 22310,
+            "chassis_number": "129-16-5596",
+            "engine_number": "556-95-5196"
+        },
+        "main_driver_details": {
+            "full_name": "Laurie Rivas",
+            "gender": "Male",
+            "hkid": "E681968(2)",
+            "date_of_birth": "1992-11-10",
+            "contact_email": "summer09@example.net",
+            "mobile": "319-748-6667",
+            "occupation": "Dispensing optician",
+            "address": "84869 Richardson Field Suite 172\nWest Christianside, SC 93397"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-4827910989784",
+    "application_status": "Cancelled",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Uninsured Motorist Protection",
+            "insurance_type": "Third Party",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$70960.00",
+            "no_claims_discount": 25,
+            "car_type": "Diesel"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "Explorer",
+            "manufacturing_year": 2004,
+            "registration_number": "373ZVK",
+            "first_registration_date": "2022-08-14",
+            "engine_capacity": 1434,
+            "market_value": 32436,
+            "chassis_number": "713-31-9217",
+            "engine_number": "602-90-8313"
+        },
+        "main_driver_details": {
+            "full_name": "Melissa Lowe",
+            "gender": "Female",
+            "hkid": "X260480(2)",
+            "date_of_birth": "1950-09-01",
+            "contact_email": "drusso@example.com",
+            "mobile": "+1-516-790-9544",
+            "occupation": "Musician",
+            "address": "916 Heather Wells Apt. 124\nWest Susan, NY 29713"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-4347570609411",
+    "application_status": "Rejected",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Uninsured Motorist Protection",
+            "insurance_type": "Full Coverage",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$73471.00",
+            "no_claims_discount": 87,
+            "car_type": "Petrol"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "Optima",
+            "manufacturing_year": 2002,
+            "registration_number": "00Q 499",
+            "first_registration_date": "2020-08-10",
+            "engine_capacity": 2486,
+            "market_value": 16354,
+            "chassis_number": "093-73-0773",
+            "engine_number": "197-07-2650"
+        },
+        "main_driver_details": {
+            "full_name": "Emily King",
+            "gender": "Female",
+            "hkid": "RW031034(7)",
+            "date_of_birth": "1968-06-13",
+            "contact_email": "anthonyalvarez@example.org",
+            "mobile": "(843)653-8483",
+            "occupation": "Further education lecturer",
+            "address": "055 Michelle Knoll\nNew Jasmine, VA 02549"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-7742095633070",
+    "application_status": "Rejected",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Collision Coverage",
+            "insurance_type": "Full Coverage",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$66445.00",
+            "no_claims_discount": 54,
+            "car_type": "Petrol"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "Civic",
+            "manufacturing_year": 2011,
+            "registration_number": "Q17-21N",
+            "first_registration_date": "2021-03-14",
+            "engine_capacity": 2264,
+            "market_value": 35864,
+            "chassis_number": "477-29-3598",
+            "engine_number": "520-57-7773"
+        },
+        "main_driver_details": {
+            "full_name": "Debra Trevino",
+            "gender": "Male",
+            "hkid": "KJ059478(3)",
+            "date_of_birth": "1976-09-02",
+            "contact_email": "kellyjohnson@example.org",
+            "mobile": "943-901-4411x8213",
+            "occupation": "Lawyer",
+            "address": "10130 Andrea Road\nWest Christineborough, IA 94035"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-2584911740508",
+    "application_status": "Rejected",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Basic Liability Coverage",
+            "insurance_type": "Full Coverage",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$62817.00",
+            "no_claims_discount": 24,
+            "car_type": "Electric"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "Fusion",
+            "manufacturing_year": 2017,
+            "registration_number": "785 BAL",
+            "first_registration_date": "2024-03-15",
+            "engine_capacity": 1362,
+            "market_value": 17627,
+            "chassis_number": "341-98-3023",
+            "engine_number": "037-10-3847"
+        },
+        "main_driver_details": {
+            "full_name": "Joshua Johnston",
+            "gender": "Male",
+            "hkid": "X462351(4)",
+            "date_of_birth": "1938-04-01",
+            "contact_email": "adam23@example.net",
+            "mobile": "001-835-669-9053x3685",
+            "occupation": "Forensic scientist",
+            "address": "02435 Waters Trace\nOlsontown, OH 23236"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-5627993587893",
+    "application_status": "Rejected",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Collision Coverage",
+            "insurance_type": "Third Party",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$76901.00",
+            "no_claims_discount": 60,
+            "car_type": "Diesel"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "Explorer",
+            "manufacturing_year": 2020,
+            "registration_number": "370 KEF",
+            "first_registration_date": "2023-07-22",
+            "engine_capacity": 1376,
+            "market_value": 19950,
+            "chassis_number": "449-23-9829",
+            "engine_number": "183-30-3635"
+        },
+        "main_driver_details": {
+            "full_name": "Gregory Calderon",
+            "gender": "Male",
+            "hkid": "E028393(0)",
+            "date_of_birth": "1941-10-02",
+            "contact_email": "anne43@example.net",
+            "mobile": "765.234.4912x4775",
+            "occupation": "Tax adviser",
+            "address": "46707 Roberta Parks\nJoshuafurt, TX 38973"
+        }
+    }
+},
+{
+    "application_reference_number": "LMC-4428045928047",
+    "application_status": "Cancelled",
+    "application_details": {
+        "insurance_plan": {
+            "insurance_plan": "Uninsured Motorist Protection",
+            "insurance_type": "Full Coverage",
+            "payment_method": "Yearly | Credit Card",
+            "fees": "HK$64109.00",
+            "no_claims_discount": 81,
+            "car_type": "Petrol"
+        },
+        "vehicle_details": {
+            "make": "LMC",
+            "model": "Malibu",
+            "manufacturing_year": 2016,
+            "registration_number": "FHS 544",
+            "first_registration_date": "2020-04-06",
+            "engine_capacity": 2799,
+            "market_value": 25129,
+            "chassis_number": "250-33-5556",
+            "engine_number": "490-78-4195"
+        },
+        "main_driver_details": {
+            "full_name": "Dylan Smith",
+            "gender": "Male",
+            "hkid": "IK653305(8)",
+            "date_of_birth": "1954-08-05",
+            "contact_email": "barbara72@example.net",
+            "mobile": "495-858-1863x0221",
+            "occupation": "Pilot, airline",
+            "address": "USCGC Davis\nFPO AE 80553"
+        }
+    }
+}

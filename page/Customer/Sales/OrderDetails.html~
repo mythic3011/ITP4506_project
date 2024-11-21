@@ -8,7 +8,7 @@
     <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
     <script src="../../../resources/js/Sales/Wishlist.js"></script>
     <script src="../../../resources/js/Sales/Checkout.js"></script>
-    <style rel="../../../resources/css/styles/components/notifications.css"></style>
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Order Details | Legend Motor Company</title>
     <style>
         .notification {
@@ -82,7 +82,7 @@
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="index.html">Home</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="ViewVehicles.html">Vehicles</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="./Wishlist.html">Wishlist</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./ordersRecord.html">Orders</a>
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./viewOrderRecord.html">Orders</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="./profile.html">Profile</a>
             <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../../logout.html">Log Out</a>
         </nav>

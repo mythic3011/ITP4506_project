@@ -410,13 +410,17 @@ function addToWishlist(vehicle) {
         return;
     }
 
-    // Gather selected upgrades
+    // Gather selected upgrades (excluding insurance)
     const selectedUpgrades = [];
     $('input[type="checkbox"]:checked').each(function () {
-        selectedUpgrades.push($(this).attr('id')); // Store the ID or name of the upgrade
+        const id = $(this).attr('id');
+        // Only add to upgrades if it does not contain 'insurance-'
+        if (!id.startsWith('insurance-')) {
+            selectedUpgrades.push(id); // Store the ID or name of the upgrade
+        }
     });
 
-    // Gather selected insurance plans
+    // Gather selected insurance plans separately
     const selectedInsurancePlans = [];
     $('input[type="checkbox"][id^="insurance"]:checked').each(function () {
         selectedInsurancePlans.push({
@@ -447,8 +451,8 @@ function addToWishlist(vehicle) {
         make: vehicle.make,
         model: vehicle.model,
         color: selectedColor,
-        upgrades: selectedUpgrades,
-        insurancePlans: selectedInsurancePlans,
+        upgrades: selectedUpgrades,  // Only upgrades, no insurance here
+        insurancePlans: selectedInsurancePlans,  // Separate array for insurance plans
         price: vehicle.price,
         totalPrice: totalPrice,  // New field for total price
         dateAdded: new Date().toISOString()  // Timestamp for when it was added
