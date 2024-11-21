@@ -732,7 +732,7 @@
             document.getElementById('policyStatus').textContent = (pendingInsurance.status == 'pending' ? 'Under Review' : 'Approval');
             (pendingInsurance.status == 'pending' ? document.getElementById('statusColor').classList.add('active') : document.getElementById('statusColor').classList.add('completed'));
             (pendingInsurance.status == 'pending' ? document.getElementById('statusIcon').textContent = '⋯' : document.getElementById('statusIcon').textContent = '✓');
-            (pendingInsurance.status == 'pending' ? document.getElementById('statusBtnOrtxt').innerHTML = '                            <p>Estimated processing time: <strong><u>1-2 business days</u></strong></p>\n' : document.getElementById('statusBtnOrtxt').innerHTML = '<span id="createAt" class="timestamp">Approved by Staff01 "Mike Chan" at: Just Now</span>');
+            (pendingInsurance.status == 'pending' ? document.getElementById('statusBtnOrtxt').innerHTML = '                            <p>Estimated processing time: <strong><u>1-2 business days</u></strong></p>\n' :document.getElementById('statusBtnOrtxt').innerHTML = '<span id="createAt" class="timestamp">Approved by Staff01 "Mike Chan" at: Just Now</span>');
 
             if(pendingInsurance.status == 'accepted'){
                 document.getElementById('claimColor').classList.add('completed');
@@ -747,20 +747,22 @@
                 document.getElementById('claimMessage').innerText = 'Claim Rejected by Staff001 "Dave Chan", at "Just Now"';
             }
 
-            if(!(pendingInsurance.paid && pendingInsurance.status == 'pending')){
-                document.getElementById('payBtn').disabled = true;
-                document.getElementById('payBtn').style.backgroundColor = 'gray';
-                document.getElementById('payBtn').innerText = "Paid";
-                document.getElementById('paidTime').textContent = "Paid at: Just Now";
-            }else{
-                document.getElementById('claimBtn').style.display = 'none';
-            }
-
             if(pendingInsurance.status == 'claim'){
                 document.getElementById('claimBtn').style.display = 'none';
                 document.getElementById('claimColor').classList.add('active')
                 document.getElementById('claimMessage').innerText = 'Claim Submitted by you, at "Just Now"';
             }
+
+            if(pendingInsurance.paid){
+                document.getElementById('payBtn').disabled = true;
+                document.getElementById('payBtn').style.backgroundColor = 'gray';
+                document.getElementById('payBtn').innerText = "Paid";
+                document.getElementById('paidTime').textContent = "Paid at: Just Now";
+            }
+
+            (pendingInsurance.status == 'approved' ? document.getElementById('claimBtn').style.display = 'block' : document.getElementById('claimBtn').style.display = 'none');
+
+
 
 
 
@@ -1191,7 +1193,7 @@
                 <label for="consent">I hereby authorize Legend Motor Limited to charge my designated credit card account for the insurance premium, premium levy, and HKIB levy.</label>
             </div>
 
-            <button onclick="changePaymentStatus()" type="submit" class="submit-button" id="paymentButton" disabled>Complete Payment</button>F
+            <button onclick="changePaymentStatus()" type="submit" class="submit-button" id="paymentButton" disabled>Complete Payment</button>
         </form>
     </div>
 </div>
