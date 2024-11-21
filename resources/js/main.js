@@ -8,7 +8,6 @@ import {initTheme} from './services/theme.js';
 $(document).ready(async () => {
     try {
         await initAuth();
-        await initializeMockData();
         initTheme();
         initRouter();
 

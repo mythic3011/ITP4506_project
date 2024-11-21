@@ -309,6 +309,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const loginForm = document.getElementById('loginForm');
         const messageDiv = document.getElementById('message');
+        const darkModeToggle = document.getElementById('darkModeToggle');
 
         let users = [];
 
@@ -349,7 +350,7 @@
             // Successful login
             showMessage('Login successful! Redirecting...', 'success');
             setTimeout(() => {
-                window.location.href = `./page/${user.role}/Sales/index.html`;
+                window.location.href = `./page/${user.role}/${$systemSelect}/index.html`;
             }, 1500);
         });
 
@@ -380,6 +381,21 @@
         </p>
     </div>
     <form id="loginForm">
+        <!--- Select System -->
+        <div class="form-group" id="system-select" style="display: block">
+            <label for="system-select" class="form-select-label">
+                Select System to Login
+                <select
+                        name="system"
+                        id="system-select-form"
+                        required="required"
+                        class="form-select"
+                >
+                    <option value="Sales">Vehicle Sale</option>
+                    <option value="Insurance">Vehicle Insurance</option>
+                </select>
+            </label>
+        </div>
         <div class="form-group">
             <label for="username">Username / Email</label>
             <input
