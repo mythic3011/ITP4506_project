@@ -1,4 +1,31 @@
 $(document).ready(function () {
+// Trade-In Option Tabs
+    $('#tradeInTabs .tab-button').on('click', function () {
+        const tabId = $(this).data('tab');
+        switchTab(tabId, '#tradeInTabs');
+    });
+
+// Financing Options Tabs
+    $('#financingTabs .tab-button').on('click', function () {
+        const tabId = $(this).data('tab');
+        switchTab(tabId, '#financingTabs');
+    });
+
+// Licensing Verification Tabs
+    $('#licensingVerificationTabs .tab-button').on('click', function () {
+        const tabId = $(this).data('tab');
+        switchTab(tabId, '#licensingVerificationTabs');
+    });
+
+    function switchTab(tabId, tabContainer) {
+        // Remove active class from all buttons and panels within the specified container
+        $(`${tabContainer} .tab-button, ${tabContainer} .tab-panel`).removeClass('active');
+
+        // Add active class to the clicked button and corresponding panel
+        $(`${tabContainer} [data-tab="${tabId}"]`).addClass('active');
+        $(`${tabContainer} #${tabId}`).addClass('active');
+    }
+
     fetchUserinfo();
     renderOrderSummary();
 
@@ -6,19 +33,15 @@ $(document).ready(function () {
 
     $('#checkoutForm').on('submit', function (event) {
         event.preventDefault();
-
         const fullName = $('#fullName').val();
         const address = $('#address').val();
-
         // Validate inputs
         if (!fullName || !address) {
             showNotification('Please fill in all required fields.', 'error');
             return;
         }
-
         // Show confirmation notification
         showNotification('Order confirmed! Thank you for your purchase!', 'success');
-
         console.log({
             fullName,
             address,
@@ -28,8 +51,6 @@ $(document).ready(function () {
 
         // // Optionally clear the wishlist after confirming the order
         // localStorage.removeItem('LMC_WishList');
-
-        // Redirect or perform another action after confirmation
         PlaceOrder();
     });
 });
@@ -67,49 +88,28 @@ function PlaceOrder() {
 
     // Construct the order object
     const order = {
-        id: orderId,
-        orderNumber: orderNumber,
-        date: new Date().toISOString(),
-        status: 'pending',
-        customer: {
-            id: user,
-            name: fullName,
-            email: user,
-            phone: user,
-            address: address
-        },
-        vehicle: wishlist.map(item => ({
+        id: orderId, orderNumber: orderNumber, date: new Date().toISOString(), status: 'pending', customer: {
+            id: user, name: fullName, email: user, phone: user, address: address
+        }, vehicle: wishlist.map(item => ({
             make: item.make,
             model: item.model,
             color: item.color,
             upgrades: item.upgrades,
             insurancePlans: item.insurancePlans,
             price: item.price
-        })),
-        payment: {
-            status: 'pending',
-            amount: totalAmount - depositAmount, // Remaining amount after deposit
+        })), payment: {
+            status: 'pending', amount: totalAmount - depositAmount, // Remaining amount after deposit
             method: selectedFinancingOption
         }
     };
 
     console.log(order); // Log the complete order object for debugging
-
-    // Optionally clear the wishlist after confirming the order
-    //localStorage.removeItem('LMC_WishList');
-    //window.location.href = './OrderDetails.html?id=' + orderId;
-    // store the order in the database and local storage
-    // send the order to the server for processing
-    // show a success message
     sendOrder(order);
 }
 
 function sendOrder(order) {
     const userUrl = "../../../resources/json/user.json";
     const orderUrl = "../../../resources/json/orders.json";
-
-    // build the user object from the order use the customer object
-
     const user = {
         id: order.customer.id,
         username: order.customer.username,
@@ -124,13 +124,9 @@ function sendOrder(order) {
         orders: order.customer.orders
     };
 
-
-
-
     localStorage.setItem('orders', JSON.stringify(order));
-    localStorage.setItem('user', JSON.stringify(user));
-
-        window.location.href = './OrderDetails.html?id=' + order.id;
+    localStorage.setItem('orders_user', JSON.stringify(user));
+    window.location.href = './OrderDetails.html?id=' + order.id;
     // Add order to the order.json file and local storage
     $.ajax({
         url: orderUrl,
@@ -150,35 +146,31 @@ function sendOrder(order) {
 
     // Add order ID to the user.json file and local storage
     $.ajax({
-        url: userUrl,
-        type: "GET",
-        dataType: "json",
-        success: function (data) {
+        url: userUrl, type: "GET", dataType: "json", success: function (data) {
             console.log("Successfully fetched user data:", data);
             if (data.status === "success" && data.data) {
                 const userData = data.data;
                 userData.orders.push(order);
                 showNotification('Order added to your order history.', 'success');
             }
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
+        }, error: function (jqXHR, textStatus, errorThrown) {
             console.log("AJAX error:", textStatus, errorThrown);
             console.log("Response:", jqXHR.responseText);
         }
     });
 }
 
- function generateId() {
+function generateId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
 }
 
- function generateStaffNumber() {
+function generateStaffNumber() {
     const prefix = 'STF';
     const number = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
     return `${prefix}${number}`;
 }
 
- function generateOrderNumber() {
+function generateOrderNumber() {
     const prefix = 'ORD';
     const timestamp = Date.now().toString(36).toUpperCase();
     const random = Math.random().toString(36).substr(2, 4).toUpperCase();
@@ -297,16 +289,9 @@ function renderOrderSummary() {
 
 function showNotification(message, type) {
     const notificationContainer = $('#notification-container');
-
-    // Clear previous notifications
     notificationContainer.empty();
-
-    // Create a new notification element
     const notification = $('<div>').addClass(`notification ${type}`).text(message);
-
-    // Append and fade out after 3 seconds
     notificationContainer.append(notification);
-
     setTimeout(() => {
         notification.fadeOut(400, function () {
             $(this).remove();
@@ -322,11 +307,9 @@ function calculateMonthlyPayment() {
         $('#monthlyPaymentDisplay').addClass('hidden');
         return;
     }
-
     const principal = parseFloat($('#totalAmount').text().replace(/[^0-9.-]+/g, "")) - parseFloat($('#DepositAmount').text().replace(/[^0-9.-]+/g, "")); // Total minus deposit
     const interestRate = parseFloat(selectedOption.data('interest-rate')); // Get interest rate from selected option
     const termMonths = parseInt(selectedOption.data('term-months')); // Get term in months from selected option
-
     if (!principal || principal <= 0) {
         $('#monthlyPaymentDisplay').addClass('hidden');
         return;

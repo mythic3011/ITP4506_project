@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,66 +14,72 @@
         document.getElementById('userEmail').innerText = "Email: " + localStorage.getItem('loginUser');
     }
 
-    window.onload = function() {
+    window.onload = function () {
         getUserNameAndEmail();
     }
 </script>
+
 <body>
-<nav class="main-nav">
-    <div class="nav-content">
-        <a href="/" class="logo">
-            <img src="/resources/image/icon-removebg.png" alt="LMC" class="logo-img">
-            <span>LMC</span>
-        </a>
-        <ul class="nav-links">
-            <li><a href="/" class="active">Home</a></li>
-            <li><a href="/apply">Apply</a></li>
-            <li><a href="/application">Your Application</a></li>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/profile">Profile</a></li>
-            <li><a href="/logout">Log Out</a></li>
-        </ul>
-    </div>
-</nav>
-<div style="padding-top: 4rem;">
-</div>
-
-<main>
-    <section class="user-info">
-        <div class="user-header">
-            <img src="image/icon/user.svg" alt="Profile" class="large-profile-pic">
-            <div class="user-details">
-                <h2 id="userName"></h2>
-                <p class="account" id="userEmail"></p>
-                <p class="account" id="userLicenseNum"></p>
-            </div>
+    <nav class="main-nav">
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <img src="/resources/image/icon-removebg.png" alt="LMC" class="logo-img">
+                <span>LMC</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/apply">Apply</a></li>
+                <li><a href="/application">Your Application</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
         </div>
-        <p class="support-message"><h3 style="color: #b91c1c">Role: Admin</h3></p>
-    </section>
-
-    <div id="checkRole">
-        <section class="tell-us">
-            <h2>Tell us what's happening</h2>
-            <input type="text" placeholder="Example: /" class="issue-input">
-        </section>
-
-        <section class="support-options">
-            <div class="option">
-                <div class="icon"> <img src="image/icon/account.svg" alt="Profile" class="infoBox-profile-pic"></div>
-                <h3>User Account Management</h3>
-                <p>Approve staff of insurance account</p>
-                <a href="userAccountManagement.html" class="link">Overview accounts &#8594;</a>
-            </div>
-            <div class="option">
-                <div class="icon"><img src="image/icon/orderHistory.svg" alt="Profile" class="infoBox-profile-pic"></div>
-                <h3>View support activity</h3>
-                <p>View your recent or upcoming reservations, repairs, calls, and chats.</p>
-                <a href="#" class="link">View activity &#8594;</a>
-            </div>
-        </section>
+    </nav>
+    <div style="padding-top: 4rem;">
     </div>
 
+    <main>
+        <section class="user-info">
+            <div class="user-header">
+                <img src="image/icon/user.svg" alt="Profile" class="large-profile-pic">
+                <div class="user-details">
+                    <h2 id="userName"></h2>
+                    <p class="account" id="userEmail"></p>
+                    <p class="account" id="userLicenseNum"></p>
+                </div>
+            </div>
+            <p class="support-message">
+            <h3 style="color: #b91c1c">Role: Admin</h3>
+            </p>
+        </section>
 
-</main>
+        <div id="checkRole">
+            <section class="tell-us">
+                <h2>Tell us what's happening</h2>
+                <input type="text" placeholder="Example: /" class="issue-input">
+            </section>
+
+            <section class="support-options">
+                <div class="option">
+                    <div class="icon"> <img src="image/icon/account.svg" alt="Profile" class="infoBox-profile-pic">
+                    </div>
+                    <h3>User Account Management</h3>
+                    <p>Approve staff of insurance account</p>
+                    <a href="userAccountManagement.html" class="link">Overview accounts &#8594;</a>
+                </div>
+                <div class="option">
+                    <div class="icon"><img src="image/icon/orderHistory.svg" alt="Profile" class="infoBox-profile-pic">
+                    </div>
+                    <h3>View support activity</h3>
+                    <p>View your recent or upcoming reservations, repairs, calls, and chats.</p>
+                    <a href="#" class="link">View activity &#8594;</a>
+                </div>
+            </section>
+        </div>
+
+
+    </main>
 </body>
+
 </html>

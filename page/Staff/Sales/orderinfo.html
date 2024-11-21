@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head class="dark" lang="en">
     <meta charset="UTF-8">
     <title>Order info | Username | Legend Motor Limited</title>
@@ -8,47 +9,12 @@
     <meta content="Dashboard" name="description">
     <meta content="dashboard, page" name="keywords">
     <meta content="noindex, nofollow" name="robots">
-    <link href="../../resources/image/icon_dark.png" rel="icon" type="image/x-icon"/>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
+    <link href="../../resources/image/icon_dark.png" rel="icon" type="image/x-icon" />
     <script type="module" src="../../resources/js/script.js"></script>
     <script type="module" src="../../resources/js/module/auth.js"></script>
     <script type="module" src="../../resources/js/module/api.js"></script>
     <script type="module" src="../../resources/js/OrderAction.js"></script>
     <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        primary: {
-                            "50": "#eff6ff",
-                            "100": "#dbeafe",
-                            "200": "#bfdbfe",
-                            "300": "#93c5fd",
-                            "400": "#60a5fa",
-                            "500": "#3b82f6",
-                            "600": "#2563eb",
-                            "700": "#1d4ed8",
-                            "800": "#1e40af",
-                            "900": "#1e3a8a",
-                            "950": "#172554"
-                        }
-                    }
-                },
-                fontFamily: {
-                    'body': [
-                        'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto',
-                        'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji',
-                        'Segoe UI Symbol', 'Noto Color Emoji'
-                    ],
-                    'sans': [
-                        'Inter', 'ui-sans-serif', 'system-ui', '-apple-system', 'system-ui', 'Segoe UI', 'Roboto',
-                        'Helvetica Neue', 'Arial', 'Noto Sans', 'sans-serif', 'Apple Color Emoji', 'Segoe UI Emoji',
-                        'Segoe UI Symbol', 'Noto Color Emoji'
-                    ]
-                }
-            }
-        }
 
         function displayError(message) {
             const errorDiv = document.createElement('div');
@@ -321,9 +287,9 @@ flex-direction: column;
             <a class="flex items-center space-x-3 rtl:space-x-reverse mb-6" href="#">
                 <div class="h-8 w-8 relative">
                     <img alt="LMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-                         src="../../resources/image/LMC.png"/>
+                        src="../../resources/image/LMC.png" />
                     <img alt="LMC Logo" class="absolute inset-0 object-contain hidden dark:block"
-                         src="../../resources/image/LMC_DM.png"/>
+                        src="../../resources/image/LMC_DM.png" />
                 </div>
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">LMC</span>
             </a>
@@ -331,26 +297,26 @@ flex-direction: column;
             <ul class="font-medium flex flex-col space-y-2">
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="order.html">Order Record</a>
+                        href="order.html">Order Record</a>
                 </li>
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="Item.html">Vehicle</a>
+                        href="Item.html">Vehicle</a>
                 </li>
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="genreport.html">Generate Report</a>
+                        href="genreport.html">Generate Report</a>
                 </li>
                 <li>
                     <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                       href="../../logout.html" onclick="logout()">Log Out</a>
+                        href="../../logout.html" onclick="logout()">Log Out</a>
                 </li>
             </ul>
 
             <!-- Dark mode toggle button -->
             <button class="mt-6 p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2
             focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                    id="darkModeToggle">
+                id="darkModeToggle">
                 <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z">
                     </path>
@@ -364,164 +330,142 @@ flex-direction: column;
         <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
             <div class="h-8 w-8 relative">
                 <img alt="LMC Logo" class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-                     src="../../resources/image/LMC.png"/>
+                    src="../../resources/image/LMC.png" />
                 <img alt="LMC Logo" class="absolute inset-0 object-contain hidden dark:block"
-                     src="../../resources/image/LMC_DM.png"/>
+                    src="../../resources/image/LMC_DM.png" />
             </div>
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">LMC</span>
         </a>
-        <button class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-                id="mobileMenuButton">
+        <button
+            class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
+            id="mobileMenuButton">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                 xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                      d="M4 6h16M4 12h16M4 18h16"></path>
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16">
+                </path>
             </svg>
         </button>
     </div>
 
     <!-- Mobile Menu -->
     <!--------------------Menu-------------------->
+
     <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-body">
-    <div class="md:hidden" id="mobileMenu" style="display: none;">
-        <ul class="font-medium flex flex-col space-y-2 p-4 bg-white dark:bg-gray-900">
-            <li>
-                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="order.html">Order Record</a>
-            </li>
-            <li>
-                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="Item.html">Vehicle</a>
-            </li>
-            <li>
-                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="genreport.html">Generate Report</a>
-            </li>
-            <li>
-                <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                   href="../../logout.html" onclick="logout()">Log Out</a>
-            </li>
-        </ul>
-    </div>
+        <div class="md:hidden" id="mobileMenu" style="display: none;">
+            <ul class="font-medium flex flex-col space-y-2 p-4 bg-white dark:bg-gray-900">
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        href="order.html">Order Record</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        href="Item.html">Vehicle</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        href="genreport.html">Generate Report</a>
+                </li>
+                <li>
+                    <a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                        href="../../logout.html" onclick="logout()">Log Out</a>
+                </li>
+            </ul>
+        </div>
 
-    <!-- Main Content -->
-    <!--------------------Order-------------------->
-    <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
-    <div class="container mx-auto px-4 py-8" id="order">
-        <h1 class="text-3xl font-bold mb-6" id="OrderDetails-title">Order Details - SL00008</h1>
+        <!-- Main Content -->
+        <!--------------------Order-------------------->
 
-        <div class="flex flex-col md:flex-row gap-6">
-            <!-- Order Summary -->
-            <div class="md:w-1/2">
-                <div class="hidden justify-center items-center my-4" id="loadingSpinner">
-                    <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
-                </div>
-                <div
-                        class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6"
-                        id="orderSummaryDiv"
-                >
-                    <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
-                    <div class="grid grid-cols-2 gap-4" id="orderSummary">
-                        <!-- it will be rendered by javascript -->
+        <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white">
+            <div class="container mx-auto px-4 py-8" id="order">
+                <h1 class="text-3xl font-bold mb-6" id="OrderDetails-title">Order Details - SL00008</h1>
+
+                <div class="flex flex-col md:flex-row gap-6">
+                    <!-- Order Summary -->
+                    <div class="md:w-1/2">
+                        <div class="hidden justify-center items-center my-4" id="loadingSpinner">
+                            <div class="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-500"></div>
+                        </div>
+                        <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg p-6"
+                            id="orderSummaryDiv">
+                            <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                            <div class="grid grid-cols-2 gap-4" id="orderSummary">
+                                <!-- it will be rendered by javascript -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Order Items -->
+                    <div class="md:w-1/2" id="orderItemsDiv">
+                        <div class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                            scope="col">
+                                            Item
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                            scope="col">
+                                            Quantity
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                            scope="col">
+                                            Price
+                                        </th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
+                                            scope="col">
+                                            Total
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
+                                    id="order-Details-Product">
+                                    <!-- Product will be rendered here -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
-            </div>
+                <!-- Order Actions -->
+                <div class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4" id="orderActions">
+                    <a class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
+                        href="order.html">
+                        <svg class="fill-current w-4 h-4 mr-2" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z" />
+                        </svg>
+                        <span>Return to Order Records</span>
+                    </a>
+                    <div class="flex flex-wrap justify-center sm:justify-end gap-2 hidden" id="orderActionsDiv">
+                        <button id="confirmBtn"
+                            class="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                            Confirm Order
+                        </button>
 
-            <!-- Order Items -->
-            <div class="md:w-1/2" id="orderItemsDiv">
-                <div
-                        class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg"
-                >
-                    <table
-                            class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
-                    >
-                        <thead class="bg-gray-50 dark:bg-gray-700">
-                        <tr>
-                            <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                                    scope="col"
-                            >
-                                Item
-                            </th>
-                            <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                                    scope="col"
-                            >
-                                Quantity
-                            </th>
-                            <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                                    scope="col"
-                            >
-                                Price
-                            </th>
-                            <th
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider"
-                                    scope="col"
-                            >
-                                Total
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody
-                                class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700"
-                                id="order-Details-Product"
-                        >
-                        <!-- Product will be rendered here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <!-- Order Actions -->
-        <div
-                class="mt-8 flex flex-col sm:flex-row justify-between items-center gap-4"
-                id="orderActions"
-        >
-            <a
-                    class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center"
-                    href="order.html"
-            >
-                <svg
-                        class="fill-current w-4 h-4 mr-2"
-                        viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                            d="M10 8.586L2.929 1.515 1.515 2.929 8.586 10l-7.071 7.071 1.414 1.414L10 11.414l7.071 7.071 1.414-1.414L11.414 10l7.071-7.071-1.414-1.414L10 8.586z"
-                    />
-                </svg>
-                <span>Return to Order Records</span>
-            </a>
-            <div class="flex flex-wrap justify-center sm:justify-end gap-2 hidden" id="orderActionsDiv">
-                <button id="confirmBtn"
-                        class="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
-                    Confirm Order
-                </button>
+                        <button id="processingBtn"
+                            class="bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">
+                            Mark as Processing
+                        </button>
 
-                <button id="processingBtn"
-                        class="bg-yellow-500 hover:bg-yellow-600 dark:bg-yellow-600 dark:hover:bg-yellow-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-opacity-50">
-                    Mark as Processing
-                </button>
+                        <button id="shippingBtn"
+                            class="bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
+                            Ship Order
+                        </button>
 
-                <button id="shippingBtn"
-                        class="bg-green-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
-                    Ship Order
-                </button>
+                        <button id="shippedBtn"
+                            class="bg-purple-500 hover:bg-purple-600 dark:bg-purple-600 dark:hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
+                            Shipped Order
+                        </button>
 
-                <button id="shippedBtn"
-                        class="bg-purple-500 hover:bg-purple-600 dark:bg-purple-600 dark:hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50">
-                    Shipped Order
-                </button>
-
-                <button id="cancelBtn"
-                        class="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                    Cancel Order
-                </button>
-            </div>
-            <button onclick="printOrder('order')" id="printBtn"
+                        <button id="cancelBtn"
+                            class="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                            Cancel Order
+                        </button>
+                    </div>
+                    <button onclick="printOrder('order')" id="printBtn"
                         class="bg-orange-500 hover:bg-orange-600 dark:bg-orange-600 dark:hover:bg-orange-700 text-white font-semibold py-2 px-4 rounded transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
-                    Print Order
-            </button>
-    </body>
+                        Print Order
+                    </button>
+        </body>
+
 </html>

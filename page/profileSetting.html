@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>Profile Setting | Smart & Luxury Motor Company</title>
+    <!--    <link href="../../resources/css/profileSetting.css" rel="stylesheet"/>-->
+    <link href="../../resources/image/SLMC_Icon_login.jpg" rel="icon" type="image/x-icon" />
+    <!--    <script src="../../resources/js/profileSetting.js"></script>-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="module" src="../../resources/js/script.js"></script>
+    <link rel="stylesheet" href="../../resources/css/main.css">
+    <script>
+        function loadInfo() {
+            $.ajax({
+                url: '../../resources/php/profile.php?action=getEditInfo',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+
+                    $firstName = data.name.split(" ")[0];
+                    $lastName = data.name.split(" ")[1];
+
+                    document.getElementById('editFirstName').value = $firstName;
+                    document.getElementById('editLastName').value = $lastName;
+                    document.getElementById('email').textContent = data.email;
+                    document.getElementById('editMobileNumber').value = data.contactNumber;
+                    document.getElementById('editFaxNumber').value = data.faxNumber;
+                    document.getElementById('editAddressLine1').value = data.address;
+                    document.getElementById('Full-name').textContent = data.name;
+                    document.getElementById('email').textContent = data.email;
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('AJAX error:', textStatus, errorThrown);
+                    console.log('Response:', jqXHR.responseText);
+                }
+            });
+        }
+
+        function updateProfile1() {
+            //get all the values
+            $firstName = document.getElementById('editFirstName').value;
+            if ($firstName == "") {
+                alert('Please enter your first name.');
+                return;
+            }
+            $lastName = document.getElementById('editLastName').value;
+            if ($lastName == "") {
+                alert('Please enter your last name.');
+                return;
+            }
+            $name = $firstName + " " + $lastName;
+            $mobileNumber = document.getElementById('editMobileNumber').value;
+            if ($mobileNumber == "") {
+                alert('Please enter your mobile number.');
+                return;
+            }
+            $faxNumber = document.getElementById('editFaxNumber').value;
+            if ($faxNumber == "") {
+                alert('Please enter your fax number.');
+                return;
+            }
+            $addressLine1 = document.getElementById('editAddressLine1').value;
+            if ($addressLine1 == "") {
+                alert('Please enter your address.');
+                return;
+            }
+
+            $url = '../../resources/php/profile.php?action=updateProfile&';
+            $url += 'name=' + $name + '&';
+            $url += 'mobileNumber=' + $mobileNumber + '&';
+            $url += 'faxNumber=' + $faxNumber + '&';
+            $url += 'addressLine1=' + $addressLine1;
+
+            $.ajax({
+                url: $url,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status == 'success') {
+                        alert('Profile updated successfully');
+                        window.location.href = 'profile.html';
+                    } else {
+                        alert('Same Profile Detail. Please try again.');
+                    }
+                    // alert('Profile updated successfully');
+                    // window.location.href = 'profile.html';
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('AJAX error:', textStatus, errorThrown);
+                    console.log('Response:', jqXHR.responseText);
+                }
+            });
+        }
+        function updatePassword1() {
+            //get all the values
+            $currentPassword = document.getElementById('currentPassword').value;
+            if ($currentPassword == "") {
+                alert('Please enter your current password.');
+                return;
+            }
+
+            if ($currentPassword != 'itp4523m') {
+                alert('Current password is incorrect. Please try again.');
+                return;
+            }
+            $newPassword = document.getElementById('newPassword').value;
+            if ($newPassword == "") {
+                alert('Please enter your new password.');
+                return;
+            }
+            $newPassword = document.getElementById('newPassword').value;
+            if ($newPassword == "") {
+                alert('Please enter your new password.');
+                return;
+            }
+            $confirmPassword = document.getElementById('confirmPassword').value;
+            if ($confirmPassword == "") {
+                alert('Please confirm your new password.');
+                return;
+            }
+            if ($newPassword != $confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+            if ($newPassword == 'itp4523m' && $confirmPassword == 'itp4523m') {
+                alert('New password cannot be the same as the current password.')
+                return;
+            }
+
+            $url = '../../resources/php/profile.php?action=updatePassword&';
+            $url += 'oldPassword=' + $currentPassword + '&';
+            $url += 'newPassword=' + $newPassword;
+
+            $.ajax({
+                url: $url,
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    // if (data.status == 'success')   {
+                    //     alert('Password updated successfully');
+                    //     window.location.href = 'profile.html';
+                    // } else {
+                    //     alert('Failed to update password. Please try again.');
+                    // }
+                    alert('Password updated successfully');
+                    window.location.href = 'profile.html';
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log('AJAX error:', textStatus, errorThrown);
+                    console.log('Response:', jqXHR.responseText);
+                }
+            });
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white" onload="loadInfo()">
+    <main>
+        <!--------------------Profile-------------------->
+        <div class="container mx-auto px-4 py-8">
+            <div class="bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+                <div class="md:flex">
+                    <!-- Left side - User info -->
+                    <div class="md:w-1/3 bg-gray-100 dark:bg-gray-700 p-8 text-center">
+                        <svg class="mx-auto w-32 h-32 rounded-full border-4 border-white dark:border-none" fill="none"
+                            stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <h2 class="mt-4 text-xl font-semibold text-gray-800 dark:text-white" id="Full-name"></h2>
+                        <p class="text-gray-600 dark:text-gray-300" id="email"></p>
+                    </div>
+
+                    <!-- Right side - Profile details -->
+                    <div class="md:w-2/3 p-8">
+                        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6">Profile Settings</h3>
+                        <form class="space-y-4" id="updateProfileForm" onsubmit="updateProfile()" method="POST">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                        for="editFirstName">First
+                                        Name</label>
+                                    <input
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        id="editFirstName" name="editFirstName" readonly type="text">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                        for="editLastName">Last
+                                        Name</label>
+                                    <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200
+                                focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        id="editLastName" name="editLastName" readonly type="text">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                        for="editMobileNumber">Mobile
+                                        Number</label>
+                                    <input
+                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        id="editMobileNumber" name="editMobileNumber" value="86-12345678"
+                                        pattern="[0-9]{8}" placeholder="Mobile Number" type="number">
+                                    <p id="editMobileNumberError"
+                                        class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden">Please enter a
+                                        valid mobile number.</p>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                        for="editFaxNumber">Fax Number</label>
+                                    <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200
+                                focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                        id="editFaxNumber" name="editFaxNumber" pattern="[0-9]{3}-[0-9]{7}"
+                                        value="86-12345678" placeholder="Fax Number" type="number">
+                                    <p id="editFaxNumberError"
+                                        class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden">Please enter a
+                                        valid fax number.</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                    for="editAddressLine1">Address Line
+                                </label>
+                                <input
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                    id="editAddressLine1" name="editAddressLine1"
+                                    value="Room 1203, Building C, Jinhua Garden" placeholder="Address Line 1"
+                                    type="text">
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"
+                                    id="editAddressLine1Error">Please enter a valid address line 1.</p>
+                            </div>
+                            <!-- <div>
+                            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                   for="editAddressLine2">Address Line
+                                2</label>
+                            <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                   id="editAddressLine2" name="editAddressLine2"
+                                   value="No. 88, East Avenue"
+                                   placeholder="Address Line 2"
+                                   type="text">
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden" id="editAddressLine2Error">Please enter a valid address line 2.</p>
+                        </div> -->
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <!-- <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                       for="editStateProvince">State/Province</label>
+                                <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                       id="editStateProvince" name="stateProvince"
+                                       value="Guangdong"
+                                       placeholder="State/Province"
+                                       type="text">
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden" id="editStateProvinceError">Please enter a valid state/province.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300" for="editCountry">Country</label>
+                                <input class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                       id="editCountry" name="editCountry"
+                                       placeholder="Country"
+                                       type="text">
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden" id="editCountryError">Please enter a valid country.</p>
+                            </div> -->
+                            </div>
+                            <div>
+
+                                <button
+                                    class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+                                    onclick="updateProfile1()" type="button">
+                                    Save Profile
+                                </button>
+                            </div>
+                        </form>
+
+                        <h3 class="text-2xl font-semibold text-gray-800 dark:text-white mt-8 mb-6">Password Settings
+                        </h3>
+                        <form class="space-y-4" id="passwordForm" onsubmit="updatePassword()" method="POST">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                    for="currentPassword">Current
+                                    Password</label>
+                                <input
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                    id="currentPassword" name="currentPassword" placeholder="Current Password"
+                                    type="password">
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"
+                                    id="editCurrentPasswordError">Please enter your current password.</p>
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"
+                                    id="editCurrentPasswordIncorrectError">Incorrect password, please try again.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                    for="newPassword">New
+                                    Password</label>
+                                <input
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                    id="newPassword" name="newPassword" placeholder="New Password" type="password">
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"
+                                    id="editNewPasswordError">Please enter a new password.</p>
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"
+                                    id="editNewPasswordSameError">Passwords cannot be the same as your current password.
+                                </p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                                    for="confirmPassword">Confirm New
+                                    Password</label>
+                                <input
+                                    class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                                    id="confirmPassword" name="confirmPassword" placeholder="Confirm New Password"
+                                    type="password">
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"
+                                    id="editConfirmPasswordError">Please enter your new password again.</p>
+                                <p class="mt-2 text-sm text-gray-500 dark:text-gray-400 hidden"
+                                    id="editConfirmPasswordNotMatchError">Passwords not match as new password.</p>
+                            </div>
+                            <div>
+                                <button
+                                    class="w-full bg-green-600 text-white py-2 px-4 rounded-md
+                            hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition duration-150 ease-in-out"
+                                    onclick="updatePassword1()" type="button">
+                                    Update Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer class="bg-white border-t border-gray-200 dark:bg-gray-900 dark:border-gray-700">
+            <div class="container mx-auto px-4 py-8">
+                <div class="flex flex-wrap items-center justify-between md:flex-no-wrap">
+                    <div class="flex items-center mb-6 md:mb-0">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">Copyright &copy; 2023 Smart & Luxury
+                            Motor Company</span>
+                    </div>
+                    <div class="flex items-center justify-between space-x-6 md:space-x-12">
+                        <div class="flex items-center justify-between space-x-6">
+                            <div class="flex items-center">
+                                <a class="text-gray-600 dark:text-gray-400" href="#">About Us</a>
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                <a class="text-gray-600 dark:text-gray-400" href="#">Contact Us</a>
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                <a class="text-gray-600 dark:text-gray-400" href="#">Order Tracking</a>
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                <a class="text-gray-600 dark:text-gray-400" href="#">Returns</a>
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                <a class="text-gray-600 dark:text-gray-400" href="#">FAQ</a>
+                            </div>
+                            <div class="flex items-center">
+                                <a class="text-gray-600 dark:text-gray-400" href="#">Terms of Service</a>
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                <a class="text-gray-600 dark:text-gray-400" href="#">Privacy Policy</a>
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                <a class="text-gray-600 dark:text-gray-400" href="#">Site Map</a>
+                                <span
+                                    class="bg-gray-200 dark:bg-gray-700 dark:text-gray-400 rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                <a class="text-gray-600 dark:text-gray-400" href="#">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+    <script>
+        // Function to load profile data
+        function loadProfileData() {
+            const apiUrl = `../../resources/php/profile_api.php?action=get`;
+
+            fetch(apiUrl, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('userToken')}`
+                },
+                credentials: 'include'
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to load profile data');
+                }
+                return response.json();
+            }).then(data => {
+                if (data.success) {
+                    populateProfileFields(data.data);
+                } else {
+                    throw new Error('Failed to load profile data');
+                }
+            }).catch(error => {
+                console.error('Error loading profile data:', error);
+                //alert('Failed to load profile data. Please try again later.');
+            });
+        }
+
+        // Function to populate profile fields
+        function populateProfileFields(data) {
+            const fields = [
+                'FullName', 'email', 'firstName', 'lastName', 'mobileNumber',
+                'faxNumber', 'addressLine1', 'addressLine2', 'stateProvince', 'country'
+            ];
+
+            fields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element) {
+                    if (element.tagName === 'INPUT') {
+                        element.value = data[field] || '';
+                    } else {
+                        element.textContent = data[field] || '';
+                    }
+                }
+
+                // Also update the edit fields if they exist
+                const editElement = document.getElementById('edit' + field.charAt(0).toUpperCase() + field.slice(1));
+                if (editElement && editElement.tagName === 'INPUT') {
+                    editElement.value = data[field] || '';
+                }
+                console.log(field, data[field]);
+            });
+        }
+
+
+        // Function to handle profile editing
+        // Function to update profile data
+        function updateProfile(event) {
+            event.preventDefault();
+
+            const updatedData = {
+                firstName: document.getElementById('editFirstName').value,
+                lastName: document.getElementById('editLastName').value,
+                mobileNumber: document.getElementById('editMobileNumber').value,
+                faxNumber: document.getElementById('editFaxNumber').value,
+                addressLine1: document.getElementById('editAddressLine1').value,
+                addressLine2: document.getElementById('editAddressLine2').value,
+                stateProvince: document.getElementById('editStateProvince').value,
+                country: document.getElementById('editCountry').value
+            };
+
+            // Validate input fields
+            if (!validateProfileData(updatedData)) {
+                return;
+            }
+
+            // Send updated data to server
+            fetch('../../resources/php/EditProfile.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedData)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Failed to update profile');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        alert('Profile updated successfully');
+                        loadProfileData(); // Reload profile data
+                        closeEditModal(); // Close the edit modal
+                    } else {
+                        alert('Failed to update profile. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error updating profile:', error);
+                    alert('An error occurred while updating the profile. Please try again later.');
+                });
+        }
+
+        // Function to validate profile data
+        function validateProfileData(data) {
+            if (data.mobileNumber.length < 8) {
+                document.getElementById('editMobileNumber').classList.add('border-red-500');
+                return false;
+            }
+            if (data.faxNumber.length < 8) {
+                document.getElementById('editFaxNumber').classList.add('border-red-500');
+                return false;
+            }
+            if (data.addressLine1.length < 1) {
+                document.getElementById('editAddressLine1').classList.add('border-red-500');
+                return false;
+            }
+            if (data.addressLine2.length < 1) {
+                document.getElementById('editAddressLine2').classList.add('border-red-500');
+                return false;
+            }
+            if (data.stateProvince.length < 1) {
+                document.getElementById('editStateProvince').classList.add('border-red-500');
+                return false;
+            }
+            if (data.country.length < 1) {
+                document.getElementById('editCountry').classList.add('border-red-500');
+                return false;
+            }
+
+            // Add more validation as needed
+            return true;
+        }
+
+        // timer for resetting errors after 5 seconds
+        setTimeout(() => {
+            document.getElementById('editMobileNumberError').style.display = 'none';
+            document.getElementById('editFaxNumberError').style.display = 'none';
+            document.getElementById('editAddressLine1Error').style.display = 'none';
+            document.getElementById('editAddressLine2Error').style.display = 'none';
+            document.getElementById('editStateProvinceError').style.display = 'none';
+            document.getElementById('editCountryError').style.display = 'none';
+            // reset the form to its original state
+
+            document.getElementById('editMobileNumber').classList.remove('border-red-500');
+            document.getElementById('editFaxNumber').classList.remove('border-red-500');
+            document.getElementById('editAddressLine1').classList.remove('border-red-500');
+            document.getElementById('editAddressLine2').classList.remove('border-red-500');
+            document.getElementById('editStateProvince').classList.remove('border-red-500');
+            document.getElementById('editCountry').classList.remove('border-red-500');
+        }, 5000);
+
+        //
+        function updatePassword() {
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (!currentPassword || !newPassword || !confirmPassword) {
+                document.getElementById('editCurrentPasswordError').style.display = 'block';
+                document.getElementById('editNewPasswordError').style.display = 'block';
+                document.getElementById('editConfirmPasswordError').style.display = 'block';
+                document.getElementById('editNewPasswordSameError').style.display = 'block';
+                return;
+            }
+
+            if (newPassword !== confirmPassword) {
+                document.getElementById('editNewPasswordNotMatchError').style.display = 'block';
+                return;
+            }
+        }
+
+        // reset all errors
+        function resetPasswordErrorsMessage() {
+            document.getElementById('editCurrentPasswordError').style.display = 'none';
+            document.getElementById('editNewPasswordError').style.display = 'none';
+            document.getElementById('editConfirmPasswordError').style.display = 'none';
+            document.getElementById('editNewPasswordSameError').style.display = 'none';
+            document.getElementById('editNewPasswordNotMatchError').style.display = 'none';
+        }
+
+        // Function to close edit modal
+        function closeEditModal() {
+            const editModal = document.getElementById('editProfileModal');
+            if (editModal) {
+                editModal.style.display = 'none';
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProfileData();
+        });
+
+        // Event listeners
+        document.getElementById('updateProfileForm').addEventListener('submit', updateProfile);
+    </script>
+</body>
+
+</html>

@@ -7,7 +7,9 @@
     <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
     <script src="../../../resources/js/Sales/Wishlist.js"></script>
     <script src="../../../resources/js/Sales/Checkout.js"></script>
-    <link rel="stylesheet" href="../../../resources/css/main.css">
+    <script src="../../../resources/js/script.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/main.css"/>
+    <link rel="icon" href="../../../resources/image/icon_dark.png" type="image/x-icon"/>
     <title>Checkout | Legend Motor Company</title>
     <style>
         .notification {
@@ -34,120 +36,239 @@
         .hidden {
             display: none;
         }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #e5e7eb; /* Tailwind gray-200 */
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 10px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            color: #4b5563; /* Tailwind gray-600 */
+        }
+
+        .tab-button.active {
+            border-bottom: 2px solid #3b82f6; /* Tailwind blue-500 */
+            color: #3b82f6; /* Tailwind blue-500 */
+        }
+
+        .tab-content {
+            padding-top: 20px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
 <header class="navbar bg-white shadow-md sticky top-0 z-10">
-    <div class="container mx-auto flex justify-between items-center p-4">
-        <div class="flex items-center">
-            <!-- Back button -->
-            <button id="backBtn"
-                    class=" px-4 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
-                </svg>
-            </button>
-            <script>
-                $('#backBtn').on('click', function () {
-                    window.location.href = 'Wishlist.html';
-                });
-            </script>
-            <!-- Logo -->
-            <a href="#" class="flex items-center">
-                <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
-                <span class="ml-3 text-xl font-bold">LMC</span>
-            </a>
-        </div>
-        <div class="relative">
-            <label for="search-bar-vehicles" class="absolute left-2 top-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
-            </label>
-            <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
-                   class="border rounded px-10 py-1"/>
-        </div>
-
-        <div class="hamburger md:hidden flex flex-col cursor-pointer">
-            <span class="w-6 h-0.5 bg-gray-700 mb-1"></span>
-            <span class="w-6 h-0.5 bg-gray-700 mb-1"></span>
-            <span class="w-6 h-0.5 bg-gray-700"></span>
-        </div>
-
-        <nav class="nav-links hidden md:flex space-x-4">
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="index.html">Home</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="ViewVehicles.html">Vehicles</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./Wishlist.html">Wishlist</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./viewOrderRecord.html">Orders</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./profile.html">Profile</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../../logout.html">Log Out</a>
-        </nav>
-    </div>
 </header>
 <div id="notification-container" class="fixed top-4 right-4 z-50"></div>
 <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8" id="Checkout">
-    <h1 class="text-3xl font-bold mb-6">Checkout</h1>
+    <div id="checkout-container" class="container mx-auto">
+        <h1 class="text-3xl font-bold mb-6">Checkout</h1>
 
-    <!-- Order Summary Section -->
-    <div id="orderSummaryContainer" class="mb-6 p-4 bg-white shadow rounded-md">
-        <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
-        <table class="min-w-full divide-y divide-gray-200">
-            <tbody id="orderSummary"></tbody>
-        </table>
+        <!-- Order Summary Section -->
+        <div id="orderSummaryContainer" class="mb-6 p-4 bg-white shadow rounded-md">
+            <h2 class="text-2xl font-bold mb-4">Order Summary</h2>
+            <table class="min-w-full divide-y divide-gray-200">
+                <tbody id="orderSummary"></tbody>
+            </table>
 
-        <!-- Summary Totals -->
-        <div id="summaryTotals" class="mt-4">
-            <p id="subtotalAmount" class=""></p>
-            <p id="totalAmount" class=""></p>
-            <p id="DepositAmount" class=""></p>
-            <p id="EstimatedDelivery" class=""></p>
+            <!-- Summary Totals -->
+            <div id="summaryTotals" class="mt-4">
+                <p id="subtotalAmount"></p>
+                <p id="totalAmount"></p>
+                <p id="DepositAmount"></p>
+                <p id="EstimatedDelivery"></p>
+            </div>
+        </div>
+
+        <!-- Licensing Verification Section -->
+        <section id="licensingVerification-container" class="mt-10 border-t border-gray-200">
+            <h2 class="text-2xl font-bold mb-6">Licensing Verification</h2>
+            <div id="licensingVerificationTabs" class="mt-10 border-t border-gray-200">
+                <!-- Tabs Navigation -->
+                <div class="tabs" id="licensingVerificationTabs-buttons">
+                    <button class="tab-button active" data-tab="yes" id="licensingVerificationYes">Yes</button>
+                    <button class="tab-button" data-tab="no" id="licensingVerificationNo">No</button>
+                </div>
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <div id="yes-licensing" class="tab-panel active">
+                        <form id="licensingVerificationForm" class="mt-4 grid">
+                            <div class="mb-4 grid-item">
+                                <label for="licensePlate" class="block text-sm font-medium text-gray-700">License Plate</label>
+                                <input type="text" id="licensePlate" name="licensePlate" required placeholder="Enter your license plate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </div>
+                            <div class="mb-4 grid-item">
+                                <label for="licenseState" class="block text-sm font-medium text-gray-700">License State</label>
+                                <input type="text" id="licenseState" name="licenseState" required placeholder="Enter your license state" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </div>
+                            <div class="mb-4 grid-item">
+                                <label for="licenseNumber" class="block text-sm font-medium text-gray-700">License Number</label>
+                                <input type="text" id="licenseNumber" name="licenseNumber" required placeholder="Enter your license number" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            </div>
+                        </form>
+                    </div>
+                    <div id="no-licensing" class="tab-panel">
+                        <p class="text-gray-700">You have chosen not to verify your vehicle's license.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Trade-In Option Section -->
+        <div id="tradeInOption" class="mt-10 border-t border-gray-200 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold mb-6">Trade-In Option</h2>
+            <div id="tradeInTabs" class="mt-10 border-t border-gray-200">
+                <!-- Tabs Navigation -->
+                <div class="tabs" id="tradeInTabs-buttons">
+                    <button class="tab-button active" data-tab="yes" id="tradeInYes">Yes</button>
+                    <button class="tab-button" data-tab="no" id="tradeInNo">No</button>
+                </div>
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <div id="yes-trade-in" class="tab-panel active">
+                        <form id="tradeInForm" class="mt-4 grid">
+                            <div class="mb-4 grid-item">
+                                <label for="tradeInMake" class="block text-sm font-medium text-gray-700">Make</label>
+                                <input type="text" id="tradeInMake" name="tradeInMake" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter the make of your vehicle">
+                            </div>
+                            <div class="mb-4 grid-item">
+                                <label for="tradeInModel" class="block text-sm font-medium text-gray-700">Model</label>
+                                <input type="text" id="tradeInModel" name="tradeInModel" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter the model of your vehicle">
+                            </div>
+                            <div class="mb-4 grid-item">
+                                <label for="tradeInYear" class="block text-sm font-medium text-gray-700">Year</label>
+                                <input type="number" id="tradeInYear" name="tradeInYear" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter the year of your vehicle">
+                            </div>
+                            <div class="mb-4 grid-item">
+                                <label for="tradeInMileage" class="block text-sm font-medium text-gray-700">Mileage</label>
+                                <input type="number" id="tradeInMileage" name="tradeInMileage" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter the mileage of your vehicle">
+                            </div>
+                            <div class="mb-4 grid-item">
+                                <label for="tradeInCondition" class="block text-sm font-medium text-gray-700">Condition</label>
+                                <select id="tradeInCondition" name="tradeInCondition" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required>
+                                    <option value="">Select condition</option>
+                                    <option value="excellent">Excellent</option>
+                                    <option value="good">Good</option>
+                                    <option value="fair">Fair</option>
+                                    <option value="poor">Poor</option>
+                                </select>
+                            </div>
+                            <p class="text-gray-700 mt-4">* The trade-in value will be calculated based on your vehicle's condition and mileage.</p>
+                        </form>
+                    </div>
+                    <div id="no-trade-in" class="tab-panel">
+                        <p class="text-gray-700">You have chosen not to trade in a vehicle.</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Financing Options Section -->
-        <div id='financingOptions' class='mt10 border-t border-gray-200'>
-            <label for='financingMethod' class='block text-sm font-medium text-gray700'>Select Financing Option:</label>
-            <select id='financingMethod' name='financingMethod'
-                    class='mt1 block w-full rounded-md bordergray300 shadow-sm focus:border-indigo focus:ring focus:ring-indigo focus:ring-opacity'>
-                <option value='none'>Select a plan...</option>
-                <!-- Loan Plans -->
-                <option value='loan_plan_a' data-interest-rate='0.05' data-term-months='60'>Plan A - $300/month for 60
-                    months (5% APR)
-                </option>
-                <option value='loan_plan_b' data-interest-rate='0.04' data-term-months='36'>Plan B - $400/month for 36
-                    months (4% APR)
-                </option>
-                <option value='loan_plan_c' data-interest-rate='0.03' data-term-months='24'>Plan C - $500/month for 24
-                    months (3% APR)
-                </option>
-                <!-- Other Methods -->
-                <option value='cash_payment'>Cash Payment - Pay full amount upfront.</option>
-                <option value='credit_card'>Credit Card - Pay using a credit card.</option>
-            </select>
+        <div id="financingOptions" class="mt-10 border-t border-gray-200 max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+            <h2 class="text-2xl font-bold mb-6">Financing Options</h2>
+            <div id="financingTabs" class="mt-10 border-t border-gray-200">
+                <!-- Tabs Navigation -->
+                <div class="tabs mt-4">
+                    <button class="tab-button active" data-tab="loan-plans">Loan Plans</button>
+                    <button class="tab-button" data-tab="payment-methods">Payment Methods</button>
+                </div>
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <div id="loan-plans" class="tab-panel active">
+                        <label for="financingMethod" class="block text-sm font-medium text-gray-700 mt-4">Select Financing Option:</label>
+                        <select id="financingMethod" name="financingMethod" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 hover:border-blue-500 hover:ring-blue-500">
+                            <option value="none" class="mt-2 text-gray-700 hover:text-blue-500">Select a plan...</option>
+                            <!-- Loan Plans -->
+                            <option value="loan_plan_a" data-interest-rate="0.05" data-term-months="60" class="mt-2">Plan A - $300/month for 60 months (5% APR)</option>
+                            <option value="loan_plan_b" data-interest-rate="0.04" data-term-months="36" class="mt-2">Plan B - $400/month for 36 months (4% APR)</option>
+                            <option value="loan_plan_c" data-interest-rate="0.03" data-term-months="24" class="mt-2">Plan C - $500/month for 24 months (3% APR)</option>
+                        </select>
+                        <p class="text-gray-700 mt-4 hover:text-blue-500">* The loan amount will be calculated based on your loan plan and the amount of time you plan to use the vehicle. </p>
+                        <p class="text-gray-700 mt-4 hover:text-blue-500">
+                            For more information, please see our <a href="#loan-plans" target="_blank" class="text-blue-500 hover:text-blue-600">loan plans</a> page.</p>
+
+                    </div>
+                    <div id="payment-methods" class="tab-panel">
+                        <label for="paymentMethod" class="block text-sm font-medium text-gray-700 mb-4">Select Payment Method:</label>
+                        <select id="paymentMethod" name="paymentMethod" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                            <option value="none">Select a method...</option>
+                            <option value="cash_payment">Cash Payment - Pay full amount upfront.</option>
+                            <option value="credit_card">Credit Card - Pay using a credit card.</option>
+                        </select>
+                        <p class="text-gray-700">* We will send you a confirmation email with your payment details.</p>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <!-- Address Form -->
-        <form id="checkoutForm" class="mt10 border-t ">
-            <div class="mb-4">
-                <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
-                <input type="text" id="fullName" name="fullName"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                       required placeholder="Enter your full name">
+        <form id="checkoutForm" class="mt-10 border-t grid">
+            <h2 class="text-2xl font-bold mb-6">Address</h2>
+            <!-- Tabs Navigation -->
+            <div class="tabs mb-4">
+                <button type="button" class="tab-button active" data-tab="local">Local (Hong Kong)</button>
+                <button type="button" class="tab-button" data-tab="overseas">Overseas</button>
             </div>
-
-            <div class="mb-4">
-                <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
-                <input type="text" id="address" name="address"
-                       class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                       required placeholder="Enter your address">
+            <!-- Tab Content -->
+            <div class="tab-content">
+                <!-- Local Address Fields -->
+                <div id="local" class="tab-panel active">
+                    <div class="mb-4 grid-item">
+                        <label for="fullName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="fullName" name="fullName" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter your full name" aria-describedby="fullNameHelp" aria-required="true" title="Full name is required" pattern="[A-Za-z]{2,50}">
+                    </div>
+                    <div class="mb-4 grid-item">
+                        <label for="addressLine1" class="block text-sm font-medium text-gray-700">Address Line 1</label>
+                        <input type="text" id="addressLine1" name="addressLine1" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter your street address" aria-describedby="addressLine1Help" aria-required="true" title="Address line 1 is required" pattern="[A-Za-z0-9]{2,50}">
+                    </div>
+                    <div class="mb-4 grid-item">
+                        <label for="district" class="block text-sm font-medium text-gray-700">District</label>
+                        <input type="text" id="district" name="district" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter your district" aria-describedby="districtHelp" aria-required="true" title="District is required" pattern="[A-Za-z]{2,50}">
+                    </div>
+                </div>
+                <!-- Overseas Address Fields -->
+                <div id="overseas" class="tab-panel hidden">
+                    <div class="mb-4 grid-item">
+                        <label for="fullNameOverseas" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="fullNameOverseas" name="fullNameOverseas" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter your full name">
+                    </div>
+                    <div class="mb-4 grid-item">
+                        <label for="addressLine1Overseas" class="block text-sm font-medium text-gray-700">Address Line 1</label>
+                        <input type="text" id="addressLine1Overseas" name="addressLine1Overseas" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" required placeholder="Enter your street address">
+                    </div>
+                    <div class="mb-4 grid-item">
+                        <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+                        <input type="text" id="city" name="city" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Enter your city or town if applicable">
+                    </div>
+                    <div class="mb-4 grid-item">
+                        <label for="state" class="block text-sm font-medium text-gray-700">State</label>
+                        <input type="text" id="state" name="state" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Enter your state or province">
+                    </div>
+                    <div class="mb-4 grid-item">
+                        <label for="zipCode" class="block text-sm font-medium text-gray-700">Zip Code</label>
+                        <input type="text" id="zipCode" name="zipCode" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="Enter your zip code if applicable">
+                    </div>
+                </div>
             </div>
-
             <!-- Submit Button -->
-            <button type="submit"
-                    class="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-offset-gray focus:ring-indigo ring-opacity ring-offset rounded-md shadow-sm transition duration=150 ease-in-out">
+            <button type="submit" class="mt-6 w-full bg-indigo-600 border border-transparent rounded-md py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-offset-gray focus:ring-indigo ring-opacity ring-offset rounded-md shadow-sm transition duration-150 ease-in-out">
                 Confirm Order
             </button>
         </form>
+    </div>
 </main>
 </body>

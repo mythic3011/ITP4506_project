@@ -211,8 +211,8 @@ $(document).ready(function () {
 
     // auto add icon link to head and replace the default icon and current path of page to find the icon path
     //     <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon"/>
-    // const iconlinkcssfile = document.createElement('link');
-    // iconlinkcssfile.rel = 'icon';
-    // iconlinkcssfile.href = window.location.href.replace('page/', 'resources/image/icon_dark.png');
-    // document.head.appendChild(iconlinkcssfile);
+    const iconlinkcssfile = document.createElement('link');
+    iconlinkcssfile.rel = 'icon';
+    iconlinkcssfile.href = window.location.href.replace('page/', 'resources/image/icon_dark.png');
+    document.head.appendChild(iconlinkcssfile);
 });

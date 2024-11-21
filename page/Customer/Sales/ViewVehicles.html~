@@ -9,60 +9,13 @@
     <script type="module" src="../../../resources/js/viewVehicles.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../../resources/css/main.css">
+    <script src ="../../../resources/js/script.js"></script>
+
 
 </head>
 <body class="bg-gray-50 font-sans">
 <header class="navbar bg-white shadow-md sticky top-0 z-10">
-    <div class="container mx-auto flex justify-between items-center p-4">
-        <div class="flex items-center">
-            <!-- Back button -->
-            <button id="backBtn"
-                    class=" px-4 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 ">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/>
-                </svg>
-            </button>
-            <script>
-                $('#backBtn').on('click', function () {
-                    window.location.href = 'index.html';
-                });
-            </script>
-            <!-- Logo -->
-            <a href="#" class="flex items-center">
-                <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
-                <span class="ml-3 text-xl font-bold">LMC</span>
-            </a>
-        </div>
 
-
-        <div class="relative">
-            <label for="search-bar-vehicles" class="absolute left-2 top-2">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                     stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
-            </label>
-            <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
-                   class="border rounded px-10 py-1"/>
-        </div>
-
-        <div class="hamburger md:hidden flex flex-col cursor-pointer">
-            <span class="w-6 h-0.5 bg-gray-700 mb-1"></span>
-            <span class="w-6 h-0.5 bg-gray-700 mb-1"></span>
-            <span class="w-6 h-0.5 bg-gray-700"></span>
-        </div>
-
-        <nav class="nav-links hidden md:flex space-x-4">
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="index.html">Home</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="ViewVehicles.html">Vehicles</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./Wishlist.html">Wishlist</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./viewOrderRecord.html">Orders</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./profile.html">Profile</a>
-            <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../../logout.html">Log Out</a>
-        </nav>
-    </div>
 </header>
 
 <!-- Notification Container -->
@@ -111,7 +64,7 @@
     <!-- Vehicle List -->
     <div id="VehicleList"
          class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
-></div>
+    ></div>
     <div id='noVehiclesMessage' class='flex justify-center items-center h-full hidden pt-4'>
         <div class='bg-gray100 text-gray900 rounded-lg p6 flex flex-col items-center'>
             <svg class="w-12 h-12 mb-4 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
