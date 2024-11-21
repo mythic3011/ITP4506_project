@@ -6,6 +6,7 @@
     "email": "is@a.com",
     "role": "Staff",
     "InsuranceLicenseNumber": "AA1111",
+    "status" : "Inactive",
     "password": "a",
     "mobile": "12345678",
     "orders": []
@@ -16,26 +17,40 @@
     "lastName": "Doe",
     "email": "is2@a.com",
     "role": "Staff",
+    "status" : "Active",
     "password": "a",
     "mobile": "12345678",
     "orders": []
   },
   {
     "id": 3,
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": "iad@a.com",
+    "role": "Admin",
+    "status" : "Active",
+    "password": "a",
+    "mobile": "12345678",
+    "orders": []
+  },
+  {
+    "id": 4,
     "firstName": "Jane",
     "lastName": "Smith",
     "email": "c1@a.com",
     "role": "Customer",
+    "status" : "Active",
     "password": "a",
     "mobile": "87654321",
     "orders": []
   },
   {
-    "id": 4,
+    "id": 5,
     "firstName": "Alice",
     "lastName": "Johnson",
     "email": "c2@c.com",
     "role": "Customer",
+    "status" : "Active",
     "password": "a",
     "mobile": "23456789",
     "orders": []
