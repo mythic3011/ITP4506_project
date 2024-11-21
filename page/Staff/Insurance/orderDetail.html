@@ -17,43 +17,6 @@
 
 </head>
 <style>
-
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1000;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-        border-radius: 8px;
-        text-align: center;
-    }
-
-    .modal .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .modal .close:hover,
-    .modal .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
     body {
         margin: 0;
         padding: 0;
@@ -401,190 +364,6 @@
     }
 </style>
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const payButton = document.getElementById('payBtn');
-        const modal = document.getElementById('paymentModal');
-        const closeBtn = document.querySelector('.payment-modal-close');
-        const form = document.getElementById('paymentForm');
-        const paymentButton = document.getElementById('paymentButton');
-        const requiredFields = form.querySelectorAll('input[required]');
-        const cardIcons = document.querySelectorAll('.card-icon');
-
-        const cancelBtn = document.getElementById('cancelBtn');
-        const cancelModal = document.getElementById('cancelModal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const confirmCancelBtn = document.getElementById('confirmCancelBtn');
-        const closeSpan = document.querySelector('.modal .close');
-
-        cancelBtn.onclick = function() {
-            cancelModal.style.display = 'block';
-        }
-
-        closeModalBtn.onclick = function() {
-            cancelModal.style.display = 'none';
-        }
-
-        closeSpan.onclick = function() {
-            cancelModal.style.display = 'none';
-        }
-
-        window.onclick = function(event) {
-            if (event.target == cancelModal) {
-                cancelModal.style.display = 'none';
-            }
-        }
-
-        confirmCancelBtn.onclick = function() {
-            cancelModal.style.display = 'none';
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('id');
-            let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
-            pendingInsurance = { ...pendingInsurance, status: 'requestCancel' };
-            localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
-            location.reload();
-        }
-
-
-        // Show modal when pay button is clicked
-        payButton.onclick = function() {
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        }
-
-        // Close modal when X is clicked
-        closeBtn.onclick = function() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
-
-        // Close modal when clicking outside
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // Card type detection
-        function detectCardType(number) {
-            const cleanNumber = number.replace(/\s/g, '');
-            if (/^4/.test(cleanNumber)) return 'visa';
-            if (/^(5[1-5]|222[1-9]|22[3-9]|2[3-6]|27[0-1]|2720)/.test(cleanNumber)) return 'mastercard';
-            if (/^62/.test(cleanNumber)) return 'unionpay';
-            return null;
-        }
-
-
-
-        // Update selected card icon
-        function updateSelectedCard(cardType) {
-            cardIcons.forEach(icon => {
-                icon.classList.remove('selected');
-                if (cardType && icon.alt.toLowerCase() === cardType) {
-                    icon.classList.add('selected');
-                }
-            });
-        }
-
-        // Validate input field
-        function validateInput(input) {
-            const isValid = input.checkValidity();
-            input.classList.toggle('error', !isValid);
-            return isValid;
-        }
-
-        // Format credit card number
-        const cardNumber = document.getElementById('cardNumber');
-        cardNumber.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\s/g, '');
-            value = value.replace(/\D/g, '');
-            value = value.replace(/(\d{4})/g, '$1 ').trim();
-            e.target.value = value;
-
-            const cardType = detectCardType(value);
-            updateSelectedCard(cardType);
-            validateInput(this);
-            validateForm();
-        });
-
-        // Format expiry date
-        const expiryDate = document.getElementById('expiryDate');
-        expiryDate.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length >= 2) {
-                value = value.slice(0,2) + '/' + value.slice(2);
-            }
-            e.target.value = value;
-            validateInput(this);
-        });
-
-        // Format CVV
-        const cvv = document.getElementById('cvv');
-        cvv.addEventListener('input', function(e) {
-            e.target.value = e.target.value.replace(/\D/g, '');
-            validateInput(this);
-        });
-
-        // Form validation
-        function validateForm() {
-            let isValid = true;
-            requiredFields.forEach(field => {
-                if (!validateInput(field)) {
-                    isValid = false;
-                }
-            });
-
-            const cardType = detectCardType(cardNumber.value);
-            if (!cardType) {
-                isValid = false;
-            }
-
-            paymentButton.disabled = !isValid;
-        }
-
-        requiredFields.forEach(field => {
-            field.addEventListener('input', validateForm);
-        });
-
-        // Form submission
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (form.checkValidity()) {
-                const popup = document.createElement('div');
-                popup.className = 'popup-overlay';
-                popup.style.display = 'flex';
-
-                popup.innerHTML = `
-    <div class="popup-content">
-        <h2>Thank you your payment !</h2>
-        <p><strong>We will send a receipt to your email address.</strong></p>
-        <div class="popup-buttons">
-            <button class="popup-button save-button" onclick="location.reload()">
-                Close
-            </button>
-        </div>
-    </div>
-`;
-
-                document.body.appendChild(popup);
-                setTimeout(() => popup.classList.add('show'), 10);
-
-                const style = document.createElement('style');
-                style.textContent = `
-    .save-notice { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
-    .popup-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
-    .popup-button { display: flex; flex-direction: column; align-items: center; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
-    .popup-button small { font-size: 0.8rem; font-weight: normal; margin-top: 0.25rem; opacity: 0.8; }
-    .save-button { background-color: #4CAF50; color: white; }
-    .leave-button { background-color: #f44336; color: white; }
-    .stay-button { background-color: #00bcd4; color: white; }
-`;
-                document.head.appendChild(style);
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-    });
     class EditModeManager {
         static setEditMode(orderId) {
             localStorage.setItem('editMode', 'true');
@@ -680,7 +459,7 @@
                 '                        <div class="step-icon">✕</div>\n' +
                 '                        <div class="step-content">\n' +
                 '                            <h3>Policy Expired</h3>\n' +
-                '                            <p>Please contact the customer<br> renew policy as soon as possible</p>\n' +
+                '                            <p>If you want to get our service<br>Please renew your policy as soon as possible</p>\n' +
                 '                            <span id="createAt" class="timestamp"></span>\n' +
                 '                        </div>\n' +
                 '                    </div>'
@@ -690,13 +469,13 @@
             let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
             pendingInsurance = { ...pendingInsurance, status: 'expired' };
             localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
-            document.getElementById('payBtn').style.display = 'none';
-        } else if(pendingInsurance.status == 'requestCancel'){
+        }else if(pendingInsurance.status == 'requestCancel'){
             document.getElementById('timeLine').innerHTML = '<div class="status-step active">\n' +
                 '                        <div class="step-icon">○</div>\n' +
                 '                        <div class="step-content">\n' +
-                '                            <h3>Request Cancel</h3>\n' +
-                '                            <span class="timestamp">Request to cancel the policy is under review<br>At "Just Now"</span>\n' +
+                '                            <h3>Request Cancel By Customer</h3>\n' +
+                '                            <span class="timestamp">After confirm, Click "Approve Cancel" button</span>\n' +
+                '<br><br><button onclick="cancelInsurance()" class="back-button" style="background-color: green;">Approve Cancel</button></p>' +
                 '                            <span id="createAt" class="timestamp"></span>\n' +
                 '                        </div>\n' +
                 '                    </div> <div id="statusColor" class="status-step">\n' +
@@ -706,63 +485,44 @@
                 '                            <div></div>\n' +
                 '                        </div>\n' +
                 '                    </div>'
-            document.getElementById('payBtn').style.display = 'none';
-            document.getElementById('cancelBtn').style.display = 'none';
 
-        }else if(pendingInsurance.status == 'cancelled'){
+        }
+        else if(pendingInsurance.status == 'cancelled'){
             document.getElementById('timeLine').innerHTML = '<div class="status-step completed">\n' +
                 '                        <div class="step-icon">✓</div>\n' +
                 '                        <div class="step-content">\n' +
-                '                            <h3>Request Cancel</h3>\n' +
-                '                            <span class="timestamp">Request to cancel the policy is under review<br>At "Just Now"</span>\n' +
+                '                            <h3>Request Cancel By Customer</h3>\n' +
+                '                            <span class="timestamp">After confirm, Click "Approve Cancel" button</span>\n' +
                 '                            <span id="createAt" class="timestamp"></span>\n' +
                 '                        </div>\n' +
                 '                    </div> <div id="statusColor" class="status-step completed">\n' +
                 '                        <div class="step-icon">✓</div>\n' +
                 '                        <div class="step-content">\n' +
                 '                            <h3>Cancelled</h3>\n' +
-                '                            <span class="timestamp">Your Insurace has been canncelled at "Just Now"</span>\n' +
+                '                            <span class="timestamp">The Insurace has been canncelled at "Just Now" by you</span>\n' +
                 '                        </div>\n' +
                 '                    </div>'
-
-            document.getElementById('payBtn').style.display = 'none';
-            document.getElementById('cancelBtn').style.display = 'none';
         }
         else{
             document.getElementById('policyStatus').textContent = (pendingInsurance.status == 'pending' ? 'Under Review' : 'Approval');
             (pendingInsurance.status == 'pending' ? document.getElementById('statusColor').classList.add('active') : document.getElementById('statusColor').classList.add('completed'));
             (pendingInsurance.status == 'pending' ? document.getElementById('statusIcon').textContent = '⋯' : document.getElementById('statusIcon').textContent = '✓');
-            (pendingInsurance.status == 'pending' ? document.getElementById('statusBtnOrtxt').innerHTML = '                            <p>Estimated processing time: <strong><u>1-2 business days</u></strong></p>\n' : document.getElementById('statusBtnOrtxt').innerHTML = '<span id="createAt" class="timestamp">Approved by Staff01 "Mike Chan" at: Just Now</span>');
+            (pendingInsurance.status == 'pending' ? document.getElementById('statusBtnOrtxt').innerHTML = '                            <button id="statusBtn" onclick="updateStatus()" class="back-button" style="background-color: green;">Approve</button>\n' : document.getElementById('statusBtnOrtxt').innerHTML = '<span id="createAt" class="timestamp">Approved by you at: Just Now</span>');
 
             if(pendingInsurance.status == 'accepted'){
-                document.getElementById('claimColor').classList.add('completed');
+                document.getElementById('claimStatus').classList.add('completed');
                 document.getElementById('claimIcon').textContent = '✓';
-                document.getElementById('claimBtn').style.display = 'none';
-                document.getElementById('claimMessage').innerText = 'Claim Approved by Staff001 "Dave Chan", at "Just Now"';
+                document.getElementById('RejectClaimBtn').style.display = 'none';
+                document.getElementById('AcceptClaimBtn').style.display = 'none';
+                document.getElementById('claimMessage').innerText = 'Claim Approved by you, at "Just Now"';
 
             }else if(pendingInsurance.status == 'rejected') {
-                document.getElementById('claimColor').classList.add('error');
+                document.getElementById('claimStatus').classList.add('error');
                 document.getElementById('claimIcon').textContent = '✕';
-                document.getElementById('claimBtn').style.display = 'none';
-                document.getElementById('claimMessage').innerText = 'Claim Rejected by Staff001 "Dave Chan", at "Just Now"';
+                document.getElementById('RejectClaimBtn').style.display = 'none';
+                document.getElementById('AcceptClaimBtn').style.display = 'none';
+                document.getElementById('claimMessage').innerText = 'Claim Rejected by you, at "Just Now"';
             }
-
-            if(!(pendingInsurance.paid && pendingInsurance.status == 'pending')){
-                document.getElementById('payBtn').disabled = true;
-                document.getElementById('payBtn').style.backgroundColor = 'gray';
-                document.getElementById('payBtn').innerText = "Paid";
-                document.getElementById('paidTime').textContent = "Paid at: Just Now";
-            }else{
-                document.getElementById('claimBtn').style.display = 'none';
-            }
-
-            if(pendingInsurance.status == 'claim'){
-                document.getElementById('claimBtn').style.display = 'none';
-                document.getElementById('claimColor').classList.add('active')
-                document.getElementById('claimMessage').innerText = 'Claim Submitted by you, at "Just Now"';
-            }
-
-
 
             document.getElementById('createAt').textContent = "Create at: " + formatDate(pendingInsurance.createdAt);
 
@@ -770,6 +530,18 @@
                 window.location.href = 'ordersIndex.html';
                 return;
             }
+
+            if(pendingInsurance.status == 'claim'){
+                document.getElementById('claimStatus').classList.add('active')
+                document.getElementById('RejectClaimBtn').style.display = 'block';
+                document.getElementById('AcceptClaimBtn').style.display = 'block';
+                document.getElementById('claimMessage').innerText = "Claim Requested by customer, at 'Just Now'";
+            }else{
+                document.getElementById('RejectClaimBtn').style.display = 'none';
+                document.getElementById('AcceptClaimBtn').style.display = 'none';
+            }
+
+
         }
 
 
@@ -914,12 +686,40 @@
         }
     });
 
-
+    function cancelInsurance() {
+        const cancelModal = new EditModal();
+        cancelModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Cancellation';
+        cancelModal.modal.querySelector('.orderdetail-modal-message').textContent = 'Are you sure you approve of canceling this insurance policy?';
+        cancelModal.modal.querySelector('.confirm').onclick = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+            pendingInsurance = {...pendingInsurance, status: 'cancelled'};
+            localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
+            location.reload();
+        };
+        cancelModal.show();
+    }
 
     function formatDate(dateString) {
         if (!dateString) return 'N/A';
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Date(dateString).toLocaleDateString('en-US', options);
+    }
+
+    function updateStatus() {
+        const confirmModal = new EditModal();
+        confirmModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Approval';
+        confirmModal.modal.querySelector('.orderdetail-modal-message').textContent = 'Are you sure you want to approve this policy?';
+        confirmModal.modal.querySelector('.confirm').onclick = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+            pendingInsurance = { ...pendingInsurance, status: 'approved' };
+            localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
+            location.reload();
+        };
+        confirmModal.show();
     }
 
     function findInsuranceById(id) {
@@ -936,23 +736,6 @@
         return methods[method] || method;
     }
 
-    function claimInsurance(){
-        const claimModal = new EditModal();
-        claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Claim';
-        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'Are you sure you want to claim this policy?';
-
-        claimModal.modal.querySelector('.confirm').onclick = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('id');
-            let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
-            pendingInsurance = { ...pendingInsurance, status: 'claim' };
-            localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
-            location.reload();
-        };
-
-        claimModal.show();
-    }
-
     function formatDrivingExperience(experience) {
         const experiences = {
             'more_than_5_years': 'More than 5 years',
@@ -960,14 +743,6 @@
             'within_1_year': 'Less than 1 year'
         };
         return experiences[experience] || experience;
-    }
-
-    function changePaymentStatus(){
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderId = urlParams.get('id');
-        const pendingInsurance = findInsuranceById(orderId);
-        pendingInsurance.paid = true;
-        localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
     }
 
     function findNewestPendingInsurance() {
@@ -1025,6 +800,21 @@
             word.charAt(0).toUpperCase() + word.slice(1)
         ).join(' ');
     }
+
+    function claimInsurance(status){
+        const confirmModal = new EditModal();
+confirmModal.modal.querySelector('.orderdetail-modal-title').textContent = `Confirm ${status.charAt(0).toUpperCase() + status.slice(1)}`;
+confirmModal.modal.querySelector('.orderdetail-modal-message').textContent = `Are you sure you want to ${status} this policy?`;
+confirmModal.modal.querySelector('.confirm').onclick = () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('id');
+    let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+    pendingInsurance = { ...pendingInsurance, status: status === 'accept' ? 'accepted' : 'rejected' };
+    localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
+    location.reload();
+};
+confirmModal.show();
+    }
 </script>
 <body>
 <div class="navbar">
@@ -1058,7 +848,7 @@
                     <p id="referenceNumber"></p>
                 </div>
                 <h2>Application Status</h2>
-                <div id="timeLine"  class="status-timeline">
+                <div id="timeLine" class="status-timeline">
                     <div class="status-step completed">
                         <div class="step-icon">✓</div>
                         <div class="step-content">
@@ -1074,11 +864,13 @@
                             <div id="statusBtnOrtxt"></div>
                         </div>
                     </div>
-                    <div id="claimColor" class="status-step">
+                    <div id="claimStatus" class="status-step">
                         <div id="claimIcon" class="step-icon">○</div>
                         <div class="step-content">
-                            <h3>Claim the insurance</h3>
-                            <button id="claimBtn" onclick="claimInsurance()" class="back-button" style="background-color: green;">Claim</button>
+                            <h3>Claim By Customer</h3>
+                            <p>
+                            <button id="AcceptClaimBtn" onclick="claimInsurance('accept')" class="back-button" style="background-color: green;">Accept</button>
+                                <button id="RejectClaimBtn" onclick="claimInsurance('reject')" class="back-button" style="background-color: red;">Reject</button></p>
                             <span class="timestamp" id="claimMessage"></span>
                         </div>
                     </div>
@@ -1113,13 +905,6 @@
     <div class="details-container">
 
         <h2>Application Details</h2>
-        <button id="cancelBtn" class="back-button" style="background-color: red">
-            Cancel Your Insurance
-        </button><br>
-        <button id="payBtn" class="back-button" style="background-color: green">
-            Pay
-        </button><br>
-        <span id="paidTime" class="timestamp"></span>
         <div class="details-grid">
             <div class="detail-section">
                 <h3>Insurance Plan</h3>
@@ -1141,74 +926,6 @@
     </div>
 
 
-</div>
-
-<div class="payment-modal" id="paymentModal">
-    <div class="payment-modal-content">
-        <span class="payment-modal-close">&times;</span>
-        <div class="payment-header">
-            <h2>Payment Details</h2>
-            <div class="card-types">
-                <img src="../../../resources/image/visa.svg" alt="Visa" class="card-icon">
-                <img src="../../../resources/image/mastercard.svg" alt="Mastercard" class="card-icon">
-                <img src="../../../resources/image/unionpay.svg" alt="UnionPay" class="card-icon">
-            </div>
-        </div>
-
-        <form id="paymentForm" class="payment-form">
-            <div class="form-group">
-                <label for="cardName">Cardholder Name *</label>
-                <input type="text" id="cardName" placeholder="Name on card" required>
-            </div>
-
-            <div class="form-group">
-                <label for="cardNumber">Card Number *</label>
-                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group half">
-                    <label for="expiryDate">Expiry Date *</label>
-                    <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
-                </div>
-                <div class="form-group half">
-                    <label for="cvv">Security Code (CVV) *</label>
-                    <div class="cvv-container">
-                        <input type="text" id="cvv" placeholder="000" maxlength="3" required>
-                        <div class="cvv-help">?</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="payment-info">
-                <p>Payment will be made to:</p>
-                <p class="company">Legend Motor Limited</p>
-                <p class="address">xxxx, Hong Kong</p>
-            </div>
-
-            <div class="consent">
-                <input type="checkbox" id="consent" required>
-                <label for="consent">I hereby authorize Legend Motor Limited to charge my designated credit card account for the insurance premium, premium levy, and HKIB levy.</label>
-            </div>
-
-            <button onclick="changePaymentStatus()" type="submit" class="submit-button" id="paymentButton" disabled>Complete Payment</button>F
-        </form>
-    </div>
-</div>
-
-<div id="cancelModal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h1>Confirm Cancellation</h1>
-        <p style="text-align: left">
-            You can cancel your policy with Legend Motor Company at any time by providing a <strong>7-day advance notice</strong>, as long as no claims have been made during the current insurance period and the current Certificate of Insurance is returned before the cancellation date. A <strong>pro-rata refund</strong> of the premium will be issued for the unused coverage period, subject to a <strong>minimum non-refundable premium of HKD 500</strong> (excluding surcharges).
-        </p>
-
-        <p><u>Please waiting for our staff to process your request of cancel</u></p>
-        <button id="closeModalBtn" class="back-button">Close</button>
-        <button id="confirmCancelBtn"  class="back-button" style="background-color: red">Cancel</button>
-
-    </div>
 </div>
 
 </body>

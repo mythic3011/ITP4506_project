@@ -102,6 +102,22 @@
         background-color: #4CAF50;
     }
 
+    .status-approved {
+        background-color: #4CAF50;
+    }
+
+    .status-claim {
+        background-color: #FFA726;
+    }
+
+    .status-accepted {
+        background-color: #4CAF50;
+    }
+
+    .status-rejected {
+        background-color: #EF5350;
+    }
+
     .status-pending {
         background-color: #FFA726;
     }
@@ -281,6 +297,10 @@
                 <span class="detail-value">${effectiveDate}</span>
             </div>
             <div class="detail-row">
+                <span class="detail-label">Policy End Date</span>
+                <span class="detail-value">${formatDate(policy.customerData.mainDriver.policyEndDate)}</span>
+            </div>
+            <div class="detail-row">
                 <span class="detail-label">Fees</span>
                 <span class="detail-value">${policy.policyData.checkoutPrice}</span>
             </div>
@@ -299,17 +319,33 @@
         return div;
     }
 
+    function formatDate(dateString) {
+        if (!dateString) return 'N/A';
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        const date = new Date(dateString);
+        date.setDate(date.getDate() + 1); // Add one day to the date
+        return date.toLocaleDateString('en-US', options);
+    }
+
     function getStatusBadge(status) {
         const statusClasses = {
             active: 'status-active',
             pending: 'status-pending',
-            expired: 'status-expired'
+            expired: 'status-expired',
+            approved: 'status-approved',
+            claim: 'status-claim',
+            accepted: 'status-accepted',
+            rejected: 'status-rejected'
         };
 
         const statusText = {
             active: 'Active',
             pending: 'Pending',
-            expired: 'Expired'
+            expired: 'Expired',
+            approved: 'Approved',
+            claim: 'Claim',
+            accepted: 'Accepted',
+            rejected: 'Rejected'
         };
 
         return `

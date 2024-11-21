@@ -90,6 +90,22 @@
     background-color: #4CAF50;
 }
 
+.status-approved {
+    background-color: #4CAF50;
+}
+
+.status-claim {
+    background-color: #FFA726;
+}
+
+.status-accepted {
+    background-color: #4CAF50;
+}
+
+.status-rejected {
+    background-color: #EF5350;
+}
+
 .status-pending {
     background-color: #FFA726;
 }
