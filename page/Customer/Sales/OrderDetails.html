@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -37,91 +38,99 @@
         }
     </style>
 </head>
+
 <body class="bg-gray-50 font-sans">
-<header class="navbar bg-white shadow-md sticky top-0 z-10">
-</header>
-<div id="notification-container" class="fixed top-4 right-4 z-50"></div>
-<main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8" id="Checkout">
-    <div >
-        <h1 class="text-3xl font-bold mb-6" style="padding: 0.5rem 0.5rem 0.5rem 0.5rem;">Order Details</h1>
-        <div class="mb-4 flex flex-col sm:flex-row gap-6">
-            <!-- Order Summary -->
-            <div id="orderSummaryContainer" class="mb-6 p-4 bg-white shadow rounded-md">
-                <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
-                <table class="min-w-full divide-y divide-gray-200">
-                    <tbody id="orderSummary"></tbody>
-                </table>
+    <header class="navbar bg-white shadow-md sticky top-0 z-10">
+    </header>
+    <div id="notification-container" class="fixed top-4 right-4 z-50"></div>
+    <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8" id="OrderDetails">
+        <div class="container">
+            <h1 class="text-3xl font-bold mb-6" style="padding: 0.5rem 0.5rem 0.5rem 0.5rem;">Order Details</h1>
+            <div class="mb-4 flex flex-col sm:flex-row gap-6">
+                <!-- Order Summary -->
+                <div id="orderSummaryContainer" class="mb-6 p-4 bg-white shadow rounded-md">
+                    <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <tbody id="orderSummary"></tbody>
+                    </table>
 
-                <!-- Summary Totals -->
-                <div id="summaryTotals" class="mt-4">
-                    <p id="subtotalAmount" class=""></p>
-                    <p id="totalAmount" class=""></p>
-                    <p id="DepositAmount" class=""></p>
-                    <p id="EstimatedDelivery" class=""></p>
-                </div>
-                <!-- Financing Options Section -->
-                <div id='financingOptions' class='mt10 border-t border-gray-200'>
-                    <label class='block text-sm font-medium text-gray700'>Selected Financing
-                        Option:</label>
-                    <span class='mt-1 block text-sm text-gray700' id="financingMethod-Selected">Credit Card</span>
-                </div>
-
-                <!-- User information -->
-                <div id='userName' class='mt10 border-t border-gray-200'>
-                    <label for='fullName' class='block text-sm font-medium text-gray700'>Name:</label>
-                    <span class='mt-1 block text-sm text-gray700' id="fullName">LMC User</span>
-                </div>
-                <div id='userEmail' class='mt10 border-t border-gray-200'>
-                    <label for='email' class='block text-sm font-medium text-gray700'>Email:</label>
-                    <span class='mt-1 block text-sm text-gray700' id="email">user@example.com</span>
-                </div>
-                <div id='userPhone' class='mt10 border-t border-gray-200'>
-                    <label for='phone' class='block text-sm font-medium text-gray700'>Phone:</label>
-                    <span class='mt-1 block text-sm text-gray700' id="phone">+852 12345678</span>
-                </div>
-                <div id='userAddress' class='mt10 border-t border-gray-200'>
-                    <label for='address' class='block text-sm font-medium text-gray700'>Address:</label>
-                    <span class='mt-1 block text-sm text-gray700' id="address">
-                    Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong
-                </span>
-                </div>
-            </div>
-        </div>
-    </div>
-</main>
-<footer class="border-t border-gray-200">
-    <div class="container mx-auto px-4 py-8">
-        <div class="flex flex-wrap items-center justify-between md:flex-no-wrap">
-            <div class="flex items-center mb-6 md:mb-0">
-                <span class="text-sm text-gray-500 ">Copyright &copy; 2024 Legend Motor Company</span>
-            </div>
-            <div class="flex items-center justify-between space-x-6 md:space-x-12 ms:hidden">
-                <div class="flex items-center justify-between space-x-6">
-                    <div class="flex items-center">
-                        <a class="text-gray-600 " href="#">About Us</a>
-                        <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                        <a class="text-gray-600 " href="#">Contact Us</a>
-                        <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                        <a class="text-gray-600 " href="#">Order Tracking</a>
-                        <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                        <a class="text-gray-600 " href="#">Returns</a>
-                        <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                        <a class="text-gray-600 " href="#">FAQ</a>
+                    <!-- Summary Totals -->
+                    <div id="summaryTotals" class="mt-4">
+                        <p id="subtotalAmount" class=""></p>
+                        <p id="totalAmount" class=""></p>
+                        <p id="DepositAmount" class=""></p>
+                        <p id="EstimatedDelivery" class=""></p>
                     </div>
-                    <div class="flex items-center">
-                        <a class="text-gray-600 " href="#">Terms of Service</a>
-                        <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                        <a class="text-gray-600 " href="#">Privacy Policy</a>
-                        <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                        <a class="text-gray-600 " href="#">Site Map</a>
-                        <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                        <a class="text-gray-600 " href="#">Contact Us</a>
+                    <!-- Financing Options Section -->
+                    <div id='financingOptions' class='mt10 border-t border-gray-200'>
+                        <label class='block text-sm font-medium text-gray700'>Selected Financing
+                            Option:</label>
+                        <span class='mt-1 block text-sm text-gray700' id="financingMethod-Selected">Credit Card</span>
+                    </div>
+
+                    <!-- User information -->
+                    <div id='userName' class='mt10 border-t border-gray-200'>
+                        <label for='fullName' class='block text-sm font-medium text-gray700'>Name:</label>
+                        <span class='mt-1 block text-sm text-gray700' id="fullName">LMC User</span>
+                    </div>
+                    <div id='userEmail' class='mt10 border-t border-gray-200'>
+                        <label for='email' class='block text-sm font-medium text-gray700'>Email:</label>
+                        <span class='mt-1 block text-sm text-gray700' id="email">user@example.com</span>
+                    </div>
+                    <div id='userPhone' class='mt10 border-t border-gray-200'>
+                        <label for='phone' class='block text-sm font-medium text-gray700'>Phone:</label>
+                        <span class='mt-1 block text-sm text-gray700' id="phone">+852 12345678</span>
+                    </div>
+                    <div id='userAddress' class='mt10 border-t border-gray-200'>
+                        <label for='address' class='block text-sm font-medium text-gray700'>Address:</label>
+                        <span class='mt-1 block text-sm text-gray700' id="address">
+                            Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong
+                        </span>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</footer>
+    </main>
+    <footer class="border-t border-gray-200">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-wrap items-center justify-between md:flex-no-wrap">
+                <div class="flex items-center mb-6 md:mb-0">
+                    <span class="text-sm text-gray-500 ">Copyright &copy; 2024 Legend Motor Company</span>
+                </div>
+                <div class="flex items-center justify-between space-x-6 md:space-x-12 ms:hidden">
+                    <div class="flex items-center justify-between space-x-6">
+                        <div class="flex items-center">
+                            <a class="text-gray-600 " href="#">About Us</a>
+                            <span
+                                class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                            <a class="text-gray-600 " href="#">Contact Us</a>
+                            <span
+                                class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                            <a class="text-gray-600 " href="#">Order Tracking</a>
+                            <span
+                                class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                            <a class="text-gray-600 " href="#">Returns</a>
+                            <span
+                                class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                            <a class="text-gray-600 " href="#">FAQ</a>
+                        </div>
+                        <div class="flex items-center">
+                            <a class="text-gray-600 " href="#">Terms of Service</a>
+                            <span
+                                class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                            <a class="text-gray-600 " href="#">Privacy Policy</a>
+                            <span
+                                class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                            <a class="text-gray-600 " href="#">Site Map</a>
+                            <span
+                                class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                            <a class="text-gray-600 " href="#">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
 <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
@@ -147,5 +156,3 @@
         $('#financingMethod-Selected').text(order.payment.method);
     }
 </script>
-
-

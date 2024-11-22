@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Profile | Legend Motor Company</title>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <link href="../resources/css/profile.css" rel="stylesheet"/>
     <link href="../resources/image/icon-removebg.png" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="../resources/css/main.css">
     <script type="module" src="../resources/js/script.js"></script>

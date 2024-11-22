@@ -1,54 +1,97 @@
+// script.js
 console.log("hello");
 
 $(document).ready(function () {
+    // Navbar items organized by user roles
     const navbarItems = {
-        admin: [{
-            category: 'Dashboard', items: [{name: 'Admin Home', url: '/admin/home'}]
-        }, {
-            category: 'Management',
-            items: [{name: 'Users', url: '../admin/users'}, {name: 'Reports', url: '../admin/reports'}]
-        }], customer: [{
-            category: 'Home', items: [{name: 'Customer Home', url: '/customer/index.html'}]
-        }, {
-            category: 'Vehicles',
-            items: [{name: 'View Vehicles', url: '/vehicles'}, {name: 'Wishlist', url: '/wishlist'}, {
-                name: 'Orders',
-                url: '/orders'
-            }]
-        }, {
-            category: 'Insurance',
-            items: [{name: 'Insurance Info', url: '/insurance'}, {
-                name: 'Apply',
-                url: '/insurance/apply'
-            }, {name: 'Applications', url: '/insurance/applications'}]
-        }], staff: [{
-            category: 'Dashboard', items: [{name: 'Staff Home', url: '/staff/home'}]
-        }, {
-            category: 'Tasks',
-            items: [{name: 'View Tasks', url: '/tasks'}, {name: 'Update Status', url: '/tasks/update'}]
-        }]
+        admin: [
+            {
+                category: 'Dashboard',
+                items: [{ name: 'Admin Home', url: '/page/Admin/index.html' }]
+            },
+            {
+                category: 'Management',
+                items: [
+                    { name: 'Users', url: '/page/Admin/Users.html' },
+                    { name: 'Reports', url: '/page/Admin/Reports.html' }
+                ]
+            }
+        ],
+        customer: [
+            {
+                category: 'Home',
+                items: [{ name: 'Customer Home', url: '/page/Customer/index.html' }]
+            },
+            {
+                category: 'Vehicles',
+                items: [
+                    { name: 'View Vehicles', url: '/page/Customer/Sales/ViewVehicles.html' },
+                    { name: 'Wishlist', url: '/page/Customer/Sales/Wishlist.html' },
+                    { name: 'Orders', url: '/page/Customer/Sales/viewOrderRecord.html' }
+                ]
+            },
+            {
+                category: 'Insurance',
+                items: [
+                    { name: 'Insurance Info', url: '/page/Customer/Insurance/index.html' },
+                    { name: 'Apply', url: '/page/Customer/Insurance/progress.html' },
+                    { name: 'Applications', url: '/page/Customer/Insurance/ordersindex.html' }
+                ]
+            }
+        ],
+        staff: [
+            {
+                category: 'Dashboard',
+                items: [{ name: 'Staff Home', url: '/page/Staff/home.html' }]
+            },
+            {
+                category: 'Tasks',
+                items: [
+                    { name: 'View Tasks', url: '/page/Staff/Tasks/view.html' },
+                    { name: 'Update Status', url: '/page/Staff/Tasks/update.html' }
+                ]
+            }
+        ],
+        common: [
+            {
+                name: 'Profile',
+                url: '/page/profile.html'
+            },
+            {
+                name: 'Logout',
+                url: '/page/logout.html'
+            }
+        ]
     };
 
-    // Function to get user role (replace with actual logic)
+    // Retrieve the user role from localStorage
     function getUserRole() {
-        // Retrieve user role from local storage or default to 'customer'
         return localStorage.getItem('role') || 'customer';
     }
 
-    // Function to get user information (replace with actual logic)
+    // Retrieve user information from localStorage
     function getUserInfo() {
-        // Example user data; replace with actual data retrieval
         return {
-            name: localStorage.getItem('username') || 'User', avatar: localStorage.getItem('avatar') || ''
+            name: localStorage.getItem('username') || 'User',
+            avatar: localStorage.getItem('avatar') || 'U'
         };
     }
 
-    // Function to render the full navbar
+    // Highlight active menu item
+    function highlightActiveMenu() {
+        const currentPath = window.location.pathname;
+        $('nav a').each(function () {
+            if (this.pathname === currentPath) {
+                $(this).addClass('text-blue-500 font-semibold');
+            }
+        });
+    }
+
+    // Render the navbar based on the user role
     function renderNavbar(role) {
         const userInfo = getUserInfo();
         const userFirstLetter = userInfo.name.charAt(0).toUpperCase();
 
-        // Create header
         const header = $(`
             <header class="navbar bg-white shadow-md sticky top-0 z-50">
                 <div class="container mx-auto flex items-center justify-between p-4">
@@ -60,31 +103,28 @@ $(document).ready(function () {
             </header>
         `);
 
-        // Append header to body
         $('body').prepend(header);
 
-        // Render navbar items
         const navbar = $('#navbar');
         const roleItems = navbarItems[role] || [];
 
         roleItems.forEach(category => {
-            // Create category element
             const categoryElem = $(`
                 <div class="relative group">
                     <button class="category-toggle text-gray-700 hover:text-blue-500 focus:outline-none flex items-center">
                         ${category.category}
-                        <svg class="w-4 h-4 ml-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        <svg class="w-4 h-4 ml-1" xmlns="http://www.w3.org/2000/svg"
+                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  stroke-width="2" d="M19 9l-7 7-7-7"/>
                         </svg>
                     </button>
                     <div class="dropdown-menu hidden absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md z-20">
-                        <ul class="py-2">
-                        </ul>
+                        <ul class="py-2"></ul>
                     </div>
                 </div>
             `);
 
-            // Append items to category
             const itemsContainer = categoryElem.find('.dropdown-menu ul');
             category.items.forEach(item => {
                 const itemElem = $(`
@@ -97,15 +137,14 @@ $(document).ready(function () {
                 itemsContainer.append(itemElem);
             });
 
-            // Append category to navbar
             navbar.append(categoryElem);
         });
 
-        // Initialize dropdown functionality
         initializeDropdowns();
+        highlightActiveMenu();
     }
 
-    // Function to create the logo element
+    // Create the logo element
     function createLogo() {
         return `
             <a href="/" class="flex items-center">
@@ -115,104 +154,88 @@ $(document).ready(function () {
         `;
     }
 
-    // Function to create the search bar
+    // Create the search bar element
     function createSearchBar() {
         return `
             <div class="relative flex-grow mx-4">
                 <label for="search-bar-vehicles" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                        stroke="currentColor" class="w-5 h-5">
+                         stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round"
-                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                     </svg>
                 </label>
                 <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
-                    class="border rounded px-10 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300" />
+                       class="border rounded px-10 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300"/>
             </div>
         `;
     }
 
-    // Function to create the user menu
+    // Create the user menu element
     function createUserMenu(firstLetter, userName) {
         return `
             <div class="relative group">
                 <button class="flex items-center gap-2 p-2 bg-gray-100 rounded-md shadow-sm border focus:outline-none"
-                    id="user-menu">
-                    <!-- User Avatar -->
-                    <span
-                        class="user-avatar bg-blue-500 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold">
+                        id="user-menu">
+                    <span class="user-avatar bg-blue-500 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold">
                         ${firstLetter}
                     </span>
-                    <!-- Username -->
                     <span class="user-name text-gray-800 font-medium hidden md:inline">${userName}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600"
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                         fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M19 9l-7 7-7-7" />
+                              d="M19 9l-7 7-7-7"/>
                     </svg>
                 </button>
                 <div id="user-Submenu"
-                    class="dropdown-menu hidden absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md z-30">
+                     class="dropdown-menu hidden absolute right-0 mt-2 w-40 bg-white shadow-lg rounded-md z-30">
                     <ul class="py-2">
-                        <li>
-                            <a href="../profile.html"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="../logout.html"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
-                                Logout
-                            </a>
-                        </li>
+                        ${createUserMenuItems()}
                     </ul>
                 </div>
             </div>
         `;
     }
 
-    // Function to initialize dropdown functionality
+    function createUserMenuItems() {
+        return navbarItems.common.map(item => `
+            <li>
+                <a href="${item.url}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">
+                    ${item.name}
+                </a>
+            </li>
+        `).join('');
+    }
+
+    // Initialize dropdown menus
     function initializeDropdowns() {
-        // Toggle category dropdown
-        $('.category-toggle').on('click', function (e) {
+        // Toggle category dropdowns
+        $(document).on('click', '.category-toggle', function (e) {
             e.stopPropagation();
-            const dropdown = $(this).next('.dropdown-menu');
-            $('.dropdown-menu').not(dropdown).hide(); // Close other dropdowns
-            dropdown.toggle();
+            const $dropdown = $(this).next('.dropdown-menu');
+            $('.dropdown-menu').not($dropdown).hide();
+            $dropdown.toggle();
         });
 
         // Toggle user submenu
-        $('#user-menu').on('click', function (e) {
+        $(document).on('click', '#user-menu', function (e) {
             e.stopPropagation();
             $('#user-Submenu').toggle();
         });
 
-        // Close all dropdowns when clicking outside
+        // Hide dropdowns when clicking outside
         $(document).on('click', function () {
             $('.dropdown-menu').hide();
         });
-
-        // Prevent closing when clicking inside dropdown
-        $('.dropdown-menu').on('click', function (e) {
-            e.stopPropagation();
-        });
     }
 
-    // Render the navbar on page load
+    // Get the user role and render the navbar
     const userRole = getUserRole();
     renderNavbar(userRole);
 
-    // auto add style link to head
-    const stylelinkcssfile = document.createElement('link');
-    stylelinkcssfile.rel = 'stylesheet';
-    stylelinkcssfile.href = '../../resources/css/main.css';
-    document.head.appendChild(stylelinkcssfile);
-
-    // auto add icon link to head and replace the default icon and current path of page to find the icon path
-    //     <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon"/>
-    // const iconlinkcssfile = document.createElement('link');
-    // iconlinkcssfile.rel = 'icon';
-    // iconlinkcssfile.href = window.location.href.replace('page/', 'resources/image/icon_dark.png');
-    // document.head.appendChild(iconlinkcssfile);
+    // Append the main CSS file to the document head
+    $('<link>', {
+        rel: 'stylesheet',
+        href: '../../resources/css/main.css'
+    }).appendTo('head');
 });

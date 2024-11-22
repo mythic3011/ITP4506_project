@@ -1,108 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Order Records | Legend Motor Company</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <link href="../../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon"/>
+    <link href="../../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon" />
     <link rel="stylesheet" href="../../../resources/css/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
     <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
     <script src="../../../resources/js/Sales/Wishlist.js"></script>
     <script src="../../../resources/js/Sales/Checkout.js"></script>
+    <script src="../../../resources/js/script.js"></script>
 </head>
+
 <body class="bg-gray-50 font-sans">
-<header class="navbar bg-white shadow-md sticky top-0 z-10">
-</header>
+    <header class="navbar bg-white shadow-md sticky top-0 z-10">
+    </header>
+    <main class="flex flex-col flex-grow p-6 overflow-y-auto">
+        <div class="flex flex-col flex-grow p-6 overflow-y-auto">
+            <main class="">
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Order Records</h1>
+                    <div class="flex items-center">
+                        <label for="sort-select" class="mr-2 text-sm text-gray-700 dark:text-gray-300">Sort by:</label>
+                        <select id="sort-select"
+                            class="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring focus:ring-blue-500">
+                            <option value="">Select...</option>
+                            <option value="orderId">Order ID</option>
+                            <option value="status">Status</option>
+                            <option value="">Expected Delivery Date</option>
+                            <option value="">Order Date</option>
+                            <option value="">Total Amount</option>
+                        </select>
 
-<div class="flex flex-col flex-grow p-6 overflow-y-auto">
-    <main class="">
-        <div class="flex justify-between items-center mb-4">
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Order Records</h1>
-            <div class="flex items-center">
-                <label for="sort-select" class="mr-2 text-sm text-gray-700 dark:text-gray-300">Sort by:</label>
-                <select id="sort-select"
-                        class="bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-md py-2 px-4 focus:outline-none focus:ring focus:ring-blue-500">
-                    <option value="">Select...</option>
-                    <option value="orderId">Order ID</option>
-                    <option value="status">Status</option>
-                    <option value="">Expected Delivery Date</option>
-                    <option value="">Order Date</option>
-                    <option value="">Total Amount</option>
-                </select>
-
-                <!-- Search Bar -->
-                <input type="text" id="search-bar-orders" placeholder="Search Order Records..."
-                       class="border rounded px-4 py-1 ml-2"/>
-                <button id='search-button' class='bg-blue-500 text-white rounded px-4 py-[6px] ml-[6px]'>Search</button>
-            </div>
-        </div>
-
-        <!-- Total Orders Count -->
-        <p class='mb-[16px] text-gray-[700] dark:text-gray-[300]'>Total Orders:
-            <span id='total-orders' class='font-bold'>0</span></p>
-
-        <!-- Loading Spinner -->
-        <div id='loadingSpinner' class='hidden justify-center items-center my-[16px]'>
-            <div class='animate-spin rounded-full h-[40px] w-[40px] border-b-[3px] border-blue-[500]'></div>
-        </div>
-
-        <!-- Orders Table -->
-        <div class='overflow-x-auto bg-white dark:bg-gray-[800] shadow-md rounded-lg'>
-            <table id='order-table' class='min-w-full divide-y divide-gray-[200] dark:divide-gray-[700]'>
-                <!-- Table Header -->
-                <thead class='bg-gray-[50] dark:bg-gray-[700]'>
-                <tr>
-                    <!-- Table Columns -->
-                    <!-- Each th represents a column in the table -->
-                </tr>
-                </thead>
-                <!-- Table Body -->
-                <tbody id='order-body'
-                       class='bg-white dark:bg-gray-[800] divide-y divide-gray-[200] dark:divide-gray-[700]'>
-                <!-- Order rows will be dynamically inserted here -->
-                </tbody>
-            </table>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class='border-t border-gray-200 text-center py-16 mt-32'>
-        <div class="container mx-auto px-4 py-8">
-            <div class="flex flex-wrap items-center justify-between md:flex-no-wrap">
-                <div class="flex items-center mb-6 md:mb-0">
-                    <span class="text-sm text-gray-500 ">Copyright &copy; 2024 Legend Motor Company</span>
+                        <!-- Search Bar -->
+                        <input type="text" id="search-bar-orders" placeholder="Search Order Records..."
+                            class="border rounded px-4 py-1 ml-2" />
+                        <button id='search-button'
+                            class='bg-blue-500 text-white rounded px-4 py-[6px] ml-[6px]'>Search</button>
+                    </div>
                 </div>
-                <div class="flex items-center justify-between space-x-6 md:space-x-12 ms:hidden">
-                    <div class="flex items-center justify-between space-x-6">
-                        <div class="flex items-center">
-                            <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                            <a class="text-gray-600 " href="#">About Us</a>
-                            <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                            <a class="text-gray-600 " href="#">Contact Us</a>
-                            <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                            <a class="text-gray-600 " href="#">Order Tracking</a>
-                            <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                            <a class="text-gray-600 " href="#">Returns</a>
-                            <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                            <a class="text-gray-600 " href="#">FAQ</a>
+
+                <!-- Total Orders Count -->
+                <p class='mb-[16px] text-gray-[700] dark:text-gray-[300]'>Total Orders:
+                    <span id='total-orders' class='font-bold'>0</span>
+                </p>
+
+                <!-- Loading Spinner -->
+                <div id='loadingSpinner' class='hidden justify-center items-center my-[16px]'>
+                    <div class='animate-spin rounded-full h-[40px] w-[40px] border-b-[3px] border-blue-[500]'></div>
+                </div>
+
+                <!-- Orders Table -->
+                <div class='overflow-x-auto bg-white dark:bg-gray-[800] shadow-md rounded-lg'>
+                    <table id='order-table' class='min-w-full divide-y divide-gray-[200] dark:divide-gray-[700]'>
+                        <!-- Table Header -->
+                        <thead class='bg-gray-[50] dark:bg-gray-[700]'>
+                            <tr>
+                                <!-- Table Columns -->
+                                <!-- Each th represents a column in the table -->
+                            </tr>
+                        </thead>
+                        <!-- Table Body -->
+                        <tbody id='order-body'
+                            class='bg-white dark:bg-gray-[800] divide-y divide-gray-[200] dark:divide-gray-[700]'>
+                            <!-- Order rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+            <!-- Footer -->
+            <footer class='border-t border-gray-200 text-center py-16 mt-32'>
+                <div class="container mx-auto px-4 py-8">
+                    <div class="flex flex-wrap items-center justify-between md:flex-no-wrap">
+                        <div class="flex items-center mb-6 md:mb-0">
+                            <span class="text-sm text-gray-500 ">Copyright &copy; 2024 Legend Motor Company</span>
                         </div>
-                        <div class="flex items-center">
-                            <a class="text-gray-600 " href="#">Terms of Service</a>
-                            <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                            <a class="text-gray-600 " href="#">Privacy Policy</a>
-                            <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                            <a class="text-gray-600 " href="#">Site Map</a>
-                            <span class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
-                            <a class="text-gray-600 " href="#">Contact Us</a>
+                        <div class="flex items-center justify-between space-x-6 md:space-x-12 ms:hidden">
+                            <div class="flex items-center justify-between space-x-6">
+                                <div class="flex items-center">
+                                    <span
+                                        class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                    <a class="text-gray-600 " href="#">About Us</a>
+                                    <span
+                                        class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                    <a class="text-gray-600 " href="#">Contact Us</a>
+                                    <span
+                                        class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                    <a class="text-gray-600 " href="#">Order Tracking</a>
+                                    <span
+                                        class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                    <a class="text-gray-600 " href="#">Returns</a>
+                                    <span
+                                        class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                    <a class="text-gray-600 " href="#">FAQ</a>
+                                </div>
+                                <div class="flex items-center">
+                                    <a class="text-gray-600 " href="#">Terms of Service</a>
+                                    <span
+                                        class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                    <a class="text-gray-600 " href="#">Privacy Policy</a>
+                                    <span
+                                        class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                    <a class="text-gray-600 " href="#">Site Map</a>
+                                    <span
+                                        class="bg-gray-200   rounded-full mx-3 h-5 w-5 opacity-20 group-hover:opacity-0"></span>
+                                    <a class="text-gray-600 " href="#">Contact Us</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </footer>
         </div>
-    </footer>
-</div>
 </body>
 <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
 <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
@@ -126,14 +138,14 @@
                 model: "Camry",
                 color: "Blue",
                 upgrades: [
-                    {name: "Engine", price: 25999},
-                    {name: "Transmission", price: 12999},
-                    {name: "Suspension", price: 7999},
-                    {name: "Brakes", price: 4999}
+                    { name: "Engine", price: 25999 },
+                    { name: "Transmission", price: 12999 },
+                    { name: "Suspension", price: 7999 },
+                    { name: "Brakes", price: 4999 }
                 ],
                 insurancePlans: [
-                    {planName: "Basic Coverage", annualPremium: 1298, coverageLimit: 88253},
-                    {planName: "Comprehensive Coverage", annualPremium: 1898, coverageLimit: 66059}
+                    { planName: "Basic Coverage", annualPremium: 1298, coverageLimit: 88253 },
+                    { planName: "Comprehensive Coverage", annualPremium: 1898, coverageLimit: 66059 }
                 ],
                 price: 25999
             },
@@ -159,14 +171,14 @@
                 model: "Accord",
                 color: "Red",
                 upgrades: [
-                    {name: "Engine", price: 22999},
-                    {name: "Transmission", price: 14999},
-                    {name: "Suspension", price: 6999},
-                    {name: "Brakes", price: 3999}
+                    { name: "Engine", price: 22999 },
+                    { name: "Transmission", price: 14999 },
+                    { name: "Suspension", price: 6999 },
+                    { name: "Brakes", price: 3999 }
                 ],
                 insurancePlans: [
-                    {planName: "Basic Coverage", annualPremium: 1198, coverageLimit: 116163},
-                    {planName: "Comprehensive Coverage", annualPremium: 1798, coverageLimit: 77804}
+                    { planName: "Basic Coverage", annualPremium: 1198, coverageLimit: 116163 },
+                    { planName: "Comprehensive Coverage", annualPremium: 1798, coverageLimit: 77804 }
                 ],
                 price: 28999
             },
@@ -237,7 +249,7 @@
     // Function to format time
     function formatTime(dateString) {
         const time = new Date(dateString);
-        return time.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'}); // Format time as HH:MM
+        return time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); // Format time as HH:MM
     }
 
     // Function to get status class for styling

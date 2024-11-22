@@ -39,4 +39,16 @@ $(document).ready(function () {
     $('#user-Submenu').on('mouseleave', function () {
         $(this).stop(true, true).fadeOut(200);
     });
+
+    // change the username-name text and avatar when loading the page
+    const user = localStorage.getItem('username');
+    const UserInfo = JSON.parse(localStorage.getItem('orders_user'));
+    if (user) {
+        $('#username-name').text(user);
+        $('#username-avatar').text(getFirstLetter(user));
+    }
+
+    function getFirstLetter(name) {
+        return name.charAt(0).toUpperCase();
+    }
 });

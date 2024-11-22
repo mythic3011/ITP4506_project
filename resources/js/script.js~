@@ -1,25 +1,27 @@
 console.log("hello");
-
 $(document).ready(function () {
     const navbarItems = {
         admin: [{
-            category: 'Dashboard', items: [{name: 'Admin Home', url: '/admin/home'}]
+            category: 'Dashboard', items: [{name: 'Admin Home', url: pageFiles['/page/Customer/index.html'].html}]
         }, {
             category: 'Management',
-            items: [{name: 'Users', url: '../admin/users'}, {name: 'Reports', url: '../admin/reports'}]
+            items: [{name: 'Users', url: pageFiles['/Sales/viewOrderRecord.html'].html}, {
+                name: 'Reports',
+                url: pageFiles['/Sales/Wishlist.html'].html
+            }]
         }], customer: [{
-            category: 'Home', items: [{name: 'Customer Home', url: '/customer/index.html'}]
+            category: 'Home', items: [{name: 'Customer Home', url: pageFiles['/page/Customer/index.html'].html}]
         }, {
             category: 'Vehicles',
-            items: [{name: 'View Vehicles', url: '/vehicles'}, {name: 'Wishlist', url: '/wishlist'}, {
-                name: 'Orders',
-                url: '/orders'
+            items: [{
+                name: 'View Vehicles',
+                url: pageFiles['/page/Customer/Sales/ViewVehicles.html'].html
+            }, {name: 'Wishlist', url: pageFiles['/Sales/Wishlist.html'].html}, {
+                name: 'Orders', url: pageFiles['/Sales/viewOrderRecord.html'].html
             }]
         }, {
-            category: 'Insurance',
-            items: [{name: 'Insurance Info', url: '/insurance'}, {
-                name: 'Apply',
-                url: '/insurance/apply'
+            category: 'Insurance', items: [{name: 'Insurance Info', url: '/insurance'}, {
+                name: 'Apply', url: '/insurance/apply'
             }, {name: 'Applications', url: '/insurance/applications'}]
         }], staff: [{
             category: 'Dashboard', items: [{name: 'Staff Home', url: '/staff/home'}]
@@ -29,10 +31,112 @@ $(document).ready(function () {
         }]
     };
 
+    const pageFiles = {
+        '/page/Customer/index.html': {
+            html: '/page/Customer/index.html',
+            js: '/resources/js/Customer/index.js',
+            css: '/resources/css/Customer/index.css',
+            role: 'customer'
+        },
+        '/page/Customer/Sales/ViewVehicles.html': {
+            html: '/page/Customer/Sales/ViewVehicles.html',
+            js: '/resources/js/Sales/ViewVehicles.js',
+            css: '/resources/css/Sales/ViewVehicles.css'
+            role: 'customer'
+        },
+        '/page/Customer/Sales/Wishlist.html': {
+            html: '/page/Customer/Sales/Wishlist.html',
+            js: '/resources/js/Sales/Wishlist.js',
+            css: '/resources/css/Sales/Wishlist.css',
+            role: 'customer'
+        },
+        '/page/Customer/Sales/viewOrderRecord.html': {
+            html: '/page/Customer/Sales/viewOrderRecord.html',
+            js: '/resources/js/Sales/viewOrderRecord.js',
+            css: '/resources/css/Sales/viewOrderRecord.css',
+            role: 'customer'
+        },
+        '/page/Customer/Insurance/index.html': {
+            html: '/page/Customer/Insurance/index.html',
+            js: '/resources/js/Customer/Insurance/index.js',
+            css: '/resources/css/Customer/Insurance/index.css'
+        },
+        '/page/Customer/Insurance/progress.html': {
+            html: '/page/Customer/Insurance/progress.html',
+            js: '/resources/js/Customer/Insurance/progress.js',
+            css: '/resources/css/Customer/Insurance/progress.css'
+        },
+        '/page/Customer/Insurance/ordersIndex.html': {
+            html: '/page/Customer/Insurance/ordersIndex.html',
+            js: '/resources/js/Customer/Insurance/ordersIndex.js',
+            css: '/resources/css/Customer/Insurance/ordersIndex.css'
+        },
+        '/page/Customer/Insurance/apply.html': {
+            html: '/page/Customer/Insurance/apply.html',
+            js: '/resources/js/Customer/Insurance/apply.js',
+            css: '/resources/css/Customer/Insurance/apply.css'
+        },
+        '/page/Customer/Insurance/checkout.html': {
+            html: '/page/Customer/Insurance/checkout.html',
+            js: '/resources/js/Customer/Insurance/checkout.js',
+            css: '/resources/css/Customer/Insurance/checkout.css'
+        },
+        '/page/Customer/Insurance/estimate.html': {
+            html: '/page/Customer/Insurance/estimate.html',
+            js: '/resources/js/Customer/Insurance/estimate.js',
+            css: '/resources/css/Customer/Insurance/estimate.css'
+        },
+        '/page/Customer/Insurance/orders.html': {
+            html: '/page/Customer/Insurance/orders.html',
+            js: '/resources/js/Customer/Insurance/orders.js',
+            css: '/resources/css/Customer/Insurance/orders.css'
+        },
+        '/page/Customer/Sales/ViewDetailsNRequest.html': {
+            html: '/page/Customer/Sales/ViewDetailsNRequest.html',
+            js: '/resources/js/Sales/ViewDetailsNRequest.js',
+            css: '/resources/css/Sales/ViewDetailsNRequest.css'
+        },
+        '/page/Customer/Sales/OrderDetails.html': {
+            html: '/page/Customer/Sales/OrderDetails.html',
+            js: '/resources/js/Sales/OrderDetails.js',
+            css: '/resources/css/Sales/OrderDetails.css'
+        },
+        '/page/Customer/Sales/Checkout.html': {
+            html: '/page/Customer/Sales/Checkout.html',
+            js: '/resources/js/Sales/Checkout.js',
+            css: '/resources/css/Sales/Checkout.css'
+        },
+        '/page/Customer/Sales/Estimate.html': {
+            html: '/page/Customer/Sales/Estimate.html',
+            js: '/resources/js/Sales/Estimate.js',
+            css: '/resources/css/Sales/Estimate.css'
+        },
+        '/page/Customer/Sales/Orders.html': {
+            html: '/page/Customer/Sales/Orders.html',
+            js: '/resources/js/Sales/Orders.js',
+            css: '/resources/css/Sales/Orders.css'
+        },
+        '/page/Customer/Sales/ViewOrderRecord.html': {
+            html: '/page/Customer/Sales/ViewOrderRecord.html',
+            js: '/resources/js/Sales/ViewOrderRecord.js',
+            css: '/resources/css/Sales/ViewOrderRecord.css'
+        }
+    };
+    
     // Function to get user role (replace with actual logic)
     function getUserRole() {
         // Retrieve user role from local storage or default to 'customer'
         return localStorage.getItem('role') || 'customer';
+    }
+
+    // Function to get current page path
+    function getPagePath() {
+        return window.location.pathname;
+    }
+
+    // Function to check if a page path exists
+    function pagePathExists(path) {
+        return getPagePath().includes(path);
     }
 
     // Function to get user information (replace with actual logic)
@@ -211,8 +315,8 @@ $(document).ready(function () {
 
     // auto add icon link to head and replace the default icon and current path of page to find the icon path
     //     <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon"/>
-    const iconlinkcssfile = document.createElement('link');
-    iconlinkcssfile.rel = 'icon';
-    iconlinkcssfile.href = window.location.href.replace('page/', 'resources/image/icon_dark.png');
-    document.head.appendChild(iconlinkcssfile);
+    // const iconlinkcssfile = document.createElement('link');
+    // iconlinkcssfile.rel = 'icon';
+    // iconlinkcssfile.href = window.location.href.replace('page/', 'resources/image/icon_dark.png');
+    // document.head.appendChild(iconlinkcssfile);
 });
