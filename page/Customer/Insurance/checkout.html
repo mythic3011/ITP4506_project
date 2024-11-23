@@ -100,6 +100,16 @@
             inputs.forEach(input => input.disabled = true);
         }
 
+        if(localStorage.getItem('editMode') == 'true' || localStorage.getItem('editMode') == 'check'){
+            const editOrderId = localStorage.getItem('editOrderId');
+            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
+            document.getElementById('discount').innerHTML = '<div class="detail-row">\n' +
+                '                            <span>- Discount by staff</span>\n' +
+                '                            <span id="discountByStaff"></span>\n' +
+                '                        </div>';
+            document.getElementById('discountByStaff').innerText = pendingInsurance.discount + "%";
+        }
+
         document.getElementById('email').value = localStorage.getItem('loginUser');
         const links = document.querySelectorAll('a:not([href="process.html"])');
         links.forEach(link => {
@@ -1609,6 +1619,7 @@
                             <span>- NCD*</span>
                             <span id="ncd"></span>
                         </div>
+                        <div id="discount"></div>
 
                         <div class="detail-row">
                             <span>- Excess*</span>

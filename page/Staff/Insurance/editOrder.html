@@ -95,7 +95,11 @@
         const inputs = document.querySelectorAll('input, select, textarea, button');
         inputs.forEach(input => {
             if (input.id !== 'excess2' && input.id !== 'discountDescription') {
+                const editOrderId = localStorage.getItem('editOrderId');
+                const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
                 input.disabled = true;
+                document.getElementById('excess2').value = pendingInsurance.discount;
+                document.getElementById('discountDescription').value = "DEMO";
             }
         });
 
@@ -1611,7 +1615,7 @@
                         <h3>Discount By Staff</h3>
                         <div class="payment-options">
                             <div class="input-group" style="width: 250px">
-                                <label for="Excess">Excess *</label>
+                                <label for="Excess">Discount *</label>
                                 <div class="excess-input">
                                     <input type="number" id="excess2" min="0" max="50" value="0" required>
                                 </div>

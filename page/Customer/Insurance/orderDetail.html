@@ -661,6 +661,7 @@
 
 
         document.getElementById('referenceNumber').textContent = pendingInsurance.referenceNumber;
+        document.getElementById('payPrice').innerText = 'Total: ' + policyData.checkoutPrice;
 
         const insurancePlanHtml = `
         <div class="detail-row">
@@ -1290,8 +1291,7 @@
             <div id="paymentMethod">
 
             </div>
-
-
+            <h1 style="color: red" id="payPrice"></h1>
             <div class="payment-info">
                 <p>Payment will be made to:</p>
                 <p class="company">Legend Motor Limited</p>
