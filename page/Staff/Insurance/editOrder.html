@@ -473,7 +473,9 @@
 
 
     function updatePrices() {
-        const subTotal = Save_selected_option_2.checkoutPrice;
+        const editOrderId = localStorage.getItem('editOrderId');
+        const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
+        const subTotal = pendingInsurance.receipt.subTotal;
         const charges = calculateCharges(subTotal);
 
         // Update the display
@@ -797,12 +799,14 @@
             <hr style="margin-top: 40px">
         `);
 
-        document.getElementById('subTotal').textContent = `${Save_selected_option_2.checkoutPrice}`;
-        const editMode = localStorage.getItem('editMode') === 'true' || (localStorage.getItem('editMode') === 'check');
         const editOrderId = localStorage.getItem('editOrderId');
+        const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
+
+        document.getElementById('subTotal').textContent = `${pendingInsurance.receipt.subTotal}`;
+        const editMode = localStorage.getItem('editMode') === 'true' || (localStorage.getItem('editMode') === 'check');
+
 
         if (editMode && editOrderId) {
-            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
             document.getElementById('insuredDrivers').value = pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers;
         }else {
             document.getElementById('insuredDrivers').value = Save_selected_option_2.insuredDrivers;
@@ -971,6 +975,7 @@
                 if(localStorage.getItem('editModeInsuredNum') != null){
                     document.getElementById('insuredDrivers').value = localStorage.getItem('editModeInsuredNum');
                 }
+
 
                 // Then create the driver forms
                 const numDrivers = parseInt(document.getElementById('insuredDrivers').value);

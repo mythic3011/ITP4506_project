@@ -13,6 +13,7 @@
     <script src="../../../resources/js/customer.js"></script>
     <!-- <script src="../../../resources/js/script.js"></script> -->
     <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+    <link rel="stylesheet" href="css/ordersIndex.css">
 </head>
 <style>
     .insurance-detail-container {
@@ -333,7 +334,10 @@
             approved: 'status-approved',
             claim: 'status-claim',
             accepted: 'status-accepted',
-            rejected: 'status-rejected'
+            rejected: 'status-rejected',
+            requestCancel : 'status-pending',
+            cancelled: 'status-approved',
+            acceptByCustomer: 'status-approved'
         };
 
         const statusText = {
@@ -343,7 +347,10 @@
             approved: 'Approved',
             claim: 'Claim',
             accepted: 'Accepted',
-            rejected: 'Rejected'
+            rejected: 'Rejected',
+            requestCancel: 'Request Cancel',
+            cancelled: 'Cancelled',
+            acceptByCustomer: 'Active'
         };
 
         return `

@@ -356,11 +356,14 @@
     }
     function saveChangesAndRedirect(referenceNumber) {
         const formData = saveFormData();
+        const receipt = recipt();
 
         const existingData = JSON.parse(localStorage.getItem(`pendingInsurance-${referenceNumber}`));
 
         // Update only the form data while preserving other fields
         existingData.Save_selected_option_3 = formData;
+        existingData.receipt = receipt;
+        existingData.discount = 0;
         localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify(existingData));
 
         // Clear edit mode flags
@@ -458,7 +461,9 @@
 
 
     function updatePrices() {
-        const subTotal = Save_selected_option_2.checkoutPrice;
+        const editOrderId = localStorage.getItem('editOrderId');
+        const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
+        const subTotal = pendingInsurance.receipt.subTotal;
         const charges = calculateCharges(subTotal);
 
         // Update the display
@@ -781,12 +786,14 @@
             <hr style="margin-top: 40px">
         `);
 
-        document.getElementById('subTotal').textContent = `${Save_selected_option_2.checkoutPrice}`;
-        const editMode = localStorage.getItem('editMode') === 'true' || (localStorage.getItem('editMode') === 'check');
         const editOrderId = localStorage.getItem('editOrderId');
+        const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
+
+        document.getElementById('subTotal').textContent = `${pendingInsurance.receipt.subTotal}`;
+        const editMode = localStorage.getItem('editMode') === 'true' || (localStorage.getItem('editMode') === 'check');
+
 
         if (editMode && editOrderId) {
-            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
             document.getElementById('insuredDrivers').value = pendingInsurance.Save_selected_option_3.vehicle.insuredDrivers;
         }else {
             document.getElementById('insuredDrivers').value = Save_selected_option_2.insuredDrivers;
@@ -822,6 +829,20 @@
         vehicle: {},
         additionalDrivers: []
     };
+    let receipt = {};
+
+    function recipt(){
+        receipt = {
+            subTotal: document.getElementById('subTotal').innerText,
+            insuranceLevy: document.getElementById('insuranceLevy').innerText,
+            mibCharge: document.getElementById('mibCharge').innerText,
+            dop: document.getElementById('markupOfPoint').innerText,
+            ncdDiscount: document.getElementById('ncd').innerText,
+            excess: document.getElementById('detailExcess').innerText,
+        }
+
+        return receipt;
+    }
 
     function saveFormData() {
         Save_selected_option_3.mainDriver = {
@@ -865,6 +886,7 @@
             chassisNumber: document.getElementById('chassisNumber').value,
             engineNumber: document.getElementById('engineNumber').value
         };
+
 
         Save_selected_option_3.additionalDrivers = [];
         const numDrivers = parseInt(document.getElementById('insuredDrivers').value);
@@ -976,6 +998,7 @@
                 allFields.forEach(field => addValidationListeners(field));
             }
         }
+
         function populateFormFields(data) {
             if (!data) return;
 

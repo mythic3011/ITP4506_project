@@ -35,7 +35,7 @@ class ChatManager {
             maxlength="1000"
           ></textarea>
         </div>
-        <button disabled>Send</button>
+        <button id="sendBtn">Send</button>
       </div>
     `;
         document.body.appendChild(this.chatContainer);
@@ -49,6 +49,7 @@ class ChatManager {
             this.messages = JSON.parse(storedMessages);
             this.renderMessages();
         }
+
     }
 
     saveMessages() {
@@ -59,7 +60,7 @@ class ChatManager {
 
     attachEventListeners() {
         const toggleBtn = document.querySelector('.chat-toggle');
-        const sendBtn = this.chatContainer.querySelector('button');
+        const sendBtn = this.chatContainer.querySelector('#sendBtn');
         const closeBtn = this.chatContainer.querySelector('#closeBtn');
         const textarea = this.chatContainer.querySelector('textarea');
 
@@ -97,6 +98,7 @@ class ChatManager {
     sendMessage() {
         const textarea = this.chatContainer.querySelector('textarea');
         const message = textarea.value.trim();
+        console.log('sendMessage called');
 
         if (message) {
             const urlParams = new URLSearchParams(window.location.search);
@@ -106,8 +108,8 @@ class ChatManager {
             const newMessage = {
                 text: message,
                 timestamp: new Date().toISOString(),
-                sender: 'staff',
-                staffEmail: 'staff@lmc.com',
+                sender: 'customer',
+                staffEmail: 'customer@lmc.com',
                 customerEmail: pendingInsurance.Save_selected_option_3.mainDriver.email
             };
 
@@ -140,7 +142,8 @@ class ChatManager {
       </div>
     `).join('');
 
-        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        this.attachEventListeners();
+        setInterval(() => this.loadMessages(), 1000);
     }
 
     formatMessage(text) {

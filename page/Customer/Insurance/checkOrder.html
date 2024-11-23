@@ -476,16 +476,19 @@
         const subTotal = Save_selected_option_2.checkoutPrice;
         const charges = calculateCharges(subTotal);
 
+        const order = JSON.parse(localStorage.getItem("pendingInsurance-" + localStorage.getItem("editOrderId")));
+
         // Update the display
-        $('#insuranceLevy').text(`HK$${charges.insuranceLevy}`);
-        $('#mibCharge').text(`HK$${charges.mibCharge}`);
-        $('#totalPrice').text(`HK$ ${charges.total}*`);
-        $('#discountByStaff').text(`HK$ ${charges.discountByStaff} (${document.getElementById('excess2').value}%)*`);
+        $('#insuranceLevy').text(order.receipt.insuranceLevy);
+        $('#mibCharge').text(order.receipt.mibCharge);
+        $('#totalPrice').text(order.receipt.total);
+        $('#discountByStaff').text(order.discount + '%');
 
-        $('#markupOfPoint').text(`HK$${charges.markupPoint} (Predict)`);
+        $('#markupOfPoint').text(order.receipt.markupPoint);
 
-        $('#ncd').text(document.getElementById('claimsDiscount').value);
-        $('#detailExcess').text(`HK$${charges.excess}`);
+        $('#ncd').text(order.receipt.ncdDiscount);
+        $('#detailExcess').text(order.receipt.excess);
+        $('#totalPrice').text(order.Save_selected_option_2.checkoutPrice)
 
     }
     document.addEventListener('DOMContentLoaded', function() {
