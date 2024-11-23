@@ -90,6 +90,14 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('editID').innerHTML = 'Applicant: ' + localStorage.getItem('editOrderId');
+
+        const inputs = document.querySelectorAll('input, select, textarea, button');
+        inputs.forEach(input => {
+            if (input.id !== 'excess2' && input.id !== 'discountDescription') {
+                input.disabled = true;
+            }
+        });
 
         if (localStorage.getItem('editMode') == 'check') {
             document.getElementById('editDetail').style.display = 'none';
@@ -299,6 +307,11 @@
                         document.getElementById('excessWeight').innerText = isValid && parseFloat(value) > 0? 'Your total excess is ' + document.getElementById('detailExcess').innerText : "";
                         message = "Excess amount must be a positive number";
                         break;
+
+                    case 'excess2':
+                        document.getElementById('excessWeight2').style.display = parseFloat(value) >= 0 && !isNaN(parseFloat(value)) && parseFloat(value) <= 5 ? 'none' : 'block';
+                        document.getElementById('discountDescription').required = parseFloat(value) >= 0 && !isNaN(parseFloat(value)) && parseFloat(value) <= 5 ? false : true;
+                        break;
                     case 'offence_point':
                         isValid = parseFloat(value) >= 0 && !isNaN(parseFloat(value)) && parseFloat(value) <= 15;
                         document.getElementById('offence_point_warning').style.display = isValid && parseFloat(value) > 0? 'block' : 'none';
@@ -434,6 +447,7 @@
         const mibCharge = amount * 0.0025;
         const excess = amount * (parseFloat(document.getElementById('excess').value) / 100);
         const markupPoint = amount * (parseFloat(document.getElementById('offence_point').value)/10);
+        const discountByStaff = amount * (parseFloat(document.getElementById('excess2').value) / 100);
 
         const ncdSelect = document.getElementById('claimsDiscount');
         const ncdValue = ncdSelect.value;
@@ -450,9 +464,10 @@
             insuranceLevy: insuranceLevy.toFixed(2),
             mibCharge: mibCharge.toFixed(2),
             ncdDiscount: discount.toFixed(2),
-            total: (amount + insuranceLevy + mibCharge - discount + markupPoint - excess).toFixed(2),
+            total: (amount + insuranceLevy + mibCharge - discount + markupPoint - excess - discountByStaff).toFixed(2),
             excess: excess.toFixed(2),
-            markupPoint: markupPoint.toFixed(2)
+            markupPoint: markupPoint.toFixed(2),
+            discountByStaff: discountByStaff.toFixed(2)
         };
     }
 
@@ -465,6 +480,7 @@
         $('#insuranceLevy').text(`HK$${charges.insuranceLevy}`);
         $('#mibCharge').text(`HK$${charges.mibCharge}`);
         $('#totalPrice').text(`HK$ ${charges.total}*`);
+        $('#discountByStaff').text(`HK$ ${charges.discountByStaff} (${document.getElementById('excess2').value}%)*`);
 
         $('#markupOfPoint').text(`HK$${charges.markupPoint} (Predict)`);
 
@@ -835,7 +851,6 @@
             dob: document.getElementById('dob').value,
             occupation: document.getElementById('occupation').value,
             drivingExperience: document.getElementById('mainDrivingExperience').value,
-            paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
             ncd: document.getElementById('claimsDiscount').value,
             excess: document.getElementById('excess').value,
             driverOffencePoint: document.getElementById('offence_point').value,
@@ -946,7 +961,7 @@
                 // Update button text
                 const buyButton = document.querySelector('.buy-button');
                 if (buyButton) {
-                    buyButton.textContent = 'Save Changes';
+                    buyButton.textContent = 'Approve Application';
                 }
 
                 // First set the number of insured drivers
@@ -1116,6 +1131,7 @@
                         <p>Policy is non-transferable without prior written consent.</p>
                         <p>Premium payments must be maintained as per selected schedule.</p>
                 </div>
+                <h3 style="color: red">You assign a ${document.getElementById('excess2').value}% discount to this policy</h3>
                 <div class="popup-buttons">
                     <label style="display: flex; align-items: center; gap: 0.5rem;">
                         <input type="checkbox" id="termsAccepted" required>
@@ -1127,7 +1143,7 @@
                         Review Application
                     </button>
                     <button style="background-color: #00bcd4" class="popup-button save-button" id="proceedButton" disabled>
-                        Proceed with Application
+                        Approve Application
                     </button>
 
                 </div>
@@ -1151,27 +1167,15 @@
                 const editMode = localStorage.getItem('editMode') === 'true' || (localStorage.getItem('editMode') === 'check');
                 const referenceNumber = (editMode? editOrderId: generateReferenceNumber());
 
-                const currentData = JSON.parse(localStorage.getItem(`Save_selected_option_2`)) || {};
-                if(localStorage.getItem('editMode') === 'true')
-                currentData.checkoutPrice = document.getElementById('totalPrice').textContent;
-                localStorage.setItem(`Save_selected_option_2`, JSON.stringify(currentData));
 
-                localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify({
-                    Save_selected_option: JSON.parse(localStorage.getItem('Save_selected_option')),
-                    Save_selected_option_2: JSON.parse(localStorage.getItem('Save_selected_option_2')),
-                    Save_selected_option_3: formData,
-                    referenceNumber,
-                    status: 'pending',
-                    paid : false,
-                    createdAt: new Date().toISOString()
-                }));
-                if(editMode){
-                    showThankYouPopup(referenceNumber, true);
-                }else{
-                    showThankYouPopup(referenceNumber, false);
-                }
+                const currentData = JSON.parse(localStorage.getItem(`pendingInsurance-${referenceNumber}`)) || {};
+                currentData.discount = document.getElementById('excess2').value;
+                currentData.status = 'approved';
+                currentData.Save_selected_option_2.checkoutPrice = document.getElementById('totalPrice').textContent;
+                localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify(currentData));
 
-                closeTermsModal();
+                window.location.href = `orderDetail.html?id=${referenceNumber}`;
+
             });
         });
     });
@@ -1257,11 +1261,6 @@
         <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../../logout.html">Log Out</a>
     </div>
 </div>
-<div style="padding-top: 4rem;">
-    <div class="progress_bar_container">
-        <div class="progress_bar" id="progressBar" style="width:75%"></div>
-    </div>
-</div>
 
 <div class="container" style="min-width: 1400px">
     <div style="display: flex; min-height: 100vh; padding: 2rem; gap: 2rem;">
@@ -1270,15 +1269,15 @@
                 <div class="section-header">
                     <div class="header-left">
                         <img src="../../../resources/image/user-icon.svg" alt="User" class="section-icon">
-                        <h1>Applicant Details</h1>
+                        <h1 id="editID"></h1>
                     </div>
                 </div>
 
                 <div id="applicantDetails" class="section-content">
                     <div class="notice">
-                        <p style="font-size: large; color: darkred">* The applicant must be over 18 years old and the registered owner of the insured vehicle.</p>
+                        <p style="font-size: large; color: darkred">* Please confirm all detail of this application, then approve. You only can review, <u>if need modify</u>, please contact the customer</p>
                     </div>
-                    <button id="editDetail" onclick="location.href = 'estimate.html'" class="back-button">
+                    <button id="editDetail" style="display: none" onclick="location.href = 'estimate.html'" class="back-button">
                         ← Edit Details
                     </button>
                     <form id="applicantForm" class="form-section">
@@ -1444,8 +1443,8 @@
                             <div class="input-group">
                                 <label for="offence_point">Driving-offence points *</label>
                                 <input type="number" id="offence_point" min="0" max="15" value="0" required>
-                                <div id="offence_point_warning" style="display: none"><span  style="color: red;">You need to upload Certificates of Traffic Conviction Records, please go to <a>https://www.police.gov.hk/ppp_en/05_traffic_matters/tcr.html</a> to look for detail</span><br><br>
-                                    <button type="button" id="uploadRecord" class="upload-button">Upload Certificates of Traffic Conviction Records</button><br><span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span></div>
+                                <div id="offence_point_warning" style="display: none"><br><br>
+                                    <button type="button" id="uploadRecord" class="upload-button">Download Certificates of Traffic Conviction Records</button><br><span style="font-size: 20px; color: green"><em><b>Uploaded</b></em></span></div>
                             </div>
                         </div>
                     </form>
@@ -1588,6 +1587,11 @@
                         </div>
 
                         <div class="detail-row">
+                            <span>- Discount by staff</span>
+                            <span id="discountByStaff"></span>
+                        </div>
+
+                        <div class="detail-row">
                             <span>- Excess*</span>
                             <span id="detailExcess"></span>
                         </div>
@@ -1599,36 +1603,19 @@
                     </div>
 
                     <div class="payment-method-section">
-                        <h3>Select Payment Method</h3>
+                        <h3>Discount By Staff</h3>
                         <div class="payment-options">
-                            <label class="payment-option">
-                                <input type="radio" name="paymentMethod" value="Credit Card" checked>
-                                <span class="payment-label">
-                                    <img style="margin-top: 22px" src="../../../resources/image/credit-card.svg" alt="Credit Card">
-                                    Credit Card Payment
-                                </span>
-                            </label>
-                            <label class="payment-option">
-                                <input type="radio" name="paymentMethod" value="Online Bank Transfer">
-                                <span class="payment-label">
-                                    <img style="margin-top: 22px" src="../../../resources/image/bank-transfer.svg" alt="Bank Transfer">
-                                    Online Bank Transfer
-                                </span>
-                            </label>
-                            <label class="payment-option">
-                                <input type="radio" name="paymentMethod" value="Cash Payment at Convenience Stores">
-                                <span class="payment-label">
-                                    <img style="margin-top: 22px" src="../../../resources/image/store.svg" alt="Convenience Store">
-                                    Cash Payment at Convenience Stores
-                                </span>
-                            </label>
-                            <label class="payment-option">
-                                <input type="radio" name="paymentMethod" value="Alipay/Wechat Payments">
-                                <span class="payment-label">
-                                    <img style="margin-top: 22px" src="../../../resources/image/atm.svg">
-                                    Alipay / WeChat Pay
-                                </span>
-                            </label>
+                            <div class="input-group" style="width: 250px">
+                                <label for="Excess">Excess *</label>
+                                <div class="excess-input">
+                                    <input type="number" id="excess2" min="0" max="50" value="0" required>
+                                </div>
+                                <div id="excessWeight2">
+                                    <br>
+                                    <span style="color: red;">With discount more than 5%, you need to describe the result</span>
+                                    <input type="text" id="discountDescription" placeholder="Describe the result">
+                                </div>
+                            </div>
                         </div>
                     </div>
 

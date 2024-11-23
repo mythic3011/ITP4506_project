@@ -399,9 +399,424 @@
             padding: 1.5rem;
         }
     }
+    .upload-button {
+        background-color: #00bcd4;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+    .upload-button:hover {
+        background-color: #0097a7;
+    }
 </style>
 <script>
+
+    class EditModeManager {
+        static setEditMode(orderId) {
+            localStorage.setItem('editMode', 'true');
+            localStorage.setItem('editOrderId', orderId);
+            localStorage.setItem('editData', localStorage.getItem(`pendingInsurance-${orderId}`));
+        }
+    }
+
+    class EditModal {
+        constructor() {
+            this.createModal();
+            this.attachEventListeners();
+        }
+
+        createModal() {
+            this.modal = document.createElement('div');
+            this.modal.className = 'orderdetail-modal';
+            this.modal.innerHTML = `
+                    <div class="orderdetail-modal-content">
+                        <h3 class="orderdetail-modal-title">Confirm Edit</h3>
+                        <p class="orderdetail-modal-message">Are you sure you want to edit this application? You will be redirected to the edit page.</p>
+                        <div class="orderdetail-modal-buttons">
+                            <button class="orderdetail-modal-button confirm">Confirm</button>
+                            <button class="orderdetail-modal-button cancel">Cancel</button>
+                        </div>
+                    </div>
+                `;
+            document.body.appendChild(this.modal);
+        }
+
+        attachEventListeners() {
+            this.modal.querySelector('.confirm').onclick = () => this.handleConfirm();
+            this.modal.querySelector('.cancel').onclick = () => this.hide();
+            this.modal.onclick = (e) => {
+                if (e.target === this.modal) this.hide();
+            };
+        }
+
+        show() {
+            this.modal.style.display = 'block';
+        }
+
+        hide() {
+            this.modal.style.display = 'none';
+        }
+
+        handleConfirm() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            EditModeManager.setEditMode(orderId);
+            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+            localStorage.setItem('Save_selected_option', JSON.stringify(pendingInsurance.Save_selected_option));
+            localStorage.setItem('Save_selected_option_2', JSON.stringify(pendingInsurance.Save_selected_option_2));
+            localStorage.setItem('Save_selected_option_3', JSON.stringify(pendingInsurance.Save_selected_option_3));
+            window.location.href = 'checkout.html';
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
+
+        const modal = new EditModal();
+        const editButton = document.querySelector('button[style*="background-color: orange"]');
+
+        if (editButton) {
+            editButton.onclick = function(e) {
+                e.preventDefault();
+                modal.show();
+            };
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id') || localStorage.getItem('currentViewingPolicy');
+
+        if (!orderId) {
+            window.location.href = 'ordersIndex.html';
+            return;
+        }
+
+        const pendingInsurance = findInsuranceById(orderId);
+        if (!pendingInsurance) {
+            window.location.href = 'ordersIndex.html';
+            return;
+        }
+        function findInsuranceById(id) {
+            const policy = localStorage.getItem(`pendingInsurance-${id}`);
+            return policy ? JSON.parse(policy) : null;
+        }
+
+
+        const insuranceData = pendingInsurance.Save_selected_option;
+        const policyData = pendingInsurance.Save_selected_option_2;
+        const customerData = pendingInsurance.Save_selected_option_3;
+
+        if(pendingInsurance.Save_selected_option_3.mainDriver.paymentMethod == 'Credit Card') {
+            document.getElementById('paymentMethod').innerHTML = '<div class="form-group">\n' +
+                '                    <label for="cardName">Cardholder Name *</label>\n' +
+                '                    <input type="text" id="cardName" placeholder="Name on card" required>\n' +
+                '                </div>\n' +
+                '\n' +
+                '                <div class="form-group">\n' +
+                '                    <label for="cardNumber">Card Number *</label>\n' +
+                '                    <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>\n' +
+                '                </div>\n' +
+                '\n' +
+                '                <div class="form-row">\n' +
+                '                    <div class="form-group half">\n' +
+                '                        <label for="expiryDate">Expiry Date *</label>\n' +
+                '                        <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>\n' +
+                '                    </div>\n' +
+                '                    <div class="form-group half">\n' +
+                '                        <label for="cvv">Security Code (CVV) *</label>\n' +
+                '                        <div class="cvv-container">\n' +
+                '                            <input type="text" id="cvv" placeholder="000" maxlength="3" required>\n' +
+                '                            <div class="cvv-help">?</div>\n' +
+                '                        </div>\n' +
+                '                    </div>\n' +
+                '                </div>';
+        }else{
+            document.getElementById('credit_icon').innerHTML = '<h1>Please scan this QR code while paying</h1>';
+            document.getElementById('paymentMethod').innerHTML = '<img src="../../../resources/image/qrCode.svg" style="width: 400px; height: 400px" alt="Demo QR Code">';
+            document.getElementById('paymentButton').disabled = false;
+            document.getElementById('paymentButton').innerText = 'Bypass (DEMO)';
+            document.getElementById('paymentButton').style.backgroundColor = 'gray';
+        }
+
+
+        (pendingInsurance.status != 'pending' ?  document.getElementById('editPolicy').style.display = 'none' :true);
+
+        if (new Date(pendingInsurance.Save_selected_option_3.mainDriver.policyEndDate).getTime() < new Date(pendingInsurance.createdAt).getTime()) {
+            document.getElementById('timeLine').innerHTML = '<div class="status-step error">\n' +
+                '                        <div class="step-icon">✕</div>\n' +
+                '                        <div class="step-content">\n' +
+                '                            <h3>Policy Expired</h3>\n' +
+                '                            <p>Please contact the customer<br> renew policy as soon as possible</p>\n' +
+                '                            <span id="createAt" class="timestamp"></span>\n' +
+                '                        </div>\n' +
+                '                    </div>'
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+            pendingInsurance = { ...pendingInsurance, status: 'expired' };
+            localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
+            document.getElementById('payBtn').style.display = 'none';
+        } else if(pendingInsurance.status == 'requestCancel'){
+            document.getElementById('timeLine').innerHTML = '<div class="status-step active">\n' +
+                '                        <div class="step-icon">○</div>\n' +
+                '                        <div class="step-content">\n' +
+                '                            <h3>Request Cancel</h3>\n' +
+                '                            <span class="timestamp">Request to cancel the policy is under review<br>At "Just Now"</span>\n' +
+                '                            <span id="createAt" class="timestamp"></span>\n' +
+                '                        </div>\n' +
+                '                    </div> <div id="statusColor" class="status-step">\n' +
+                '                        <div class="step-icon">⋯</div>\n' +
+                '                        <div class="step-content">\n' +
+                '                            <h3>Cancelled</h3>\n' +
+                '                            <div></div>\n' +
+                '                        </div>\n' +
+                '                    </div>'
+            document.getElementById('payBtn').style.display = 'none';
+            document.getElementById('cancelBtn').style.display = 'none';
+
+        }else if(pendingInsurance.status == 'cancelled'){
+            document.getElementById('timeLine').innerHTML = '<div class="status-step completed">\n' +
+                '                        <div class="step-icon">✓</div>\n' +
+                '                        <div class="step-content">\n' +
+                '                            <h3>Request Cancel</h3>\n' +
+                '                            <span class="timestamp">Request to cancel the policy is under review<br>At "Just Now"</span>\n' +
+                '                            <span id="createAt" class="timestamp"></span>\n' +
+                '                        </div>\n' +
+                '                    </div> <div id="statusColor" class="status-step completed">\n' +
+                '                        <div class="step-icon">✓</div>\n' +
+                '                        <div class="step-content">\n' +
+                '                            <h3>Cancelled</h3>\n' +
+                '                            <span class="timestamp">Your Insurace has been canncelled at "Just Now"</span>\n' +
+                '                        </div>\n' +
+                '                    </div>'
+
+            document.getElementById('payBtn').style.display = 'none';
+            document.getElementById('cancelBtn').style.display = 'none';
+        }
+        else{
+            document.getElementById('policyStatus').textContent = (pendingInsurance.status == 'pending' ? 'Under Review' : 'Approval');
+            (pendingInsurance.status == 'pending' ? document.getElementById('statusColor').classList.add('active') : document.getElementById('statusColor').classList.add('completed'));
+            (pendingInsurance.status == 'pending' ? document.getElementById('statusIcon').textContent = '⋯' : document.getElementById('statusIcon').textContent = '✓');
+            (pendingInsurance.status == 'pending' ? document.getElementById('statusBtnOrtxt').innerHTML = '                            <p>Estimated processing time: <strong><u>1-2 business days</u></strong></p>\n' :document.getElementById('statusBtnOrtxt').innerHTML = '<span id="createAt" class="timestamp">Approved by Staff01 "Mike Chan" at: Just Now</span>');
+
+            if(pendingInsurance.status == 'acceptByCustomer'){
+                document.getElementById('acceptsColor').classList.add('completed');
+                document.getElementById('acceptIcon').textContent = '✓';
+                document.getElementById('acceptAt').innerHTML = '<span id="createAt" class="timestamp">Just Accept By You</span>';
+            }
+
+            if(pendingInsurance.status == 'accepted'){
+                document.getElementById('claimColor').classList.add('completed');
+                document.getElementById('claimIcon').textContent = '✓';
+                document.getElementById('claimBtn').style.display = 'none';
+                document.getElementById('claimMessage').innerText = 'Claim Approved by Staff001 "Dave Chan", at "Just Now"';
+
+            }else if(pendingInsurance.status == 'rejected') {
+                document.getElementById('claimColor').classList.add('error');
+                document.getElementById('claimIcon').textContent = '✕';
+                document.getElementById('claimBtn').style.display = 'none';
+                document.getElementById('claimMessage').innerText = 'Claim Rejected by Staff001 "Dave Chan", at "Just Now"';
+            }
+
+            if(pendingInsurance.status == 'claim'){
+                document.getElementById('claimBtn').style.display = 'none';
+                document.getElementById('claimColor').classList.add('active')
+                document.getElementById('claimMessage').innerText = 'Claim Submitted by you, at "Just Now"';
+            }
+
+            if(pendingInsurance.paid){
+                document.getElementById('payBtn').disabled = true;
+                document.getElementById('payBtn').style.backgroundColor = 'gray';
+                document.getElementById('payBtn').innerText = "Paid";
+            }
+
+            if(pendingInsurance.status == 'approved'){
+                document.getElementById('acceptAt').innerText = 'Just Approved by Staff01 "Mike Chan", discount: ' + pendingInsurance.discount + '%,' + '\nScroll down to look detail';
+            }
+
+            (pendingInsurance.status == 'acceptByCustomer' ? document.getElementById('claimBtn').style.display = 'block' : document.getElementById('claimBtn').style.display = 'none');
+            (pendingInsurance.status == 'approved' ? document.getElementById('rejectBtn').style.display = 'block' : document.getElementById('rejectBtn').style.display = 'none');
+            (pendingInsurance.status == 'approved' ? document.getElementById('acceptsColor').classList.add('active'):true)
+
+
+
+
+
+
+            document.getElementById('createAt').textContent = "Create at: " + formatDate(pendingInsurance.createdAt);
+
+            if (!insuranceData || !policyData || !customerData) {
+                window.location.href = 'ordersIndex.html';
+                return;
+            }
+        }
+
+
+
+        document.getElementById('referenceNumber').textContent = pendingInsurance.referenceNumber;
+
+        const insurancePlanHtml = `
+        <div class="detail-row">
+            <span class="detail-label">Insurance Type</span>
+            <span class="detail-value">${insuranceData.insuranceType}</span>
+
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Payment Method</span>
+            <span class="detail-value">${formatPaymentMethod(policyData.paymentMethod)} | ${customerData.mainDriver.paymentMethod}</span>
+            ${pendingInsurance.paid ? '<span style="font-size: 20px; color: green"><em><b>Just Paid</b></em></span>' : '<span style="font-size: 20px; color: red"><em><b>Unpaid</b></em></span>'}
+
+        </div>
+        ${pendingInsurance.discount ? `<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">${pendingInsurance.discount}%</span></div>` : '<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">Not yet assign</span></div>'}
+        <div class="detail-row">
+            <span class="detail-label">Fees</span>
+            <span class="detail-value">${policyData.checkoutPrice}</span>
+            ${pendingInsurance.status == 'approved' ? document.getElementById('payBtn').style.display = 'block' : document.getElementById('payBtn').style.display = 'none'}
+
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">No Claims Discount</span>
+            <span class="detail-value">${customerData.mainDriver.ncd || 'None'}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Excess</span>
+            <span class="detail-value">${customerData.mainDriver.excess + "%" || 'None'}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Car Type</span>
+            <span class="detail-value">${formatCarType(insuranceData.carType)}</span>
+        </div>
+    `;
+        document.getElementById('insurancePlan').innerHTML = insurancePlanHtml;
+
+        const policyInfoHtml = `
+        <div class="detail-row">
+            <span class="detail-label">Effective Date</span>
+            <span class="detail-value">${formatDate(policyData.policyEffectiveDate)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">End Date</span>
+            <span class="detail-value">${formatDate(customerData.mainDriver.policyEndDate)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Insured Drivers</span>
+            <span class="detail-value">${customerData.vehicle.insuredDrivers || policyData.insuredDrivers}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Driving Experience of Main Driver</span>
+            <span class="detail-value">${formatDrivingExperience(customerData.mainDriver.drivingExperience || policyData.drivingExperience)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Driving Offence Points Of Main Driver</span>
+            <span class="detail-value">${customerData.mainDriver.driverOffencePoint + " Points" || 'None'}</span>
+            <button type="button" class="upload-button">Download Certificates of Traffic Conviction Records</button>
+        </div>
+
+    `;
+        document.getElementById('policyInfo').innerHTML = policyInfoHtml;
+
+        const vehicleHtml = `
+        <div class="detail-row">
+            <span class="detail-label">Vehicle</span>
+            <span class="detail-value">${customerData.vehicle.carModel || `${insuranceData.carBrand} ${insuranceData.carModel}`}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Manufacturing Year</span>
+            <span class="detail-value">${customerData.vehicle.manufacturingYear || insuranceData.manufacturingYear}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Registration Number</span>
+            <span class="detail-value">${customerData.vehicle.registrationNumber}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">First Registration Date</span>
+            <span class="detail-value">${formatDate(insuranceData.firstRegistrationDate)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Engine Capacity</span>
+            <span class="detail-value">${customerData.vehicle.cylinderCapacity}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Market Value</span>
+            <span class="detail-value">HK$ ${customerData.vehicle.marketValue}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Chassis Number</span>
+            <span class="detail-value">${customerData.vehicle.chassisNumber}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Engine Number</span>
+            <span class="detail-value">${customerData.vehicle.engineNumber}</span>
+        </div>
+    `;
+        document.getElementById('vehicleDetails').innerHTML = vehicleHtml;
+
+        const driverHtml = `
+        <div class="detail-row">
+            <span class="detail-label">Full Name</span>
+            <span class="detail-value">${customerData.mainDriver.title} ${customerData.mainDriver.firstName} ${customerData.mainDriver.lastName}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Gender</span>
+            <span class="detail-value">${formatGender(customerData.mainDriver.gender)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">HKID</span>
+            <span class="detail-value">${customerData.mainDriver.hkid}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Date of Birth</span>
+            <span class="detail-value">${formatDate(customerData.mainDriver.dob)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Contact</span>
+            <span class="detail-value">Email: ${customerData.mainDriver.email}<br>Mobile: ${customerData.mainDriver.mobile}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Occupation</span>
+            <span class="detail-value">${formatOccupation(customerData.mainDriver.occupation)}</span>
+        </div>
+        <div class="detail-row">
+            <span class="detail-label">Address</span>
+            <span class="detail-value">${formatAddress(customerData.address)}</span>
+        </div>
+    `;
+        document.getElementById('driverDetails').innerHTML = driverHtml;
+
+        if (customerData.additionalDrivers && customerData.additionalDrivers.length > 0) {
+            const additionalDriversSection = document.createElement('div');
+            additionalDriversSection.className = 'detail-section';
+            additionalDriversSection.innerHTML = `
+            <h3>Additional Drivers</h3>
+            <div class="detail-content" id="additionalDrivers">
+                ${customerData.additionalDrivers.map((driver, index) => `
+                    <div class="detail-row">
+                        <span class="detail-label">Driver ${index + 2}</span>
+                        <span class="detail-value">
+                            ${driver.title} ${driver.firstName} ${driver.lastName}<br>
+                            HKID: ${driver.hkid}<br>
+                            DOB: ${formatDate(driver.dob)}<br>
+                            Occupation: ${formatOccupation(driver.occupation)}<br>
+                            Experience: ${formatDrivingExperience(driver.drivingExperience)}<br>
+                            Relation: ${formatRelation(driver.relation)}
+                        </span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+            document.querySelector('.details-grid').appendChild(additionalDriversSection);
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+
+
         const payButton = document.getElementById('payBtn');
         const modal = document.getElementById('paymentModal');
         const closeBtn = document.querySelector('.payment-modal-close');
@@ -540,6 +955,7 @@
             }
 
             paymentButton.disabled = !isValid;
+
         }
 
         requiredFields.forEach(field => {
@@ -550,11 +966,12 @@
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             if (form.checkValidity()) {
-                const popup = document.createElement('div');
-                popup.className = 'popup-overlay';
-                popup.style.display = 'flex';
+                setTimeout(() => {
+                    const popup = document.createElement('div');
+                    popup.className = 'popup-overlay';
+                    popup.style.display = 'flex';
 
-                popup.innerHTML = `
+                    popup.innerHTML = `
     <div class="popup-content">
         <h2>Thank you your payment !</h2>
         <p><strong>We will send a receipt to your email address.</strong></p>
@@ -566,11 +983,11 @@
     </div>
 `;
 
-                document.body.appendChild(popup);
-                setTimeout(() => popup.classList.add('show'), 10);
+                    document.body.appendChild(popup);
+                    setTimeout(() => popup.classList.add('show'), 10);
 
-                const style = document.createElement('style');
-                style.textContent = `
+                    const style = document.createElement('style');
+                    style.textContent = `
     .save-notice { color: #666; font-size: 0.9rem; margin-top: 0.5rem; }
     .popup-buttons { display: flex; flex-direction: column; gap: 1rem; margin-top: 2rem; }
     .popup-button { display: flex; flex-direction: column; align-items: center; padding: 1rem; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease; width: 100%; }
@@ -579,341 +996,14 @@
     .leave-button { background-color: #f44336; color: white; }
     .stay-button { background-color: #00bcd4; color: white; }
 `;
-                document.head.appendChild(style);
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+                    document.head.appendChild(style);
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+
+                }, 3000);
+
             }
         });
-    });
-    class EditModeManager {
-        static setEditMode(orderId) {
-            localStorage.setItem('editMode', 'true');
-            localStorage.setItem('editOrderId', orderId);
-            localStorage.setItem('editData', localStorage.getItem(`pendingInsurance-${orderId}`));
-        }
-    }
-
-    class EditModal {
-        constructor() {
-            this.createModal();
-            this.attachEventListeners();
-        }
-
-        createModal() {
-            this.modal = document.createElement('div');
-            this.modal.className = 'orderdetail-modal';
-            this.modal.innerHTML = `
-                    <div class="orderdetail-modal-content">
-                        <h3 class="orderdetail-modal-title">Confirm Edit</h3>
-                        <p class="orderdetail-modal-message">Are you sure you want to edit this application? You will be redirected to the edit page.</p>
-                        <div class="orderdetail-modal-buttons">
-                            <button class="orderdetail-modal-button confirm">Confirm</button>
-                            <button class="orderdetail-modal-button cancel">Cancel</button>
-                        </div>
-                    </div>
-                `;
-            document.body.appendChild(this.modal);
-        }
-
-        attachEventListeners() {
-            this.modal.querySelector('.confirm').onclick = () => this.handleConfirm();
-            this.modal.querySelector('.cancel').onclick = () => this.hide();
-            this.modal.onclick = (e) => {
-                if (e.target === this.modal) this.hide();
-            };
-        }
-
-        show() {
-            this.modal.style.display = 'block';
-        }
-
-        hide() {
-            this.modal.style.display = 'none';
-        }
-
-        handleConfirm() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('id');
-            EditModeManager.setEditMode(orderId);
-            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
-            localStorage.setItem('Save_selected_option', JSON.stringify(pendingInsurance.Save_selected_option));
-            localStorage.setItem('Save_selected_option_2', JSON.stringify(pendingInsurance.Save_selected_option_2));
-            localStorage.setItem('Save_selected_option_3', JSON.stringify(pendingInsurance.Save_selected_option_3));
-            window.location.href = 'checkout.html';
-        }
-    }
-    document.addEventListener('DOMContentLoaded', function() {
-        const modal = new EditModal();
-        const editButton = document.querySelector('button[style*="background-color: orange"]');
-
-        if (editButton) {
-            editButton.onclick = function(e) {
-                e.preventDefault();
-                modal.show();
-            };
-        }
-        const urlParams = new URLSearchParams(window.location.search);
-        const orderId = urlParams.get('id') || localStorage.getItem('currentViewingPolicy');
-
-        if (!orderId) {
-            window.location.href = 'ordersIndex.html';
-            return;
-        }
-
-        const pendingInsurance = findInsuranceById(orderId);
-        if (!pendingInsurance) {
-            window.location.href = 'ordersIndex.html';
-            return;
-        }
-        function findInsuranceById(id) {
-            const policy = localStorage.getItem(`pendingInsurance-${id}`);
-            return policy ? JSON.parse(policy) : null;
-        }
-
-
-        const insuranceData = pendingInsurance.Save_selected_option;
-        const policyData = pendingInsurance.Save_selected_option_2;
-        const customerData = pendingInsurance.Save_selected_option_3;
-
-        if (new Date(pendingInsurance.Save_selected_option_3.mainDriver.policyEndDate).getTime() < new Date(pendingInsurance.createdAt).getTime()) {
-            document.getElementById('timeLine').innerHTML = '<div class="status-step error">\n' +
-                '                        <div class="step-icon">✕</div>\n' +
-                '                        <div class="step-content">\n' +
-                '                            <h3>Policy Expired</h3>\n' +
-                '                            <p>Please contact the customer<br> renew policy as soon as possible</p>\n' +
-                '                            <span id="createAt" class="timestamp"></span>\n' +
-                '                        </div>\n' +
-                '                    </div>'
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('id');
-            let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
-            pendingInsurance = { ...pendingInsurance, status: 'expired' };
-            localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
-            document.getElementById('payBtn').style.display = 'none';
-        } else if(pendingInsurance.status == 'requestCancel'){
-            document.getElementById('timeLine').innerHTML = '<div class="status-step active">\n' +
-                '                        <div class="step-icon">○</div>\n' +
-                '                        <div class="step-content">\n' +
-                '                            <h3>Request Cancel</h3>\n' +
-                '                            <span class="timestamp">Request to cancel the policy is under review<br>At "Just Now"</span>\n' +
-                '                            <span id="createAt" class="timestamp"></span>\n' +
-                '                        </div>\n' +
-                '                    </div> <div id="statusColor" class="status-step">\n' +
-                '                        <div class="step-icon">⋯</div>\n' +
-                '                        <div class="step-content">\n' +
-                '                            <h3>Cancelled</h3>\n' +
-                '                            <div></div>\n' +
-                '                        </div>\n' +
-                '                    </div>'
-            document.getElementById('payBtn').style.display = 'none';
-            document.getElementById('cancelBtn').style.display = 'none';
-
-        }else if(pendingInsurance.status == 'cancelled'){
-            document.getElementById('timeLine').innerHTML = '<div class="status-step completed">\n' +
-                '                        <div class="step-icon">✓</div>\n' +
-                '                        <div class="step-content">\n' +
-                '                            <h3>Request Cancel</h3>\n' +
-                '                            <span class="timestamp">Request to cancel the policy is under review<br>At "Just Now"</span>\n' +
-                '                            <span id="createAt" class="timestamp"></span>\n' +
-                '                        </div>\n' +
-                '                    </div> <div id="statusColor" class="status-step completed">\n' +
-                '                        <div class="step-icon">✓</div>\n' +
-                '                        <div class="step-content">\n' +
-                '                            <h3>Cancelled</h3>\n' +
-                '                            <span class="timestamp">Your Insurace has been canncelled at "Just Now"</span>\n' +
-                '                        </div>\n' +
-                '                    </div>'
-
-            document.getElementById('payBtn').style.display = 'none';
-            document.getElementById('cancelBtn').style.display = 'none';
-        }
-        else{
-            document.getElementById('policyStatus').textContent = (pendingInsurance.status == 'pending' ? 'Under Review' : 'Approval');
-            (pendingInsurance.status == 'pending' ? document.getElementById('statusColor').classList.add('active') : document.getElementById('statusColor').classList.add('completed'));
-            (pendingInsurance.status == 'pending' ? document.getElementById('statusIcon').textContent = '⋯' : document.getElementById('statusIcon').textContent = '✓');
-            (pendingInsurance.status == 'pending' ? document.getElementById('statusBtnOrtxt').innerHTML = '                            <p>Estimated processing time: <strong><u>1-2 business days</u></strong></p>\n' :document.getElementById('statusBtnOrtxt').innerHTML = '<span id="createAt" class="timestamp">Approved by Staff01 "Mike Chan" at: Just Now</span>');
-
-            if(pendingInsurance.status == 'accepted'){
-                document.getElementById('claimColor').classList.add('completed');
-                document.getElementById('claimIcon').textContent = '✓';
-                document.getElementById('claimBtn').style.display = 'none';
-                document.getElementById('claimMessage').innerText = 'Claim Approved by Staff001 "Dave Chan", at "Just Now"';
-
-            }else if(pendingInsurance.status == 'rejected') {
-                document.getElementById('claimColor').classList.add('error');
-                document.getElementById('claimIcon').textContent = '✕';
-                document.getElementById('claimBtn').style.display = 'none';
-                document.getElementById('claimMessage').innerText = 'Claim Rejected by Staff001 "Dave Chan", at "Just Now"';
-            }
-
-            if(pendingInsurance.status == 'claim'){
-                document.getElementById('claimBtn').style.display = 'none';
-                document.getElementById('claimColor').classList.add('active')
-                document.getElementById('claimMessage').innerText = 'Claim Submitted by you, at "Just Now"';
-            }
-
-            if(pendingInsurance.paid){
-                document.getElementById('payBtn').disabled = true;
-                document.getElementById('payBtn').style.backgroundColor = 'gray';
-                document.getElementById('payBtn').innerText = "Paid";
-                document.getElementById('paidTime').textContent = "Paid at: Just Now";
-            }
-
-            (pendingInsurance.status == 'approved' ? document.getElementById('claimBtn').style.display = 'block' : document.getElementById('claimBtn').style.display = 'none');
-
-
-
-
-
-            document.getElementById('createAt').textContent = "Create at: " + formatDate(pendingInsurance.createdAt);
-
-            if (!insuranceData || !policyData || !customerData) {
-                window.location.href = 'ordersIndex.html';
-                return;
-            }
-        }
-
-
-
-        document.getElementById('referenceNumber').textContent = pendingInsurance.referenceNumber;
-
-        const insurancePlanHtml = `
-        <div class="detail-row">
-            <span class="detail-label">Insurance Type</span>
-            <span class="detail-value">${insuranceData.insuranceType}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Payment Method</span>
-            <span class="detail-value">${formatPaymentMethod(policyData.paymentMethod)} | ${customerData.mainDriver.paymentMethod}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Fees</span>
-            <span class="detail-value">${policyData.checkoutPrice}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">No Claims Discount</span>
-            <span class="detail-value">${customerData.mainDriver.ncd || 'None'}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Car Type</span>
-            <span class="detail-value">${formatCarType(insuranceData.carType)}</span>
-        </div>
-    `;
-        document.getElementById('insurancePlan').innerHTML = insurancePlanHtml;
-
-        const policyInfoHtml = `
-        <div class="detail-row">
-            <span class="detail-label">Effective Date</span>
-            <span class="detail-value">${formatDate(policyData.policyEffectiveDate)}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">End Date</span>
-            <span class="detail-value">${formatDate(customerData.mainDriver.policyEndDate)}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Insured Drivers</span>
-            <span class="detail-value">${customerData.vehicle.insuredDrivers || policyData.insuredDrivers}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Driving Experience of Main Driver</span>
-            <span class="detail-value">${formatDrivingExperience(customerData.mainDriver.drivingExperience || policyData.drivingExperience)}</span>
-        </div>
-
-    `;
-        document.getElementById('policyInfo').innerHTML = policyInfoHtml;
-
-        const vehicleHtml = `
-        <div class="detail-row">
-            <span class="detail-label">Vehicle</span>
-            <span class="detail-value">${customerData.vehicle.carModel || `${insuranceData.carBrand} ${insuranceData.carModel}`}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Manufacturing Year</span>
-            <span class="detail-value">${customerData.vehicle.manufacturingYear || insuranceData.manufacturingYear}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Registration Number</span>
-            <span class="detail-value">${customerData.vehicle.registrationNumber}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">First Registration Date</span>
-            <span class="detail-value">${formatDate(insuranceData.firstRegistrationDate)}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Engine Capacity</span>
-            <span class="detail-value">${customerData.vehicle.cylinderCapacity}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Market Value</span>
-            <span class="detail-value">HK$ ${customerData.vehicle.marketValue}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Chassis Number</span>
-            <span class="detail-value">${customerData.vehicle.chassisNumber}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Engine Number</span>
-            <span class="detail-value">${customerData.vehicle.engineNumber}</span>
-        </div>
-    `;
-        document.getElementById('vehicleDetails').innerHTML = vehicleHtml;
-
-        const driverHtml = `
-        <div class="detail-row">
-            <span class="detail-label">Full Name</span>
-            <span class="detail-value">${customerData.mainDriver.title} ${customerData.mainDriver.firstName} ${customerData.mainDriver.lastName}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Gender</span>
-            <span class="detail-value">${formatGender(customerData.mainDriver.gender)}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">HKID</span>
-            <span class="detail-value">${customerData.mainDriver.hkid}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Date of Birth</span>
-            <span class="detail-value">${formatDate(customerData.mainDriver.dob)}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Contact</span>
-            <span class="detail-value">Email: ${customerData.mainDriver.email}<br>Mobile: ${customerData.mainDriver.mobile}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Occupation</span>
-            <span class="detail-value">${formatOccupation(customerData.mainDriver.occupation)}</span>
-        </div>
-        <div class="detail-row">
-            <span class="detail-label">Address</span>
-            <span class="detail-value">${formatAddress(customerData.address)}</span>
-        </div>
-    `;
-        document.getElementById('driverDetails').innerHTML = driverHtml;
-
-        if (customerData.additionalDrivers && customerData.additionalDrivers.length > 0) {
-            const additionalDriversSection = document.createElement('div');
-            additionalDriversSection.className = 'detail-section';
-            additionalDriversSection.innerHTML = `
-            <h3>Additional Drivers</h3>
-            <div class="detail-content" id="additionalDrivers">
-                ${customerData.additionalDrivers.map((driver, index) => `
-                    <div class="detail-row">
-                        <span class="detail-label">Driver ${index + 2}</span>
-                        <span class="detail-value">
-                            ${driver.title} ${driver.firstName} ${driver.lastName}<br>
-                            HKID: ${driver.hkid}<br>
-                            DOB: ${formatDate(driver.dob)}<br>
-                            Occupation: ${formatOccupation(driver.occupation)}<br>
-                            Experience: ${formatDrivingExperience(driver.drivingExperience)}<br>
-                            Relation: ${formatRelation(driver.relation)}
-                        </span>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-            document.querySelector('.details-grid').appendChild(additionalDriversSection);
-        }
     });
 
 
@@ -955,6 +1045,23 @@
         claimModal.show();
     }
 
+    function rejectInsurance(){
+        const claimModal = new EditModal();
+        claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Reject';
+        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'Are you sure you want to reject this policy?';
+
+        claimModal.modal.querySelector('.confirm').onclick = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+            pendingInsurance = { ...pendingInsurance, status: 'reject' };
+            localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
+            location.reload();
+        };
+
+        claimModal.show();
+    }
+
     function formatDrivingExperience(experience) {
         const experiences = {
             'more_than_5_years': 'More than 5 years',
@@ -969,6 +1076,7 @@
         const orderId = urlParams.get('id');
         const pendingInsurance = findInsuranceById(orderId);
         pendingInsurance.paid = true;
+        pendingInsurance.status = 'acceptByCustomer';
         localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
     }
 
@@ -1050,7 +1158,7 @@
         <button onclick="window.location.href='ordersIndex.html'" class="back-button">
             ← All Appllication
         </button>
-        <button class="back-button" style="background-color: orange">
+        <button id="editPolicy" class="back-button" style="background-color: orange">
             Edit Appllication &rAarr;
         </button>
         <div class="status-grid">
@@ -1074,6 +1182,15 @@
                         <div class="step-content">
                             <h3 id="policyStatus"></h3>
                             <div id="statusBtnOrtxt"></div>
+                        </div>
+                    </div>
+                    <div id="acceptsColor" class="status-step">
+                        <div id="acceptIcon" class="step-icon">⋯</div>
+                        <div class="step-content">
+                            <h3 id="acceptStatus">Accept the quote</h3>
+                            <span id="acceptAt" class="timestamp"></span>
+                            <button id="payBtn" class="back-button" style="background-color: green">Pay for activating insurance</button>
+                            <button id="rejectBtn" onclick="rejectInsurance()" class="back-button" style="background-color: red;">Reject the quote</button>
                         </div>
                     </div>
                     <div id="claimColor" class="status-step">
@@ -1114,14 +1231,24 @@
 
     <div class="details-container">
 
-        <h2>Application Details</h2>
+        <h2>Application Overview</h2>
+        <button onclick="const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            localStorage.setItem('editMode', 'check');
+            localStorage.setItem('editOrderId', orderId);
+            localStorage.setItem('editData', localStorage.getItem(`pendingInsurance-${orderId}`));
+            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+            localStorage.setItem('Save_selected_option', JSON.stringify(pendingInsurance.Save_selected_option));
+            localStorage.setItem('Save_selected_option_2', JSON.stringify(pendingInsurance.Save_selected_option_2));
+            localStorage.setItem('Save_selected_option_3', JSON.stringify(pendingInsurance.Save_selected_option_3));
+            window.location.href = 'editOrder.html';" class="back-button" style="background-color: orange">
+            Application Details
+        </button><br>
+        <br>
         <button id="cancelBtn" class="back-button" style="background-color: red">
             Cancel Your Insurance
-        </button><br>
-        <button id="payBtn" class="back-button" style="background-color: green">
-            Pay
-        </button><br>
-        <span id="paidTime" class="timestamp"></span>
+        </button>
+
         <div class="details-grid">
             <div class="detail-section">
                 <h3>Insurance Plan</h3>
@@ -1148,7 +1275,7 @@
 <div class="payment-modal" id="paymentModal">
     <div class="payment-modal-content">
         <span class="payment-modal-close">&times;</span>
-        <div class="payment-header">
+        <div id="credit_icon" class="payment-header">
             <h2>Payment Details</h2>
             <div class="card-types">
                 <img src="../../../resources/image/visa.svg" alt="Visa" class="card-icon">
@@ -1158,29 +1285,10 @@
         </div>
 
         <form id="paymentForm" class="payment-form">
-            <div class="form-group">
-                <label for="cardName">Cardholder Name *</label>
-                <input type="text" id="cardName" placeholder="Name on card" required>
+            <div id="paymentMethod">
+
             </div>
 
-            <div class="form-group">
-                <label for="cardNumber">Card Number *</label>
-                <input type="text" id="cardNumber" placeholder="0000 0000 0000 0000" maxlength="19" required>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group half">
-                    <label for="expiryDate">Expiry Date *</label>
-                    <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5" required>
-                </div>
-                <div class="form-group half">
-                    <label for="cvv">Security Code (CVV) *</label>
-                    <div class="cvv-container">
-                        <input type="text" id="cvv" placeholder="000" maxlength="3" required>
-                        <div class="cvv-help">?</div>
-                    </div>
-                </div>
-            </div>
 
             <div class="payment-info">
                 <p>Payment will be made to:</p>
