@@ -347,9 +347,23 @@
 
             // Successful login
             showMessage('Login successful! Redirecting...', 'success');
-            setTimeout(() => {
-                window.location.href = `./page/${user.role}/index.html`;
-            }, 1500);
+            if(user.role == 'Admin'){
+                setTimeout(() => {
+                    window.location.href = `./page/${user.role}/index.html`;
+                }, 1500);
+            }else if(user.role == 'Staff' && user.InsuranceLicenseNumber){
+                setTimeout(() => {
+                    window.location.href = `./page/${user.role}/Insurance/index.html`;
+                }, 1500);
+            }else if(user.role == 'Staff'){
+                setTimeout(() => {
+                    window.location.href = `./page/Sales/index.html`;
+                }, 1500);
+            }else if(user.role == 'Customer'){
+                setTimeout(() => {
+                    window.location.href = `./page/Customer/index.html`;
+                }, 1500);
+            }
         });
 
 
