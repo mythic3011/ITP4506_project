@@ -73,7 +73,7 @@
                 localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(updatedInsuranceData));
 
                 alert('Claim submitted successfully! Our team will review your claim and contact you within 24 hours.');
-                window.location.href = 'index.html';
+                window.location.href = 'orderDetail.html?id=' + orderId;
             } catch (error) {
                 console.error('Error saving claim:', error);
                 alert('There was an error saving your claim. Please try again.');
@@ -197,6 +197,19 @@
         border-radius: 12px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         margin-bottom: 2rem;
+    }
+
+    .ncd-warning {
+        background-color: #f8d7da;
+        border-left: 4px solid #dc3545;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+    }
+
+    .ncd-warning h3 {
+        color: #721c24;
+        margin-top: 0;
     }
 
     .policy-header {
@@ -398,11 +411,21 @@
     </div>
 </div>
 
+
 <div class="mainContainer" style="margin-top: 0px">
     <div id="policyInfo" class="policy-summary"></div>
 
     <div class="claim-form">
         <div id="insuranceDetail"></div>
+        <div class="ncd-warning">
+            <h3>Important Notice: About third-party and full-cover compensation</h3>
+            <p>Please be study following mention:</p>
+            <ul>
+                <p>If you purchased third-party insurance, you need to recover the amount by yourself, also, you need to wait the court of judgement than get compensated, provided you are the victim and comply with our regulations (such as no drunk driving)</p>
+                <p>If you purchased full-cover insurance, you would get compensated no matter the court of judgment, provided you are the comply with our regulations (such as no drunk driving)</p>
+            </ul>
+
+        </div>
 
         <h1>Insurance Claim Form</h1>
 
@@ -410,6 +433,7 @@
             <h3>Important Notice</h3>
             <p>Please submit your claim within 24-48 hours of the accident. Ensure all required documents are ready before proceeding.</p>
         </div>
+
 
         <div class="warning-box">
             <h3>Required Documents</h3>
@@ -450,7 +474,7 @@
             <div class="form-section">
                 <h2>Witness and Injured Person Information</h2>
                 <div class="form-group">
-                    <label>Witness Name</label>
+                    <label>Witness(es) Name</label>
                     <input type="text" name="witnessName">
                 </div>
                 <div class="form-group">
@@ -546,6 +570,13 @@
                 </div>
                 <div class="upload-section">
                     <h3>Detailed list of losses</h3>
+                    <div class="upload-area">
+                        <input type="file" name="accidentPictures" accept="image/*" multiple>
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                </div>
+                <div class="upload-section">
+                    <h3>Alcohol breath test</h3>
                     <div class="upload-area">
                         <input type="file" name="accidentPictures" accept="image/*" multiple>
                     </div>

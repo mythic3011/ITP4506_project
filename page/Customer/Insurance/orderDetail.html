@@ -648,9 +648,11 @@
                 document.getElementById('acceptAt').innerText = 'Just Approved by Staff01 "Mike Chan", discount: ' + pendingInsurance.discount + '%,' + '\nScroll down to look detail';
             }
 
-            (pendingInsurance.status == 'acceptByCustomer' ? document.getElementById('claimBtn').style.display = 'block' : document.getElementById('claimBtn').style.display = 'none');
+            (pendingInsurance.status != 'claim' ? document.getElementById('claimingBtn').style.display = 'none' : document.getElementById('claimingBtn').style.display = 'block');
+            (pendingInsurance.status != 'acceptByCustomer' ? document.getElementById('claimBtn').style.display = 'none' : document.getElementById('claimBtn').style.display = 'block');
             (pendingInsurance.status == 'approved' ? document.getElementById('rejectBtn').style.display = 'block' : document.getElementById('rejectBtn').style.display = 'none');
-            (pendingInsurance.status == 'approved' ? document.getElementById('acceptsColor').classList.add('active'):true)
+            (pendingInsurance.status == 'approved' ? document.getElementById('acceptsColor').classList.add('active'):true);
+            (pendingInsurance.status == 'accepted' ? document.getElementById('claimBtn').style.display = 'block' : true);
 
 
 
@@ -690,7 +692,6 @@
 
         </div>
         ${pendingInsurance.raisePrice ? `<div class="detail-row"><span class="detail-label">Raise price By Staff</span><span class="detail-value">HK$${pendingInsurance.raisePrice}</span></div>` : '<div class="detail-row"><span class="detail-label">Raise Price By Staff</span><span class="detail-value">Not yet assign</span></div>'}
-        ${pendingInsurance.status == 'acceptByCustomer' || pendingInsurance.status == 'claim' ||  pendingInsurance.status == 'accepted' || pendingInsurance.status == 'active' || pendingInsurance.status == 'active'? `<div class="detail-row"><span class="detail-label">Raise price By Staff</span><span class="detail-value">HK$${pendingInsurance.raisePrice}</span></div>` : '<div class="detail-row"><span class="detail-label">Raise Price By Staff</span><span class="detail-value">Not yet assign</span></div>'}
 
         <div class="detail-row">
             <span class="detail-label">No Claims Discount</span>
@@ -1054,6 +1055,20 @@
         claimModal.show();
     }
 
+    function claimingInsurance(){
+        const claimModal = new EditModal();
+        claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Claim';
+        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'After encountering a traffic accident, a report must be made within 7-14 days from the date of the accident. Are you sure you want to claim this policy?';
+
+        claimModal.modal.querySelector('.confirm').onclick = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            window.location.href = `claimDetail.html?id=${orderId}`;
+        };
+
+        claimModal.show();
+    }
+
     function rejectInsurance(){
         const claimModal = new EditModal();
         claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Reject';
@@ -1177,6 +1192,7 @@
                     <h3>Application Reference Number:</h3>
                     <p id="referenceNumber"></p>
                 </div>
+
                 <h2>Application Status</h2>
                 <div id="timeLine"  class="status-timeline">
                     <div class="status-step completed">
@@ -1210,6 +1226,7 @@
                             <h3>Claim the insurance</h3>
                             <button id="claimBtn" onclick="claimInsurance()" class="back-button" style="background-color: green;">Claim</button>
                             <span class="timestamp" id="claimMessage"></span>
+                            <button id="claimingBtn" onclick="claimingInsurance()" class="back-button" style="background-color: green;">Check or update your claiming</button>
                         </div>
                     </div>
                 </div>

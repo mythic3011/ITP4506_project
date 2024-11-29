@@ -576,6 +576,9 @@
                 document.getElementById('RejectClaimBtn').style.display = 'none';
                 document.getElementById('AcceptClaimBtn').style.display = 'none';
             }
+            (pendingInsurance.status != 'claim'? document.getElementById('claimingBtn').style.display = 'none' : document.getElementById('claimingBtn').style.display = 'block');
+
+            (pendingInsurance.status == 'accepted'? document.getElementById('claimingBtn').style.display = 'block' : document.getElementById('claimingBtn').style.display = 'none');
 
         }
 
@@ -848,6 +851,20 @@
         ).join(' ');
     }
 
+    function claimingInsurance(){
+        const claimModal = new EditModal();
+        claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Claim';
+        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'After encountering a traffic accident, a report must be made within 7-14 days from the date of the accident. Are you sure you want to claim this policy?';
+
+        claimModal.modal.querySelector('.confirm').onclick = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            window.location.href = `claimDetail.html?id=${orderId}`;
+        };
+
+        claimModal.show();
+    }
+
     function claimInsurance(status){
         const confirmModal = new EditModal();
 confirmModal.modal.querySelector('.orderdetail-modal-title').textContent = `Confirm ${status.charAt(0).toUpperCase() + status.slice(1)}`;
@@ -925,9 +942,10 @@ confirmModal.show();
                         <div class="step-content">
                             <h3>Claim By Customer</h3>
                             <p>
-                            <button id="AcceptClaimBtn" onclick="claimInsurance('accept')" class="back-button" style="background-color: green;">Accept</button>
+                            <button id="AcceptClaimBtn" onclick="claimInsurance('accept')" class="back-button" style="background-color: green;">Finish</button>
                                 <button id="RejectClaimBtn" onclick="claimInsurance('reject')" class="back-button" style="background-color: red;">Reject</button></p>
                             <span class="timestamp" id="claimMessage"></span>
+                            <button id="claimingBtn" onclick="claimingInsurance()" class="back-button" style="background-color: green;">Check or update your claiming</button>
                         </div>
                     </div>
                 </div>
