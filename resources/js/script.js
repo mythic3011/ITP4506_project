@@ -94,7 +94,7 @@ $(document).ready(function () {
 
         const header = $(`
             <header class="navbar bg-white shadow-md sticky top-0 z-50">
-                <div class="container mx-auto flex items-center justify-between p-4">
+                <div class="mainContainer mx-auto flex items-center justify-between p-4">
                     ${createLogo()}
                     ${createSearchBar()}
                     <nav id="navbar" class="flex space-x-4"></nav>

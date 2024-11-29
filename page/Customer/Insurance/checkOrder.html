@@ -94,8 +94,13 @@
 
         const inputs = document.querySelectorAll('input, select, textarea, button');
         inputs.forEach(input => {
-            if (input.id !== 'excess2' && input.id !== 'discountDescription') {
+            if (input.id !== 'excess3' && input.id !== 'excess2' && input.id !== 'discountDescription') {
+                const editOrderId = localStorage.getItem('editOrderId');
+                const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
                 input.disabled = true;
+                document.getElementById('excess2').value = pendingInsurance.discount;
+                document.getElementById('excess3').value = pendingInsurance.raisePrice;
+                document.getElementById('discountDescription').value = "DEMO";
             }
         });
 
@@ -312,6 +317,10 @@
                         document.getElementById('excessWeight2').style.display = parseFloat(value) >= 0 && !isNaN(parseFloat(value)) && parseFloat(value) <= 5 ? 'none' : 'block';
                         document.getElementById('discountDescription').required = parseFloat(value) >= 0 && !isNaN(parseFloat(value)) && parseFloat(value) <= 5 ? false : true;
                         break;
+
+                    case 'excess3':
+                        document.getElementById('excessWeight3').style.display = parseFloat(value) == 0 ? 'none' : 'block';
+                        break;
                     case 'offence_point':
                         isValid = parseFloat(value) >= 0 && !isNaN(parseFloat(value)) && parseFloat(value) <= 15;
                         document.getElementById('offence_point_warning').style.display = isValid && parseFloat(value) > 0? 'block' : 'none';
@@ -450,6 +459,7 @@
         const discountByStaff = amount * (parseFloat(document.getElementById('excess2').value) / 100);
 
         const ncdSelect = document.getElementById('claimsDiscount');
+        const raisePrice = parseFloat(document.getElementById('excess3').value);
         const ncdValue = ncdSelect.value;
 
         let discount = 0;
@@ -464,10 +474,11 @@
             insuranceLevy: insuranceLevy.toFixed(2),
             mibCharge: mibCharge.toFixed(2),
             ncdDiscount: discount.toFixed(2),
-            total: (amount + insuranceLevy + mibCharge - discount + markupPoint - excess - discountByStaff).toFixed(2),
+            total: (amount + raisePrice + insuranceLevy + mibCharge - discount + markupPoint - excess - discountByStaff).toFixed(2),
             excess: excess.toFixed(2),
             markupPoint: markupPoint.toFixed(2),
-            discountByStaff: discountByStaff.toFixed(2)
+            discountByStaff: discountByStaff.toFixed(2),
+            raisePrice: raisePrice.toFixed(2)
         };
     }
 
@@ -485,6 +496,8 @@
         $('#discountByStaff').text(order.discount + '%');
 
         $('#markupOfPoint').text(order.receipt.dop);
+        $('#raisePriceByStaff').text(`HK$${charges.raisePrice}`);
+
 
         $('#ncd').text(order.receipt.ncdDiscount);
         $('#detailExcess').text(order.receipt.excess);
@@ -1175,6 +1188,7 @@
 
                 const currentData = JSON.parse(localStorage.getItem(`pendingInsurance-${referenceNumber}`)) || {};
                 currentData.discount = document.getElementById('excess2').value;
+                currentData.raisePrice = document.getElementById('excess3').value;
                 currentData.status = 'approved';
                 currentData.Save_selected_option_2.checkoutPrice = document.getElementById('totalPrice').textContent;
                 localStorage.setItem(`pendingInsurance-${referenceNumber}`, JSON.stringify(currentData));
@@ -1267,7 +1281,7 @@
     </div>
 </div>
 
-<div class="container" style="min-width: 1400px">
+<div class="mainContainer" style="min-width: 1400px">
     <div style="display: flex; min-height: 100vh; padding: 2rem; gap: 2rem;">
         <div class="checkout_container">
             <div class="section">
@@ -1582,6 +1596,11 @@
                         </div>
 
                         <div class="detail-row">
+                            <span>+ Raise a price by staff</span>
+                            <span id="raisePriceByStaff">-</span>
+                        </div>
+
+                        <div class="detail-row">
                             <span>+ Driving-offence points *</span>
                             <span id="markupOfPoint">-</span>
                         </div>
@@ -1619,6 +1638,21 @@
                                     <br>
                                     <span style="color: red;">With discount more than 5%, you need to describe the result</span>
                                     <input type="text" id="discountDescription" placeholder="Describe the result">
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3>Raise a price By Staff</h3>
+                        <div class="payment-options">
+                            <div class="input-group" style="width: 250px">
+                                <label for="Excess">Raise a price *</label>
+                                <div>
+                                    <input type="number" id="excess3" min="0" value="0" required>
+                                </div>
+                                <div id="excessWeight3">
+                                    <br>
+                                    <span style="color: red;">you need to describe the reason if raise a price</span>
+                                    <input type="text" id="discountDescription3" value="DEMO" placeholder="Describe the result">
                                 </div>
                             </div>
                         </div>

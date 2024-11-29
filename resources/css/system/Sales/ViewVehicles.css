@@ -23,7 +23,7 @@ body {
     text-decoration: underline;
 }
 
-.container {
+.mainContainer {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;

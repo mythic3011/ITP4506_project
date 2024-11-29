@@ -5874,7 +5874,7 @@ img, video {
     display: none
 }
 
-.container {
+.mainContainer {
     width: 100%;
     max-width: 1200px;
     margin: auto; /* Changed to 'auto' for centering */
@@ -5882,31 +5882,31 @@ img, video {
 }
 
 @media (min-width: 640px) {
-    .container {
+    .mainContainer {
         max-width: 640px
     }
 }
 
 @media (min-width: 768px) {
-    .container {
+    .mainContainer {
         max-width: 768px
     }
 }
 
 @media (min-width: 1024px) {
-    .container {
+    .mainContainer {
         max-width: 1024px
     }
 }
 
 @media (min-width: 1280px) {
-    .container {
+    .mainContainer {
         max-width: 1280px
     }
 }
 
 @media (min-width: 1536px) {
-    .container {
+    .mainContainer {
         max-width: 1536px
     }
 }
@@ -6212,7 +6212,7 @@ img, video {
     font-weight: 600
 }
 
-.container {
+.mainContainer {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -8420,7 +8420,7 @@ body {
     padding: 0;
     margin: 0;
 
-    .container {
+    .mainContainer {
         width: 95%;
         max-width: 1200px;
         margin: 0 auto;

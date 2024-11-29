@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Claim Form | Legend Motor Limited</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
+    <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id');
+        const insuranceData = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+
+        displayPolicyInfo(insuranceData);
+
+        const form = document.getElementById('claimForm');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const errors = validateForm(formData);
+
+            if (errors.length > 0) {
+                alert(errors.join('\n'));
+                return;
+            }
+
+            try {
+                // Create claim data object from form
+                const claimData = {
+                    driverInfo: {
+                        name: formData.get('driverLicenceName'),
+                        licenseNumber: formData.get('driverLicenceNumber'),
+                        idNumber: formData.get('driverLicenceID')
+                    },
+                    witnessInfo: {
+                        name: formData.get('witnessName'),
+                        contact: formData.get('witnessContact'),
+                        injuredPersonDetails: formData.get('injuredPersonDetails')
+                    },
+                    passengerInfo: {
+                        count: formData.get('passengerCount'),
+                        details: formData.get('passengerDetails')
+                    },
+                    accidentDetails: {
+                        dateTime: formData.get('accidentDateTime'),
+                        location: formData.get('location'),
+                        policeFileNumber: formData.get('policeFileNumber'),
+                        breathTestReport: formData.get('breathTestReport'),
+                        intendedChargeRef: formData.get('intendedChargeRef'),
+                        description: formData.get('description')
+                    },
+                    damageInfo: {
+                        type: formData.get('damageType'),
+                        estimatedCost: formData.get('estimatedCost')
+                    },
+                    submissionDate: new Date().toISOString(),
+                    status: 'claim'
+                };
+
+                console.log(claimData);
+
+                // Update the insurance data with claim information
+                const updatedInsuranceData = {
+                    ...insuranceData,
+                    claimData: claimData,
+                    status: 'claim'
+                };
+
+                // Save to localStorage
+                localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(updatedInsuranceData));
+
+                alert('Claim submitted successfully! Our team will review your claim and contact you within 24 hours.');
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Error saving claim:', error);
+                alert('There was an error saving your claim. Please try again.');
+            }
+        });
+    });
+
+    function validateForm(formData) {
+        const errors = [];
+
+        if (!formData.get('accidentDateTime')) {
+            errors.push('Accident date and time is required');
+        }
+
+        if (!formData.get('location').trim()) {
+            errors.push('Accident location is required');
+        }
+
+        if (!formData.get('description').trim()) {
+            errors.push('Accident description is required');
+        }
+
+        if (!formData.get('damageType')) {
+            errors.push('Damage type is required');
+        }
+
+        if (!formData.get('driverLicenceName').trim()) {
+            errors.push('Driver name is required');
+        }
+
+        if (!formData.get('driverLicenceNumber').trim()) {
+            errors.push('Driver license number is required');
+        }
+
+        if (!formData.get('driverLicenceID').trim()) {
+            errors.push('Driver ID number is required');
+        }
+
+        if (!formData.get('policeFileNumber').trim()) {
+            errors.push('Police file number is required');
+        }
+
+        const accidentDate = new Date(formData.get('accidentDateTime'));
+        const now = new Date();
+        const hoursDifference = (now - accidentDate) / (1000 * 60 * 60);
+
+        if (hoursDifference > 48) {
+            errors.push('Claim must be submitted within 48 hours of the accident');
+        }
+
+        return errors;
+    }
+
+    function displayPolicyInfo(insuranceData) {
+        const policyContainer = document.getElementById('policyInfo');
+        if (!insuranceData) return;
+
+        const { Save_selected_option, Save_selected_option_2, Save_selected_option_3 } = insuranceData;
+
+        policyContainer.innerHTML = `
+        <div class="policy-header">
+            <h2>Your Insurance Policy</h2>
+            <div style="color: green" class="policy-status ${insuranceData.paid ? 'status-active' : 'status-inactive'}">
+                ${insuranceData.paid ? 'Active' : 'Inactive'}
+            </div>
+        </div>
+        <div class="policy-details">
+            <div class="detail-item">
+                <span class="detail-label">Policy Number</span>
+                <span class="detail-value">${insuranceData.referenceNumber}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Insurance Type</span>
+                <span class="detail-value">${Save_selected_option.insuranceType}</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Vehicle</span>
+                <span class="detail-value">${Save_selected_option.carBrand} ${Save_selected_option.carModel} (${Save_selected_option.manufacturingYear})</span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Coverage Period</span>
+                <span class="detail-value">${formatDate(Save_selected_option_2.policyEffectiveDate)} - ${formatDate(Save_selected_option_3.mainDriver.policyEndDate)}</span>
+            </div>
+        </div>
+    `;
+    }
+
+    function formatDate(dateString) {
+        return new Date(dateString).toLocaleDateString('en-HK', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+</script>
+<style>
+    body {
+        background-color: #ffffff;
+        color: #111;
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mainContainer {
+        z-index: 1;
+        position: relative;
+        min-height: 100vh;
+        max-width: 1000px;
+        min-width: 500px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .policy-summary {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .policy-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        margin-top: 50px;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .policy-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .detail-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .detail-label {
+        font-size: 0.875rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+    }
+
+    .detail-value {
+        font-size: 1rem;
+        color: #333;
+        font-weight: 500;
+    }
+
+    .claim-form {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    label {
+        display: block;
+        font-size: 0.875rem;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    input[type="text"],
+    input[type="datetime-local"],
+    input[type="tel"],
+    input[type="email"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        outline: none;
+        border-color: #00bcd4;
+        box-shadow: 0 0 0 2px rgba(0, 188, 212, 0.1);
+    }
+
+    .required {
+        color: #f44336;
+        margin-left: 4px;
+    }
+
+    .upload-area {
+        border: 2px dashed #ddd;
+        padding: 2rem;
+        text-align: center;
+        margin: 1rem 0;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: border-color 0.2s;
+    }
+
+    .upload-area:hover {
+        border-color: #00bcd4;
+    }
+
+    .file-list {
+        margin-top: 1rem;
+    }
+
+    .file-item {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem;
+        background: #f8f9fa;
+        margin-bottom: 0.5rem;
+        border-radius: 4px;
+    }
+
+    .file-name {
+        flex-grow: 1;
+    }
+
+    .remove-file {
+        color: #f44336;
+        cursor: pointer;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .btn-submit {
+        background-color: #00bcd4;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1.1rem;
+        width: 100%;
+        transition: background-color 0.2s;
+    }
+
+    .btn-submit:hover {
+        background-color: #00acc1;
+    }
+
+    .info-box {
+        background-color: #f8f9fa;
+        border-left: 4px solid #2196F3;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .warning-box {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .warning-box p {
+        margin: 0.5rem 0;
+        line-height: 1.6;
+    }
+
+    .warning-box p.section-title {
+        font-weight: 600;
+        margin-top: 1rem;
+        color: #333;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 40px;
+        padding: 10px;
+        background-color: #f4f4f4;
+        color: #555;
+    }
+
+    @media (max-width: 768px) {
+        .mainContainer {
+            min-width: auto;
+            margin: 0 1rem;
+        }
+
+        .policy-details {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+<body>
+<div class="navbar">
+    <a href="index.html" style="display: flex; align-items: center; padding: 1rem;">
+        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited"
+             style="position: absolute; margin-top: 0.75rem;height: 3rem; width: 3rem;">
+        <span style="display: flex; margin-left: 0.75rem; align-items: center; align-self: center; padding-left: 2.5rem; font-size: 1.5rem; line-height: 2rem; font-weight: 600; white-space: nowrap;">LMC</span>
+    </a>
+    <div class="nav-links">
+        <a class="navbar_a" href="index.html">Home</a>
+        <a class="navbar_a" href="progress.html">Apply</a>
+        <a class="navbar_a" href="ordersIndex.html" style="color: orange">Your Application</a>
+        <a class="navbar_a" href="js/">About Us</a>
+        <a class="navbar_a text-gray-700 hover:text-blue-500" href="../Sales/profile.html">Profile</a>
+        <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../logout.html">Log Out</a>
+    </div>
+</div>
+
+<div class="mainContainer" style="margin-top: 0px">
+    <div id="policyInfo" class="policy-summary"></div>
+
+    <div class="claim-form">
+        <div id="insuranceDetail"></div>
+
+        <h1>Insurance Claim Form</h1>
+
+        <div class="info-box">
+            <h3>Important Notice</h3>
+            <p>Please submit your claim within 24-48 hours of the accident. Ensure all required documents are ready before proceeding.</p>
+        </div>
+
+        <div class="warning-box">
+            <h3>Required Documents</h3>
+
+            <p class="section-title">Police Documentation</p>
+            <p>A police report and statement is mandatory for all accident claims. This document should include the official incident report number and responding officer's details.</p>
+
+            <p class="section-title">Photographic Evidence</p>
+            <p>Clear photographs must be taken of all damaged areas of your vehicle, showing the full extent of the damage. Additional photos should capture the entire accident scene from multiple angles, clearly visible vehicle registration plates of all involved vehicles, and any relevant traffic signals or signs.</p>
+
+            <p class="section-title">Identity Documents</p>
+            <p>Please prepare your valid Hong Kong Driver's License, Hong Kong Identity Card or Passport, and your Vehicle Registration Document. All documents must be current and clearly legible.</p>
+
+            <p class="section-title">Medical Documentation</p>
+            <p>If injuries were sustained, provide all relevant medical reports and diagnoses, hospital admission records, and any treatment receipts or invoices. These documents help establish the extent of personal injury claims.</p>
+
+            <p class="section-title">Supporting Documentation</p>
+            <p>Additional documents that strengthen your claim include witness statements (if available), repair cost estimates from authorized workshops, and recent vehicle maintenance records. These help establish the pre-accident condition of your vehicle and support your claim's validity.</p>
+        </div>
+
+        <form id="claimForm">
+            <div class="form-section">
+                <h2>Driving Licences</h2>
+                <div class="form-group">
+                    <label>Driver Name<span class="required">*</span></label>
+                    <input type="text" name="driverLicenceName" required>
+                </div>
+                <div class="form-group">
+                    <label>Driver License Number<span class="required">*</span></label>
+                    <input type="text" name="driverLicenceNumber" pattern="[A-Z][0-9]{8}" title="Format: A0000000" required>
+                </div>
+                <div class="form-group">
+                    <label>Driver ID Number (HKID, Passport Number etc.)<span class="required">*</span></label>
+                    <input type="text" name="driverLicenceID" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Witness and Injured Person Information</h2>
+                <div class="form-group">
+                    <label>Witness Name</label>
+                    <input type="text" name="witnessName">
+                </div>
+                <div class="form-group">
+                    <label>Witness Contact Number</label>
+                    <input type="tel" name="witnessContact">
+                </div>
+                <div class="form-group">
+                    <label>Injured Person Details</label>
+                    <textarea name="injuredPersonDetails" rows="3" placeholder="Name, contact information, and nature of injuries"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Passenger Information</h2>
+                <div class="form-group">
+                    <label>Number of Passengers</label>
+                    <input type="number" name="passengerCount" min="0">
+                </div>
+                <div class="form-group">
+                    <label>Passenger Details</label>
+                    <textarea name="passengerDetails" rows="3" placeholder="Names and contact information of passengers"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Accident Details</h2>
+                <div class="form-group">
+                    <label>Date and Time of Accident<span class="required">*</span></label>
+                    <input type="datetime-local" name="accidentDateTime" required>
+                </div>
+                <div class="form-group">
+                    <label>Location of Accident<span class="required">*</span></label>
+                    <input type="text" name="location" placeholder="Enter full address of accident location" required>
+                </div>
+                <div class="form-group">
+                    <label>Police File Number<span class="required">*</span></label>
+                    <input type="text" name="policeFileNumber" required>
+                </div>
+                <div class="form-group">
+                    <label>Breath Test Report Number</label>
+                    <input type="text" name="breathTestReport">
+                </div>
+                <div class="form-group">
+                    <label>Notice of Intended Charge Reference</label>
+                    <input type="text" name="intendedChargeRef">
+                </div>
+                <div class="form-group">
+                    <label>Accident Description<span class="required">*</span></label>
+                    <textarea name="description" rows="4" placeholder="Describe how the accident occurred" required></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Damage Information</h2>
+                <div class="form-group">
+                    <label>Type of Damage<span class="required">*</span></label>
+                    <select name="damageType" required>
+                        <option value="">Select damage type</option>
+                        <option value="collision">Collision Damage</option>
+                        <option value="theft">Theft</option>
+                        <option value="vandalism">Vandalism</option>
+                        <option value="natural">Natural Disaster</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Estimated Damage Cost (HKD)</label>
+                    <input type="text" name="estimatedCost" placeholder="Enter estimated cost if known">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Required Documents Upload</h2>
+                <div class="upload-section">
+                    <h3>Police Statement</h3>
+                    <div class="upload-area">
+                        <input type="file" name="policeStatement" accept=".pdf,.doc,.docx">
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                </div>
+                <div class="upload-section">
+                    <h3>Accident Pictures or Videos</h3>
+                    <div class="upload-area">
+                        <input type="file" name="accidentPictures" accept="image/*" multiple>
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                </div>
+                <div class="upload-section">
+                    <h3>Medical report</h3>
+                    <div class="upload-area">
+                        <input type="file" name="accidentPictures" accept="image/*" multiple>
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                </div>
+                <div class="upload-section">
+                    <h3>Detailed list of losses</h3>
+                    <div class="upload-area">
+                        <input type="file" name="accidentPictures" accept="image/*" multiple>
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                </div>
+                <div class="upload-section">
+                    <h3>Additional Documents</h3>
+                    <div class="upload-area" id="uploadArea">
+                        <p>Drop files here or click to upload</p>
+                        <input type="file" id="fileInput" multiple style="display: none">
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                    <div class="file-list" id="fileList"></div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">Submit Claim</button>
+        </form>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
+</body>
+</html>

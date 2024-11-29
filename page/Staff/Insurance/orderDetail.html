@@ -531,11 +531,18 @@
             (pendingInsurance.status != 'acceptByCustomer' ? document.getElementById('acceptsColor').classList.add('active') : document.getElementById('acceptsColor').classList.add('completed'));
             (pendingInsurance.status == 'pending' ? document.getElementById('acceptsColor').classList.remove('active'):true)
 
-            if(pendingInsurance.status == 'acceptByCustomer'){
+            if(pendingInsurance.status == 'acceptByCustomer' || pendingInsurance.status == 'accepted' || pendingInsurance.status == 'claim'){
                 document.getElementById('acceptsColor').classList.remove('active');
                 document.getElementById('acceptsColor').classList.add('completed');
                 document.getElementById('acceptIcon').textContent = '✓';
                 document.getElementById('acceptAt').innerHTML = '<span id="createAt" class="timestamp">Just Accept By Customer</span>';
+            }
+
+            if(pendingInsurance.status == 'rejectPrice'){
+                document.getElementById('acceptsColor').classList.add('error');
+                document.getElementById('acceptIcon').textContent = '✕';
+                document.getElementById('acceptAt').style.display = 'none';
+                document.getElementById('rejectMessage').innerText = 'Rejected by customer, at "Just Now"';
             }
 
             if(pendingInsurance.status == 'accepted'){
@@ -591,6 +598,7 @@
             ${pendingInsurance.paid ? '<span style="font-size: 20px; color: green"><em><b>Just Paid</b></em></span>' : '<span style="font-size: 20px; color: red"><em><b>Unpaid</b></em></span>'}
         </div>
         ${pendingInsurance.discount ? `<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">${pendingInsurance.discount}%</span></div>` : '<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">Not yet assign</span></div>'}
+        ${pendingInsurance.raisePrice ? `<div class="detail-row"><span class="detail-label">Raise price By Staff</span><span class="detail-value">HK$${pendingInsurance.raisePrice}</span></div>` : '<div class="detail-row"><span class="detail-label">Raise Price By Staff</span><span class="detail-value">Not yet assign</span></div>'}
         <div class="detail-row">
             <span class="detail-label">No Claims Discount</span>
             <span class="detail-value">${customerData.mainDriver.ncd || 'None'}</span>
@@ -873,7 +881,7 @@ confirmModal.show();
     </div>
 </div>
 
-<div class="container">
+<div class="mainContainer">
     <div class="status-container">
         <button onclick="window.location.href='ordersIndex.html'" class="back-button">
             ← All Appllication
@@ -909,6 +917,7 @@ confirmModal.show();
                         <div class="step-content">
                             <h3 id="acceptStatus">Waiting Customer Accept and Payment</h3>
                             <span id="acceptAt" class="timestamp"></span>
+                            <span class="timestamp" id="rejectMessage"></span>
                         </div>
                     </div>
                     <div id="claimStatus" class="status-step">

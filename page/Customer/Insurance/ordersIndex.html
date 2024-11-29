@@ -199,7 +199,7 @@
     }
 
     @media (max-width: 768px) {
-        .container {
+        .mainContainer {
             padding: 1rem;
         }
 
@@ -337,7 +337,8 @@
             rejected: 'status-rejected',
             requestCancel : 'status-pending',
             cancelled: 'status-approved',
-            acceptByCustomer: 'status-approved'
+            acceptByCustomer: 'status-approved',
+            rejectPrice: 'status-rejected'
         };
 
         const statusText = {
@@ -350,7 +351,8 @@
             rejected: 'Rejected',
             requestCancel: 'Request Cancel',
             cancelled: 'Cancelled',
-            acceptByCustomer: 'Active'
+            acceptByCustomer: 'Active',
+            rejectPrice: 'Rejected Quote'
         };
 
         return `
