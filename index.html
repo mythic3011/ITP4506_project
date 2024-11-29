@@ -2,21 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Login | Legend Motor Limited</title>
-    <meta name="description" content="Login page for the Legend Motor Limited" />
-    <meta name="author" content="Legend Motor Limited" />
-    <meta name="robots" content="noindex, nofollow" />
-    <link rel="stylesheet" href="resources/css/index.css" />
-    <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon" />
+    <meta name="description" content="Login page for the Legend Motor Limited"/>
+    <meta name="author" content="Legend Motor Limited"/>
+    <meta name="robots" content="noindex, nofollow"/>
+    <link rel="stylesheet" href="resources/css/index.css"/>
+    <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!--    <style rel="resources/css/styles/components/alerts.css"></style>-->
-    <!--    <style rel="resources/css/styles/components/buttons.css"></style>-->
-    <!--    <style rel="resources/css/styles/components/forms.css"></style>-->
-    <!--    <style rel="resources/css/styles/components/index.css"></style>-->
-    <!--    <style rel="resources/css/styles/pages/login.css"></style>-->
     <style rel="resources/css/main.css"></style>
     <script type="module" src="resources/js/main.js"></script>
     <script src="resources/js/index.js"></script>
@@ -135,7 +130,7 @@
         box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
     }
 
-    input:focus+.icon {
+    input:focus + .icon {
         color: var(--primary-color);
     }
 
@@ -347,25 +342,21 @@
 
             // Successful login
             showMessage('Login successful! Redirecting...', 'success');
-            if(user.role == 'Admin'){
+            const redirectToPage = (role, path) => {
                 setTimeout(() => {
-                    window.location.href = `./page/${user.role}/index.html`;
+                    window.location.href = `./page/${role}/${path}`;
                 }, 1500);
-            }else if(user.role == 'Staff' && user.InsuranceLicenseNumber){
-                setTimeout(() => {
-                    window.location.href = `./page/${user.role}/Insurance/index.html`;
-                }, 1500);
-            }else if(user.role == 'Staff'){
-                setTimeout(() => {
-                    window.location.href = `./page/Sales/index.html`;
-                }, 1500);
-            }else if(user.role == 'Customer'){
-                setTimeout(() => {
-                    window.location.href = `./page/Customer/index.html`;
-                }, 1500);
+            };
+
+            if (user.role === 'Admin') {
+                redirectToPage(user.role, 'index.html');
+            } else if (user.role === 'Staff') {
+                const path = user.InsuranceLicenseNumber ? 'Insurance/index.html' : 'Sales/index.html';
+                redirectToPage(user.role, path);
+            } else if (user.role === 'Customer') {
+                redirectToPage(user.role, 'index.html');
             }
         });
-
 
         // Function to show messages
         function showMessage(text, type) {
@@ -378,44 +369,44 @@
 </script>
 
 <body>
-    <main class="container">
-        <div class="text-center">
-            <img src="resources/image/icon-removebg.png" alt="Legend Motor Limited Logo" />
-            <h1>Sign in to Legend Motor Limited</h1>
+<main class="container">
+    <div class="text-center">
+        <img src="resources/image/icon-removebg.png" alt="Legend Motor Limited Logo"/>
+        <h1>Sign in to Legend Motor Limited</h1>
+    </div>
+    <div class="text-center">
+        <p>
+            Don't have an account?
+            <a href="./register.html" style="color: #007bff">Click Here to Register</a>
+        </p>
+    </div>
+    <form id="loginForm">
+        <div class="form-group">
+            <label for="username">Username / Email</label>
+            <input type="text" id="username" name="username" required autocomplete="username"
+                   placeholder="Username"/>
         </div>
-        <div class="text-center">
-            <p>
-                Don't have an account?
-                <a href="./register.html" style="color: #007bff">Click Here to Register</a>
-            </p>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required autocomplete="current-password"
+                   placeholder="Password"/>
         </div>
-        <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Username / Email</label>
-                <input type="text" id="username" name="username" required autocomplete="username"
-                    placeholder="Username" />
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required autocomplete="current-password"
-                    placeholder="Password" />
-            </div>
-            <div class="form-group2">
-                <input type="checkbox" id="remember-me" name="remember-me" />
-                <label for="remember-me">Remember me</label>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <div id="message" class="message"></div>
-        <br><br>
-        <div id="forget-password" class="text-center hidden">
-            <a href="./forget-password.html">Forgot Password?</a>
+        <div class="form-group2">
+            <input type="checkbox" id="remember-me" name="remember-me"/>
+            <label for="remember-me">Remember me</label>
         </div>
-    </main>
+        <button type="submit">Login</button>
+    </form>
+    <div id="message" class="message"></div>
+    <br><br>
+    <div id="forget-password" class="text-center hidden">
+        <a href="./forget-password.html">Forgot Password?</a>
+    </div>
+</main>
 
-    <footer>
-        <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
-    </footer>
+<footer>
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
 
 </body>
 
