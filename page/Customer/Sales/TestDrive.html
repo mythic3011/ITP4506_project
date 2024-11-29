@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Test Drive | Legend Motor Company</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <meta content="Test Drive" name="description">
+    <meta content="test drive, legend motor company" name="keywords">
+    <meta content="noindex, nofollow" name="robots">
+    <link href="../../../resources/image/icon_dark.png" rel="icon" type="image/x-icon" />
+    <script type="module" src="../../../resources/js/script.js"></script>
+    <script type="module" src="../../../resources/js/TestDrive.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    </script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Hero Section -->
+    <section class="h-screen bg-cover bg-center text-white relative" style="background-image: url('https://enzostvs-cached-generation.hf.space/generate/luxury+car+interior?format=landscape-16_9');">
+        <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
+        <div class="relative z-10 h-full flex flex-col justify-center items-center text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4">Book Your Test Drive</h1>
+            <p class="text-xl md:text-2xl mb-8">Experience the thrill of driving your dream car today.</p>
+        </div>
+    </section>
+
+    <!-- Vehicle Selection -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Choose Your Vehicle</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://enzostvs-cached-generation.hf.space/generate/interior+of+luxury+car?format=square" alt="Interior of Luxury Car" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name A</h3>
+                        <p class="text-gray-700 mb-4">Experience luxury and performance with the new Model Name A.</p>
+                        <a href="#vehicle-details" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://enzostvs-cached-generation.hf.space/generate/exterior+of+luxury+car?format=square" alt="Exterior of Luxury Car" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name B</h3>
+                        <p class="text-gray-700 mb-4">Stand out with the style and strength of the new Model Name B.</p>
+                        <a href="#vehicle-details" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
+                    </div>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <img src="https://enzostvs-cached-generation.hf.space/generate/luxury+car+in+a+garage?format=square" alt="Luxury Car in a Garage" class="w-full h-56 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name C</h3>
+                        <p class="text-gray-700 mb-4">Experience the thrill of the open road with the new Model Name C.</p>
+                        <a href="#vehicle-details" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vehicle Details -->
+    <section id="vehicle-details" class="py-16 bg-gray-200">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Vehicle Details</h2>
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-4">Model Name A</h3>
+                        <p class="text-gray-700 mb-4">Experience luxury and performance with the new Model Name A. It comes equipped with advanced safety features, easy-to-use technology, and superior fuel efficiency.</p>
+                        <ul class="list-disc ml-6 text-gray-700 mb-4">
+                            <li>Advanced Safety Features</li>
+                            <li>Easy-to-Use Technology</li>
+                            <li>Superior Fuel Efficiency</li>
+                        </ul>
+                    </div>
+                    <div class="hidden md:block">
+                        <img src="https://enzostvs-cached-generation.hf.space/generate/interior+of+luxury+car?format=square" alt="Interior of Luxury Car" class="w-full h-auto object-cover rounded-lg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Form -->
+    <section id="booking-form" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Book Your Test Drive</h2>
+            <form id="testDriveForm" class="bg-white p-6 shadow-md rounded-lg">
+                <div class="mb-4">
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name</label>
+                    <input type="text" id="name" name="name" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
+                    <input type="email" id="email" name="email" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                </div>
+                <div class="mb-4">
+                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Phone</label>
+                    <input type="tel" id="phone" name="phone" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                </div>
+                <div class="mb-4">
+                    <label for="vehicle" class="block mb-2 text-sm font-medium text-gray-900">Select Vehicle</label>
+                    <select id="vehicle" name="vehicle" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <option value="" disabled selected>Choose a model</option>
+                        <option value="modelA">Model Name A</option>
+                        <option value="modelB">Model Name B</option>
+                        <option value="modelC">Model Name C</option>
+                    </select>
+                </div>
+                <div class="mb-4">
+                    <label for="date" class="block mb-2 text-sm font-medium text-gray-900">Preferred Date</label>
+                    <input type="date" id="date" name="date" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                </div>
+                <div class="mb-4">
+                    <label for="time" class="block mb-2 text-sm font-medium text-gray-900">Preferred Time</label>
+                    <input type="time" id="time" name="time" class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                </div>
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded focus:outline-none focus:ring-4 focus:ring-blue-300">
+                        Book Now
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">What Our Customers Say</h2>
+            <div id="testimonial-carousel" class="carousel relative">
+                <div class="carousel-inner relative overflow-hidden">
+                    <div class="carousel-item active">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <p class="text-gray-700 mb-4">"Amazing service and fantastic cars. Highly recommend!"</p>
+                            <p class="font-bold">- Jane Doe</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <p class="text-gray-700 mb-4">"Smooth ride and great handling. A perfect car for me."</p>
+                            <p class="font-bold">- John Smith</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="bg-white rounded-lg shadow-lg p-6">
+                            <p class="text-gray-700 mb-4">"Very satisfied with my purchase. Legendary service!"</p>
+                            <p class="font-bold">- Amy Brown</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev absolute top-0 bottom-0 left-0 flex items-center justify-center p-10 text-4xl font-semibold text-white hover:text-blue-600" data-slide="prev">‹</button>
+                <button class="carousel-control-next absolute top-0 bottom-0 right-0 flex items-center justify-center p-10 text-4xl font-semibold text-white hover:text-blue-600" data-slide="next">›</button>
+            </div>
+        </div>
+    </section>
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2023 Legend Motor Company. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
+<script>
+    $(document).ready(function() {
+    // Function to show selected vehicle details
+    $(document).on('click', 'a[href="#vehicle-details"]', function(e) {
+        e.preventDefault();
+        const vehicleName = $(this).text().split(' ')[1];
+        $('#vehicle-details h3').text(vehicleName);
+        $('#vehicle-details p:first').text(getVehicleDescription(vehicleName));
+        $('#testDriveForm #vehicle').val(vehicleName.toLowerCase().replace(/\s+/g, '')); // Set default selection
+    });
+
+    function getVehicleDescription(name) {
+        const descriptions = {
+            "Model Name A": "Experience luxury and performance with the new Model Name A. It comes equipped with advanced safety features, easy-to-use technology, and superior fuel efficiency.",
+            "Model Name B": "Stand out with the style and strength of the new Model Name B. It features sleek design, powerful performance, and innovative safety technologies.",
+            "Model Name C": "Experience the thrill of the open road with the new Model Name C. Known for its affordability, versatility, and durable build."
+        };
+        return descriptions[name] || "No description available.";
+    }
+
+    // Form Validation and Submission
+    $('#testDriveForm').on('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        // Validate input fields
+        const name = $('#name').val().trim();
+        const email = $('#email').val().trim();
+        const phone = $('#phone').val().trim();
+        const vehicle = $('#vehicle').val();
+        const date = $('#date').val();
+        const time = $('#time').val();
+
+        // Reset border color
+        $('#name, #email, # телефон, #vehicle, #date, #time').removeClass('border-red-500');
+
+        if (!name) {
+            $('#name').addClass('border-red-500').focus();
+            return alert('Please enter your name.');
+        }
+        if (!email) {
+            $('#email').addClass('border-red-500').focus();
+            return alert('Please enter your email.');
+        }
+        if (!validateEmail(email)) {
+            $('#email').addClass('border-red-500').focus();
+            return alert('Please enter a valid email address.');
+        }
+        if (!vehicle) {
+            $('#vehicle').addClass('border-red-500').focus();
+            return alert('Please select a vehicle.');
+        }
+        if (!date) {
+            $('#date').addClass('border-red-500').focus();
+            return alert('Please select a preferred date.');
+        }
+        if (!time) {
+            $('#time').addClass('border-red-500').focus();
+            return alert('Please select a preferred time.');
+        }
+
+        // Proceed with booking logic (e.g., AJAX call)
+        alert('Test drive booked successfully!');
+        // Optionally redirect to confirmation page
+        window.location.href = 'confirmation.html';
+    });
+
+    // Email validation function
+    function validateEmail(email) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+    }
+
+    // Testimonial Carousel
+    let currentIndex = 0;
+    const items = $('.carousel-item');
+    const numItems = items.length;
+
+    function showItem(index) {
+        items.removeClass('active').eq(index).addClass('active');
+    }
+
+    function nextItem() {
+        currentIndex = (currentIndex + 1) % numItems;
+        showItem(currentIndex);
+    }
+
+    function prevItem() {
+        currentIndex = (currentIndex - 1 + numItems) % numItems;
+        showItem(currentIndex);
+    }
+
+    $('.carousel-control-next').click(nextItem);
+    $('.carousel-control-prev').click(prevItem);
+
+    // Auto-slide the carousel every 5 seconds
+    setInterval(nextItem, 5000);
+});
+</script>
