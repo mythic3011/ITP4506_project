@@ -148,7 +148,7 @@ $(document).ready(function () {
     function createLogo() {
         return `
             <a href="/" class="flex items-center">
-                <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
+                <img src="../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
                 <span class="ml-3 text-xl font-bold text-gray-800">LMC</span>
             </a>
         `;

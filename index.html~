@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Login | Legend Motor Limited</title>
-    <meta
-            name="description"
-            content="Login page for the Legend Motor Limited"
-    />
+    <meta name="description" content="Login page for the Legend Motor Limited"/>
     <meta name="author" content="Legend Motor Limited"/>
     <meta name="robots" content="noindex, nofollow"/>
     <link rel="stylesheet" href="resources/css/index.css"/>
     <link rel="icon" href="resources/image/icon_dark.png" type="image/x-icon"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!--    <style rel="resources/css/styles/components/alerts.css"></style>-->
-<!--    <style rel="resources/css/styles/components/buttons.css"></style>-->
-<!--    <style rel="resources/css/styles/components/forms.css"></style>-->
-<!--    <style rel="resources/css/styles/components/index.css"></style>-->
-<!--    <style rel="resources/css/styles/pages/login.css"></style>-->
     <style rel="resources/css/main.css"></style>
     <script type="module" src="resources/js/main.js"></script>
     <script src="resources/js/index.js"></script>
@@ -274,6 +267,7 @@
             right: 1rem;
         }
     }
+
     .message {
         margin-top: 1rem;
         padding: 1rem;
@@ -309,7 +303,6 @@
     document.addEventListener('DOMContentLoaded', () => {
         const loginForm = document.getElementById('loginForm');
         const messageDiv = document.getElementById('message');
-        const darkModeToggle = document.getElementById('darkModeToggle');
 
         let users = [];
 
@@ -349,74 +342,53 @@
 
             // Successful login
             showMessage('Login successful! Redirecting...', 'success');
-            setTimeout(() => {
-                window.location.href = `./page/${user.role}/${$systemSelect}/index.html`;
-            }, 1500);
+            const redirectToPage = (role, path) => {
+                setTimeout(() => {
+                    window.location.href = `./page/${role}/${path}`;
+                }, 1500);
+            };
+
+            if (user.role === 'Admin') {
+                redirectToPage(user.role, 'index.html');
+            } else if (user.role === 'Staff') {
+                const path = user.InsuranceLicenseNumber ? 'Insurance/index.html' : 'Sales/index.html';
+                redirectToPage(user.role, path);
+            } else if (user.role === 'Customer') {
+                redirectToPage(user.role, 'index.html');
+            }
         });
-
-
-        // Function to show messages
-        function showMessage(text, type) {
-            messageDiv.textContent = text;
-            messageDiv.className = 'message';
-            messageDiv.classList.add(`${type}-message`);
-            messageDiv.style.display = 'block';
-        }
-    });
+            // Function to show messages
+            function showMessage(text, type) {
+                messageDiv.textContent = text;
+                messageDiv.className = 'message';
+                messageDiv.classList.add(`${type}-message`);
+                messageDiv.style.display = 'block';
+            }
+        });
 </script>
+
 <body>
 <main class="container">
     <div class="text-center">
-        <img
-                src="resources/image/icon-removebg.png"
-                alt="Legend Motor Limited Logo"
-        />
+        <img src="resources/image/icon-removebg.png" alt="Legend Motor Limited Logo"/>
         <h1>Sign in to Legend Motor Limited</h1>
     </div>
     <div class="text-center">
         <p>
             Don't have an account?
-            <a href="./register.html" style="color: #007bff"
-            >Click Here to Register</a>
+            <a href="./register.html" style="color: #007bff">Click Here to Register</a>
         </p>
     </div>
     <form id="loginForm">
-        <!--- Select System -->
-        <div class="form-group" id="system-select" style="display: block">
-            <label for="system-select" class="form-select-label">
-                Select System to Login
-                <select
-                        name="system"
-                        id="system-select-form"
-                        required="required"
-                        class="form-select"
-                >
-                    <option value="Sales">Vehicle Sale</option>
-                    <option value="Insurance">Vehicle Insurance</option>
-                </select>
-            </label>
-        </div>
         <div class="form-group">
             <label for="username">Username / Email</label>
-            <input
-                    type="text"
-                    id="username"
-                    name="username"
-                    required
-                    autocomplete="username"
-                    placeholder="Username"
-            />
+            <input type="text" id="username" name="username" required autocomplete="username"
+                   placeholder="Username"/>
         </div>
         <div class="form-group">
             <label for="password">Password</label>
-            <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                    autocomplete="current-password"
-                    placeholder="Password"
-            />
+            <input type="password" id="password" name="password" required autocomplete="current-password"
+                   placeholder="Password"/>
         </div>
         <div class="form-group2">
             <input type="checkbox" id="remember-me" name="remember-me"/>
@@ -436,4 +408,5 @@
 </footer>
 
 </body>
+
 </html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Legend Motor Company - Exclusive Offer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="icon" href="../../../resources/image/icon_dark.png" type="image/x-icon"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
+    <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
+    <script src="../../../resources/js/Sales/Wishlist.js"></script>
+    <script src="../../../resources/js/Sales/Checkout.js"></script>
+    <script src="../../../resources/js/script.js"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Hero Section with Video -->
+    <section class="h-screen bg-cover bg-center text-white relative" style="background-image: url('https://enzostvs-cached-generation.hf.space/generate/elegant+car+driving+on+road?format=landscape-16_9');">
+        <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50"></div>
+        <div class="relative z-10 h-full flex flex-col justify-center items-center text-center">
+            <h1 class="text-5xl md:text-6xl font-bold mb-4">Drive Home Your Dream Car Today!</h1>
+            <p class="text-xl md:text-2xl mb-8">Exclusive deals on the latest models. Limited time offer.</p>
+            <a href="#offers" class="bg-red-500 hover:bg-red-600 text-white font-bold py-3 px-6 rounded">View Offers</a>
+        </div>
+    </section>
+
+    <!-- Vehicles Section -->
+    <section id="vehicles" class="py-16 bg-gray-200">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Explore Our Vehicles</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="vehicles-grid">
+                <!-- Vehicle Cards will be dynamically generated here with jQuery -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 360-degree View Section -->
+    <section class="py-16 bg-gray-800 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">360° Vehicle Views</h2>
+            <p class="mb-8">Explore every angle of our top models with interactive 360-degree views.</p>
+            <!-- Embed 360-degree Viewer -->
+            <div class="relative" style="padding-top: 56.25%;">
+                <iframe src="https://example.com/360-viewer" class="absolute top-0 left-0 w-full h-full" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h3600000)
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">What Our Customers Say</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial Card -->
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <p class="text-gray-700 mb-4">"Amazing service and fantastic cars. Highly recommend!"</p>
+                    <p class="font-bold">- Jane Doe</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <p class="text-gray-700 mb-4">"Smooth ride and great handling. A perfect car for me."</p>
+                    <p class="font-bold">- John Smith</p>
+                </div>
+                <div class="bg-white rounded-lg shadow-lg p-6">
+                    <p class="text-gray-700 mb-4">"Very satisfied with my purchase. Legendary service!"</p>
+                    <p class="font-bold">- Amy Brown</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section id="offers" class="py-16 bg-red-500 text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Limited Time Offers</h2>
+            <p class="mb-8">Get the best deals on our latest models with flexible financing options.</p>
+            <p class="text-2xl font-bold mb-12">Offer Ends In <span id="countdown">00:00:00</span></p>
+            <a href="#contact" class="bg-white text-red-500 font-bold py-3 px-6 rounded">Contact Us Today</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-8 md:mb-0">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Get in Touch</h2>
+                    <p class="text-gray-700 mb-6">Our team is here to help you find your perfect vehicle.</p>
+                    <p class="text-gray-700"><strong>Address:</strong> 1234 Main St, City, Country</p>
+                    <p class="text-gray-700"><strong>Phone:</strong> (123) 456-7890</p>
+                    <p class="text-gray-700"><strong>Email:</strong> contact@legendmotorco.com</p>
+                </div>
+                <div class="md:w-1/2">
+                    <!-- Embed Map -->
+                    <div class="w-full h-64">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.834384643875!2d144.95373631563178!3d-37.81735097975267!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad642a6dd79df19%3A0xce9c2f9b546779c5!2s121%20King%20St%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2sau!4v1612294972492!5m2!1sen!2sau" class="w-full h-full" frameborder="0" style="border:0;" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2024 Legend Motor Company. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Sample data for vehicles
+        const vehicles = [
+            {
+                id: 1,
+                name: "Model Name A",
+                description: "Experience luxury and performance with the new Model Name A.",
+                image: "https://enzostvs-cached-generation.hf.space/generate/interior+of+luxury+car?format=square"
+            },
+            {
+                id: 2,
+                name: "Model Name B",
+                description: "Stand out with the style and strength of the new Model Name B.",
+                image: "https://enzostvs-cached-generation.hf.space/generate/exterior+of+luxury+car?format=square"
+            },
+            {
+                id: 3,
+                name: "Model Name C",
+                description: "Experience the thrill of the open road with the new Model Name C.",
+                image: "https://enzostvs-cached-generation.hf.space/generate/luxury+car+in+a+garage?format=square"
+            }
+        ];
+
+        // Function to create and append vehicle cards to the grid
+        function renderVehicles(vehicles) {
+            const $vehiclesGrid = $('#vehicles-grid');
+            vehicles.forEach(vehicle => {
+                const vehicleCard = `
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="${vehicle.image}" alt="${vehicle.name}" class="w-full h-56 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl md:text-2xl font-bold mb-2">${vehicle.name}</h3>
+                            <p class="text-gray-700 mb-4">${vehicle.description}</p>
+                            <a href="TestDrive.html?id=${vehicle.id}" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Book a Test Drive</a>
+                        </div>
+                    </div>
+                `;
+                $vehiclesGrid.append(vehicleCard);
+            });
+        }
+
+        // Render the vehicles when the document is ready
+        $(document).ready(function() {
+            renderVehicles(vehicles);
+        });
+
+        // Countdown Timer Script
+        const countdownElement = document.getElementById('countdown');
+        const targetDate = new Date().getTime() + 86400000; // 24 hours from now
+
+        function countdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                countdownElement.innerHTML = "EXPIRED";
+            }
+        }
+
+        const countdownInterval = setInterval(countdown, 1000);
+    </script>
+</body>
+</html>
