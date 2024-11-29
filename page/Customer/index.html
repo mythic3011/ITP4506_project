@@ -10,6 +10,91 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <style>
+    .topics-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+
+    .topics-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .topics-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        color: #24292f;
+    }
+
+    .topics-description {
+        color: #57606a;
+        font-size: 1rem;
+    }
+
+    .topics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .topic-card {
+        background-color: #ffffff;
+        border: 1px solid #d0d7de;
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        position: relative;
+        transition: all 0.2s ease-in-out;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .topic-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .topic-icon {
+        width: 64px;
+        height: 64px;
+        margin-bottom: 1rem;
+        object-fit: contain;
+    }
+
+    .topic-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #24292f;
+    }
+
+    .topic-description {
+        color: #57606a;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .topics-grid {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .topics-title {
+            font-size: 1.75rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .topics-container {
+            padding: 1rem;
+        }
+
+        .topic-card {
+            padding: 1.25rem;
+        }
+    }
 </style>
 <body class="bg-gray-50 font-sans">
     <header class="navbar bg-white shadow-md sticky top-0 z-10">
@@ -117,11 +202,25 @@
     </header>
     <main class="container mx-auto p-6">
         <!-- Dashboard Section -->
-        <section id="dashboard-content">
-            <!-- Dynamic content will be loaded here -->
-            <noscript>
-                Please enable JavaScript to view this page.
-            </noscript>
+        <section class="topics-container">
+            <div class="topics-header">
+                <h2 class="topics-title">The services we provide</h2>
+                <p class="topics-description">Provide the best as much as possible</p>
+            </div>
+
+            <div class="topics-grid">
+                <div class="topic-card"  onclick="window.location='./Sales/index.html'">
+                    <img src="../../resources/image/car-svg.svg" class="topic-icon">
+                    <h3 class="topic-title">Vehicle Purchase</h3>
+                    <p class="topic-description">We have a wide car list for customers to select</p>
+                </div>
+
+                <div class="topic-card" onclick="window.location='./Insurance/index.html'">
+                    <img src="../../resources/image/seat-belt-svg.svg" class="topic-icon">
+                    <h3 class="topic-title">Insurance Policy</h3>
+                    <p class="topic-description">Our car insurance is for protection against liability, collision and comprehensive damage, uninsured motorist coverage, and medical payments coverage. It also provides coverage for theft if their vehicle is stolen or damaged by fire, vandalism, or another natural disaster.</p>
+                </div>
+            </div>
         </section>
         <!-- End of Dashboard Section -->
         <!-- Footer Section -->

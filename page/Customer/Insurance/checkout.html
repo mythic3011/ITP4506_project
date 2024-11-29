@@ -462,7 +462,8 @@
         return {
             insuranceLevy: insuranceLevy.toFixed(2),
             mibCharge: mibCharge.toFixed(2),
-            ncdDiscount: discount.toFixed(2),
+            //ncdDiscount: discount.toFixed(2),
+            ncdDiscount: document.getElementById('claimsDiscount').value,
             total: (amount + insuranceLevy + mibCharge - discount + markupPoint - excess).toFixed(2),
             excess: excess.toFixed(2),
             markupPoint: markupPoint.toFixed(2)
@@ -471,20 +472,40 @@
 
 
     function updatePrices() {
-        const editOrderId = localStorage.getItem('editOrderId');
-        const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
-        const subTotal = pendingInsurance.receipt.subTotal;
-        const charges = calculateCharges(subTotal);
+        if (localStorage.getItem('editMode') === 'true') {
+            const editOrderId = localStorage.getItem('editOrderId');
+            const pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${editOrderId}`));
+            const subTotal = pendingInsurance.receipt.subTotal;
+            document.getElementById('subTotal').innerText = subTotal;
+            const charges = calculateCharges(subTotal);
 
-        // Update the display
-        $('#insuranceLevy').text(`HK$${charges.insuranceLevy}`);
-        $('#mibCharge').text(`HK$${charges.mibCharge}`);
-        $('#totalPrice').text(`HK$ ${charges.total}*`);
+            // Update the display
+            $('#insuranceLevy').text(`HK$${charges.insuranceLevy}`);
+            $('#mibCharge').text(`HK$${charges.mibCharge}`);
+            $('#totalPrice').text(`HK$ ${charges.total}*`);
 
-        $('#markupOfPoint').text(`HK$${charges.markupPoint} (Predict)`);
+            $('#markupOfPoint').text(`HK$${charges.markupPoint} (Predict)`);
 
-        $('#ncd').text(document.getElementById('claimsDiscount').value);
-        $('#detailExcess').text(`HK$${charges.excess}`);
+            $('#ncd').text(`${charges.ncdDiscount}`);
+            $('#detailExcess').text(`HK$${charges.excess}`);
+        }
+        else{
+            const subTotal = Save_selected_option_2.checkoutPrice;
+            document.getElementById('subTotal').innerText = subTotal;
+            const charges = calculateCharges(subTotal);
+
+            // Update the display
+            $('#insuranceLevy').text(`HK$${charges.insuranceLevy}`);
+            $('#mibCharge').text(`HK$${charges.mibCharge}`);
+            $('#totalPrice').text(`HK$ ${charges.total}*`);
+
+            $('#markupOfPoint').text(`HK$${charges.markupPoint} (Predict)`);
+
+
+            $('#ncd').text(document.getElementById('claimsDiscount').value);
+            $('#detailExcess').text(`HK$${charges.excess}`);
+        }
+
 
     }
     document.addEventListener('DOMContentLoaded', function() {
@@ -622,7 +643,6 @@
         $('.insurance-type h3').text(Save_selected_option.insuranceType + ' Insurance');
         $('#planName').text('LMC ' + Save_selected_option.insuranceType);
         let paymentMethod = Save_selected_option_2.paymentMethod;
-        document.getElementById('claimsDiscount').value = Save_selected_option_2.ncd;
         updatePrices();
         const numDrivers = parseInt(Save_selected_option_2.insuredDrivers);
         if ((localStorage.getItem('editMode') === 'true') || (localStorage.getItem('editMode') === 'check')) {
@@ -1022,6 +1042,7 @@
                 document.getElementById('hkid').value = data.mainDriver.hkid || '';
                 document.getElementById('dob').value = data.mainDriver.dob || '';
                 document.getElementById('offence_point').value = data.mainDriver.driverOffencePoint || '';
+                document.getElementById('claimsDiscount').value = data.mainDriver.ncd || '';
                 document.getElementById('occupation').value = data.mainDriver.occupation || '';
                 document.getElementById('mainDrivingExperience').value = data.mainDriver.drivingExperience || '';
 
@@ -1183,9 +1204,16 @@
                 const formData = saveFormData();
                 const editMode = localStorage.getItem('editMode') === 'true' || (localStorage.getItem('editMode') === 'check');
                 const referenceNumber = (editMode? editOrderId: generateReferenceNumber());
+                const receipt = {
+                    subTotal: document.getElementById('subTotal').innerText,
+                    insuranceLevy: document.getElementById('insuranceLevy').innerText,
+                    mibCharge: document.getElementById('mibCharge').innerText,
+                    dop: document.getElementById('markupOfPoint').innerText,
+                    ncdDiscount: document.getElementById('ncd').innerText,
+                    excess: document.getElementById('detailExcess').innerText,
+                }
 
                 const currentData = JSON.parse(localStorage.getItem(`Save_selected_option_2`)) || {};
-                if(localStorage.getItem('editMode') === 'true')
                 currentData.checkoutPrice = document.getElementById('totalPrice').textContent;
                 localStorage.setItem(`Save_selected_option_2`, JSON.stringify(currentData));
 
@@ -1196,7 +1224,8 @@
                     referenceNumber,
                     status: 'pending',
                     paid : false,
-                    createdAt: new Date().toISOString()
+                    createdAt: new Date().toISOString(),
+                    receipt
                 }));
                 if(editMode){
                     showThankYouPopup(referenceNumber, true);
