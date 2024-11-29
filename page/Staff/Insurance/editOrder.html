@@ -629,7 +629,6 @@
         $('.insurance-type h3').text(Save_selected_option.insuranceType + ' Insurance');
         $('#planName').text('LMC ' + Save_selected_option.insuranceType);
         let paymentMethod = Save_selected_option_2.paymentMethod;
-        document.getElementById('claimsDiscount').value = Save_selected_option_2.ncd;
         updatePrices();
         const numDrivers = parseInt(Save_selected_option_2.insuredDrivers);
         if ((localStorage.getItem('editMode') === 'true') || (localStorage.getItem('editMode') === 'check')) {
@@ -1012,6 +1011,7 @@
                 document.getElementById('lastName').value = data.mainDriver.lastName || '';
                 document.getElementById('hkid').value = data.mainDriver.hkid || '';
                 document.getElementById('dob').value = data.mainDriver.dob || '';
+                document.getElementById('claimsDiscount').value = data.mainDriver.ncd || '';
                 document.getElementById('offence_point').value = data.mainDriver.driverOffencePoint || '';
                 document.getElementById('occupation').value = data.mainDriver.occupation || '';
                 document.getElementById('mainDrivingExperience').value = data.mainDriver.drivingExperience || '';
