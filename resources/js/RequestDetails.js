@@ -131,11 +131,17 @@ function createImageSlider(images) {
 
     if (Array.isArray(images)) {
         images.forEach((url, index) => {
-            $('<img>', {
-                src: url, alt: "Vehicle Image", class: `slide${index === 0 ? '' : ' hidden'}`, error() {
-                    $(this).attr('src', fallbackImageUrl);
-                }
-            }).appendTo(slidesContainer);
+            console.log(url);
+            const img = $('<img>', {
+                src: url,
+                alt: "Vehicle Image",
+                class: `slide${index === 0 ? '' : ' hidden'}`,
+                width: 750,
+                height: 500
+            }).on('error', function() {
+                $(this).attr('src', fallbackImageUrl);
+            });
+            slidesContainer.append(img);
         });
     } else {
         console.error('Images is not an array:', images);

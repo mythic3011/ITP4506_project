@@ -16,7 +16,7 @@
         background-size: cover;
     }
 
-    .mainContainer {
+    .container {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -398,7 +398,7 @@
                 setTimeout(() => popup.classList.add('show'), 10);
                 document.getElementById('registerAfterShowEmail').innerText = 'Register Email: ' + localStorage.getItem('username');
                 if(document.getElementById('department')){
-                    if(document.getElementById('department').value === 'Insurance'){
+                    if(document.getElementById('department').value == 'Insurance'){
                         document.getElementById('registerAfterShowMessage2').innerText = "After confirm your qualifications will send to your email.";
                         document.getElementById('sellingCarPageBtn').style.display = 'none';
                         document.getElementById('carInsurancePageBtn').style.display = 'none';
@@ -580,6 +580,10 @@
                         <input type="password" id="passwordRepeat" name="passwordRepeat" required>
                     </div>
                 </div>
+            </div>
+            <div class="payment-info">
+                <pre class="company">/</pre>
+
             </div>
 
             <div class="consent">

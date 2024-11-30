@@ -16,6 +16,24 @@
     line-height: 1;
 }
 
-a:hover{
+a:hover {
     text-decoration: none;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji'
+}
+
+::after, ::before {
+    box-sizing: border-box
+}
+
+html {
+    -moz-tab-size: 4;
+    tab-size: 4
+}
+
+[type=search] {
+    -webkit-appearance: textfield;
+    outline-offset: -2px
 }
