@@ -648,6 +648,7 @@
             (pendingInsurance.status == 'approved' ? document.getElementById('rejectBtn').style.display = 'block' : document.getElementById('rejectBtn').style.display = 'none');
             (pendingInsurance.status == 'approved' ? document.getElementById('acceptsColor').classList.add('active'):true);
             (pendingInsurance.status == 'accepted' ? document.getElementById('claimBtn').style.display = 'block' : true);
+            (pendingInsurance.status == 'accepted' ? document.getElementById('claimingBtn').style.display = 'block' : true);
 
 
 
@@ -1041,17 +1042,9 @@
     }
 
     function claimInsurance(){
-        const claimModal = new EditModal();
-        claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Claim';
-        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'After encountering a traffic accident, a report must be made within 7-14 days from the date of the accident. Are you sure you want to claim this policy?';
-
-        claimModal.modal.querySelector('.confirm').onclick = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('id');
-            window.location.href = `claim.html?id=${orderId}`;
-        };
-
-        claimModal.show();
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id');
+        window.location.href = `claim.html?id=${orderId}`;
     }
 
     function claimingInsurance(){
