@@ -115,7 +115,8 @@
     </div>
 </header>
   <section class="py-16 lg:py-24 px-4 lg:px-8 text-center">
-    <img class="w-48 h-48 mx-auto mb-8" src="https://enzostvs-cached-generation.hf.space/generate/car+image?format=square" alt="car image">
+    <img class="w-48 h-48 mx-auto mb-8" src="https://enzostvs-cached-generation.hf.space/generate/car+image?format=square" 
+    alt="car image" id="car-image">
     <h1 class="text-3xl lg:text-4xl font-bold mb-4">Thank you for booking your test drive!</h1>
     <p class="text-xl lg:text-2xl mb-8">We're excited to have you driving our <span id="vehicle-model" class="font-semibold"></span>.</p>
   </section>
@@ -161,19 +162,24 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function() {
-      const bookingData = {
-        vehicle: {
-          model: "LMC Model S"
-        },
-        date: "April 10, 2023",
-        time: "2:00 PM",
-        location: "123 Tesla Lane"
-      };
-      $('#vehicle-model').text(bookingData.vehicle.model);
-      $('#booking-vehicle').text(bookingData.vehicle.model);
-      $('#booking-date').text(bookingData.date);
-      $('#booking-time').text(bookingData.time);
-      $('#booking-location').text(bookingData.location);
+      // get the data from local storage
+    let testDriveData = JSON.parse(localStorage.getItem('testDriveData')) || {};
+    const location = '21 Yuen Wo Rd, Sha Tin, NT, Hong Kong';
+        $('#vehicle-model').text(testDriveData.vehicle);
+        $('#booking-vehicle').text(testDriveData.vehicle);
+        $('#booking-date').text(testDriveData.date);
+        $('#booking-time').text(testDriveData.time);
+        $('#booking-location').text(location);
+        $('#car-image').attr('src', );
+
+      function getCarImage() {
+        // use model to get the car image
+        const vehicles = JSON.parse(localStorage.getItem('vehicles')) || [];
+        // use model to find the car image
+        const carImage = vehicles.find(vehicle => vehicle.model === testDriveData.vehicle).images[0].url;
+        // set the car image
+        $('#car-image').attr('src', carImage);
+      }
     });
   </script>
 </body>

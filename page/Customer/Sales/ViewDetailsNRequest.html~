@@ -10,8 +10,6 @@
     <link href="../../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" href="../../../resources/css/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
-    <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
     <style>
         .image-slider {
             position: relative;

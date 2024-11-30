@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../../../resources/css/main.css">
     <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
     <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
-        <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/hero.css">
@@ -26,6 +26,7 @@
     <script>
     </script>
 </head>
+<body>
 <header class="navbar bg-white shadow-md sticky top-0 z-10">
     <div class="container mx-auto flex justify-between items-center p-4 bg-white">
         <!-- Logo -->
@@ -140,42 +141,10 @@
         </div>
     </section>
     <!-- Vehicle Selection -->
-    <section class="py-16 bg-white ">
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Choose Your Vehicle</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://enzostvs-cached-generation.hf.space/generate/luxury+car?format=square"
-                         alt="Interior of Luxury Car" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name A</h3>
-                        <p class="text-gray-700 mb-4">Experience luxury and performance with the new Model Name A.</p>
-                        <a href="#vehicle-details"
-                           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://enzostvs-cached-generation.hf.space/generate/exterior+of+luxury+car?format=square"
-                         alt="Exterior of Luxury Car" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name B</h3>
-                        <p class="text-gray-700 mb-4">Stand out with the style and strength of the new Model Name B.</p>
-                        <a href="#vehicle-details"
-                           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://enzostvs-cached-generation.hf.space/generate/luxury+car+in+a+garage?format=square"
-                         alt="Luxury Car in a Garage" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name C</h3>
-                        <p class="text-gray-700 mb-4">Experience the thrill of the open road with the new Model Name
-                            C.</p>
-                        <a href="#vehicle-details"
-                           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
-                    </div>
-                </div>
-            </div>
+            <div id="vehicle-selection" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
         </div>
     </section>
 
@@ -195,8 +164,7 @@
                         </ul>
                     </div>
                     <div class="hidden md:block">
-                        <img src="https://enzostvs-cached-generation.hf.space/generate/interior+of+luxury+car?format=square"
-                             alt="Interior of Luxury Car" class="w-full h-auto object-cover rounded-lg">
+                        <img id="VehicleImage" src="" alt="Vehicle Image" class="w-full h-auto object-cover rounded-lg">
                     </div>
                 </div>
             </div>
@@ -231,9 +199,6 @@
                     <select id="vehicle-test-option" name="vehicle"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="" disabled selected>Choose a model</option>
-                        <option value="modelA">Model Name A</option>
-                        <option value="modelB">Model Name B</option>
-                        <option value="modelC">Model Name C</option>
                     </select>
                 </div>
                 <div class="mb-4">
@@ -263,26 +228,7 @@
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">What Our Customers Say</h2>
             <div id="testimonial-carousel" class="carousel relative">
-                <div class="carousel-inner relative overflow-hidden">
-                    <div class="carousel-item active">
-                        <div class="bg-white rounded-lg shadow-lg p-6">
-                            <p class="text-gray-700 mb-4">"Amazing service and fantastic cars. Highly recommend!"</p>
-                            <p class="font-bold">- Jane Doe</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="bg-white rounded-lg shadow-lg p-6">
-                            <p class="text-gray-700 mb-4">"Smooth ride and great handling. A perfect car for me."</p>
-                            <p class="font-bold">- John Smith</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="bg-white rounded-lg shadow-lg p-6">
-                            <p class="text-gray-700 mb-4">"Very satisfied with my purchase. Legendary service!"</p>
-                            <p class="font-bold">- Amy Brown</p>
-                        </div>
-                    </div>
-                </div>
+                <div class="carousel-inner relative overflow-hidden"></div>
                 <button class="carousel-control-prev absolute top-0 bottom-0 left-0 flex items-center justify-center p-10 text-4xl font-semibold text-white hover:text-blue-600"
                         data-slide="prev">‹
                 </button>
@@ -298,24 +244,129 @@
         <p>&copy; 2023 Legend Motor Company. All rights reserved.</p>
     </div>
 </footer>
-</body>
-</html>
 <script>
     $(document).ready(function () {
+        let vehicles = JSON.parse(localStorage.getItem('vehicles')) || fetchVehicles();
 
         // ?id=vehicleid
         const vehicleid = window.location.search.split('=')[1];
         console.log(vehicleid);
         if (vehicleid) {
             // set vehicle name and description
-            $('#VehicleName').text(vehicleid);
-            $('#VehicleDescription').text(getVehicleDescription(vehicleid));
-            $('#testDriveForm #vehicle-test-option').val(vehicleid.toLowerCase().replace(/\s+/g, '')); // Set default selection
+            $('#VehicleName').text(vehicles.find(v => v.id === parseInt(vehicleid)).make + ' ' + vehicles.find(v => v.id === parseInt(vehicleid)).model);
+            $('#VehicleDescription').text(getVehicleDescription(vehicles.find(v => v.id === parseInt(vehicleid)).id));
+            $('#testDriveForm #vehicle-test-option').val(vehicles.find(v => v.id === parseInt(vehicleid)).model.toLowerCase().replace(/\s+/g, '')); // Set default selection
         } else {
             // redirect to 404 page
             window.location.href = '404.html';
         }
 
+        async function fetchVehicles() {
+            try {
+                const data = await $.getJSON("../../../resources/json/vehicles.json");
+                const vehicles = data.map(vehicle => ({
+                    id: vehicle.id,
+                    make: vehicle.make || 'Unknown',
+                    model: vehicle.model || 'Unknown',
+                    modelCode: vehicle.modelCode || 'N/A',
+                    manufacturingYear: vehicle.manufacturingYear || 'N/A',
+                    carType: vehicle.carType || 'N/A',
+                    fuelType: vehicle.fuelType || 'N/A',
+                    year: vehicle.year || 'N/A',
+                    price: vehicle.price || 0,
+                    images: vehicle.images || [],
+                    availableColors: Array.isArray(vehicle.availableColors) ? vehicle.availableColors.map(color => ({
+                        name: color.name, hexCode: color.hexCode
+                    })) : [],
+                    upgradeOptions: {
+                        interiorUpgrades: Array.isArray(vehicle.upgradeOptions?.interiorUpgrades) ? vehicle.upgradeOptions.interiorUpgrades : [],
+                        performanceUpgrades: Array.isArray(vehicle.upgradeOptions?.performanceUpgrades) ? vehicle.upgradeOptions.performanceUpgrades : [],
+                        technologyUpgrades: Array.isArray(vehicle.upgradeOptions?.technologyUpgrades) ? vehicle.upgradeOptions.technologyUpgrades : []
+                    },
+                    insurancePlans: Array.isArray(vehicle.insurancePlans) ? vehicle.insurancePlans.map(option => ({
+                        planName: option.planName,
+                        annualPremium: option.annualPremium,
+                        coverageLimit: option.coverageLimit || null,
+                        deductible: option.deductible || null
+                    })) : [],
+                    specifications: {
+                        engine: vehicle.specifications.engine,
+                        transmission: vehicle.specifications.transmission,
+                        mileage: vehicle.specifications.mileage,
+                        safetyRating: vehicle.specifications.safetyRating || null,
+                        warrantyYears: vehicle.specifications.warrantyYears || null
+                    }
+                }));
+                localStorage.setItem('vehicles', JSON.stringify(vehicles));
+                populateVehicleSelection(vehicles);
+                populateVehicleOptions(vehicles);
+                return vehicles;
+            } catch (error) {
+                console.error("Error fetching vehicles:", error);
+                return []; // Return an empty array on error to prevent further issues
+            }
+        }
+
+        function populateVehicleSelection(vehicles) {
+            const vehicleSelection = $('#vehicle-selection');
+            vehicleSelection.empty();
+                const sellingPoints = [
+        'Experience luxury and performance',
+        'Stand out with style and strength',
+        'Feel the rush of high-speed innovation',
+        'Embrace cutting-edge technology',
+        'Unlock unmatched versatility on any terrain',
+        'Discover the harmony of power and efficiency',
+        'Elevate your driving experience',
+        'Command attention around every curve',
+        'Enjoy supreme comfort and sophistication',
+        'Push the boundaries of adventure',
+        'Navigate with precision and confidence',
+        'Set new standards for performance',
+        'Drive your ambition to new heights',
+        'Indulge in bespoke luxury',
+        'Experience the thrill of the open road',
+        'Unleash your inner thrill-seeker',
+        'Awaken your senses with dynamic design',
+        'Conquer the streets with unrivaled agility',
+        'Transform every journey into a masterpiece',
+        'Capture the spirit of freedom',
+        'Ignite your passion for driving',
+        'Achieve extraordinary performance',
+        'Lead the evolution of automotive excellence',
+        'Seek perfection in every detail',
+        'Revitalize your drive',
+        'Become one with the road',
+        'Delight in sophisticated engineering',
+        'Master every road with grace',
+        'Reimagine your connection to the road',
+        'Explore the future of mobility'
+    ];
+
+            vehicles.forEach(vehicle => {
+                const vehicleCard = `
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="${vehicle.images[0]?.url || 'default-image.jpg'}" alt="${vehicle.make} ${vehicle.model}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold">${vehicle.make} ${vehicle.model}</h3>
+                            <p class="text-gray-700">${vehicle.specifications.engine}</p>
+                            <p class="text-gray-700">${vehicle.price} USD</p>
+                            <a href="#vehicle-details" class="text-blue-500 hover:underline">View Details</a>
+                        </div>
+                    </div>
+                `;
+                vehicleSelection.append(vehicleCard);
+            });
+        }
+
+        function populateVehicleOptions(vehicles) {
+            const vehicleTestOption = $('#vehicle-test-option');
+            vehicleTestOption.empty();
+            vehicles.forEach(vehicle => {
+                const option = `<option value="${vehicle.model.toLowerCase().replace(/\s+/g, '')}">${vehicle.make} ${vehicle.model}</option>`;
+                vehicleTestOption.append(option);
+            });
+        }
 
         // Function to show selected vehicle details
         $(document).on('click', 'a[href="#vehicle-details"]', function (e) {

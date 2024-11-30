@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../../../resources/css/main.css">
     <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
     <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
-        <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/layout.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/hero.css">
@@ -26,6 +26,7 @@
     <script>
     </script>
 </head>
+<body>
 <header class="navbar bg-white shadow-md sticky top-0 z-10">
     <div class="container mx-auto flex justify-between items-center p-4 bg-white">
         <!-- Logo -->
@@ -140,42 +141,10 @@
         </div>
     </section>
     <!-- Vehicle Selection -->
-    <section class="py-16 bg-white ">
+    <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Choose Your Vehicle</h2>
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://enzostvs-cached-generation.hf.space/generate/luxury+car?format=square"
-                         alt="Interior of Luxury Car" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name A</h3>
-                        <p class="text-gray-700 mb-4">Experience luxury and performance with the new Model Name A.</p>
-                        <a href="#vehicle-details"
-                           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://enzostvs-cached-generation.hf.space/generate/exterior+of+luxury+car?format=square"
-                         alt="Exterior of Luxury Car" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name B</h3>
-                        <p class="text-gray-700 mb-4">Stand out with the style and strength of the new Model Name B.</p>
-                        <a href="#vehicle-details"
-                           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
-                    </div>
-                </div>
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <img src="https://enzostvs-cached-generation.hf.space/generate/luxury+car+in+a+garage?format=square"
-                         alt="Luxury Car in a Garage" class="w-full h-56 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl md:text-2xl font-bold mb-2">Model Name C</h3>
-                        <p class="text-gray-700 mb-4">Experience the thrill of the open road with the new Model Name
-                            C.</p>
-                        <a href="#vehicle-details"
-                           class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded">Select Model</a>
-                    </div>
-                </div>
-            </div>
+            <div id="vehicle-selection" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
         </div>
     </section>
 
@@ -195,8 +164,7 @@
                         </ul>
                     </div>
                     <div class="hidden md:block">
-                        <img src="https://enzostvs-cached-generation.hf.space/generate/interior+of+luxury+car?format=square"
-                             alt="Interior of Luxury Car" class="w-full h-auto object-cover rounded-lg">
+                        <img id="VehicleImage" src="" alt="Vehicle Image" class="w-full h-auto object-cover rounded-lg">
                     </div>
                 </div>
             </div>
@@ -231,9 +199,6 @@
                     <select id="vehicle-test-option" name="vehicle"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                         <option value="" disabled selected>Choose a model</option>
-                        <option value="modelA">Model Name A</option>
-                        <option value="modelB">Model Name B</option>
-                        <option value="modelC">Model Name C</option>
                     </select>
                 </div>
                 <div class="mb-4">
@@ -264,24 +229,21 @@
             <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">What Our Customers Say</h2>
             <div id="testimonial-carousel" class="carousel relative">
                 <div class="carousel-inner relative overflow-hidden">
-                    <div class="carousel-item active">
-                        <div class="bg-white rounded-lg shadow-lg p-6">
-                            <p class="text-gray-700 mb-4">"Amazing service and fantastic cars. Highly recommend!"</p>
-                            <p class="font-bold">- Jane Doe</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="bg-white rounded-lg shadow-lg p-6">
-                            <p class="text-gray-700 mb-4">"Smooth ride and great handling. A perfect car for me."</p>
-                            <p class="font-bold">- John Smith</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="bg-white rounded-lg shadow-lg p-6">
-                            <p class="text-gray-700 mb-4">"Very satisfied with my purchase. Legendary service!"</p>
-                            <p class="font-bold">- Amy Brown</p>
-                        </div>
-                    </div>
+        <div class="grid grid-3">
+            <div class="testimonial shadow-lg bg-white">
+                <p>"Amazing service and fantastic cars. Highly recommend!"</p>
+                <p class="testimonial-author">- Jane Doe</p>
+            </div>
+            <div class="testimonial shadow-lg bg-white">
+                <p>"Smooth ride and great handling. A perfect car for me."</p>
+                <p class="testimonial-author">- John Smith</p>
+            </div>
+            <div class="testimonial shadow-lg bg-white">
+                <p>"Very satisfied with my purchase. Legendary service!"</p>
+                <p class="testimonial-author">- Amy Brown</p>
+            </div>
+        </div>
+
                 </div>
                 <button class="carousel-control-prev absolute top-0 bottom-0 left-0 flex items-center justify-center p-10 text-4xl font-semibold text-white hover:text-blue-600"
                         data-slide="prev">‹
@@ -298,24 +260,186 @@
         <p>&copy; 2023 Legend Motor Company. All rights reserved.</p>
     </div>
 </footer>
-</body>
-</html>
 <script>
     $(document).ready(function () {
+        let vehicles = JSON.parse(localStorage.getItem('vehicles')) || [];
 
-        // ?id=vehicleid
-        const vehicleid = window.location.search.split('=')[1];
-        console.log(vehicleid);
-        if (vehicleid) {
-            // set vehicle name and description
-            $('#VehicleName').text(vehicleid);
-            $('#VehicleDescription').text(getVehicleDescription(vehicleid));
-            $('#testDriveForm #vehicle-test-option').val(vehicleid.toLowerCase().replace(/\s+/g, '')); // Set default selection
+            const testimonials = [
+        {
+            name: "John Doe",
+            text: "This is the best car dealership I have ever visited. The staff were friendly and the cars were amazing.",
+        },
+        {
+            name: "Jane Smith",
+            text: "I had a wonderful experience test driving my dream car. Highly recommend!",
+        },
+        {
+            name: "Sam Wilson",
+            text: "Great service and fantastic cars. I will definitely come back for my next purchase.",
+        }
+    ];
+        // Fetch vehicles if not already in local storage
+        if (vehicles.length === 0) {
+            fetchVehicles().then(fetchedVehicles => {
+                vehicles = fetchedVehicles;
+                console.log('Fetched Vehicles:', vehicles); // Debug log
+                handleVehicleSelection();
+                populateVehicleSelection(vehicles);
+                populateVehicleOptions(vehicles);
+            });
         } else {
-            // redirect to 404 page
-            window.location.href = '404.html';
+            console.log('Loaded Vehicles from Local Storage:', vehicles); // Debug log
+            handleVehicleSelection();
+            populateVehicleSelection(vehicles);
+            populateVehicleOptions(vehicles);
         }
 
+            function populateTestimonialCarousel(testimonials) {
+        const carouselInner = $('#testimonial-carousel .carousel-inner');
+        carouselInner.empty();
+
+        testimonials.forEach((testimonial, index) => {
+            const activeClass = index === 0 ? 'active' : '';
+            const testimonialItem = `
+                <div class="carousel-item ${activeClass}">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="${testimonial.image}" alt="${testimonial.name}" class="w-24 h-24 rounded-full mb-4">
+                        <p class="text-lg italic mb-4">"${testimonial.text}"</p>
+                        <p class="text-sm font-bold">${testimonial.name}</p>
+                    </div>
+                </div>
+            `;
+            carouselInner.append(testimonialItem);
+        });
+    }
+
+        function handleVehicleSelection() {
+            // ?id=vehicleid
+            const vehicleid = window.location.search.split('=')[1];
+            console.log('Vehicle ID from URL:', vehicleid); // Debug log
+            if (vehicleid) {
+                const selectedVehicle = vehicles.find(v => v.id === parseInt(vehicleid));
+                if (selectedVehicle) {
+                    // set vehicle name and description
+                    $('#VehicleName').text(`LMC ${selectedVehicle.model}`);
+                    $('#VehicleDescription').text(getVehicleDescription(selectedVehicle.id));
+                    $('#testDriveForm #vehicle-test-option').val(selectedVehicle.model.toLowerCase().replace(/\s+/g, '')); // Set default selection
+                } else {
+                    // redirect to 404 page if vehicle not found
+                    window.location.href = '404.html';
+                }
+            } else {
+                // redirect to 404 page if no vehicle ID in URL
+                window.location.href = '404.html';
+            }
+        }
+
+        async function fetchVehicles() {
+            try {
+                const data = await $.getJSON("../../../resources/json/vehicles.json");
+                const vehicles = data.map(vehicle => ({
+                    id: vehicle.id,
+                    make: vehicle.make || 'Unknown',
+                    model: vehicle.model || 'Unknown',
+                    modelCode: vehicle.modelCode || 'N/A',
+                    manufacturingYear: vehicle.manufacturingYear || 'N/A',
+                    carType: vehicle.carType || 'N/A',
+                    fuelType: vehicle.fuelType || 'N/A',
+                    year: vehicle.year || 'N/A',
+                    price: vehicle.price || 0,
+                    images: vehicle.images || [],
+                    availableColors: Array.isArray(vehicle.availableColors) ? vehicle.availableColors.map(color => ({
+                        name: color.name, hexCode: color.hexCode
+                    })) : [],
+                    upgradeOptions: {
+                        interiorUpgrades: Array.isArray(vehicle.upgradeOptions?.interiorUpgrades) ? vehicle.upgradeOptions.interiorUpgrades : [],
+                        performanceUpgrades: Array.isArray(vehicle.upgradeOptions?.performanceUpgrades) ? vehicle.upgradeOptions.performanceUpgrades : [],
+                        technologyUpgrades: Array.isArray(vehicle.upgradeOptions?.technologyUpgrades) ? vehicle.upgradeOptions.technologyUpgrades : []
+                    },
+                    insurancePlans: Array.isArray(vehicle.insurancePlans) ? vehicle.insurancePlans.map(option => ({
+                        planName: option.planName,
+                        annualPremium: option.annualPremium,
+                        coverageLimit: option.coverageLimit || null,
+                        deductible: option.deductible || null
+                    })) : [],
+                    specifications: {
+                        engine: vehicle.specifications.engine,
+                        transmission: vehicle.specifications.transmission,
+                        mileage: vehicle.specifications.mileage,
+                        safetyRating: vehicle.specifications.safetyRating || null,
+                        warrantyYears: vehicle.specifications.warrantyYears || null
+                    }
+                }));
+                localStorage.setItem('vehicles', JSON.stringify(vehicles));
+                return vehicles;
+            } catch (error) {
+                console.error("Error fetching vehicles:", error);
+                return []; // Return an empty array on error to prevent further issues
+            }
+        }
+
+        function populateVehicleSelection(vehicles) {
+            const vehicleSelection = $('#vehicle-selection');
+            vehicleSelection.empty();
+            console.log('Populating Vehicle Selection:', vehicles); // Debug log
+            const sellingPoints = [
+                'Experience luxury and performance',
+                'Stand out with style and strength',
+                'Feel the rush of high-speed innovation',
+                'Embrace cutting-edge technology',
+                'Unlock unmatched versatility on any terrain',
+                'Discover the harmony of power and efficiency',
+                'Elevate your driving experience',
+                'Command attention around every curve',
+                'Enjoy supreme comfort and sophistication',
+                'Push the boundaries of adventure',
+                'Navigate with precision and confidence',
+                'Set new standards for performance',
+                'Drive your ambition to new heights',
+                'Indulge in bespoke luxury',
+                'Experience the thrill of the open road',
+                'Unleash your inner thrill-seeker',
+                'Awaken your senses with dynamic design',
+                'Conquer the streets with unrivaled agility',
+                'Transform every journey into a masterpiece',
+                'Capture the spirit of freedom',
+                'Ignite your passion for driving',
+                'Achieve extraordinary performance',
+                'Lead the evolution of automotive excellence',
+                'Seek perfection in every detail',
+                'Revitalize your drive',
+                'Become one with the road',
+                'Delight in sophisticated engineering',
+                'Master every road with grace',
+                'Reimagine your connection to the road',
+                'Explore the future of mobility'
+            ];
+        
+            vehicles.forEach((vehicle, index) => {
+                const vehicleCard = `
+                    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        <img src="${vehicle.images[0]?.url || 'default-image.jpg'}" alt="LMC ${vehicle.model}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h3 class="text-xl font-bold">LMC ${vehicle.model}</h3>
+                            <p class="text-gray-700">${sellingPoints[index % sellingPoints.length]}</p>
+                            <p class="text-gray-700">${vehicle.price} USD</p>
+                            <a href="./ViewDetailsNRequest.html?id=${vehicle.id}" class="text-blue-500 hover:underline">View Details</a>
+                        </div>
+                    </div>
+                `;
+                vehicleSelection.append(vehicleCard);
+            });
+        }
+
+        function populateVehicleOptions(vehicles) {
+            const vehicleTestOption = $('#vehicle-test-option');
+            vehicleTestOption.empty();
+            console.log('Populating Vehicle Options:', vehicles); // Debug log
+            vehicles.forEach(vehicle => {
+                const option = `<option value="${vehicle.model.toLowerCase().replace(/\s+/g, '')}">${vehicle.make} ${vehicle.model}</option>`;
+                vehicleTestOption.append(option);
+            });
+        }
 
         // Function to show selected vehicle details
         $(document).on('click', 'a[href="#vehicle-details"]', function (e) {
@@ -336,50 +460,65 @@
         }
 
         // Form Validation and Submission
-        $('#testDriveForm').on('submit', function (e) {
-            e.preventDefault(); // Prevent default form submission
+    $('#testDriveForm').on('submit', function (e) {
+        e.preventDefault(); // Prevent default form submission
 
-            // Validate input fields
-            const name = $('#name').val().trim();
-            const email = $('#email').val().trim();
-            const phone = $('#phone').val().trim();
-            const vehicle = $('#vehicle').val();
-            const date = $('#date').val();
-            const time = $('#time').val();
+        // Validate input fields
+        const name = $('#name').val().trim();
+        const email = $('#email').val().trim();
+        const phone = $('#phone').val().trim();
+        const vehicle = $('#vehicle-test-option').val();
+        const date = $('#date').val();
+        const time = $('#time').val();
 
-            // Reset border color
-            $('#name, #email, #phone, #vehicle, #date, #time').removeClass('border-red-500');
+        // Reset border color
+        $('#name, #email, #phone, #vehicle-test-option, #date, #time').removeClass('border-red-500');
 
-            if (!name) {
-                $('#name').addClass('border-red-500').focus();
-                return alert('Please enter your name.');
-            }
-            if (!email) {
-                $('#email').addClass('border-red-500').focus();
-                return alert('Please enter your email.');
-            }
-            if (!validateEmail(email)) {
-                $('#email').addClass('border-red-500').focus();
-                return alert('Please enter a valid email address.');
-            }
-            if (!vehicle) {
-                $('#vehicle').addClass('border-red-500').focus();
-                return alert('Please select a vehicle.');
-            }
-            if (!date) {
-                $('#date').addClass('border-red-500').focus();
-                return alert('Please select a preferred date.');
-            }
-            if (!time) {
-                $('#time').addClass('border-red-500').focus();
-                return alert('Please select a preferred time.');
-            }
+        if (!name) {
+            $('#name').addClass('border-red-500').focus();
+            return alert('Please enter your name.');
+        }
+        if (!email) {
+            $('#email').addClass('border-red-500').focus();
+            return alert('Please enter your email.');
+        }
+        if (!validateEmail(email)) {
+            $('#email').addClass('border-red-500').focus();
+            return alert('Please enter a valid email address.');
+        }
+        if (!vehicle) {
+            $('#vehicle-test-option').addClass('border-red-500').focus();
+            return alert('Please select a vehicle.');
+        }
+        if (!date) {
+            $('#date').addClass('border-red-500').focus();
+            return alert('Please select a preferred date.');
+        }
+        if (!time) {
+            $('#time').addClass('border-red-500').focus();
+            return alert('Please select a preferred time.');
+        }
 
-            // Proceed with booking logic (e.g., AJAX call)
-            alert('Test drive booked successfully!');
-            // Optionally redirect to confirmation page
-            window.location.href = 'confirmation.html';
-        });
+        // save the data to "testDriveData Object"
+        const testDriveData = {
+            id: Date.now(),
+            name: name,
+            email: email,
+            phone: phone,
+            vehicle: vehicle,
+            date: date,
+            time: time,
+        };
+
+        // update the local storage
+        localStorage.setItem('testDriveData', JSON.stringify(testDriveData));
+        console.log('testDriveData', testDriveData);
+        // Proceed with booking logic (e.g., AJAX call)
+        alert('Test drive booked successfully!');
+        // Optionally redirect to confirmation page
+        window.location.href = 'confirmation.html';
+    });
+
 
         // Email validation function
         function validateEmail(email) {
