@@ -120,8 +120,8 @@
         const now = new Date();
         const hoursDifference = (now - accidentDate) / (1000 * 60 * 60);
 
-        if (hoursDifference > 48) {
-            errors.push('Claim must be submitted within 48 hours of the accident');
+        if (hoursDifference > 336) {
+            errors.push('Claim must be submitted within 7-14 days of the accident');
         }
 
         return errors;
@@ -149,6 +149,15 @@
                 <span class="detail-label">Insurance Type</span>
                 <span class="detail-value">${Save_selected_option.insuranceType}</span>
             </div>
+            <div class="detail-item">
+                    <span class="detail-label">License Plate</span>
+                    <span class="detail-value">${Save_selected_option_3.vehicle.registrationNumber}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Staff incharge</span>
+                    <span class="detail-value">John Wong (xxx@lmc.xxx)</span>
+                    <span class="detail-value">Insurance License Number: XXXXXXXX</span>
+                </div>
             <div class="detail-item">
                 <span class="detail-label">Vehicle</span>
                 <span class="detail-value">${Save_selected_option.carBrand} ${Save_selected_option.carModel} (${Save_selected_option.manufacturingYear})</span>
@@ -421,8 +430,8 @@
             <h3>Important Notice: About third-party and full-cover compensation</h3>
             <p>Please be study following mention:</p>
             <ul>
-                <p>If you purchased third-party insurance, you need to recover the amount by yourself, also, you need to wait the court of judgement than get compensated, provided you are the victim and comply with our regulations (such as no drunk driving)</p>
-                <p>If you purchased full-cover insurance, you would get compensated no matter the court of judgment, provided you are the comply with our regulations (such as no drunk driving)</p>
+                <p>If you purchased third-party insurance, we will compensate the other party if it has loss, you need to recover the amount by yourself, also, you need to wait the court of judgement than get compensated, provided you are the victim</p>
+                <p>If you purchased full-cover insurance, you would get compensated no matter the court of judgment or else, provided you are the comply with <u><b>our regulations</b></u> (such as no drunk driving)</p>
             </ul>
 
         </div>
@@ -431,7 +440,7 @@
 
         <div class="info-box">
             <h3>Important Notice</h3>
-            <p>Please submit your claim within 24-48 hours of the accident. Ensure all required documents are ready before proceeding.</p>
+            <p>Please submit your claim within 7-14 days of the accident. Ensure all required documents are ready before proceeding.</p>
         </div>
 
 
@@ -540,8 +549,8 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Estimated Damage Cost (HKD)</label>
-                    <input type="text" name="estimatedCost" placeholder="Enter estimated cost if known">
+                    <label>Estimated Damage Cost (HKD)<span class="required">*</span></label>
+                    <input type="text" name="estimatedCost" placeholder="Enter estimated cost if known" required>
                 </div>
             </div>
 
@@ -556,6 +565,20 @@
                 </div>
                 <div class="upload-section">
                     <h3>Accident Pictures or Videos</h3>
+                    <div class="upload-area">
+                        <input type="file" name="accidentPictures" accept="image/*" multiple>
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                </div>
+                <div class="upload-section">
+                    <h3>Driver Identity document</h3>
+                    <div class="upload-area">
+                        <input type="file" name="accidentPictures" accept="image/*" multiple>
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                </div>
+                <div class="upload-section">
+                    <h3>Driving license</h3>
                     <div class="upload-area">
                         <input type="file" name="accidentPictures" accept="image/*" multiple>
                     </div>
@@ -577,6 +600,13 @@
                 </div>
                 <div class="upload-section">
                     <h3>Alcohol breath test</h3>
+                    <div class="upload-area">
+                        <input type="file" name="accidentPictures" accept="image/*" multiple>
+                    </div>
+                    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+                </div>
+                <div class="upload-section">
+                    <h3>Notice of intended prosecution</h3>
                     <div class="upload-area">
                         <input type="file" name="accidentPictures" accept="image/*" multiple>
                     </div>

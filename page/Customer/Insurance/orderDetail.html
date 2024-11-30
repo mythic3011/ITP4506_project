@@ -561,7 +561,7 @@
             let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
             pendingInsurance = { ...pendingInsurance, status: 'expired' };
             localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
-            document.getElementById('payBtn').style.display = 'none';
+            //document.getElementById('payBtn').style.display = 'none';
         } else if(pendingInsurance.status == 'requestCancel'){
             document.getElementById('timeLine').innerHTML = '<div class="status-step active">\n' +
                 '                        <div class="step-icon">○</div>\n' +
@@ -577,7 +577,7 @@
                 '                            <div></div>\n' +
                 '                        </div>\n' +
                 '                    </div>'
-            document.getElementById('payBtn').style.display = 'none';
+            //document.getElementById('payBtn').style.display = 'none';
             document.getElementById('cancelBtn').style.display = 'none';
 
         }else if(pendingInsurance.status == 'cancelled'){
@@ -596,7 +596,7 @@
                 '                        </div>\n' +
                 '                    </div>'
 
-            document.getElementById('payBtn').style.display = 'none';
+            //document.getElementById('payBtn').style.display = 'none';
             document.getElementById('cancelBtn').style.display = 'none';
         }
         else{
@@ -636,11 +636,6 @@
                 document.getElementById('claimMessage').innerText = 'Claim Submitted by you, at "Just Now"';
             }
 
-            if(pendingInsurance.paid){
-                document.getElementById('payBtn').disabled = true;
-                document.getElementById('payBtn').style.backgroundColor = 'gray';
-                document.getElementById('payBtn').innerText = "Paid";
-            }
 
             if(pendingInsurance.status == 'approved' || pendingInsurance.status == 'claim' || pendingInsurance.status == 'accepted' || pendingInsurance.status == 'active'){
                 document.getElementById('acceptsColor').classList.add('completed');
@@ -684,14 +679,14 @@
             ${pendingInsurance.paid ? '<span style="font-size: 20px; color: green"><em><b>Just Paid</b></em></span>' : '<span style="font-size: 20px; color: red"><em><b>Unpaid</b></em></span>'}
 
         </div>
-        ${pendingInsurance.discount ? `<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">${pendingInsurance.discount}%</span></div>` : '<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">Not yet assign</span></div>'}
+        ${pendingInsurance.discount ? `<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">${pendingInsurance.discount}%</span></span><span>Reason: DEMO</span></div>` : '<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">Not yet assign</span></div>'}
         <div class="detail-row">
             <span class="detail-label">Fees</span>
             <span class="detail-value">${policyData.checkoutPrice}</span>
-            ${pendingInsurance.status == 'approved' ? document.getElementById('payBtn').style.display = 'block' : document.getElementById('payBtn').style.display = 'none'}
+            ${pendingInsurance.status == 'approved' ? document.getElementById('payBtn').style.display = 'block' :true}
 
         </div>
-        ${pendingInsurance.raisePrice ? `<div class="detail-row"><span class="detail-label">Raise price By Staff</span><span class="detail-value">HK$${pendingInsurance.raisePrice}</span></div>` : '<div class="detail-row"><span class="detail-label">Raise Price By Staff</span><span class="detail-value">Not yet assign</span></div>'}
+        ${pendingInsurance.raisePrice ? `<div class="detail-row"><span class="detail-label">Raise price By Staff</span><span class="detail-value">HK$${pendingInsurance.raisePrice}</span></span><span>Reason: DEMO</span></div>` : '<div class="detail-row"><span class="detail-label">Raise Price By Staff</span><span class="detail-value">Not yet assign</span></div>'}
 
         <div class="detail-row">
             <span class="detail-label">No Claims Discount</span>
@@ -729,6 +724,10 @@
             <span class="detail-label">Driving Offence Points Of Main Driver</span>
             <span class="detail-value">${customerData.mainDriver.driverOffencePoint + " Points" || 'None'}</span>
             <button type="button" class="upload-button">Download Certificates of Traffic Conviction Records</button>
+            <button type="button" class="upload-button">All register Identity Document</button>
+            <button type="button" class="upload-button">All register Driving License</button>
+            <button type="button" class="upload-button">Vehicle Registration Document</button>
+
         </div>
 
     `;
@@ -1056,17 +1055,9 @@
     }
 
     function claimingInsurance(){
-        const claimModal = new EditModal();
-        claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Claim';
-        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'After encountering a traffic accident, a report must be made within 7-14 days from the date of the accident. Are you sure you want to claim this policy?';
-
-        claimModal.modal.querySelector('.confirm').onclick = function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const orderId = urlParams.get('id');
-            window.location.href = `claimDetail.html?id=${orderId}`;
-        };
-
-        claimModal.show();
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id');
+        window.location.href = `claimDetail.html?id=${orderId}`;
     }
 
     function rejectInsurance(){
@@ -1215,7 +1206,7 @@
                         <div class="step-content">
                             <h3 id="acceptStatus">Accept the quote</h3>
                             <span id="acceptAt" class="timestamp"></span>
-                            <button id="payBtn" class="back-button" style="background-color: green">Pay for activating insurance</button>
+                            <button id="payBtn" class="back-button" style="background-color: green; display: none">Pay for activating insurance</button>
                             <button id="rejectBtn" onclick="rejectInsurance()" class="back-button" style="background-color: red;">Reject the quote</button>
                             <span class="timestamp" id="rejectMessage"></span>
                         </div>

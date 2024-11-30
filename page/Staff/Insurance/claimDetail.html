@@ -191,6 +191,138 @@
         background-color: #5a6268;
     }
 
+    .staff-notes-section {
+        background: #f5f5f5;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+        border: 1px solid #ddd;
+    }
+
+    .staff-notes-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .staff-notes-textarea {
+        width: 100%;
+        min-height: 150px;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        font-family: inherit;
+        resize: vertical;
+    }
+
+    .save-notes-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .save-notes-btn:hover {
+        background-color: #45a049;
+    }
+
+    .notes-history {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+
+    .note-entry {
+        padding: 0.5rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .note-timestamp {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .staff-status-section {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+        border: 1px solid #ddd;
+    }
+
+    .status-update-form {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .status-select {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .status-description {
+        width: 100%;
+        min-height: 100px;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    .status-history {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 4px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .status-entry {
+        padding: 0.8rem;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 0.5rem;
+    }
+
+    .status-entry:last-child {
+        border-bottom: none;
+    }
+
+    .status-timestamp {
+        color: #666;
+        font-size: 0.8rem;
+    }
+
+    .status-value {
+        font-weight: bold;
+        color: #2196F3;
+        margin: 0.3rem 0;
+    }
+
+    .update-status-btn {
+        background-color: #2196F3;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s;
+    }
+
+    .update-status-btn:hover {
+        background-color: #1976D2;
+    }
+
     @media (max-width: 768px) {
         .detail-grid {
             grid-template-columns: 1fr;
@@ -214,6 +346,8 @@
         }
 
         const claimData = insuranceData.claimData;
+
+        displayStatusHistory();
 
         // Populate driver information
         document.getElementById('driverName').textContent = claimData.driverInfo.name;
@@ -271,6 +405,90 @@
         const orderId = urlParams.get('id');
         window.location.href = `orderdetail.html?id=${orderId}`;
     }
+
+    function saveNotes() {
+        const notes = document.getElementById('staffNotes').value;
+        const timestamp = new Date().toLocaleString();
+
+        // Get existing notes from localStorage
+        let existingNotes = JSON.parse(localStorage.getItem('staffNotes') || '[]');
+
+        // Add new note
+        existingNotes.push({
+            note: notes   + " (By Staff)",
+            timestamp: timestamp
+        });
+
+        // Save back to localStorage
+        localStorage.setItem('staffNotes', (JSON.stringify(existingNotes)));
+
+        // Update the notes history display
+        displayNotesHistory();
+
+        // Clear the textarea
+        document.getElementById('staffNotes').value = '';
+
+        alert('Notes saved successfully!');
+    }
+
+    function displayNotesHistory() {
+        const notesHistory = JSON.parse(localStorage.getItem('staffNotes') || '[]');
+        const historyContainer = document.getElementById('notesHistory');
+
+        historyContainer.innerHTML = notesHistory.map(entry => `
+            <div class="note-entry">
+                <div class="note-timestamp">${entry.timestamp}</div>
+                <div>${entry.note}</div>
+            </div>
+        `).join('');
+    }
+
+    function updateStatus() {
+        const status = document.getElementById('claimStatus').value;
+        const description = document.getElementById('statusDescription').value;
+        const timestamp = new Date().toLocaleString();
+
+        // Get existing status history
+        let statusHistory = JSON.parse(localStorage.getItem('claimStatusHistory') || '[]');
+
+        // Add new status update
+        statusHistory.push({
+            status: status,
+            description: description,
+            timestamp: timestamp
+        });
+
+        // Save to localStorage
+        localStorage.setItem('claimStatusHistory', JSON.stringify(statusHistory));
+
+        // Update display
+        displayStatusHistory();
+
+        // Clear the description field
+        document.getElementById('statusDescription').value = '';
+
+        // Show success message
+        alert('Status updated successfully!');
+    }
+
+    function displayStatusHistory() {
+        const statusHistory = JSON.parse(localStorage.getItem('claimStatusHistory') || '[]');
+        const historyContainer = document.getElementById('statusHistory');
+
+        historyContainer.innerHTML = statusHistory.reverse().map(entry => `
+                <div class="status-entry">
+                    <div class="status-timestamp">${entry.timestamp}</div>
+                    <div class="status-value">${formatStatus(entry.status)}</div>
+                    <div>${entry.description}</div>
+                </div>
+            `).join('');
+    }
+
+    function formatStatus(status) {
+        return status.split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
 </script>
 <body>
 <div class="navbar">
@@ -290,14 +508,40 @@
 
 <div class="claim-details-container"  style="margin-top: 0px">
     <button onclick="goBack()" class="back-button">← Back to Application Details</button>
-
     <div class="status-badge status-pending">Claim Under Review</div>
     <div class="warning-box">
         <h3>Download the document that the customer uploaded</h3>
         <button type="button" class="upload-button">Download All</button>
     </div>
-    <span style="font-size: 20px; color: red"><em><b>Current Status: During judgement by the court</b></em></span><br><br>
-    <span style="font-size: 20px; color: red"><em><b>Please update status: <input type="text" value="During judgement by the court"></b></em></span>
+
+
+    <div class="staff-status-section">
+        <h2>Staff Status Update</h2>
+        <div class="status-update-form">
+            <select id="claimStatus" class="status-select">
+                <option value="under_review">Under Review</option>
+                <option value="pending_documents">Pending Additional Documents</option>
+                <option value="in_court">In Court Process</option>
+                <option value="approved">Approved</option>
+                <option value="rejected">Rejected</option>
+                <option value="completed">Completed</option>
+            </select>
+            <textarea id="statusDescription" class="status-description"
+                      placeholder="Add details about the status update..."></textarea>
+            <button onclick="updateStatus()" class="update-status-btn">Update Status</button>
+        </div>
+        <div class="status-history" id="statusHistory"></div>
+    </div>
+
+    <div class="staff-notes-section">
+        <div class="staff-notes-header">
+            <h2>Process Notes</h2>
+            <button onclick="saveNotes()" class="save-notes-btn">Save Notes</button>
+        </div>
+        <textarea id="staffNotes" class="staff-notes-textarea"
+                  placeholder="Enter notes about the claiming process here..."></textarea>
+        <div class="notes-history" id="notesHistory"></div>
+    </div>
 
     <h3>Compensation record</h3>
     <div class="upload-area" id="uploadArea4">
@@ -329,7 +573,6 @@
         </div>
 
     </div>
-
 
     <div class="claim-section">
         <h2>Accident Details</h2>
@@ -385,6 +628,14 @@
                     <p>Uploaded successfully</p>
                 </div>
                 <div class="document-item">
+                    <h4>Driver Identity document</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Driving license</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
                     <h4>Medical Report</h4>
                     <p>Uploaded successfully</p>
                 </div>
@@ -394,6 +645,10 @@
                 </div>
                 <div class="document-item">
                     <h4>Detailed Loss List</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Notice of intended prosecution</h4>
                     <p>Uploaded successfully</p>
                 </div>
             </div>

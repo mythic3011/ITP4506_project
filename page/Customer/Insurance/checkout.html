@@ -108,6 +108,7 @@
                 '                            <span id="discountByStaff"></span>\n' +
                 '                        </div>';
             document.getElementById('discountByStaff').innerText = pendingInsurance.discount + "%";
+            document.getElementById('editDetail').style.display = 'none';
         }
 
         document.getElementById('email').value = localStorage.getItem('loginUser');
@@ -633,6 +634,28 @@
     </select>
                     </div>
                 </div>
+                <h2>Required Documents</h2>
+                        <div class="document-upload-section">
+                            <div class="uploaded-document">
+                                <div class="document-item">
+                                    <div class="document-info">
+                                        <span class="document-title">Identity Document</span>
+                                        <span class="upload-status success">✓ Uploaded</span>
+                                    </div>
+                                    <button class="view-document">View Document</button>
+                                </div>
+                            </div>
+
+                            <div class="uploaded-document">
+                                <div class="document-item">
+                                    <div class="document-info">
+                                        <span class="document-title">Driving License</span>
+                                        <span class="upload-status success">✓ Uploaded</span>
+                                    </div>
+                                    <button class="view-document">View Document</button>
+                                </div>
+                            </div>
+                        </div>
             </div>
         `;
     }
@@ -1224,6 +1247,7 @@
                     referenceNumber,
                     status: 'pending',
                     paid : false,
+                    raisePrice: 0,
                     discount: 0,
                     createdAt: new Date().toISOString(),
                     receipt
@@ -1301,6 +1325,62 @@
     }
 
     .upload-button:hover {
+        background-color: #0097a7;
+    }
+
+    .document-upload-section {
+        margin: 20px 0;
+        padding: 20px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .uploaded-document {
+        margin-bottom: 15px;
+    }
+
+    .document-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+    }
+
+    .document-item:hover {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .document-info {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .document-title {
+        font-weight: 600;
+        color: #333;
+    }
+
+    .upload-status {
+        font-size: 0.9em;
+        color: #4CAF50;
+    }
+
+    .view-document {
+        background-color: #00bcd4;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .view-document:hover {
         background-color: #0097a7;
     }
 </style>
@@ -1434,6 +1514,28 @@
                                 </select>
                             </div>
                         </div>
+                        <h2>Required Documents</h2>
+                        <div class="document-upload-section">
+                            <div class="uploaded-document">
+                                <div class="document-item">
+                                    <div class="document-info">
+                                        <span class="document-title">Identity Document</span>
+                                        <span class="upload-status success">✓ Uploaded</span>
+                                    </div>
+                                    <button class="view-document">View Document</button>
+                                </div>
+                            </div>
+
+                            <div class="uploaded-document">
+                                <div class="document-item">
+                                    <div class="document-info">
+                                        <span class="document-title">Driving License</span>
+                                        <span class="upload-status success">✓ Uploaded</span>
+                                    </div>
+                                    <button class="view-document">View Document</button>
+                                </div>
+                            </div>
+                        </div>
 
                         <h2>Address</h2>
                         <div class="form-group">
@@ -1446,6 +1548,7 @@
                                 <input type="text" id="floor">
                             </div>
                         </div>
+
 
                         <div class="form-group">
                             <div class="input-group">
@@ -1472,7 +1575,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div id="driversContainer"></div>
+
                         <div class="form-group">
                             <div class="input-group">
                                 <label for="district">District *</label>
@@ -1482,9 +1585,9 @@
                                     <option value="central">Central</option>
                                 </select>
                             </div>
-
                         </div>
-                        <h2>Insurance Detail</h2>
+                        <h2>Insurance Detail (Main Driver)</h2>
+
                         <div class="form-group">
                             <div class="input-group">
                                 <label for="claimsDiscount">No Claims Discount *</label>
@@ -1512,6 +1615,7 @@
                             </div>
                         </div>
                     </form>
+                    <div id="driversContainer"></div>
                     <div class="section-header">
                         <div class="header-left">
                             <img src="../../../resources/image/car-svg.svg" alt="Car" class="section-icon">
@@ -1588,6 +1692,18 @@
                                     <div class="input-group">
                                         <label for="engineNumber">Engine Number *</label>
                                         <input type="text" id="engineNumber" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="document-upload-section">
+
+                                <div class="uploaded-document">
+                                    <div class="document-item">
+                                        <div class="document-info">
+                                            <span class="document-title">Vehicle Registration Document</span>
+                                            <span class="upload-status success">✓ Uploaded</span>
+                                        </div>
+                                        <button class="view-document">View Document</button>
                                     </div>
                                 </div>
                             </div>
