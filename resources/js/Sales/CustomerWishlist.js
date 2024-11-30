@@ -7,17 +7,17 @@ $(document).ready(function () {
         removeFromWishlist($(this).data('id'));
     });
 
-    // Event for payment method change
-    $('#paymentMethod').change(function () {
-        if ($(this).val() === 'CreditCard') {
-            $('#CreditCard').removeClass('hidden');
-        } else {
-            $('#CreditCard').addClass('hidden');
-        }
-    });
+    // // Event for payment method change
+    // $('#paymentMethod').change(function () {
+    //     if ($(this).val() === 'CreditCard') {
+    //         $('#CreditCard').removeClass('hidden');
+    //     } else {
+    //         $('#CreditCard').addClass('hidden');
+    //     }
+    // });
 
-    // Event for showing trade-in info
-    $('#tradeInInfo').removeClass('hidden'); // Show trade-in info when available
+    // // Event for showing trade-in info
+    // $('#tradeInInfo').removeClass('hidden'); // Show trade-in info when available
 });
 
 // Function to render the wishlist
@@ -30,13 +30,13 @@ function renderWishlist() {
 
     if (wishlist.length === 0) {
         wishlistTableBody.append('<tr><td colspan="7" class="text-center">Your wishlist is empty.</td></tr>');
-        wishlistTableBody.append('<tr><td colspan="7" class="text-center"><a href="./ViewVehicles.html" class="button button-primary">Browse Vehicles</a></td></tr>');
         return;
     }
 
     // Create table rows for each item in the wishlist
     const rows = wishlist.map(item => `
         <tr data-id="${item.id}">
+            <td class='px-6 py-4 whitespace-nowrap'>${item.make}</td>
             <td class='px-6 py-4 whitespace-nowrap'>${item.model}</td>
             <td class='px-6 py-4 whitespace-nowrap'>${item.color}</td>
             <td class='px-6 py-4 whitespace-nowrap'>${item.upgrades}</td>
@@ -51,7 +51,6 @@ function renderWishlist() {
 
     // Calculate and display total cost
     const totalCost = calculateTotalCost(wishlist);
-
 }
 
 // Function to calculate total cost
@@ -64,7 +63,7 @@ function calculateTotalCost(wishlist) {
 
 // Function to get wishlist from local storage or mock data
 function getWishlist() {
-    return DomeWishlist(); // Replace with localStorage logic if needed
+    return JSON.parse(localStorage.getItem('LMC_WishList')) || [];
 }
 
 // Function to remove an item from the wishlist
@@ -72,7 +71,7 @@ function removeFromWishlist(id) {
     const wishlist = getWishlist();
     const updatedWishlist = wishlist.filter(item => item.id !== id);
 
-    localStorage.setItem('lml_wishlist', JSON.stringify(updatedWishlist));
+    localStorage.setItem('LMC_WishList', JSON.stringify(updatedWishlist));
     addNotification('Item removed from your wishlist.', 'success');
     renderWishlist();
 }
@@ -93,16 +92,4 @@ function addNotification(message, type) {
             notification.remove();
         });
     }, 3000);
-}
-
-// Mock data function for the wishlist
-function DomeWishlist() {
-    return [
-        {id: 1, make: 'LMC', model: 'Altima', color: 'Red', upgrades: 'Sunroof', insurancePlans: 'Basic', price: '$23K'},
-        {id: 2, make: 'LMC', model: 'Fusion', color: 'Blue', upgrades: 'Leather Seats', insurancePlans: 'Premium', price: '$24K'},
-        {id: 3, make: 'LMC', model: 'Accord', color: 'Black', upgrades: 'Navigation', insurancePlans: 'Basic', price: '$22K'},
-        {id: 4, make: 'LMC', model: 'Silverado', color: 'White', upgrades: 'Towing Package', insurancePlans: 'Premium', price: '$25K'},
-        {id: 5, make: 'LMC', model: 'X4', color: 'Gray', upgrades: 'Sport Package', insurancePlans: 'Basic', price: '$25K'},
-        {id: 6, make: 'LMC', model: 'Model S', color: 'Silver', upgrades: 'Autopilot', insurancePlans: 'Premium', price: '$18K'}
-    ];
 }

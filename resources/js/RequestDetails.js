@@ -4,7 +4,6 @@ $(document).ready(async function () {
         alert('No Vehicle ID provided. Please check the URL and try again.');
         return;
     }
-
     try {
         const vehicle = await fetchVehicleDetail(vehicleId);
         renderVehicle(vehicle);
@@ -103,7 +102,9 @@ function renderVehicle(vehicle) {
         class: 'bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600', text: 'Back'
     });
     const wishlistButton = $('<button>', {
-        class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600', text: 'Add to Wishlist'
+        class: 'bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600',
+        text: 'Add to Wishlist',
+        id: "addToWishlist-button"
     });
     ButtonContainer.append(backButton, wishlistButton);
     mainDiv.append(ButtonContainer);
@@ -133,12 +134,8 @@ function createImageSlider(images) {
         images.forEach((url, index) => {
             console.log(url);
             const img = $('<img>', {
-                src: url,
-                alt: "Vehicle Image",
-                class: `slide${index === 0 ? '' : ' hidden'}`,
-                width: 750,
-                height: 500
-            }).on('error', function() {
+                src: url, alt: "Vehicle Image", class: `slide${index === 0 ? '' : ' hidden'}`, width: 750, height: 500
+            }).on('error', function () {
                 $(this).attr('src', fallbackImageUrl);
             });
             slidesContainer.append(img);
@@ -173,7 +170,7 @@ function createInfoSection(vehicle) {
     // Price Section
     const priceDiv = $('<div>', {class: 'flex items-center mb-4'});
 
-    priceDiv.append($('<span>', {class: 'text-blue600 dark:text-blue400', text: 'Price:'}));
+    priceDiv.append($('<span>', {class: 'text-blue-600 dark:text-blue400', text: 'Price:'}));
 
     priceDiv.append($('<span>', {
         id: 'VehiclePrice',
@@ -295,11 +292,7 @@ function createColorOption(color) {
     });
 
     const radioInput = $('<input>', {
-        type: "radio",
-        name: "colorOption",
-        id: `colorOption-${color.name}`,
-        value: color.name,
-        change: function () {
+        type: "radio", name: "colorOption", id: `colorOption-${color.name}`, value: color.name, change: function () {
             addSelectedColor(this.value);
         },
     });
@@ -400,18 +393,26 @@ function updateTotalPrice() {
 function addToWishlist(vehicle) {
     // Retrieve existing wishlist from local storage or initialize an empty array
     let wishlistItems = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
-
+    console.log(wishlistItems);
     // Check if a color is selected
     const selectedColor = $('input[name="colorOption"]:checked').val();
     if (!selectedColor) {
-        showNotification('Please select a color for your vehicle', 'error');
+        alert('Please select a color for your vehicle', 'error');
         return;
     }
 
     // Check if the vehicle is already in the wishlist
     const existingItem = wishlistItems.find(item => item.id === vehicle.id);
     if (existingItem) {
-        showNotification('This vehicle is already in your wishlist', 'info');
+        alert('This vehicle is already in your wishlist Now help you to redirect to Wishlist page', 'info');
+        // set the addToWishlist-button to disabled and set its text to "Added to Wishlist"
+        $('#addToWishlist-button').prop('disabled', true);
+        $('#addToWishlist-button').text('Added to Wishlist');
+        $('#addToWishlist-button').removeClass('bg-green-500');
+        $('#addToWishlist-button').addClass('bg-red-500');
+    setTimeout(() => {
+        window.location.href = './Wishlist.html';
+    }, 1000);
         return;
     }
 
@@ -452,14 +453,9 @@ function addToWishlist(vehicle) {
 
     // Create a new wishlist item with selected options
     const wishlistItem = {
-        id: vehicle.id,
-        make: vehicle.make,
-        model: vehicle.model,
-        color: selectedColor,
-        upgrades: selectedUpgrades,  // Only upgrades, no insurance here
+        id: vehicle.id, make: vehicle.make, model: vehicle.model, color: selectedColor, upgrades: selectedUpgrades,  // Only upgrades, no insurance here
         insurancePlans: selectedInsurancePlans,  // Separate array for insurance plans
-        price: vehicle.price,
-        totalPrice: totalPrice,  // New field for total price
+        price: vehicle.price, totalPrice: totalPrice,  // New field for total price
         dateAdded: new Date().toISOString()  // Timestamp for when it was added
     };
 
@@ -469,13 +465,13 @@ function addToWishlist(vehicle) {
     // Save updated wishlist back to local storage
     localStorage.setItem('LMC_WishList', JSON.stringify(wishlistItems));
 
-    showNotification('Vehicle added to your wishlist!', 'success');
+    alert('Vehicle added to your wishlist!', 'success');
 
-    showNotification('Redirecting to Wishlist page...', 'info');
+    alert('Redirecting to Wishlist page...', 'info');
 
     setTimeout(() => {
         window.location.href = './Wishlist.html';
-    }, 3000);
+    }, 1000);
 }
 
 
@@ -485,8 +481,8 @@ $(document).on('click', '.bg-green-500', function () {
 
 // Back button onClick event
 $(document).on('click', '.bg-blue-500', function () {
-    showNotification('Redirecting to Home page...', 'info');
-    window.location.href = './index.html';
+    alert('Redirecting to Home page...', 'info');
+    window.location.href = './ViewVehicles.html';
 });
 
 let notificationTimeout;

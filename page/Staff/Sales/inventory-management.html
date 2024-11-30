@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legend Motor Limited - Inventory Management</title>
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="../../../resources/css/main.css">
+    <link rel="stylesheet" href="./styles/staff/inventory.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<style>
+    .spinner {
+        display: inline-block;
+        text-align: center;
+        line-height: 86px;
+        text-align: center;
+        position: relative;
+        padding: 0 48px;
+        font-size: 48px;
+        font-family: Arial, Helvetica, sans-serif;
+        color: #fff;
+    }
+
+    .loader:before, .loader:after {
+        content: "";
+        display: block;
+        width: 15px;
+        height: 15px;
+        background: currentColor;
+        position: absolute;
+        animation: load .7s infinite alternate ease-in-out;
+        top: 0;
+    }
+
+    .loader:after {
+        top: auto;
+        bottom: 0;
+    }
+
+    @keyframes load {
+        0% {
+            left: 0;
+            height: 43px;
+            width: 15px;
+            transform: translateX(0)
+        }
+        50% {
+            height: 10px;
+            width: 40px
+        }
+        100% {
+            left: 100%;
+            height: 43px;
+            width: 15px;
+            transform: translateX(-100%)
+        }
+    }
+
+
+    .vehicle-grid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .vehicle-card {
+        flex: 1 1 calc(33.333% - 1em);
+        margin: 0.5em;
+    }
+
+    @media (max-width: 768px) {
+        .vehicle-card {
+            flex: 1 1 calc(50% - 1em);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .vehicle-card {
+            flex: 1 1 100%;
+        }
+    }
+
+    .bg-red-500 {
+        --tw-bg-opacity: 1;
+        background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+    }
+
+    button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<body class="bg-gray-50 font-sans">
+<div class="container mx-auto flex justify-between items-center p-4 bg-gray-50">
+    <!-- Logo -->
+    <a href="#" class="flex items-center">
+        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
+        <span class="ml-3 text-xl font-bold">LMC</span>
+    </a>
+
+    <!-- Search Bar -->
+    <div class="relative flex-grow mx-4">
+        <label for="search-bar-vehicles" class="absolute left-2 top-2">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+        </label>
+        <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
+               class="border rounded px-10 py-1 w-full focus:outline-none focus:ring focus:ring-primary-light"/>
+    </div>
+
+    <!-- Navigation Links -->
+    <nav id="nav_link" class="md:flex space-x-4 gap-1">
+        <a class="navbar_a text-gray-700 hover:text-blue-500" href="../index.html">Home</a>
+
+        <!-- Vehicles Dropdown -->
+        <div class="relative group">
+            <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
+                    id="Vehicles-dropdown-toggle">
+                Vehicles
+            </button>
+            <div class="dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]"
+                 id="Vehicles-dropdown">
+                <nav class="nav-links flex flex-col space-y-2 p-2 gap-5">
+                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./inventory-management.html">Manage Vehicles</a>
+                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./ManageOrder.html">Manage Orders</a>
+                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./DiscountCodeManagementSystem.html">Manage
+                        Discount Codes</a>
+                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./Licensing.html">Manage Vehicles
+                        Licensing </a>
+                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./ManageBooking.html">Manage Test Drive
+                        Bookings</a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Insurance Dropdown -->
+        <div class="relative group">
+            <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
+                    id="Insurance-dropdown-toggle">
+                Insurance
+            </button>
+            <div class='dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]'
+                 id="Insurance-dropdown">
+                <nav class="nav-links flex flex-col space-y-2 p-2 gap-[5px]">
+                    <a href="../Insurance/ordersIndex.html">Manage Insurance</a>
+                </nav>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notification Button -->
+    <div id="notificationsBtn" class="relative mx-[10px]">
+        <button aria-label="Notifications" aria-haspopup="true" aria-expanded="false" id="notificationToggle">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2">
+                <path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'></path>
+                <path d='M13.73 21a2 2 0 0 1-3.46'></path>
+            </svg>
+            <span
+                    class='notification-badge absolute top-[5px] right-[5px] bg-red text-white rounded-full px-[5px] text-xs'>3</span>
+        </button>
+    </div>
+    <!-- User Menu -->
+    <div class="relative group">
+        <div class="relative flex items-center gap-2 p-2 bg-gray-100 rounded-md shadow-sm border "
+             id="user-menu">
+            <!-- User Avatar -->
+            <span
+                    class="user-avatar bg-blue-500 rounded-full h-[40px] w-[40px] flex items-center justify-center text-white font-bold"
+                    id="username-avatar">
+                        C
+                    </span>
+            <!-- Username -->
+            <span class="user-name text-gray-800 font-medium" id="username-name">customer</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600 user-menu-Dropdown-Arrow-svg"
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+        </div>
+        <div id="user-Submenu"
+             class="dropdown hidden absolute right-0 bg-white shadow-lg rounded-md mt-2 z-[100] w-[150px]">
+            <nav class="nav-links flex flex-col space-y-2 p-2">
+                <a href="../../profile.html"
+                   class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
+                    Profile
+                </a>
+                <a href="../../logout.html"
+                   class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
+                    Logout
+                </a>
+            </nav>
+        </div>
+    </div>
+</div>
+<body class="staff-page bg-gray-150">
+<div id="message" class="message"></div>
+
+<main class="content-container">
+    <header class="page-header">
+        <h1>Vehicle Inventory Management</h1>
+        <button id="addVehicleBtn" class="primary-button">Add New Vehicle</button>
+    </header>
+
+    <div class="inventory-filters">
+        <div class="search-box">
+            <label for="searchVehicle">Search Vehicles</label>
+            <input type="text" id="searchVehicle" placeholder="Search vehicles...">
+        </div>
+        <div class="filter-group">
+            <select id="typeFilter">
+                <option value="">All Types</option>
+                <option value="SUV">SUV</option>
+                <option value="Sedan">Sedan</option>
+                <option value="Truck">Truck</option>
+            </select>
+            <select id="fuelFilter">
+                <option value="">All Fuel Types</option>
+                <option value="Gasoline">Gasoline</option>
+                <option value="Diesel">Diesel</option>
+                <option value="Electric">Electric</option>
+            </select>
+            <select id="yearFilter">
+                <option value="">All Years</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="inventory-grid" id="vehicleGrid">
+        <div id="loadingSpinner" class="spinner hidden"></div>
+        <!-- Vehicle cards will be populated by JavaScript -->
+    </div>
+</main>
+
+<!-- Add/Edit Vehicle Modal -->
+<div id="vehicleModal" class="modal">
+    <div class="modal-content">
+        <h2 id="modalTitle" class="text-2xl font-bold mb-4">Add New Vehicle</h2>
+        <form id="vehicleForm">
+            <!-- Basic Information -->
+            <div class="form-section">
+                <h3>Basic Information</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="make">Make</label>
+                        <input type="text" id="make" required pattern="[A-Za-z]+"
+                               title="Please enter a valid make using letters only.">
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Model</label>
+                        <input type="text" id="model" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modelCode">Model Code</label>
+                        <input type="text" id="modelCode" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="manufacturingYear">Manufacturing Year</label>
+                        <input type="number" id="manufacturingYear" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="carType">Car Type</label>
+                        <select id="carType" required>
+                            <option value="SUV">SUV</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="Truck">Truck</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fuelType">Fuel Type</label>
+                        <select id="fuelType" required>
+                            <option value="Gasoline">Gasoline</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Electric">Electric</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Specifications -->
+            <div class="form-section">
+                <h3>Specifications</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="engineType">Engine Type</label>
+                        <input type="text" id="engineType" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cylinderCount">Cylinder Count</label>
+                        <input type="number" id="cylinderCount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="horsepower">Horsepower</label>
+                        <input type="number" id="horsepower" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="torque">Torque</label>
+                        <input type="number" id="torque" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="drivetrain">Drivetrain</label>
+                        <select id="drivetrain" required>
+                            <option value="FWD">FWD</option>
+                            <option value="RWD">RWD</option>
+                            <option value="AWD">AWD</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="transmission">Transmission</label>
+                        <select id="transmission" required>
+                            <option value="Automatic">Automatic</option>
+                            <option value="Manual">Manual</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="gears">Number of Gears</label>
+                        <input type="number" id="gears" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mileage">Mileage</label>
+                        <input type="number" id="mileage" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="safetyRating">Safety Rating</label>
+                        <input type="number" id="safetyRating" min="1" max="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="warrantyYears">Warranty (Years)</label>
+                        <input type="number" id="warrantyYears" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing -->
+            <div class="form-section">
+                <h3>Pricing</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="price">Base Price</label>
+                        <input type="number" id="price" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Images -->
+            <div class="form-section">
+                <h3>Images</h3>
+                <div class="form-group">
+                    <label for="images">Vehicle Images</label>
+                    <input type="file" id="images" multiple accept="image/*">
+                    <label for="images-url">Or enter image URL</label>
+                    <input type="url" id="images-url" placeholder="Enter image URL..." class="mt-4">
+                    <button type="button" id="addImageBtn" class="mt-4 primary-button">Add Image</button>
+                    <div id="imagePreview" class="image-preview"></div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button type="button" class="secondary-button" id="cancelBtn">Cancel</button>
+                <button type="submit" class="primary-button">Save Vehicle</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<footer class="staff-footer">
+    © 2024 Legend Motor Limited. All rights reserved.
+</footer>
+<script>
+
+
+    class InventoryManagementUI {
+        constructor() {
+            this.vehicleService = new VehicleService();
+            this.modalManager = new ModalManager('vehicleModal');
+            this.imagePreviewManager = new ImagePreviewManager('images', 'imagePreview');
+            this.filterManager = new FilterManager();
+
+            this.initializeElements();
+            this.attachEventListeners();
+            this.loadVehicles();
+            this.attachEventListeners();
+        }
+
+        initializeElements() {
+            // Buttons
+            this.addVehicleBtn = document.getElementById('addVehicleBtn');
+            this.cancelBtn = document.getElementById('cancelBtn');
+            this.addImageBtn = document.getElementById('addImageBtn');
+
+            // Form
+            this.vehicleForm = document.getElementById('vehicleForm');
+
+            // Grid
+            this.vehicleGrid = document.getElementById('vehicleGrid');
+
+            // Message
+            this.messageDiv = document.getElementById('message');
+        }
+
+        attachEventListeners() {
+            this.addVehicleBtn.addEventListener('click', () => this.openAddVehicleModal());
+            this.cancelBtn.addEventListener('click', () => this.modalManager.close());
+            this.vehicleForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
+            this.addImageBtn.addEventListener('click', () => this.handleFormSubmit());
+
+            this.vehicleGrid.addEventListener('click', (event) => {
+                if (event.target.classList.contains('edit-btn')) {
+                    this.editVehicle(event.target.dataset.id);
+                } else if (event.target.classList.contains('delete-btn')) {
+                    this.deleteVehicle(event.target.dataset.id);
+                }
+            });
+        }
+
+        async loadVehicles() {
+            try {
+                this.showLoadingSpinner();
+                const vehicles = await this.vehicleService.getVehicles();
+                this.renderVehicleGrid(vehicles);
+                this.filterManager.initializeFilters(vehicles);
+            } catch (error) {
+                this.showMessage(error.message, 'error');
+            } finally {
+                this.hideLoadingSpinner();
+            }
+        }
+
+        showLoadingSpinner() {
+            document.getElementById('loadingSpinner').classList.remove('hidden');
+        }
+
+        hideLoadingSpinner() {
+            document.getElementById('loadingSpinner').classList.add('hidden');
+        }
+
+        renderVehicleGrid(vehicles) {
+            this.vehicleGrid.innerHTML = vehicles.map(vehicle => `
+            <div class="vehicle-card shadow-lg bg-white" data-id="${vehicle.id}">
+                <img src="${vehicle.images[0].url}" alt="${vehicle.make} ${vehicle.model}" class="vehicle-image">
+                <div class="vehicle-info">
+                    <h3 class="vehicle-title">${vehicle.make} ${vehicle.model}</h3>
+                    <div class="vehicle-specs">
+                        <p>${vehicle.year} · ${vehicle.specifications.mileage.value} ${vehicle.specifications.mileage.unit}</p>
+                        <p>${vehicle.specifications.engine.type} · ${vehicle.specifications.transmission.type}</p>
+                    </div>
+                    <div class="vehicle-price">$${vehicle.price.toLocaleString()}</div>
+                    <div class="vehicle-actions">
+                        <button class="primary-button edit-btn" data-id="${vehicle.id}">Edit</button>
+                        <button class="secondary-button delete-btn" data-id="${vehicle.id}">Delete</button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+            // Add event listeners to edit and delete buttons
+            this.vehicleGrid.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', () => this.editVehicle(btn.dataset.id));
+            });
+
+            this.vehicleGrid.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', () => this.deleteVehicle(btn.dataset.id));
+            });
+        }
+
+        openAddVehicleModal() {
+            this.vehicleForm.reset();
+            this.imagePreviewManager.clearPreview();
+            this.modalManager.open();
+        }
+
+        async handleFormSubmit(e) {
+            e.preventDefault();
+
+            try {
+                // Validate form data
+                const formData = this.getFormData();
+                if (!this.validateFormData(formData)) {
+                    this.showMessage('Please fill in all required fields.', 'error');
+                    return;
+                }
+
+                // Handle images
+                const uploadedImages = await this.imagePreviewManager.getUploadedImages();
+                const imageUrls = Array.from(this.imagePreviewManager.imageInputs).map(input => input.value.trim()).filter(url => url);
+                formData.images = [...uploadedImages, ...imageUrls];
+
+                // Determine if updating or adding a new vehicle
+                if (formData.id) {
+                    await this.vehicleService.updateVehicle(formData);
+                    this.showMessage('Vehicle updated successfully!', 'success');
+                } else {
+                    await this.vehicleService.addVehicle(formData);
+                    this.showMessage('Vehicle added successfully!', 'success');
+                }
+
+                // Close modal and reload vehicles
+                this.modalManager.close();
+                this.loadVehicles();
+            } catch (error) {
+                this.showMessage(`Error: ${error.message}`, 'error');
+            }
+        }
+
+        validateFormData(formData) {
+            const requiredFields = ['make', 'model', 'modelCode', 'manufacturingYear', 'carType', 'fuelType', 'price'];
+            return requiredFields.every(field => formData[field] && formData[field].toString().trim() !== '');
+        }
+
+        getFormData() {
+            return {
+                id: this.vehicleForm.dataset.vehicleId,
+                make: document.getElementById('make').value,
+                model: document.getElementById('model').value,
+                modelCode: document.getElementById('modelCode').value,
+                manufacturingYear: parseInt(document.getElementById('manufacturingYear').value),
+                carType: document.getElementById('carType').value,
+                fuelType: document.getElementById('fuelType').value,
+                specifications: {
+                    engine: {
+                        type: document.getElementById('engineType').value,
+                        cylinderCount: parseInt(document.getElementById('cylinderCount').value),
+                        horsepower: parseInt(document.getElementById('horsepower').value),
+                        torque: parseInt(document.getElementById('torque').value),
+                        drivetrain: document.getElementById('drivetrain').value
+                    },
+                    transmission: {
+                        type: document.getElementById('transmission').value,
+                        gears: parseInt(document.getElementById('gears').value)
+                    },
+                    mileage: {
+                        value: parseInt(document.getElementById('mileage').value),
+                        unit: 'miles'
+                    },
+                    safetyRating: parseInt(document.getElementById('safetyRating').value),
+                    warrantyYears: parseInt(document.getElementById('warrantyYears').value)
+                },
+                price: parseFloat(document.getElementById('price').value)
+            };
+        }
+
+        async editVehicle(id) {
+            try {
+                const vehicle = await this.vehicleService.getVehicle(id);
+                this.populateForm(vehicle);
+                this.modalManager.open();
+            } catch (error) {
+                showMessage(this.messageDiv, error.message, 'error');
+            }
+        }
+
+        populateForm(vehicle) {
+            this.vehicleForm.dataset.vehicleId = vehicle.id;
+
+            // Basic Information
+            document.getElementById('make').value = vehicle.make;
+            document.getElementById('model').value = vehicle.model;
+            document.getElementById('modelCode').value = vehicle.modelCode;
+            document.getElementById('manufacturingYear').value = vehicle.manufacturingYear;
+            document.getElementById('carType').value = vehicle.carType;
+            document.getElementById('fuelType').value = vehicle.fuelType;
+
+            // Specifications
+            document.getElementById('engineType').value = vehicle.specifications.engine.type;
+            document.getElementById('cylinderCount').value = vehicle.specifications.engine.cylinderCount;
+            document.getElementById('horsepower').value = vehicle.specifications.engine.horsepower;
+            document.getElementById('torque').value = vehicle.specifications.engine.torque;
+            document.getElementById('drivetrain').value = vehicle.specifications.engine.drivetrain;
+            document.getElementById('transmission').value = vehicle.specifications.transmission.type;
+            document.getElementById('gears').value = vehicle.specifications.transmission.gears;
+            document.getElementById('mileage').value = vehicle.specifications.mileage.value;
+            document.getElementById('safetyRating').value = vehicle.specifications.safetyRating;
+            document.getElementById('warrantyYears').value = vehicle.specifications.warrantyYears;
+
+            // Price
+            document.getElementById('price').value = vehicle.price;
+
+            // Images
+            this.imagePreviewManager.showExistingImages(vehicle.images);
+        }
+
+        async deleteVehicle(id) {
+            if (confirm('Are you sure you want to delete this vehicle?')) {
+                try {
+                    await this.vehicleService.deleteVehicle(id);
+                    showMessage(this.messageDiv, 'Vehicle deleted successfully!', 'success');
+                    this.loadVehicles();
+                } catch (error) {
+                    showMessage(this.messageDiv, error.message, 'error');
+                }
+            }
+        }
+
+        handleLogout() {
+            window.location.href = '../../index.html';
+        }
+    }
+
+    // Initialize the UI when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', () => {
+        new InventoryManagementUI();
+    });
+
+    class UIManager {
+        constructor({
+                        discountManager,
+                        renderOrderSummary,
+                        showNotification
+                    }) {
+            this.discountManager = discountManager;
+            this.renderOrderSummary = renderOrderSummary;
+            this.showNotification = showNotification;
+            this.initializeElements();
+            this.attachEventListeners();
+        }
+
+        initializeElements() {
+            this.createDiscountBtn = document.getElementById('createDiscountBtn');
+            this.cancelBtn = document.getElementById('cancelBtn');
+
+            this.modal = document.getElementById('discountModal');
+            this.discountForm = document.getElementById('discountForm');
+            this.modalTitle = document.getElementById('modalTitle');
+
+            this.searchInput = document.getElementById('searchDiscount');
+            this.statusFilter = document.getElementById('statusFilter');
+            this.typeFilter = document.getElementById('typeFilter');
+
+            this.tableBody = document.getElementById('discountTableBody');
+
+            this.messageDiv = document.getElementById('message');
+
+            // Discount application elements
+            this.applyDiscountBtn = document.getElementById('applyDiscount');
+            this.removeDiscountBtn = document.getElementById('removeDiscount');
+            this.discountCodeInput = document.getElementById('discountCodeInput');
+
+            // Additional UI elements can be initialized here
+        }
+
+        attachEventListeners() {
+            // Modal events
+            this.createDiscountBtn.addEventListener('click', () => this.openModal());
+            this.cancelBtn.addEventListener('click', () => this.closeModal());
+            this.discountForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
+
+            // Filter events
+            this.searchInput.addEventListener('input', () => this.filterDiscounts());
+            this.statusFilter.addEventListener('change', () => this.filterDiscounts());
+            this.typeFilter.addEventListener('change', () => this.filterDiscounts());
+
+            // Logout
+            this.logoutBtn.addEventListener('click', () => this.handleLogout());
+
+            // Close modal when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === this.modal) {
+                    this.closeModal();
+                }
+            });
+
+            // Discount application events
+            this.applyDiscountBtn.addEventListener('click', () => this.applyDiscount());
+            this.removeDiscountBtn.addEventListener('click', () => this.removeDiscount());
+        }
+
+        showMessage(text, type) {
+            this.messageDiv.textContent = text;
+            this.messageDiv.className = 'message';
+            this.messageDiv.classList.add(`${type}`);
+            this.messageDiv.style.display = 'block';
+            setTimeout(() => {
+                this.clearMessage();
+            }, 3000);
+        }
+
+        clearMessage() {
+            this.messageDiv.style.display = 'none';
+            this.messageDiv.className = 'message';
+            this.messageDiv.textContent = '';
+        }
+
+        renderDiscountTable(discounts) {
+            this.tableBody.innerHTML = '';
+
+            discounts.forEach(discount => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                <td>${discount.code}</td>
+                <td>${this.formatDiscountType(discount.discountType)}</td>
+                <td>${this.formatValue(discount.value, discount.discountType, discount.currency)}</td>
+                <td><span class="status-badge status-${discount.status.toLowerCase()}">${discount.status}</span></td>
+                <td>${this.formatDate(discount.expirationDate)}</td>
+                <td>${discount.usageCount}${discount.maxUses !== null ? ` / ${discount.maxUses}` : ''}</td>
+                <td>
+                    <button class="edit-btn" data-code="${discount.code}">Edit</button>
+                    <button class="delete-btn" data-code="${discount.code}">Delete</button>
+                </td>
+            `;
+
+                // Add event listeners to buttons
+                row.querySelector('.edit-btn').addEventListener('click', () => this.editDiscount(discount));
+                row.querySelector('.delete-btn').addEventListener('click', () => this.deleteDiscount(discount.code));
+
+                this.tableBody.appendChild(row);
+            });
+        }
+
+        formatDiscountType(type) {
+            return type === 'percentage' ? 'Percentage' : 'Fixed Amount';
+        }
+
+        formatValue(value, type, currency) {
+            return type === 'percentage' ? `${value}%` : `${currency} ${value.toFixed(2)}`;
+        }
+
+        formatDate(date) {
+            if (!date) return 'No expiration';
+            return new Date(date).toLocaleDateString();
+        }
+
+        openModal(discount = null) {
+            this.modalTitle.textContent = discount ? 'Edit Discount' : 'Create New Discount';
+            this.modal.style.display = 'block';
+
+            if (discount) {
+                // Populate form with discount data
+                this.discountForm.dataset.editing = discount.code;
+                document.getElementById('discountCode').value = discount.code;
+                document.getElementById('discountType').value = discount.discountType;
+                document.getElementById('discountValue').value = discount.value;
+                document.getElementById('minimumPurchase').value = discount.minimumPurchase;
+                document.getElementById('maxUses').value = discount.maxUses !== null ? discount.maxUses : '';
+                document.getElementById('description').value = discount.description;
+
+                document.getElementById('expirationDate').value = discount.expirationDate ? discount.expirationDate.toISOString().split('T')[0] : '';
+            } else {
+                // Reset form for new discount
+                this.discountForm.reset();
+                delete this.discountForm.dataset.editing;
+            }
+        }
+
+        closeModal() {
+            this.modal.style.display = 'none';
+            this.discountForm.reset();
+            delete this.discountForm.dataset.editing;
+        }
+
+        async handleFormSubmit(event) {
+            event.preventDefault();
+
+            try {
+                const formData = this.getFormData();
+                this.validateFormData(formData);
+
+                if (this.discountForm.dataset.editing) {
+                    // Edit existing discount
+                    await this.discountManager.updateDiscount(formData.code, formData);
+                    this.showMessage('Discount updated successfully!', 'success');
+                } else {
+                    // Create new discount
+                    await this.discountManager.createDiscount(formData);
+                    this.showMessage('Discount created successfully!', 'success');
+                }
+
+                this.closeModal();
+                this.renderDiscountTable(Array.from(this.discountManager.discounts.values()));
+            } catch (error) {
+                this.showMessage(error.message, 'error');
+            }
+        }
+
+        getFormData() {
+            return {
+                code: document.getElementById('discountCode').value,
+                discountType: document.getElementById('discountType').value,
+                value: parseFloat(document.getElementById('discountValue').value),
+                minimumPurchase: parseFloat(document.getElementById('minimumPurchase').value),
+                expirationDate: document.getElementById('expirationDate').value || null,
+                maxUses: document.getElementById('maxUses').value ? parseInt(document.getElementById('maxUses').value) : null,
+                description: document.getElementById('description').value,
+                currency: 'HKD',
+                status: 'active',
+                usageCount: 0
+            };
+        }
+
+        validateFormData(data) {
+            if (!data.code || typeof data.code !== 'string') {
+                throw new Error('Invalid discount code format');
+            }
+
+            // Remove whitespace and convert to uppercase
+            data.code = data.code.trim().toUpperCase();
+
+            // Check if code matches pattern (letters, numbers, and hyphens only)
+            if (!/^[A-Z0-9-]+$/.test(data.code)) {
+                throw new Error('Discount code can only contain letters, numbers, and hyphens');
+            }
+
+            if (isNaN(data.value) || data.value <= 0) {
+                throw new Error('Invalid discount value');
+            }
+
+            if (isNaN(data.minimumPurchase) || data.minimumPurchase < 0) {
+                throw new Error('Invalid minimum purchase amount');
+            }
+
+            if (data.maxUses !== null && (isNaN(data.maxUses) || data.maxUses <= 0)) {
+                throw new Error('Invalid maximum uses');
+            }
+        }
+
+
+        showNotification(message, type) {
+            const notificationContainer = $('#notification-container');
+            notificationContainer.empty();
+            const notification = $('<div>').addClass(`notification ${type}`).text(message);
+            notificationContainer.append(notification);
+            setTimeout(() => {
+                notification.fadeOut(400, function () {
+                    $(this).remove();
+                });
+            }, 3000);
+        }
+
+    }
+
+
+    class FilterManager {
+        constructor() {
+            this.searchInput = document.getElementById('searchVehicle');
+            this.typeFilter = document.getElementById('typeFilter');
+            this.fuelFilter = document.getElementById('fuelFilter');
+            this.yearFilter = document.getElementById('yearFilter');
+
+            this.attachEventListeners();
+        }
+
+        attachEventListeners() {
+            this.searchInput.addEventListener('input', () => this.applyFilters());
+            this.typeFilter.addEventListener('change', () => this.applyFilters());
+            this.fuelFilter.addEventListener('change', () => this.applyFilters());
+            this.yearFilter.addEventListener('change', () => this.applyFilters());
+        }
+
+        initializeFilters(vehicles) {
+            // Populate year filter options
+            const years = [...new Set(vehicles.map(v => v.year))].sort((a, b) => b - a);
+            this.yearFilter.innerHTML = '<option value="">All Years</option>' +
+                years.map(year => `<option value="${year}">${year}</option>`).join('');
+        }
+
+        applyFilters() {
+            const searchTerm = this.searchInput.value.toLowerCase();
+            const selectedType = this.typeFilter.value;
+            const selectedFuel = this.fuelFilter.value;
+            const selectedYear = this.yearFilter.value;
+
+            const cards = document.querySelectorAll('.vehicle-card');
+            cards.forEach(card => {
+                const title = card.querySelector('.vehicle-title').textContent.toLowerCase();
+                const specs = card.querySelector('.vehicle-specs').textContent.toLowerCase();
+
+                const matchesSearch = title.includes(searchTerm) || specs.includes(searchTerm);
+                const matchesType = !selectedType || card.dataset.type === selectedType;
+                const matchesFuel = !selectedFuel || card.dataset.fuel === selectedFuel;
+                const matchesYear = !selectedYear || card.dataset.year === selectedYear;
+
+                card.style.display = matchesSearch && matchesType && matchesFuel && matchesYear ? 'block' : 'none';
+            });
+        }
+    }
+
+    class ImagePreviewManager {
+        constructor(inputId, previewId) {
+            this.input = document.getElementById(inputId);
+            this.preview = document.getElementById(previewId);
+            this.setupImagePreview();
+        }
+
+        setupImagePreview() {
+            this.input.addEventListener('change', () => {
+                this.showSelectedImages();
+            });
+        }
+
+        showSelectedImages() {
+            this.clearPreview();
+            const files = this.input.files;
+
+            for (const file of files) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    this.preview.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        showExistingImages(images) {
+            this.clearPreview();
+            images.forEach(image => {
+                const img = document.createElement('img');
+                img.src = image.url;
+                this.preview.appendChild(img);
+            });
+        }
+
+        clearPreview() {
+            this.preview.innerHTML = '';
+        }
+
+        async getUploadedImages() {
+            // In a real application, this would upload the images to a server
+            // and return the URLs. For now, we'll just return placeholder URLs
+            const files = this.input.files;
+            return Array.from(files).map((file, index) => ({
+                url: URL.createObjectURL(file)
+            }));
+        }
+    }
+
+    class ModalManager {
+        constructor(modalId) {
+            this.modal = document.getElementById(modalId);
+            this.setupCloseOnOutsideClick();
+        }
+
+        open() {
+            this.modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        close() {
+            this.modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        setupCloseOnOutsideClick() {
+            this.modal.addEventListener('click', (e) => {
+                if (e.target === this.modal) {
+                    this.close();
+                }
+            });
+        }
+    }
+
+    class VehicleService {
+        constructor() {
+            this.vehicles = [];
+        }
+
+        async getVehicles() {
+            try {
+                const response = await fetch('../../../resources/json/vehicles.json');
+                const data = await response.json();
+                this.vehicles = data;
+                return data;
+            } catch (error) {
+                console.error('Error loading vehicles:', error);
+                throw new Error('Failed to load vehicles. Please try again later.');
+            }
+        }
+
+        async getVehicle(id) {
+            const vehicle = this.vehicles.find(v => v.id === parseInt(id));
+            if (!vehicle) {
+                throw new Error('Vehicle not found');
+            }
+            return vehicle;
+        }
+
+        async addVehicle(vehicleData) {
+            // In a real application, this would make an API call
+            const newVehicle = {
+                ...vehicleData,
+                id: this.vehicles.length + 1,
+                dateAdded: new Date().toISOString()
+            };
+            this.vehicles.push(newVehicle);
+            return newVehicle;
+        }
+
+        async updateVehicle(vehicleData) {
+            // In a real application, this would make an API call
+            const index = this.vehicles.findIndex(v => v.id === parseInt(vehicleData.id));
+            if (index === -1) {
+                throw new Error('Vehicle not found');
+            }
+            this.vehicles[index] = {...this.vehicles[index], ...vehicleData};
+            return this.vehicles[index];
+        }
+
+        async deleteVehicle(id) {
+            // In a real application, this would make an API call
+            const index = this.vehicles.findIndex(v => v.id === parseInt(id));
+            if (index === -1) {
+                throw new Error('Vehicle not found');
+            }
+            this.vehicles.splice(index, 1);
+        }
+    }
+
+</script>
+</body>
+</body>
+</html>

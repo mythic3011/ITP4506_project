@@ -1,0 +1,34 @@
+{
+  "discount_codes": [
+    {
+      "code": "SUMMER2024",
+      "discount_type": "percentage",
+      "value": 20,
+      "currency": "HKD",
+      "expiration_date": "2024-08-31",
+      "status": "active",
+      "usage_count": 0,
+      "description": "Get 20% off your next purchase with this summer discount code!"
+    },
+    {
+      "code": "FREESHIP",
+      "discount_type": "fixed_amount",
+      "value": 0,
+      "currency": "HKD",
+      "expiration_date": "2024-12-31",
+      "status": "active",
+      "usage_count": 0,
+      "description": "Enjoy free shipping on orders over $50!"
+    },
+    {
+      "code": "SAVE10",
+      "discount_type": "fixed_amount",
+      "value": 10,
+      "currency": "HKD",
+      "expiration_date": null,
+      "status": "active",
+      "usage_count": 0,
+      "description": "$10 off your order of $100 or more."
+    }
+  ]
+}

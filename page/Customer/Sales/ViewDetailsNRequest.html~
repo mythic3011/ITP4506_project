@@ -10,6 +10,10 @@
     <link href="../../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon"/>
     <link rel="stylesheet" href="../../../resources/css/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
+    <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
+    <script src="../../../resources/js/Sales/Wishlist.js"></script>
+    <script src="../../../resources/js/Sales/Checkout.js"></script>
     <style>
         .image-slider {
             position: relative;
@@ -56,7 +60,6 @@
             <!-- Navigation Links -->
             <nav id="nav_link" class="hidden md:flex space-x-4 gap-1">
                 <a class="navbar_a text-gray-700 hover:text-blue-500" href="">Home</a>
-
                 <!-- Vehicles Dropdown -->
                 <div class="relative group">
                     <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
@@ -72,7 +75,6 @@
                         </nav>
                     </div>
                 </div>
-
                 <!-- Insurance Dropdown -->
                 <div class="relative group">
                     <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
@@ -137,7 +139,6 @@
     </header>
 </header>
 <!--------------------Menu-------------------->
-
 <!--------------------Vehicle Detail and Request-------------------->
 <div class="container mx-auto px-4 py-8" id="VehicleContainer">
     <script src="../../../resources/js/RequestDetails.js"></script>

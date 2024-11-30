@@ -8,7 +8,8 @@
     "InsuranceLicenseNumber": "AA1111",
     "status" : "Inactive",
     "password": "a",
-    "mobile": "12345678",
+    "mobile": "852 12345678",
+    "faxNumber": "852 12345678",
     "orders": []
   },
   {
@@ -19,7 +20,8 @@
     "role": "Staff",
     "status" : "Active",
     "password": "a",
-    "mobile": "12345678",
+    "mobile": "852 12345678",
+    "faxNumber": "852 12345678",
     "orders": []
   },
   {
@@ -30,7 +32,9 @@
     "role": "Admin",
     "status" : "Active",
     "password": "a",
-    "mobile": "12345678",
+    "mobile": "852 12345678",
+    "faxNumber": "852 12345678",
+    "address": "Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong",
     "orders": []
   },
   {
@@ -41,7 +45,9 @@
     "role": "Customer",
     "status" : "Active",
     "password": "a",
-    "mobile": "87654321",
+    "address": "Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong",
+    "mobile": "852 87654321",
+    "faxNumber": "852 87654321",
     "orders": []
   },
   {
@@ -52,7 +58,9 @@
     "role": "Customer",
     "status" : "Active",
     "password": "a",
-    "mobile": "23456789",
+    "address": "Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong",
+    "mobile": "852 23456789",
+    "faxNumber": "852 23456789",
     "orders": []
   }
 ]
