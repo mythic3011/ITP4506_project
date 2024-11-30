@@ -10106,3 +10106,176 @@ progress {
 .accent-current{
     color: currentColor;
 }
+
+.select-none{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.select-text{
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    user-select: text;
+}
+
+.select-all{
+    -webkit-user-select: all;
+    -moz-user-select: all;
+    user-select: all;
+}
+
+.select-auto{
+    -webkit-user-select: auto;
+    -moz-user-select: auto;
+    user-select: auto;
+}
+
+.align-baseline{
+    vertical-align: baseline;
+}
+
+.align-top{
+    vertical-align: top;
+}
+
+.align-middle{
+    vertical-align: middle;
+}
+
+.align-bottom{
+    vertical-align: bottom;
+}
+
+.align-text-top{
+    vertical-align: text-top;
+}
+
+.align-text-bottom{
+    vertical-align: text-bottom;
+}
+
+.visible{
+    visibility: visible;
+}
+
+.invisible{
+    visibility: hidden;
+}
+
+.whitespace-normal{
+    white-space: normal;
+}
+
+.whitespace-nowrap{
+    white-space: nowrap;
+}
+
+.whitespace-pre{
+    white-space: pre;
+}
+
+.whitespace-pre-line{
+    white-space: pre-line;
+}
+
+.whitespace-pre-wrap{
+    white-space: pre-wrap;
+}
+
+.break-normal{
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+.break-words{
+    overflow-wrap: break-word;
+}
+
+.break-all{
+    word-break: break-all;
+}
+
+.truncate{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scroll-auto{
+    scroll-behavior: auto;
+}
+
+.scroll-smooth{
+    scroll-behavior: smooth;
+}
+
+.scroll-snap-none{
+    scroll-snap-type: none;
+}
+
+.animate-none{
+    animation: none;
+}
+
+.animate-spin{
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-pulse{
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .5;
+  }
+}
+}
+
+.animate-bounce{
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+.bg-auto{
+    background-size: auto;
+}
+
+.bg-cover{
+    background-size: cover;
+}
+
+.bg-contain{
+    background-size: contain;
+}
+
+.antialiased{
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.subpixel-antialiased{
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+}
