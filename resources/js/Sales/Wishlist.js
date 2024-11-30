@@ -84,8 +84,9 @@ function renderWishlist() {
     const wishlistItems = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
     const wishlistTableBody = $('#wishlistTableBody');
 
-    if (wishlistItems.length === 0) {
-        wishlistTableBody.html('<tr><td colspan="7" class="text-red-500 px-6 py-4">Your wishlist is empty.</td></tr>');
+    if (wishlist.length === 0) {
+        wishlistTableBody.append('<tr><td colspan="7" class="text-center">Your wishlist is empty.</td></tr>');
+        wishlistTableBody.append('<tr><td colspan="7" class="text-center"><a href="./ViewVehicles.html" class="button button-primary">Browse Vehicles</a></td></tr>');
         return;
     }
 

@@ -398,7 +398,7 @@
                 setTimeout(() => popup.classList.add('show'), 10);
                 document.getElementById('registerAfterShowEmail').innerText = 'Register Email: ' + localStorage.getItem('username');
                 if(document.getElementById('department')){
-                    if(document.getElementById('department').value === 'Insurance'){
+                    if(document.getElementById('department').value == 'Insurance'){
                         document.getElementById('registerAfterShowMessage2').innerText = "After confirm your qualifications will send to your email.";
                         document.getElementById('sellingCarPageBtn').style.display = 'none';
                         document.getElementById('carInsurancePageBtn').style.display = 'none';

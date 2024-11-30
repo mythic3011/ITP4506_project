@@ -218,3 +218,20 @@ function renderOrderSummary() {
         })
     );
 }
+
+function showNotification(message, type) {
+    const notificationArea = $('#notificationArea');
+
+    // Clear previous notifications
+    notificationArea.empty();
+
+    // Create a new notification element
+    const notification = $('<div>').addClass(`notification ${type}`).text(message);
+
+    // Append and fade out after 3 seconds
+    notificationArea.append(notification);
+
+    setTimeout(() => {
+        notification.fadeOut(400, function() { $(this).remove(); });
+    }, 3000);
+}

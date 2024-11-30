@@ -1,0 +1,18 @@
+/* Offers section styles */
+.offers {
+  color: white;
+  padding: 4rem 0;
+  text-align: center;
+}
+
+.countdown {
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 2rem 0;
+}
+
+.countdown span {
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  margin: 0 0.5rem;
+}

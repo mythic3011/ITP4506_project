@@ -204,7 +204,7 @@
     --text-blue-200: rgba(9, 129, 156, 0.2);
     --text-blue-300: rgba(9, 129, 156, 0.3);
     --text-blue-400: rgba(9, 129, 156, 0.4);
-    --text-blue-500: rgba(9, 129, 156, 0.5);
+    --text-blue-500: rgba(9, 129, 156, 0.5), --tw-text-opacity: 1;
     --text-blue-600: rgba(9, 129, 156, 0.6);
     --text-blue-700: rgba(9, 129, 156, 0.7);
     --text-blue-800: rgba(9, 129, 156, 0.8);

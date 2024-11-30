@@ -30,13 +30,13 @@ function renderWishlist() {
 
     if (wishlist.length === 0) {
         wishlistTableBody.append('<tr><td colspan="7" class="text-center">Your wishlist is empty.</td></tr>');
+        wishlistTableBody.append('<tr><td colspan="7" class="text-center"><a href="./ViewVehicles.html" class="button button-primary">Browse Vehicles</a></td></tr>');
         return;
     }
 
     // Create table rows for each item in the wishlist
     const rows = wishlist.map(item => `
         <tr data-id="${item.id}">
-            <td class='px-6 py-4 whitespace-nowrap'>${item.make}</td>
             <td class='px-6 py-4 whitespace-nowrap'>${item.model}</td>
             <td class='px-6 py-4 whitespace-nowrap'>${item.color}</td>
             <td class='px-6 py-4 whitespace-nowrap'>${item.upgrades}</td>
@@ -51,6 +51,7 @@ function renderWishlist() {
 
     // Calculate and display total cost
     const totalCost = calculateTotalCost(wishlist);
+
 }
 
 // Function to calculate total cost
