@@ -13,7 +13,7 @@ body.dark-mode {
     color: #e0e0e0;
 }
 
-.container.dark-mode {
+.mainContainer.dark-mode {
     background: #2b2b2b;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
@@ -35,7 +35,7 @@ input.dark-mode {
     border-radius: 5px;
 }
 
-.container {
+.mainContainer {
     max-width: 400px;
     margin: 60px auto;
     padding: 30px;

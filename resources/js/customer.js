@@ -20,7 +20,7 @@ $(document).ready(function () {
 
     $('#darkModeToggle').on('click', function () {
         $('body').toggleClass('dark-mode');
-        $('.container').toggleClass('dark-mode');
+        $('.mainContainer').toggleClass('dark-mode');
         $('input').toggleClass('dark-mode');
         $('#darkModeToggle').toggleClass('dark-mode');
         $('#switch-theme').toggleClass('dark-mode');
@@ -40,7 +40,7 @@ $(document).ready(function () {
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         $('body').addClass('dark-mode');
-        $('.container').addClass('dark-mode');
+        $('.mainContainer').addClass('dark-mode');
         $('input').addClass('dark-mode');
         $('#darkModeToggle').addClass('dark-mode');
         $('body').addClass('switch-theme');

@@ -188,7 +188,7 @@
 }
 
 @media (max-width: 768px) {
-    .container {
+    .mainContainer {
         padding: 1rem;
     }
 

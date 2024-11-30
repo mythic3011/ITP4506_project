@@ -10,7 +10,6 @@
     <link rel="icon" href="../../../resources/image/icon.png" type="image/x-icon"/>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
-    <script src="../../../resources/js/customer.js"></script>
     <!-- <script src="../../../resources/js/script.js"></script> -->
     <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
     <link rel="stylesheet" href="../../../resources/css/payment-styles.css">
@@ -562,7 +561,7 @@
             let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
             pendingInsurance = { ...pendingInsurance, status: 'expired' };
             localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
-            document.getElementById('payBtn').style.display = 'none';
+            //document.getElementById('payBtn').style.display = 'none';
         } else if(pendingInsurance.status == 'requestCancel'){
             document.getElementById('timeLine').innerHTML = '<div class="status-step active">\n' +
                 '                        <div class="step-icon">○</div>\n' +
@@ -578,7 +577,7 @@
                 '                            <div></div>\n' +
                 '                        </div>\n' +
                 '                    </div>'
-            document.getElementById('payBtn').style.display = 'none';
+            //document.getElementById('payBtn').style.display = 'none';
             document.getElementById('cancelBtn').style.display = 'none';
 
         }else if(pendingInsurance.status == 'cancelled'){
@@ -597,7 +596,7 @@
                 '                        </div>\n' +
                 '                    </div>'
 
-            document.getElementById('payBtn').style.display = 'none';
+            //document.getElementById('payBtn').style.display = 'none';
             document.getElementById('cancelBtn').style.display = 'none';
         }
         else{
@@ -610,6 +609,12 @@
                 document.getElementById('acceptsColor').classList.add('completed');
                 document.getElementById('acceptIcon').textContent = '✓';
                 document.getElementById('acceptAt').innerHTML = '<span id="createAt" class="timestamp">Just Accept By You</span>';
+            }
+            if(pendingInsurance.status == 'rejectPrice'){
+                document.getElementById('acceptsColor').classList.add('error');
+                document.getElementById('acceptIcon').textContent = '✕';
+                document.getElementById('acceptAt').style.display = 'none';
+                document.getElementById('rejectMessage').innerText = 'Rejected by you, at "Just Now"';
             }
 
             if(pendingInsurance.status == 'accepted'){
@@ -631,19 +636,18 @@
                 document.getElementById('claimMessage').innerText = 'Claim Submitted by you, at "Just Now"';
             }
 
-            if(pendingInsurance.paid){
-                document.getElementById('payBtn').disabled = true;
-                document.getElementById('payBtn').style.backgroundColor = 'gray';
-                document.getElementById('payBtn').innerText = "Paid";
-            }
 
-            if(pendingInsurance.status == 'approved'){
+            if(pendingInsurance.status == 'approved' || pendingInsurance.status == 'claim' || pendingInsurance.status == 'accepted' || pendingInsurance.status == 'active'){
+                document.getElementById('acceptsColor').classList.add('completed');
+                document.getElementById('acceptIcon').textContent = '✓';
                 document.getElementById('acceptAt').innerText = 'Just Approved by Staff01 "Mike Chan", discount: ' + pendingInsurance.discount + '%,' + '\nScroll down to look detail';
             }
 
-            (pendingInsurance.status == 'acceptByCustomer' ? document.getElementById('claimBtn').style.display = 'block' : document.getElementById('claimBtn').style.display = 'none');
+            (pendingInsurance.status != 'claim' ? document.getElementById('claimingBtn').style.display = 'none' : document.getElementById('claimingBtn').style.display = 'block');
+            (pendingInsurance.status != 'acceptByCustomer' ? document.getElementById('claimBtn').style.display = 'none' : document.getElementById('claimBtn').style.display = 'block');
             (pendingInsurance.status == 'approved' ? document.getElementById('rejectBtn').style.display = 'block' : document.getElementById('rejectBtn').style.display = 'none');
-            (pendingInsurance.status == 'approved' ? document.getElementById('acceptsColor').classList.add('active'):true)
+            (pendingInsurance.status == 'approved' ? document.getElementById('acceptsColor').classList.add('active'):true);
+            (pendingInsurance.status == 'accepted' ? document.getElementById('claimBtn').style.display = 'block' : true);
 
 
 
@@ -675,13 +679,15 @@
             ${pendingInsurance.paid ? '<span style="font-size: 20px; color: green"><em><b>Just Paid</b></em></span>' : '<span style="font-size: 20px; color: red"><em><b>Unpaid</b></em></span>'}
 
         </div>
-        ${pendingInsurance.discount ? `<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">${pendingInsurance.discount}%</span></div>` : '<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">Not yet assign</span></div>'}
+        ${pendingInsurance.discount ? `<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">${pendingInsurance.discount}%</span></span><span>Reason: DEMO</span></div>` : '<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">Not yet assign</span></div>'}
         <div class="detail-row">
             <span class="detail-label">Fees</span>
             <span class="detail-value">${policyData.checkoutPrice}</span>
-            ${pendingInsurance.status == 'approved' ? document.getElementById('payBtn').style.display = 'block' : document.getElementById('payBtn').style.display = 'none'}
+            ${pendingInsurance.status == 'approved' ? document.getElementById('payBtn').style.display = 'block' :true}
 
         </div>
+        ${pendingInsurance.raisePrice ? `<div class="detail-row"><span class="detail-label">Raise price By Staff</span><span class="detail-value">HK$${pendingInsurance.raisePrice}</span></span><span>Reason: DEMO</span></div>` : '<div class="detail-row"><span class="detail-label">Raise Price By Staff</span><span class="detail-value">Not yet assign</span></div>'}
+
         <div class="detail-row">
             <span class="detail-label">No Claims Discount</span>
             <span class="detail-value">${customerData.mainDriver.ncd || 'None'}</span>
@@ -718,6 +724,10 @@
             <span class="detail-label">Driving Offence Points Of Main Driver</span>
             <span class="detail-value">${customerData.mainDriver.driverOffencePoint + " Points" || 'None'}</span>
             <button type="button" class="upload-button">Download Certificates of Traffic Conviction Records</button>
+            <button type="button" class="upload-button">All register Identity Document</button>
+            <button type="button" class="upload-button">All register Driving License</button>
+            <button type="button" class="upload-button">Vehicle Registration Document</button>
+
         </div>
 
     `;
@@ -1033,18 +1043,21 @@
     function claimInsurance(){
         const claimModal = new EditModal();
         claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Claim';
-        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'Are you sure you want to claim this policy?';
+        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'After encountering a traffic accident, a report must be made within 7-14 days from the date of the accident. Are you sure you want to claim this policy?';
 
         claimModal.modal.querySelector('.confirm').onclick = function() {
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('id');
-            let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
-            pendingInsurance = { ...pendingInsurance, status: 'claim' };
-            localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
-            location.reload();
+            window.location.href = `claim.html?id=${orderId}`;
         };
 
         claimModal.show();
+    }
+
+    function claimingInsurance(){
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id');
+        window.location.href = `claimDetail.html?id=${orderId}`;
     }
 
     function rejectInsurance(){
@@ -1056,7 +1069,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('id');
             let pendingInsurance = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
-            pendingInsurance = { ...pendingInsurance, status: 'reject' };
+            pendingInsurance = { ...pendingInsurance, status: 'rejectPrice' };
             localStorage.setItem(`pendingInsurance-${orderId}`, JSON.stringify(pendingInsurance));
             location.reload();
         };
@@ -1156,7 +1169,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="mainContainer">
     <div class="status-container">
         <button onclick="window.location.href='ordersIndex.html'" class="back-button">
             ← All Appllication
@@ -1170,6 +1183,7 @@
                     <h3>Application Reference Number:</h3>
                     <p id="referenceNumber"></p>
                 </div>
+
                 <h2>Application Status</h2>
                 <div id="timeLine"  class="status-timeline">
                     <div class="status-step completed">
@@ -1192,8 +1206,9 @@
                         <div class="step-content">
                             <h3 id="acceptStatus">Accept the quote</h3>
                             <span id="acceptAt" class="timestamp"></span>
-                            <button id="payBtn" class="back-button" style="background-color: green">Pay for activating insurance</button>
+                            <button id="payBtn" class="back-button" style="background-color: green; display: none">Pay for activating insurance</button>
                             <button id="rejectBtn" onclick="rejectInsurance()" class="back-button" style="background-color: red;">Reject the quote</button>
+                            <span class="timestamp" id="rejectMessage"></span>
                         </div>
                     </div>
                     <div id="claimColor" class="status-step">
@@ -1202,6 +1217,7 @@
                             <h3>Claim the insurance</h3>
                             <button id="claimBtn" onclick="claimInsurance()" class="back-button" style="background-color: green;">Claim</button>
                             <span class="timestamp" id="claimMessage"></span>
+                            <button id="claimingBtn" onclick="claimingInsurance()" class="back-button" style="background-color: green;">Check or update your claiming</button>
                         </div>
                     </div>
                 </div>
@@ -1226,6 +1242,11 @@
                             Email: support@lmc.com<br>
                             Phone: (852) 2xxx xxxx</p>
                     </div>
+                    <div class="info-item">
+                        <h4 style="color: red">Reconcile</h4>
+                        <p><b>In minor accidents, traffic accidents can be settled on your own. The advantage of self-settlement is that the process is faster and can avoid lengthy traffic accident claims procedures. In addition, going private can also avoid rising car insurance costs and affecting future NCD/NCB no-claim discounts. However, there are certain risks involved in self-settlement. If not handled properly, more problems may arise, and you may not be able to claim compensation from the insurance company.
+                        </b></p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1248,6 +1269,7 @@
             Application Details
         </button><br>
         <br>
+        <h3>Already open <u>Auto-Pay</u>, if you want to cancel, please click the button below</h3>
         <button id="cancelBtn" class="back-button" style="background-color: red">
             Cancel Your Insurance
         </button>

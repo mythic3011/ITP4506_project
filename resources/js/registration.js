@@ -96,7 +96,7 @@ $(document).ready(function () {
         // on click, toggle #switch-theme class
         $('body').addClass('switch-theme');
         $('body').toggleClass('dark');
-        $('.container').toggleClass('dark');
+        $('.mainContainer').toggleClass('dark');
         $('input').toggleClass('dark');
     });
 
@@ -104,7 +104,7 @@ $(document).ready(function () {
     const savedTheme = localStorage.getItem('theme');
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme :dark)').matches || savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         $('body').addClass('dark');
-        $('.container').addClass('dark');
+        $('.mainContainer').addClass('dark');
         $('input').addClass('dark');
         $('body').addClass('switch-theme');
     }

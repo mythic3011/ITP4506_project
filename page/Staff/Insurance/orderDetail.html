@@ -442,7 +442,7 @@
     }
     document.addEventListener('DOMContentLoaded', function() {
         const modal = new EditModal();
-        const editButton = document.querySelector('button[style*="background-color: orange"]');
+        const editButton = document.querySelector('button[style*="background-color: green"]');
 
         if (editButton) {
             editButton.onclick = function(e) {
@@ -531,11 +531,18 @@
             (pendingInsurance.status != 'acceptByCustomer' ? document.getElementById('acceptsColor').classList.add('active') : document.getElementById('acceptsColor').classList.add('completed'));
             (pendingInsurance.status == 'pending' ? document.getElementById('acceptsColor').classList.remove('active'):true)
 
-            if(pendingInsurance.status == 'acceptByCustomer'){
+            if(pendingInsurance.status == 'acceptByCustomer' || pendingInsurance.status == 'accepted' || pendingInsurance.status == 'claim'){
                 document.getElementById('acceptsColor').classList.remove('active');
                 document.getElementById('acceptsColor').classList.add('completed');
                 document.getElementById('acceptIcon').textContent = '✓';
                 document.getElementById('acceptAt').innerHTML = '<span id="createAt" class="timestamp">Just Accept By Customer</span>';
+            }
+
+            if(pendingInsurance.status == 'rejectPrice'){
+                document.getElementById('acceptsColor').classList.add('error');
+                document.getElementById('acceptIcon').textContent = '✕';
+                document.getElementById('acceptAt').style.display = 'none';
+                document.getElementById('rejectMessage').innerText = 'Rejected by customer, at "Just Now"';
             }
 
             if(pendingInsurance.status == 'accepted'){
@@ -569,6 +576,9 @@
                 document.getElementById('RejectClaimBtn').style.display = 'none';
                 document.getElementById('AcceptClaimBtn').style.display = 'none';
             }
+            (pendingInsurance.status != 'claim'? document.getElementById('claimingBtn').style.display = 'none' : document.getElementById('claimingBtn').style.display = 'block');
+
+            (pendingInsurance.status == 'accepted'? document.getElementById('claimingBtn').style.display = 'block' : true);
 
         }
 
@@ -590,7 +600,8 @@
             <span class="detail-value">${policyData.checkoutPrice}</span>
             ${pendingInsurance.paid ? '<span style="font-size: 20px; color: green"><em><b>Just Paid</b></em></span>' : '<span style="font-size: 20px; color: red"><em><b>Unpaid</b></em></span>'}
         </div>
-        ${pendingInsurance.discount ? `<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">${pendingInsurance.discount}%</span></div>` : '<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">Not yet assign</span></div>'}
+        ${pendingInsurance.discount ? `<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">${pendingInsurance.discount}%</span><span>Reason: DEMO</span></div>` : '<div class="detail-row"><span class="detail-label">Discount By Staff</span><span class="detail-value">Not yet assign</span></div>'}
+        ${pendingInsurance.raisePrice ? `<div class="detail-row"><span class="detail-label">Raise price By Staff</span><span class="detail-value">HK$${pendingInsurance.raisePrice}</span><span>Reason: DEMO</span></span></div>` : '<div class="detail-row"><span class="detail-label">Raise Price By Staff</span><span class="detail-value">Not yet assign</span></div>'}
         <div class="detail-row">
             <span class="detail-label">No Claims Discount</span>
             <span class="detail-value">${customerData.mainDriver.ncd || 'None'}</span>
@@ -627,6 +638,9 @@
             <span class="detail-label">Driving Offence Points Of Main Driver</span>
             <span class="detail-value">${customerData.mainDriver.driverOffencePoint + " Points" || 'None'}</span>
             <button type="button" class="upload-button">Download Certificates of Traffic Conviction Records</button>
+            <button type="button" class="upload-button">All register Identity Document</button>
+            <button type="button" class="upload-button">All register Driving License</button>
+            <button type="button" class="upload-button">Vehicle Registration Document</button>
         </div>
 
     `;
@@ -840,6 +854,20 @@
         ).join(' ');
     }
 
+    function claimingInsurance(){
+        const claimModal = new EditModal();
+        claimModal.modal.querySelector('.orderdetail-modal-title').textContent = 'Confirm Claim';
+        claimModal.modal.querySelector('.orderdetail-modal-message').textContent = 'After encountering a traffic accident, a report must be made within 7-14 days from the date of the accident. Are you sure you want to claim this policy?';
+
+        claimModal.modal.querySelector('.confirm').onclick = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('id');
+            window.location.href = `claimDetail.html?id=${orderId}`;
+        };
+
+        claimModal.show();
+    }
+
     function claimInsurance(status){
         const confirmModal = new EditModal();
 confirmModal.modal.querySelector('.orderdetail-modal-title').textContent = `Confirm ${status.charAt(0).toUpperCase() + status.slice(1)}`;
@@ -873,12 +901,12 @@ confirmModal.show();
     </div>
 </div>
 
-<div class="container">
+<div class="mainContainer">
     <div class="status-container">
         <button onclick="window.location.href='ordersIndex.html'" class="back-button">
             ← All Appllication
         </button>
-        <button id="editOrder" class="back-button" style="background-color: orange">
+        <button id="editOrder" class="back-button" style="background-color: green">
             Approve Appllication &rAarr;
         </button>
         <div class="status-grid">
@@ -909,6 +937,7 @@ confirmModal.show();
                         <div class="step-content">
                             <h3 id="acceptStatus">Waiting Customer Accept and Payment</h3>
                             <span id="acceptAt" class="timestamp"></span>
+                            <span class="timestamp" id="rejectMessage"></span>
                         </div>
                     </div>
                     <div id="claimStatus" class="status-step">
@@ -916,9 +945,10 @@ confirmModal.show();
                         <div class="step-content">
                             <h3>Claim By Customer</h3>
                             <p>
-                            <button id="AcceptClaimBtn" onclick="claimInsurance('accept')" class="back-button" style="background-color: green;">Accept</button>
+                            <button id="AcceptClaimBtn" onclick="claimInsurance('accept')" class="back-button" style="background-color: green;">Finish</button>
                                 <button id="RejectClaimBtn" onclick="claimInsurance('reject')" class="back-button" style="background-color: red;">Reject</button></p>
                             <span class="timestamp" id="claimMessage"></span>
+                            <button id="claimingBtn" onclick="claimingInsurance()" class="back-button" style="background-color: green;">Check or update your claiming</button>
                         </div>
                     </div>
                 </div>
@@ -930,19 +960,10 @@ confirmModal.show();
                 <h1>Important Information</h1>
                 <div class="info-content">
                     <div class="info-item">
-                        <h4>Processing Time</h4>
-                        <p>Normal processing time is 1-2 business days. We'll notify you via email once your application is approved.</p>
+                        <h4>About discount and markup price</h4>
+                        <p>You have the discretion to do so.</p>
                     </div>
-                    <div class="info-item">
-                        <h4>Next Steps</h4>
-                        <p>Our team will review your application and may contact you if additional information is needed.</p>
-                    </div>
-                    <div class="info-item">
-                        <h4>Contact Support</h4>
-                        <p>For any queries, contact us at:<br>
-                            Email: support@lmc.com<br>
-                            Phone: (852) 2xxx xxxx</p>
-                    </div>
+
                 </div>
             </div>
         </div>

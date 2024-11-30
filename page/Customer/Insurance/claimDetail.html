@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Details | Legend Motor Limited</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
+    <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+</head>
+<style>
+    .claim-details-container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 2rem;
+        padding-top: 100px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .warning-box {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffc107;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+    }
+
+    .upload-area {
+        border: 2px dashed #000000;
+        padding: 2rem;
+        text-align: center;
+        margin: 1rem 0;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: border-color 0.2s;
+    }
+
+    .upload-area:hover {
+        border-color: #00bcd4;
+    }
+
+    .warning-box h3 {
+        color: #856404;
+        margin-top: 0;
+    }
+
+    .warning-box p {
+        margin: 0.5rem 0;
+        color: #666;
+    }
+
+    .claim-section {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .claim-section:last-child {
+        border-bottom: none;
+    }
+
+    .claim-section h2 {
+        color: #2196F3;
+        margin-bottom: 1rem;
+    }
+
+    .detail-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+
+    .detail-item {
+        margin-bottom: 1rem;
+    }
+
+    .detail-label {
+        font-weight: 600;
+        color: #666;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .detail-value {
+        color: #333;
+        font-size: 1.1rem;
+    }
+
+    .document-section {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-top: 1rem;
+    }
+
+    .document-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .document-item {
+        background: white;
+        padding: 1rem;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .document-item h4 {
+        margin: 0 0 0.5rem 0;
+        color: #2196F3;
+    }
+
+    .document-item p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.875rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+    }
+
+    .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .status-approved {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .status-rejected {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .ncd-warning {
+        background-color: #f8d7da;
+        border-left: 4px solid #dc3545;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        border-radius: 4px;
+    }
+
+    .ncd-warning h3 {
+        color: #721c24;
+        margin-top: 0;
+    }
+
+    .back-button {
+        background-color: #6c757d;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .back-button:hover {
+        background-color: #5a6268;
+    }
+
+    .policy-summary {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    .policy-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .policy-details {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .policy-status {
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-weight: 500;
+    }
+
+    .status-active {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .status-inactive {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .staff-notes-section {
+        background: #f5f5f5;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+        border: 1px solid #ddd;
+    }
+
+    .staff-notes-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .staff-notes-textarea {
+        width: 100%;
+        min-height: 150px;
+        padding: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+        font-family: inherit;
+        resize: vertical;
+    }
+
+    .save-notes-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .save-notes-btn:hover {
+        background-color: #45a049;
+    }
+
+    .notes-history {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 4px;
+        border: 1px solid #eee;
+    }
+
+    .note-entry {
+        padding: 0.5rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .note-timestamp {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .staff-status-section {
+        background: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 2rem 0;
+        border: 1px solid #ddd;
+    }
+
+    .status-update-form {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .status-select {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .status-description {
+        width: 100%;
+        min-height: 100px;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        resize: vertical;
+    }
+
+    .status-history {
+        margin-top: 1rem;
+        padding: 1rem;
+        background: white;
+        border-radius: 4px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .status-entry {
+        padding: 0.8rem;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 0.5rem;
+    }
+
+    .status-entry:last-child {
+        border-bottom: none;
+    }
+
+    .status-timestamp {
+        color: #666;
+        font-size: 0.8rem;
+    }
+
+    .status-value {
+        font-weight: bold;
+        color: #2196F3;
+        margin: 0.3rem 0;
+    }
+
+    .update-status-btn {
+        background-color: #2196F3;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s;
+    }
+
+    .update-status-btn:hover {
+        background-color: #1976D2;
+    }
+
+    @media (max-width: 768px) {
+        .detail-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .claim-details-container {
+            padding: 1rem;
+            margin: 1rem;
+        }
+    }
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id');
+        const insuranceData = JSON.parse(localStorage.getItem(`pendingInsurance-${orderId}`));
+
+        if (!insuranceData || !insuranceData.claimData) {
+            window.location.href = 'ordersIndex.html';
+            return;
+        }
+
+        displayPolicyInfo(insuranceData);
+        displayNotesHistory();
+        displayStatusHistory();
+
+        const claimData = insuranceData.claimData;
+
+        // Populate driver information
+        document.getElementById('driverName').textContent = claimData.driverInfo.name;
+        document.getElementById('licenseNumber').textContent = claimData.driverInfo.licenseNumber;
+        document.getElementById('idNumber').textContent = claimData.driverInfo.idNumber;
+
+        // Populate accident details
+        document.getElementById('accidentDateTime').textContent = formatDateTime(claimData.accidentDetails.dateTime);
+        document.getElementById('location').textContent = claimData.accidentDetails.location;
+        document.getElementById('policeFileNumber').textContent = claimData.accidentDetails.policeFileNumber;
+        document.getElementById('description').textContent = claimData.accidentDetails.description;
+
+        // Populate damage information
+        document.getElementById('damageType').textContent = formatDamageType(claimData.damageInfo.type);
+        document.getElementById('estimatedCost').textContent = formatCurrency(claimData.damageInfo.estimatedCost);
+
+        // Populate witness information if available
+        if (claimData.witnessInfo.name) {
+            document.getElementById('witnessInfo').innerHTML = `
+                <div class="detail-item">
+                    <span class="detail-label">Witness Name</span>
+                    <span class="detail-value">${claimData.witnessInfo.name}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Witness Contact</span>
+                    <span class="detail-value">${claimData.witnessInfo.contact}</span>
+                </div>
+            `;
+        } else {
+            document.getElementById('witnessInfo').innerHTML = '<p>No witness information provided</p>';
+        }
+    });
+
+    function saveNotes() {
+        const notes = document.getElementById('staffNotes').value;
+        const timestamp = new Date().toLocaleString();
+
+        // Get existing notes from localStorage
+        let existingNotes = JSON.parse(localStorage.getItem('staffNotes') || '[]');
+
+        // Add new note
+        existingNotes.push({
+            note: notes  + " (By Customer)",
+            timestamp: timestamp
+        });
+
+        // Save back to localStorage
+        localStorage.setItem('staffNotes', (JSON.stringify(existingNotes)));
+
+        // Update the notes history display
+        displayNotesHistory();
+
+        // Clear the textarea
+        document.getElementById('staffNotes').value = '';
+
+        alert('Notes saved successfully!');
+    }
+
+    function displayNotesHistory() {
+        const notesHistory = JSON.parse(localStorage.getItem('staffNotes') || '[]');
+        const historyContainer = document.getElementById('notesHistory');
+
+        historyContainer.innerHTML = notesHistory.map(entry => `
+            <div class="note-entry">
+                <div class="note-timestamp">${entry.timestamp}</div>
+                <div>${entry.note}</div>
+            </div>
+        `).join('');
+    }
+
+    function displayPolicyInfo(insuranceData) {
+        const policyContainer = document.getElementById('policyInfo');
+        if (!insuranceData) return;
+
+        const { Save_selected_option, Save_selected_option_2, Save_selected_option_3 } = insuranceData;
+
+        policyContainer.innerHTML = `
+            <div class="policy-header">
+                <h2>Your Insurance Policy</h2>
+                <div style="color: green" class="policy-status ${insuranceData.paid ? 'status-active' : 'status-inactive'}">
+                    ${insuranceData.paid ? 'Active' : 'Inactive'}
+                </div>
+            </div>
+            <div class="policy-details">
+                <div class="detail-item">
+                    <span class="detail-label">Policy Number</span>
+                    <span class="detail-value">${insuranceData.referenceNumber}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Insurance Type</span>
+                    <span class="detail-value">${Save_selected_option.insuranceType}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">License Plate</span>
+                    <span class="detail-value">${Save_selected_option_3.vehicle.registrationNumber}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Staff incharge</span>
+                    <span class="detail-value">John Wong (xxx@lmc.xxx)</span><br>
+                    <span class="detail-value">Insurance License Number: XXXXXXXX</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Vehicle</span>
+                    <span class="detail-value">${Save_selected_option.carBrand} ${Save_selected_option.carModel} (${Save_selected_option.manufacturingYear})</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Coverage Period</span>
+                    <span class="detail-value">${formatDate(Save_selected_option_2.policyEffectiveDate)} - ${formatDate(Save_selected_option_3.mainDriver.policyEndDate)}</span>
+                </div>
+            </div>
+        `;
+    }
+
+    function updateStatus() {
+        const status = document.getElementById('claimStatus').value;
+        const description = document.getElementById('statusDescription').value;
+        const timestamp = new Date().toLocaleString();
+
+        // Get existing status history
+        let statusHistory = JSON.parse(localStorage.getItem('claimStatusHistory') || '[]');
+
+        // Add new status update
+        statusHistory.push({
+            status: status,
+            description: description,
+            timestamp: timestamp
+        });
+
+        // Save to localStorage
+        localStorage.setItem('claimStatusHistory', JSON.stringify(statusHistory));
+
+        // Update display
+        displayStatusHistory();
+
+        // Clear the description field
+        document.getElementById('statusDescription').value = '';
+
+        // Show success message
+        alert('Status updated successfully!');
+    }
+
+    function displayStatusHistory() {
+        const statusHistory = JSON.parse(localStorage.getItem('claimStatusHistory') || '[]');
+        const historyContainer = document.getElementById('statusHistory');
+
+        historyContainer.innerHTML = statusHistory.reverse().map(entry => `
+                <div class="status-entry">
+                    <div class="status-timestamp">${entry.timestamp}</div>
+                    <div class="status-value">${formatStatus(entry.status)}</div>
+                    <div>${entry.description}</div>
+                </div>
+            `).join('');
+    }
+
+    function formatStatus(status) {
+        return status.split('_')
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(' ');
+    }
+
+    function formatDate(dateString) {
+        return new Date(dateString).toLocaleDateString('en-HK', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
+
+    function formatDateTime(dateTime) {
+        return new Date(dateTime).toLocaleString('en-HK', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    }
+
+    function formatDamageType(type) {
+        return type.charAt(0).toUpperCase() + type.slice(1);
+    }
+
+    function formatCurrency(amount) {
+        if (!amount) return 'Not specified';
+        return `HK$ ${amount}`;
+    }
+
+    function goBack() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('id');
+        window.location.href = `orderdetail.html?id=${orderId}`;
+    }
+</script>
+<body>
+<div class="navbar">
+    <a href="index.html" style="display: flex; align-items: center; padding: 1rem;">
+        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited"
+             style="position: absolute; margin-top: 0.75rem;height: 3rem; width: 3rem;">
+        <span style="display: flex; margin-left: 0.75rem; align-items: center; align-self: center; padding-left: 2.5rem; font-size: 1.5rem; line-height: 2rem; font-weight: 600; white-space: nowrap;">LMC</span>
+    </a>
+    <div class="nav-links">
+        <a class="navbar_a" href="index.html">Home</a>
+        <a class="navbar_a" href="progress.html">Apply</a>
+        <a class="navbar_a" href="ordersIndex.html" style="color: orange">Your Application</a>
+        <a class="navbar_a" href="js/">About Us</a>
+        <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../logout.html">Log Out</a>
+    </div>
+</div>
+
+<div class="claim-details-container"  style="margin-top: 0px">
+    <button onclick="goBack()" class="back-button">← Back to Application Details</button>
+
+    <div id="policyInfo" class="policy-summary"></div>
+
+    <div class="status-badge status-pending">Claim Under Review</div>
+
+    <div class="staff-status-section">
+        <h2>Status </h2>
+        <div class="status-history" id="statusHistory"></div>
+    </div>
+
+    <div class="ncd-warning">
+        <h3>Important Notice: About third-party and full-cover compensation</h3>
+        <p>Please be study following mention:</p>
+        <ul>
+            <p>If you purchased third-party insurance, you need to wait the court of judgement than get compensated, provided you are the victim</p>
+            <p>If you purchased full-cover insurance, you would get compensated no matter the court of judgment</p>
+        </ul>
+
+    </div>
+
+
+    <div class="ncd-warning">
+        <h3>Important Notice: NCD Impact</h3>
+        <p>Please be aware that submitting this claim will affect your No Claim Discount (NCD):</p>
+        <ul>
+            <p>Your current NCD will be reduced according to our policy terms</p>
+            <p>This reduction will be applied at your next policy renewal</p>
+            <p>It may take several years to rebuild your NCD to its current level</p>
+        </ul>
+
+    </div>
+
+    <div class="ncd-warning">
+        <h3>Important Notice: Notary's Quotation</h3>
+        <p>Please be upload the document that about notary quotation:</p>
+        <ul>
+            <li>YOU MUST find notary to support your claim</li>
+        </ul>
+
+        <div class="upload-area" id="uploadArea">
+            <p>Drop files here or click to upload</p>
+            <input type="file" id="fileInput" multiple style="display: none">
+        </div>
+        <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+    </div>
+
+
+    <div class="staff-notes-section">
+        <div class="staff-notes-header">
+            <h2>Process Notes</h2>
+            <button onclick="saveNotes()" class="save-notes-btn">Save Notes</button>
+        </div>
+        <textarea id="staffNotes" class="staff-notes-textarea"
+                  placeholder="Enter notes about the claiming process here..."></textarea>
+        <div class="notes-history" id="notesHistory"></div>
+    </div>
+
+    <div class="warning-box">
+        <h3>Claim Processing Information</h3>
+        <p>Your claim is currently under review by our claims team. The typical processing time is 5-7 business days.</p>
+        <p>We may contact you if additional information or documentation is required.</p>
+    </div>
+
+    <div class="warning-box">
+        <h3>Compensation documents (such as receipts)</h3>
+        <p>If you have any compensation record for claim, upload that</p>
+        <div class="upload-area" >
+            <p>Drop files here or click to upload</p>
+            <input type="file" multiple style="display: none">
+        </div>
+        <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+    </div>
+
+    <div class="warning-box">
+        <h3>Court Judgement</h3>
+        <p>If you have judgement by the court, upload that as soon as possible</p>
+        <div class="upload-area" id="uploadArea3">
+            <p>Drop files here or click to upload</p>
+            <input type="file" id="fileInput3" multiple style="display: none">
+        </div>
+        <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span>
+    </div>
+</div>
+
+    <div class="upload-area" id="uploadArea2">
+        <p>If you have any documents, Drop files here or click to upload</p>
+        <input type="file" id="fileInput2" multiple style="display: none">
+    </div>
+    <span style="font-size: 20px; color: green"><em><b>Upload Successful</b></em></span><br><br>
+    <div class="claim-section">
+        <h2>Driver Information</h2>
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">Driver Name</span>
+                <span id="driverName" class="detail-value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">License Number</span>
+                <span id="licenseNumber" class="detail-value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">ID Number</span>
+                <span id="idNumber" class="detail-value"></span>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="claim-section">
+        <h2>Accident Details</h2>
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">Date and Time</span>
+                <span id="accidentDateTime" class="detail-value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Location</span>
+                <span id="location" class="detail-value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Police File Number</span>
+                <span id="policeFileNumber" class="detail-value"></span>
+            </div>
+        </div>
+        <div class="detail-item">
+            <span class="detail-label">Accident Description</span>
+            <span id="description" class="detail-value"></span>
+        </div>
+    </div>
+
+    <div class="claim-section">
+        <h2>Damage Information</h2>
+        <div class="detail-grid">
+            <div class="detail-item">
+                <span class="detail-label">Type of Damage</span>
+                <span id="damageType" class="detail-value"></span>
+            </div>
+            <div class="detail-item">
+                <span class="detail-label">Estimated Cost</span>
+                <span id="estimatedCost" class="detail-value"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="claim-section">
+        <h2>Witness Information</h2>
+        <div id="witnessInfo" class="detail-grid"></div>
+    </div>
+
+    <div class="claim-section">
+        <h2>Submitted Documents</h2>
+        <div class="document-section">
+            <div class="document-grid">
+                <div class="document-item">
+                    <h4>Police Statement</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Accident Pictures</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Driver Identity document</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Driving license</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Medical Report</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Detailed Loss List</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Alcohol breath test</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+                <div class="document-item">
+                    <h4>Notice of intended prosecution</h4>
+                    <p>Uploaded successfully</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <p>&copy; 2024 Legend Motor Limited. All rights reserved.</p>
+</footer>
+</body>
+</html>

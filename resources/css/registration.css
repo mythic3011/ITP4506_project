@@ -6,7 +6,7 @@
             transition: background-color 0.5s, color 0.5s;
         }
 
-        .container {
+        .mainContainer {
             max-width: 500px;
             margin: auto;
             background: white;
@@ -80,7 +80,7 @@
             color: #ffffff;
         }
 
-        .container.dark {
+        .mainContainer.dark {
             background: #1e1e1e;
             box-shadow: 0 2px 20px rgba(255, 255, 255, 0.1);
         }
