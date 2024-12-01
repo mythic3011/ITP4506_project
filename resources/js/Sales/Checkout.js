@@ -171,8 +171,11 @@ class CheckoutManager {
             this.notificationManager.show('Discount removed.', 'success');
         });
 
-        // Handle Form Submission
+        // Handle Form Submission abnd the submit button
         document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            await this.handleCheckoutSubmit(e);
+        });
+        document.getElementById('checkoutFormbtn').addEventListener('click', async (e) => {
             await this.handleCheckoutSubmit(e);
         });
 
@@ -181,6 +184,7 @@ class CheckoutManager {
             this.financingManager.handleMethodChange(event);
             this.calculateMonthlyPayment();
         });
+
     }
 
     calculateSubtotal() {
@@ -219,7 +223,21 @@ class CheckoutManager {
                 throw new Error('Please fill in all required fields.');
             }
 
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+
             const orderData = {
+                id: generateOrderNumber(),
+                data: new Date().toISOString(),
+                status: 'pending',
+                customer: {
+                    id: userInfo.id,
+                    name: userInfo.firstName + " " + userInfo.lastName,
+                    email: userInfo.email,
+                    phone: userInfo.mobile,
+                    address: userInfo.address,
+                    faxNumber: userInfo.faxNumber
+                },
                 items: this.wishlistItems,
                 discount: this.discountManager.getCurrentDiscount(),
                 licensingFee: this.licensingManager.getFee(),
@@ -230,14 +248,23 @@ class CheckoutManager {
                 },
                 address: this.addressManager.getAddressData()
             };
-
-            // Simulate order processing
+            // update LMC_Order to local storage
+            localStorage.setItem('LMC_Order', JSON.stringify(orderData));
+            console.log(orderData);
             await new Promise(resolve => setTimeout(resolve, 1500));
-
+            // remove LMC_WishList from local storage
+            localStorage.removeItem('LMC_WishList');
             this.notificationManager.show('Order placed successfully! Redirecting to confirmation page...', 'success');
+            // set checkoutFormbtn to disabled
+            document.getElementById('checkoutFormbtn').disabled = true;
+            document.getElementById('checkoutFormbtn').classList.remove('bg-indigo-600');
+            document.getElementById('checkoutFormbtn').classList.add('bg-red-600');
+            document.getElementById('checkoutFormbtn').textContent = 'Order Placed';
+
             setTimeout(() => {
                 window.location.href = './orderConfirmation.html';
             }, 2000);
+
         } catch (error) {
             this.notificationManager.show(error.message, 'error');
         }
@@ -274,4 +301,34 @@ class CheckoutManager {
 // Initialize the checkout system when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new CheckoutManager();
+    // set the fullName and address fields
+    const user = localStorage.getItem('username');
+    const UserInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const orders = JSON.parse(localStorage.getItem('orders'));
+    // set fullName and address
+    if (UserInfo) {
+        document.getElementById('fullName').value = UserInfo.firstName + " " + UserInfo.lastName;
+        document.getElementById('addressLine1').value = UserInfo.address;
+        // Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong
+        // split the address and set the fields
+        const address = UserInfo.address.split(", ");
+        document.getElementById('district').value = address[3];
+    }
 });
+
+function generateId() {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+function generateStaffNumber() {
+    const prefix = 'STF';
+    const number = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+    return `${prefix}${number}`;
+}
+
+function generateOrderNumber() {
+    const prefix = 'ORD';
+    const timestamp = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).substr(2, 4).toUpperCase();
+    return `${prefix}-${timestamp}${random}`;
+}

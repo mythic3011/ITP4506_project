@@ -25,8 +25,8 @@ export class DiscountManager {
             this.currentDiscount = result;
 
             this.elements.amountElement.textContent = `Discount: -$${Number(result.discountAmount).toFixed(2)}`;
-            this.elements.percentageElement.textContent = result.discount.discountType === 'percentage' 
-                ? `(${result.discount.value}%)` 
+            this.elements.percentageElement.textContent = result.discount.discountType === 'percentage'
+                ? `(${result.discount.value}%)`
                 : '';
 
             this.elements.amountElement.classList.remove('hidden');
@@ -48,6 +48,9 @@ export class DiscountManager {
     }
 
     getCurrentDiscount() {
+        if (this.currentDiscount === null) {
+            return "";
+        }
         return this.currentDiscount;
     }
 }
