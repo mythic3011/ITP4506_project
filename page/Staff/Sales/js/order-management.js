@@ -140,6 +140,12 @@ class OrderManagementUI {
                 this.closeAllModals();
             }
         });
+
+        this.saveChangesBtn.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                this.closeAllModals();
+            }
+        });
         this.attachStatusChangeListeners();
     }
 
@@ -157,7 +163,7 @@ class OrderManagementUI {
             this.view.renderOrders(orderModels);
             this.attachOrderEventListeners();
         } catch (error) {
-            showMessage(document.getElementById('message'), error.message, 'error');
+            //showMessage(document.getElementById('message'), error.message, 'error');
         }
     }
 
@@ -181,7 +187,7 @@ class OrderManagementUI {
             this.loadTradeInData(orderId);
             this.loadPaymentData(orderId);
         } catch (error) {
-            showMessage(document.getElementById('message'), error.message, 'error');
+            //showMessage(document.getElementById('message'), error.message, 'error');
         }
     }
 
@@ -236,7 +242,7 @@ class OrderManagementUI {
             }
         } catch (error) {
             console.error(`Error loading ${tabId} data:`, error);
-            showMessage(document.getElementById('message'), `Failed to load ${tabId} data`, 'error');
+            //showMessage(document.getElementById('message'), `Failed to load ${tabId} data`, 'error');
         }
     }
 
@@ -286,16 +292,16 @@ class OrderManagementUI {
             const tradeInData = await this.orderService.getTradeInData(orderId);
             this.view.renderTradeInDetails(tradeInData);
 
-            showMessage(document.getElementById('message'), 'Trade-in value updated successfully!', 'success');
+            //showMessage(document.getElementById('message'), 'Trade-in value updated successfully!', 'success');
         } catch (error) {
-            showMessage(document.getElementById('message'), error.message, 'error');
+            //showMessage(document.getElementById('message'), error.message, 'error');
         }
     }
 
     async generateInvoice() {
         const orderId = this.orderDetailsModal.dataset.orderId;
         if (!orderId) {
-            showMessage(document.getElementById('message'), 'No order selected', 'error');
+            //showMessage(document.getElementById('message'), 'No order selected', 'error');
             return;
         }
 
@@ -305,7 +311,7 @@ class OrderManagementUI {
             // Handle invoice generation result (e.g., download PDF)
             console.log('Generated invoice:', invoice);
         } catch (error) {
-            showMessage(document.getElementById('message'), error.message, 'error');
+            //showMessage(document.getElementById('message'), error.message, 'error');
         }
     }
 
@@ -318,7 +324,7 @@ class OrderManagementUI {
 
         const orderId = this.paymentForm.dataset.orderId;
         if (!orderId) {
-            showMessage(document.getElementById('message'), 'No order selected', 'error');
+            //showMessage(document.getElementById('message'), 'No order selected', 'error');
             return;
         }
 
@@ -331,11 +337,11 @@ class OrderManagementUI {
             };
 
             await this.paymentService.recordPayment(orderId, paymentData);
-            showMessage(document.getElementById('message'), 'Payment recorded successfully!', 'success');
+            //showMessage(document.getElementById('message'), 'Payment recorded successfully!', 'success');
             this.closeAllModals();
             this.loadOrders();
         } catch (error) {
-            showMessage(document.getElementById('message'), error.message, 'error');
+            //showMessage(document.getElementById('message'), error.message, 'error');
         }
     }
 
@@ -352,10 +358,10 @@ class OrderManagementUI {
             const { orderId, status } = e.detail;
             try {
                 await this.orderService.updateLicensingStatus(orderId, status);
-                showMessage(document.getElementById('message'), 'Licensing status updated successfully!', 'success');
+                //showMessage(document.getElementById('message'), 'Licensing status updated successfully!', 'success');
                 this.loadOrders();
             } catch (error) {
-                showMessage(document.getElementById('message'), error.message, 'error');
+                //showMessage(document.getElementById('message'), error.message, 'error');
             }
         });
     }
@@ -364,14 +370,15 @@ class OrderManagementUI {
     async updateOrderStatus(orderId, newStatus) {
         try {
             await this.orderService.updateStatus(orderId, newStatus);
-            showMessage(document.getElementById('message'), 'Order status updated successfully!', 'success');
+            //showMessage(document.getElementById('message'), 'Order status updated successfully!', 'success');
             this.loadOrders();
         } catch (error) {
-            showMessage(document.getElementById('message'), error.message, 'error');
+            //showMessage(document.getElementById('message'), error.message, 'error');
         }
     }
 
     async handleSaveChanges() {
+
         const orderId = this.orderDetailsModal.dataset.orderId;
         if (!orderId) return;
 
@@ -389,9 +396,9 @@ class OrderManagementUI {
                     break;
             }
 
-            showMessage(document.getElementById('message'), 'Changes saved successfully!', 'success');
+            //showMessage(document.getElementById('message'), 'Changes saved successfully!', 'success');
         } catch (error) {
-            showMessage(document.getElementById('message'), error.message, 'error');
+            //showMessage(document.getElementById('message'), error.message, 'error');
         }
     }
 
@@ -473,7 +480,7 @@ class OrderManagementUI {
             // Handle export result (e.g., download CSV)
             console.log('Exported orders:', orders);
         } catch (error) {
-            showMessage(document.getElementById('message'), error.message, 'error');
+            //showMessage(document.getElementById('message'), error.message, 'error');
         }
     }
 

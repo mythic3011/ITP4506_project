@@ -299,67 +299,19 @@
                     <!-- Tab Content -->
                     <div class="tab-content">
                         <div id="licensing-yes" class="tab-panel">
+                            <!--- Address for Licensing -->
                             <form id="licensingVerificationForm" class="mt-4 grid">
                                 <div class="mb-4 grid-item">
-                                    <label for="licensePlate" class="block text-sm font-medium text-gray-700">License
-                                        Plate</label>
-                                    <input type="text" id="licensePlate" name="licensePlate" required
-                                        placeholder="e.g., ABC1234"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                </div>
-                                <div class="mb-4 grid-item">
-                                    <label for="licenseState" class="block text-sm font-medium text-gray-700">License
-                                        State</label>
-                                    <input type="text" id="licenseState" name="licenseState" required
-                                        placeholder="e.g., California"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                </div>
-                                <div class="mb-4 grid-item">
-                                    <label for="licenseNumber" class="block text-sm font-medium text-gray-700">License
-                                        Number</label>
-                                    <input type="text" id="licenseNumber" name="licenseNumber" required
-                                        placeholder="e.g., 123456789"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                </div>
-                                <div class="mb-4 grid-item">
-                                    <label for="licenseExpiry" class="block text-sm font-medium text-gray-700">License
-                                        Expiry</label>
-                                    <input type="date" id="licenseExpiry" name="licenseExpiry" required
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                </div>
-                                <div class="mb-4 grid-item">
-                                    <label for="licenseIssued" class="block text-sm font-medium text-gray-700">License
-                                        Issued</label>
-                                    <input type="text" id="licenseIssued" name="licenseIssued" required
-                                        placeholder="e.g., Department of Motor Vehicles"
-                                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                </div>
-                                <!--- Address for Licensing -->
-                                <div class="mb-4 grid-item">
-                                    <label for="licenseAddress"
-                                        class="block text-xl font-medium text-gray-700 text-gray-700 font-bold">Did you
-                                        apply address is same as your address?</label>
                                     <div
                                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                        <label class="inline-flex items-center">
-                                            <input type="radio" name="licenseAddressSame" value="yes" checked>
-                                            <span class="ml-2">Yes</span>
-                                        </label>
-                                        <label class="inline-flex items-center ml-6">
-                                            <input type="radio" name="licenseAddressSame" value="no">
-                                            <span class="ml-2">No</span>
-                                        </label>
-                                        <div class="mt-2">
-                                            <label id="labelForlicenseAddress" for="licenseAddress"
-                                                class="hidden block text-sm font-medium text-gray-700">License
-                                                Address</label>
-                                            <input type="text" id="licenseAddress" name="licenseAddress" required
-                                                placeholder="e.g., 123 Main St, City, State, Country"
-                                                class="mt-1 block w-full hidden
-                                       rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
-                                            <script>
-                                            </script>
-                                        </div>
+                                        <label id="labelForlicenseAddress" for="licenseAddress"
+                                            class="block text-sm font-medium text-gray-700">License
+                                            Address</label>
+
+                                        <input type="text" id="licenseAddress" name="licenseAddress" required
+                                            placeholder="e.g., 123 Main St, City, State, Country"
+                                            class="mt-1 block w-full 
+                                            rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
                                     </div>
                                 </div>
                             </form>

@@ -331,6 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const address = UserInfo.address.split(", ");
         document.getElementById('district').value = address[3];
     }
+    // licenseAddress
 });
 
 function generateId() {
