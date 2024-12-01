@@ -6,10 +6,10 @@ export class OrderService {
     async getOrder() {
         try {
             const orderData = localStorage.getItem(this.storageKey);
-
             if (!orderData) {
                 throw new Error('Order not found');
             }
+
             const parsedOrder = JSON.parse(orderData);
             return this.mapOrderData(parsedOrder);
         } catch (error) {
@@ -22,11 +22,10 @@ export class OrderService {
         if (!data || !data.id || !data.items || !data.items.length) {
             throw new Error('Invalid order data structure');
         }
-        console.log(data);
 
-        const mappedOrder = {
+        return {
             id: data.id,
-            data: data.data, // Original field name is 'data'
+            date: data.data, // Original field name is 'data'
             status: this.mapOrderStatus(data.status),
             customer: this.mapCustomerData(data.customer),
             items: this.mapOrderItems(data.items),
@@ -34,11 +33,12 @@ export class OrderService {
             licensingFee: data.licensingFee || 0,
             tradeInValue: data.tradeInValue || 0,
             financing: this.mapFinancingData(data.financing),
-            address: this.mapAddressData(data.address)
+            address: this.mapAddressData(data.address),
+            licensingStatus: data.licensingStatus || 'pending',
+            licensingDocuments: data.licensingDocuments || [],
+            tradeInVehicle: data.tradeInVehicle || null,
+            payments: data.payments || []
         };
-
-        console.log(mappedOrder);
-        return mappedOrder;
     }
 
     mapOrderStatus(status) {
@@ -163,5 +163,23 @@ export class OrderService {
 
     clearOrder() {
         localStorage.removeItem(this.storageKey);
+    }
+
+    async updatePayment(orderId, paymentData) {
+        try {
+            const orders = await this.getOrders();
+            const orderIndex = orders.findIndex(o => o.id === orderId);
+
+            if (orderIndex === -1) {
+                throw new Error('Order not found');
+            }
+
+            orders[orderIndex].payments.push(paymentData);
+            localStorage.setItem(this.storageKey, JSON.stringify(orders));
+            return orders[orderIndex];
+        } catch (error) {
+            console.error('Error updating payment:', error);
+            throw new Error('Failed to update payment');
+        }
     }
 }

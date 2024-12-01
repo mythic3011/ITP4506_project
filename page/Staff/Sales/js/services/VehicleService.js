@@ -5,7 +5,7 @@ export class VehicleService {
 
     async getVehicles() {
         try {
-            const response = await fetch('../../../resources/json/vehicles.json');
+            const response = await fetch('../../resources/json/vehicles.json');
             const data = await response.json();
             this.vehicles = data;
             return data;

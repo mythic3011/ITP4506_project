@@ -10,6 +10,7 @@ export class OrderService {
             if (!orderData) {
                 throw new Error('Order not found');
             }
+
             const parsedOrder = JSON.parse(orderData);
             return this.mapOrderData(parsedOrder);
         } catch (error) {

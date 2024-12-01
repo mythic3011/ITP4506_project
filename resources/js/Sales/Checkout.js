@@ -49,7 +49,9 @@ class CheckoutManager {
             noButton: document.getElementById('tradeInNo'),
             yearInput: document.getElementById('tradeInYear'),
             mileageInput: document.getElementById('tradeInMileage'),
-            conditionSelect: document.getElementById('tradeInCondition')
+            conditionSelect: document.getElementById('tradeInCondition'),
+            makeInput: document.getElementById('tradeInMake'),
+            modelInput: document.getElementById('tradeInModel')
         });
 
         this.financingManager = new FinancingManager({
@@ -68,7 +70,6 @@ class CheckoutManager {
     }
 
     initializeTabs() {
-        // Initialize all tab sections using TabManager
         const tabContainers = document.querySelectorAll('[data-tabs]');
         this.tabManagers = Array.from(tabContainers).map(container => {
             const tabManager = new TabManager(container);
@@ -83,23 +84,37 @@ class CheckoutManager {
     }
 
     handleTabChange(containerId, tabId) {
-        console.log(`Tab changed in container: ${containerId}, tabId: ${tabId}`); // Debugging log
-
         switch (containerId) {
-            case 'licensingVerification-container':
-                this.licensingManager.handleOption(tabId === 'licensing-yes');
+            case 'licensingVerificationTabs':
+                if (tabId === 'licensing-yes') {
+                    this.licensingManager.handleOption(true);
+                } else if (tabId === 'licensing-no') {
+                    this.licensingManager.handleOption(false);
+                }
                 break;
-            case 'tradeInOption':
-                this.tradeInManager.handleOption(tabId === 'tradeIn-yes');
+
+            case 'tradeInTabs':
+                if (tabId === 'tradeIn-yes') {
+                    this.tradeInManager.handleOption(true);
+                } else if (tabId === 'tradeIn-no') {
+                    this.tradeInManager.handleOption(false);
+                }
                 break;
-            case 'financingOptions':
-                this.financingManager.handleOption(tabId === 'financing-loan-plans');
+
+            case 'financingTabs':
+                if (tabId === 'financing-loan-plans') {
+                    this.financingManager.handleMethodChange({ target: { value: 'loan' } });
+                } else if (tabId === 'financing-payment-methods') {
+                    this.financingManager.handleMethodChange({ target: { value: 'cash' } });
+                }
                 break;
-            case 'checkoutForm':
-                this.addressManager.handleOption(tabId === 'address-local');
-                break;
-            default:
-                console.warn(`Unhandled containerId: ${containerId}`);
+
+            case 'addressTabs':
+                if (tabId === 'address-local') {
+                    this.addressManager.showLocalForm();
+                } else if (tabId === 'address-overseas') {
+                    this.addressManager.showOverseasForm();
+                }
                 break;
         }
 
@@ -242,11 +257,13 @@ class CheckoutManager {
                 discount: this.discountManager.getCurrentDiscount(),
                 licensingFee: this.licensingManager.getFee(),
                 tradeInValue: this.tradeInManager.getValue(),
+                tradeInVehicle: this.tradeInManager.getVehicle(),
                 financing: {
                     method: document.getElementById('financingMethod').value,
                     paymentMethod: document.getElementById('Select-Loan-Deposit').value
                 },
-                address: this.addressManager.getAddressData()
+                address: this.addressManager.getAddressData(),
+                licensing: this.licensingManager.getLicenseData(),
             };
             // update LMC_Order to local storage
             localStorage.setItem('LMC_Order', JSON.stringify(orderData));

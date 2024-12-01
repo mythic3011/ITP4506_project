@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="styles/staff/discount.css">
     <link rel="stylesheet" href="../../../resources/css/main.css">
     <link rel="stylesheet" href="../../../resources/css/comon.css">
-    <link rel="icon" href="../../../resources/image/icon_dark.png" type="image/x-icon"/>
+    <link rel="icon" href="../../../resources/image/icon_dark.png" type="image/x-icon" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
 </head>
@@ -24,424 +25,486 @@
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     }
 </style>
+
 <body class="bg-gray-50 font-sans">
-<div class="container mx-auto flex justify-between items-center p-4 bg-white">
-    <!-- Logo -->
-    <a href="#" class="flex items-center">
-        <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
-        <span class="ml-3 text-xl font-bold">LMC</span>
-    </a>
+    <div class="container mx-auto flex justify-between items-center p-4 bg-white">
+        <!-- Logo -->
+        <a href="#" class="flex items-center">
+            <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
+            <span class="ml-3 text-xl font-bold">LMC</span>
+        </a>
 
-    <!-- Search Bar -->
-    <div class="relative flex-grow mx-4">
-        <label for="search-bar-vehicles" class="absolute left-2 top-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-            </svg>
-        </label>
-        <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
-               class="border rounded px-10 py-1 w-full focus:outline-none focus:ring focus:ring-primary-light"/>
-    </div>
+        <!-- Search Bar -->
+        <div class="relative flex-grow mx-4">
+            <label for="search-bar-vehicles" class="absolute left-2 top-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </label>
+            <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
+                class="border rounded px-10 py-1 w-full focus:outline-none focus:ring focus:ring-primary-light" />
+        </div>
 
-    <!-- Navigation Links -->
-    <nav id="nav_link" class="md:flex space-x-4 gap-1">
-        <a class="navbar_a text-gray-700 hover:text-blue-500" href="../index.html">Home</a>
+        <!-- Navigation Links -->
+        <nav id="nav_link" class="md:flex space-x-4 gap-1">
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="../index.html">Home</a>
 
-        <!-- Vehicles Dropdown -->
-        <div class="relative group">
-            <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
+            <!-- Vehicles Dropdown -->
+            <div class="relative group">
+                <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
                     id="Vehicles-dropdown-toggle">
-                Vehicles
-            </button>
-            <div class="dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]"
-                 id="Vehicles-dropdown">
-                <nav class="nav-links flex flex-col space-y-2 p-2 gap-5">
-                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./ManagementVehicles.html">Manage Vehicles</a>
-                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./ManageOrderRecord.html">Manage Orders</a>
-                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./Licensing.html">Manage Vehicles Licensing </a>
-                    <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./inventory-management.html">Manage Test Drive Bookings</a>
-                </nav>
+                    Vehicles
+                </button>
+                <div class="dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]" id="Vehicles-dropdown">
+                    <nav class="nav-links flex flex-col space-y-2 p-2 gap-5">
+                        <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./inventory-management.html">Manage
+                            Vehicles</a>
+                        <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./order.html">Manage Orders</a>
+                        <a class="hover:bg-gray-100 px-[10px] py-[8px]"
+                            href="./DiscountCodeManagementSystem.html">Manage
+                            Discount Codes</a>
+                    </nav>
+                </div>
             </div>
-        </div>
 
-        <!-- Insurance Dropdown -->
-        <div class="relative group">
-            <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
+            <!-- Insurance Dropdown -->
+            <div class="relative group">
+                <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
                     id="Insurance-dropdown-toggle">
-                Insurance
-            </button>
-            <div class='dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]'
-                 id="Insurance-dropdown">
-                <nav class="nav-links flex flex-col space-y-2 p-2 gap-[5px]">
-                    <a href="../Insurance/ordersIndex.html">Manage Insurance</a>
-                </nav>
+                    Insurance
+                </button>
+                <div class='dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]'
+                    id="Insurance-dropdown">
+                    <nav class="nav-links flex flex-col space-y-2 p-2 gap-[5px]">
+                        <a href="../Insurance/index.html">Insurance</a>
+                        <a href="../Insurance/ordersIndex.html">Manage Insurance</a>
+                    </nav>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
 
-    <!-- Notification Button -->
-    <div id="notificationsBtn" class="relative mx-[10px]">
-        <button aria-label="Notifications" aria-haspopup="true" aria-expanded="false" id="notificationToggle">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2">
-                <path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'></path>
-                <path d='M13.73 21a2 2 0 0 1-3.46'></path>
-            </svg>
-            <span
+        <!-- Notification Button -->
+        <div id="notificationsBtn" class="relative mx-[10px]">
+            <button aria-label="Notifications" aria-haspopup="true" aria-expanded="false" id="notificationToggle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'></path>
+                    <path d='M13.73 21a2 2 0 0 1-3.46'></path>
+                </svg>
+                <span
                     class='notification-badge absolute top-[5px] right-[5px] bg-red text-white rounded-full px-[5px] text-xs'>3</span>
-        </button>
-    </div>
-    <!-- User Menu -->
-    <div class="relative group">
-        <div class="relative flex items-center gap-2 p-2 bg-gray-100 rounded-md shadow-sm border "
-             id="user-menu">
-            <!-- User Avatar -->
-            <span
+            </button>
+        </div>
+        <!-- User Menu -->
+        <div class="relative group">
+            <div class="relative flex items-center gap-2 p-2 bg-gray-100 rounded-md shadow-sm border " id="user-menu">
+                <!-- User Avatar -->
+                <span
                     class="user-avatar bg-blue-500 rounded-full h-[40px] w-[40px] flex items-center justify-center text-white font-bold"
                     id="username-avatar">
-                        C
-                    </span>
-            <!-- Username -->
-            <span class="user-name text-gray-800 font-medium" id="username-name">customer</span>
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600 user-menu-Dropdown-Arrow-svg"
-                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-            </svg>
-        </div>
-        <div id="user-Submenu"
-             class="dropdown hidden absolute right-0 bg-white shadow-lg rounded-md mt-2 z-[100] w-[150px]">
-            <nav class="nav-links flex flex-col space-y-2 p-2">
-                <a href="../../profile.html"
-                   class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
-                    Profile
-                </a>
-                <a href="../../logout.html"
-                   class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
-                    Logout
-                </a>
-            </nav>
-        </div>
-    </div>
-</div>
-<body class="staff-page bg-gray-150">
-    <div id="message" class="message"></div>
-<main class="content-container">
-    <header class="page-header gap-2">
-        <h1>Discount Code Management</h1>
-        <br>
-        <div class="flex ">
-            <button id="createDiscountBtn" class="primary-button mt-4">Create New Discount</button>
-        </div>
-    </header>
-
-    <div class="discount-filters">
-        <div class="search-box">
-            <input type="text" id="searchDiscount" placeholder="Search discount codes...">
-        </div>
-        <div class="filter-group">
-            <select id="statusFilter">
-                <option value="">All Status</option>
-                <option value="active">Active</option>
-                <option value="expired">Expired</option>
-                <option value="inactive">Inactive</option>
-            </select>
-            <select id="typeFilter">
-                <option value="">All Types</option>
-                <option value="percentage">Percentage</option>
-                <option value="fixed_amount">Fixed Amount</option>
-            </select>
+                    C
+                </span>
+                <!-- Username -->
+                <span class="user-name text-gray-800 font-medium" id="username-name">customer</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600 user-menu-Dropdown-Arrow-svg"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+            <div id="user-Submenu"
+                class="dropdown hidden absolute right-0 bg-white shadow-lg rounded-md mt-2 z-[100] w-[150px]">
+                <nav class="nav-links flex flex-col space-y-2 p-2">
+                    <a href="../../profile.html"
+                        class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
+                        Profile
+                    </a>
+                    <a href="../../logout.html"
+                        class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
+                        Logout
+                    </a>
+                </nav>
+            </div>
         </div>
     </div>
 
-    <div class="discount-list">
-        <table id="discountTable">
-            <thead>
-            <tr>
-                <th>Code</th>
-                <th>Type</th>
-                <th>Value</th>
-                <th>Status</th>
-                <th>Expiration</th>
-                <th>Usage</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody id="discountTableBody">
-            <!-- Discount rows will be populated by JavaScript -->
-            </tbody>
-        </table>
-    </div>
-</main>
+    <body class="staff-page bg-gray-150">
+        <div id="message" class="message"></div>
+        <main class="content-container">
+            <header class="page-header gap-2">
+                <h1>Discount Code Management</h1>
+                <br>
+                <div class="flex ">
+                    <button id="createDiscountBtn" class="primary-button mt-4">Create New Discount</button>
+                </div>
+            </header>
 
-<!-- Create/Edit Discount Modal -->
-<div id="discountModal" class="modal">
-    <div class="modal-content">
-        <h2 id="modalTitle">Create New Discount</h2>
-        <form id="discountForm">
-            <div class="form-group">
-                <label for="discountCode">Code</label>
-                <input type="text" id="discountCode" required pattern="[A-Za-z0-9-]+"
-                       title="Only letters, numbers, and hyphens allowed">
+            <div class="discount-filters">
+                <div class="search-box">
+                    <input type="text" id="searchDiscount" placeholder="Search discount codes...">
+                </div>
+                <div class="filter-group">
+                    <select id="statusFilter">
+                        <option value="">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="expired">Expired</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                    <select id="typeFilter">
+                        <option value="">All Types</option>
+                        <option value="percentage">Percentage</option>
+                        <option value="fixed_amount">Fixed Amount</option>
+                    </select>
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="discountType">Type</label>
-                <select id="discountType" required>
-                    <option value="percentage">Percentage</option>
-                    <option value="fixed_amount">Fixed Amount</option>
-                </select>
+            <div class="discount-list">
+                <table id="discountTable">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Type</th>
+                            <th>Value</th>
+                            <th>Status</th>
+                            <th>Expiration</th>
+                            <th>Usage</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="discountTableBody">
+                        <!-- Discount rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
             </div>
+        </main>
 
-            <div class="form-group">
-                <label for="discountValue">Value</label>
-                <input type="number" id="discountValue" required min="0" step="0.01">
+        <!-- Create/Edit Discount Modal -->
+        <div id="discountModal" class="modal">
+            <div class="modal-content">
+                <h2 id="modalTitle">Create New Discount</h2>
+                <form id="discountForm">
+                    <div class="form-group">
+                        <label for="discountCode">Code</label>
+                        <input type="text" id="discountCode" required pattern="[A-Za-z0-9-]+"
+                            title="Only letters, numbers, and hyphens allowed">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discountType">Type</label>
+                        <select id="discountType" required>
+                            <option value="percentage">Percentage</option>
+                            <option value="fixed_amount">Fixed Amount</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="discountValue">Value</label>
+                        <input type="number" id="discountValue" required min="0" step="0.01">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="minimumPurchase">Minimum Purchase</label>
+                        <input type="number" id="minimumPurchase" required min="0" step="0.01">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expirationDate">Expiration Date</label>
+                        <input type="date" id="expirationDate">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="maxUses">Maximum Uses (Optional)</label>
+                        <input type="number" id="maxUses" min="1">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea id="description" required></textarea>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button type="button" class="secondary-button" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="primary-button">Save Discount</button>
+                    </div>
+                </form>
             </div>
+        </div>
 
-            <div class="form-group">
-                <label for="minimumPurchase">Minimum Purchase</label>
-                <input type="number" id="minimumPurchase" required min="0" step="0.01">
-            </div>
+        <footer class="staff-footer">
+            © 2024 Legend Motor Limited. All rights reserved.
+        </footer>
+    </body>
+    <script>
+        $(document).ready(function () {
+            // Vehicles dropdown toggle
+            $('#Vehicles-dropdown-toggle').on('mouseenter', function () {
+                $('#Vehicles-dropdown').stop(true, true).fadeIn(200).css('display', 'block');
+            });
 
-            <div class="form-group">
-                <label for="expirationDate">Expiration Date</label>
-                <input type="date" id="expirationDate">
-            </div>
+            $('#Vehicles-dropdown').on('mouseleave', function () {
+                $(this).stop(true, true).fadeOut(200);
+            });
 
-            <div class="form-group">
-                <label for="maxUses">Maximum Uses (Optional)</label>
-                <input type="number" id="maxUses" min="1">
-            </div>
+            // Insurance dropdown toggle
+            $('#Insurance-dropdown-toggle').on('mouseenter', function () {
+                $('#Insurance-dropdown').stop(true, true).fadeIn(200).css('display', 'block');
+            });
 
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" required></textarea>
-            </div>
+            $('#Insurance-dropdown').on('mouseleave', function () {
+                $(this).stop(true, true).fadeOut(200);
+            });
 
-            <div class="modal-actions">
-                <button type="button" class="secondary-button" id="cancelBtn">Cancel</button>
-                <button type="submit" class="primary-button">Save Discount</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<footer class="staff-footer">
-    © 2024 Legend Motor Limited. All rights reserved.
-</footer>
-</body>
-<script>
-    class DiscountCode {
-        constructor({
-                        code,
-                        discountType,
-                        value,
-                        currency,
-                        expirationDate,
-                        status = 'active',
-                        usageCount = 0,
-                        description,
-                        minimumPurchase = 0,
-                        maxUses = null
-                    }) {
-            this.code = code;
-            this.discountType = discountType;
-            this.value = value;
-            this.currency = currency;
-            this.expirationDate = expirationDate ? new Date(expirationDate) : null;
-            this.status = status;
-            this.usageCount = usageCount;
-            this.description = description;
-            this.minimumPurchase = minimumPurchase;
-            this.maxUses = maxUses;
-        }
-
-        isValid() {
-            if (this.status !== 'active') return false;
-            if (this.expirationDate && new Date() > this.expirationDate) return false;
-            if (this.maxUses && this.usageCount >= this.maxUses) return false;
-            return true;
-        }
-
-        calculateDiscount(subtotal) {
-            if (!this.isValid() || subtotal < this.minimumPurchase) return 0;
-
-            switch (this.discountType) {
-                case 'percentage':
-                    return (subtotal * this.value) / 100;
-                case 'fixed_amount':
-                    return Math.min(this.value, subtotal);
-                default:
-                    return 0;
-            }
-        }
-    }
-
-    function showMessage(messageDiv, text, type) {
-        messageDiv.textContent = text;
-        messageDiv.className = 'message';
-        messageDiv.classList.add(`${type}`);
-        messageDiv.style.display = 'block';
-        setTimeout(() => {
-            messageDiv.style.display = 'none';
-                    messageDiv.textContent = '';
-                    messageDiv.className = '';
-                    messageDiv.classList.remove(`${type}`);
-        }, 3000);
-    }
-
-    function validateDiscountCode(code) {
-        if (!code || typeof code !== 'string') {
-            throw new Error('Invalid discount code format');
-        }
-
-        // Remove whitespace and convert to uppercase
-        code = code.trim().toUpperCase();
-
-        // Check if code matches pattern (letters, numbers, and hyphens only)
-        if (!/^[A-Z0-9-]+$/.test(code)) {
-            throw new Error('Discount code can only contain letters, numbers, and hyphens');
-        }
-
-        return code;
-    }
-
-    function validateAmount(amount) {
-        const parsedAmount = parseFloat(amount);
-
-        if (isNaN(parsedAmount) || parsedAmount < 0) {
-            throw new Error('Invalid amount');
-        }
-
-        return parsedAmount;
-    }
-
-    class DiscountService {
-        constructor() {
-            this.discounts = new Map();
-        }
-
-        async loadDiscounts() {
-            try {
-                const response = await fetch('../../../resources/json/discounts.json');
-                const data = await response.json();
-
-                data.discount_codes.forEach(discount => {
-                    const discountCode = new DiscountCode(discount);
-                    this.discounts.set(discountCode.code, discountCode);
-                });
-            } catch (error) {
-                console.error('Error loading discount codes:', error);
-                throw new Error('Failed to load discount codes');
-            }
-        }
-
-        validateCode(code, subtotal) {
-            const discount = this.discounts.get(code);
-
-            if (!discount) {
-                throw new Error('Invalid discount code');
-            }
-
-            if (!discount.isValid()) {
-                throw new Error('This discount code has expired or is no longer valid');
-            }
-
-            if (subtotal < discount.minimumPurchase) {
-                throw new Error(`Minimum purchase amount of ${discount.currency} ${discount.minimumPurchase} required`);
-            }
-
-            return discount;
-        }
-
-        applyDiscount(code, subtotal) {
-            const discount = this.validateCode(code, subtotal);
-            const discountAmount = discount.calculateDiscount(subtotal);
-
-            if (discountAmount > 0) {
-                discount.usageCount++;
-            }
-
-            return {
-                discountAmount,
-                finalTotal: subtotal - discountAmount,
-                discount
-            };
-        }
-    }
-
-    function clearMessage(messageDiv) {
-        messageDiv.style.display = 'none';
-        messageDiv.className = 'message';
-        messageDiv.textContent = '';
-    }
-
-    class DiscountManagementUI {
-        constructor() {
-            this.discountService = new DiscountService();
-            this.initializeElements();
-            this.attachEventListeners();
-            this.loadDiscounts();
-        }
-
-        initializeElements() {
-            // Buttons
-            this.createDiscountBtn = document.getElementById('createDiscountBtn');
-            this.cancelBtn = document.getElementById('cancelBtn');
-
-            // Modal
-            this.modal = document.getElementById('discountModal');
-            this.discountForm = document.getElementById('discountForm');
-            this.modalTitle = document.getElementById('modalTitle');
-
-            // Filters
-            this.searchInput = document.getElementById('searchDiscount');
-            this.statusFilter = document.getElementById('statusFilter');
-            this.typeFilter = document.getElementById('typeFilter');
-
-            // Table
-            this.tableBody = document.getElementById('discountTableBody');
-
-            // Message
-            this.messageDiv = document.getElementById('message');
-        }
-
-        attachEventListeners() {
-            // Modal events
-            this.createDiscountBtn.addEventListener('click', () => this.openModal());
-            this.cancelBtn.addEventListener('click', () => this.closeModal());
-            this.discountForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
-
-            // Filter events
-            this.searchInput.addEventListener('input', () => this.filterDiscounts());
-            this.statusFilter.addEventListener('change', () => this.filterDiscounts());
-            this.typeFilter.addEventListener('change', () => this.filterDiscounts());
-
-            // Close modal when clicking outside
-            window.addEventListener('click', (e) => {
-                if (e.target === this.modal) {
-                    this.closeModal();
+            // Close dropdowns when clicking outside
+            $(document).click(function (e) {
+                if (!$(e.target).closest('#Vehicles-dropdown, #Vehicles-dropdown-toggle').length) {
+                    $('#Vehicles-dropdown').fadeOut(200);
+                }
+                if (!$(e.target).closest('#Insurance-dropdown, #Insurance-dropdown-toggle').length) {
+                    $('#Insurance-dropdown').fadeOut(200);
                 }
             });
-        }
 
-        async loadDiscounts() {
-            try {
-                await this.discountService.loadDiscounts();
-                this.renderDiscountTable();
-                console.log(this.discountService.discounts);
-            } catch (error) {
-                showMessage(this.messageDiv, error.message, 'error');
+            const notificationToggle = document.getElementById('notificationToggle');
+            notificationToggle.addEventListener('click', () => {
+                alert('You have new notifications!');
+            });
+
+            $('#user-menu').on('mouseenter', function () {
+                $('#user-Submenu').stop(true, true).fadeIn(200).css('display', 'block');
+            });
+
+            $('#user-Submenu').on('mouseleave', function () {
+                $(this).stop(true, true).fadeOut(200);
+            });
+
+            // change the username-name text and avatar when loading the page
+            const user = JSON.parse(localStorage.getItem('userInfo')); // Correctly parse the user info
+
+            if (user) {
+                $('#username-name').text(user.firstName + " " + user.lastName); // Accessing firstName and lastName
+                $('#username-avatar').text(getFirstLetter(user.firstName)); // Assuming getFirstLetter is a defined function
+            } else {
+                console.error('User information not found in localStorage.');
+            }
+
+            function getFirstLetter(name) {
+                return name.charAt(0).toUpperCase();
+            }
+        });
+
+    </script>
+    <script>
+        class DiscountCode {
+            constructor({
+                code,
+                discountType,
+                value,
+                currency,
+                expirationDate,
+                status = 'active',
+                usageCount = 0,
+                description,
+                minimumPurchase = 0,
+                maxUses = null
+            }) {
+                this.code = code;
+                this.discountType = discountType;
+                this.value = value;
+                this.currency = currency;
+                this.expirationDate = expirationDate ? new Date(expirationDate) : null;
+                this.status = status;
+                this.usageCount = usageCount;
+                this.description = description;
+                this.minimumPurchase = minimumPurchase;
+                this.maxUses = maxUses;
+            }
+
+            isValid() {
+                if (this.status !== 'active') return false;
+                if (this.expirationDate && new Date() > this.expirationDate) return false;
+                if (this.maxUses && this.usageCount >= this.maxUses) return false;
+                return true;
+            }
+
+            calculateDiscount(subtotal) {
+                if (!this.isValid() || subtotal < this.minimumPurchase) return 0;
+
+                switch (this.discountType) {
+                    case 'percentage':
+                        return (subtotal * this.value) / 100;
+                    case 'fixed_amount':
+                        return Math.min(this.value, subtotal);
+                    default:
+                        return 0;
+                }
             }
         }
 
-        renderDiscountTable() {
-            this.tableBody.innerHTML = '';
+        function showMessage(messageDiv, text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = 'message';
+            messageDiv.classList.add(`${type}`);
+            messageDiv.style.display = 'block';
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+                messageDiv.textContent = '';
+                messageDiv.className = '';
+                messageDiv.classList.remove(`${type}`);
+            }, 3000);
+        }
 
-            this.discountService.discounts.forEach((discount, code) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+        function validateDiscountCode(code) {
+            if (!code || typeof code !== 'string') {
+                throw new Error('Invalid discount code format');
+            }
+
+            // Remove whitespace and convert to uppercase
+            code = code.trim().toUpperCase();
+
+            // Check if code matches pattern (letters, numbers, and hyphens only)
+            if (!/^[A-Z0-9-]+$/.test(code)) {
+                throw new Error('Discount code can only contain letters, numbers, and hyphens');
+            }
+
+            return code;
+        }
+
+        function validateAmount(amount) {
+            const parsedAmount = parseFloat(amount);
+
+            if (isNaN(parsedAmount) || parsedAmount < 0) {
+                throw new Error('Invalid amount');
+            }
+
+            return parsedAmount;
+        }
+
+        class DiscountService {
+            constructor() {
+                this.discounts = new Map();
+            }
+
+            async loadDiscounts() {
+                try {
+                    const response = await fetch('../../../resources/json/discounts.json');
+                    const data = await response.json();
+
+                    data.discount_codes.forEach(discount => {
+                        const discountCode = new DiscountCode(discount);
+                        this.discounts.set(discountCode.code, discountCode);
+                    });
+                } catch (error) {
+                    console.error('Error loading discount codes:', error);
+                    throw new Error('Failed to load discount codes');
+                }
+            }
+
+            validateCode(code, subtotal) {
+                const discount = this.discounts.get(code);
+
+                if (!discount) {
+                    throw new Error('Invalid discount code');
+                }
+
+                if (!discount.isValid()) {
+                    throw new Error('This discount code has expired or is no longer valid');
+                }
+
+                if (subtotal < discount.minimumPurchase) {
+                    throw new Error(`Minimum purchase amount of ${discount.currency} ${discount.minimumPurchase} required`);
+                }
+
+                return discount;
+            }
+
+            applyDiscount(code, subtotal) {
+                const discount = this.validateCode(code, subtotal);
+                const discountAmount = discount.calculateDiscount(subtotal);
+
+                if (discountAmount > 0) {
+                    discount.usageCount++;
+                }
+
+                return {
+                    discountAmount,
+                    finalTotal: subtotal - discountAmount,
+                    discount
+                };
+            }
+        }
+
+        function clearMessage(messageDiv) {
+            messageDiv.style.display = 'none';
+            messageDiv.className = 'message';
+            messageDiv.textContent = '';
+        }
+
+        class DiscountManagementUI {
+            constructor() {
+                this.discountService = new DiscountService();
+                this.initializeElements();
+                this.attachEventListeners();
+                this.loadDiscounts();
+            }
+
+            initializeElements() {
+                // Buttons
+                this.createDiscountBtn = document.getElementById('createDiscountBtn');
+                this.cancelBtn = document.getElementById('cancelBtn');
+
+                // Modal
+                this.modal = document.getElementById('discountModal');
+                this.discountForm = document.getElementById('discountForm');
+                this.modalTitle = document.getElementById('modalTitle');
+
+                // Filters
+                this.searchInput = document.getElementById('searchDiscount');
+                this.statusFilter = document.getElementById('statusFilter');
+                this.typeFilter = document.getElementById('typeFilter');
+
+                // Table
+                this.tableBody = document.getElementById('discountTableBody');
+
+                // Message
+                this.messageDiv = document.getElementById('message');
+            }
+
+            attachEventListeners() {
+                // Modal events
+                this.createDiscountBtn.addEventListener('click', () => this.openModal());
+                this.cancelBtn.addEventListener('click', () => this.closeModal());
+                this.discountForm.addEventListener('submit', (e) => this.handleFormSubmit(e));
+
+                // Filter events
+                this.searchInput.addEventListener('input', () => this.filterDiscounts());
+                this.statusFilter.addEventListener('change', () => this.filterDiscounts());
+                this.typeFilter.addEventListener('change', () => this.filterDiscounts());
+
+                // Close modal when clicking outside
+                window.addEventListener('click', (e) => {
+                    if (e.target === this.modal) {
+                        this.closeModal();
+                    }
+                });
+            }
+
+            async loadDiscounts() {
+                try {
+                    await this.discountService.loadDiscounts();
+                    this.renderDiscountTable();
+                    console.log(this.discountService.discounts);
+                } catch (error) {
+                    showMessage(this.messageDiv, error.message, 'error');
+                }
+            }
+
+            renderDiscountTable() {
+                this.tableBody.innerHTML = '';
+
+                this.discountService.discounts.forEach((discount, code) => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
                 <td>${discount.code}</td>
                 <td>${this.formatDiscountType(discount.discountType)}</td>
                 <td>${this.formatValue(discount.value, discount.discountType, discount.currency)}</td>
@@ -454,135 +517,135 @@
                 </td>
             `;
 
-                // Add event listeners to buttons
-                const editBtn = row.querySelector('.edit-btn');
-                const deleteBtn = row.querySelector('.delete-btn');
+                    // Add event listeners to buttons
+                    const editBtn = row.querySelector('.edit-btn');
+                    const deleteBtn = row.querySelector('.delete-btn');
 
-                editBtn.addEventListener('click', () => this.editDiscount(code));
-                deleteBtn.addEventListener('click', () => this.deleteDiscount(code));
+                    editBtn.addEventListener('click', () => this.editDiscount(code));
+                    deleteBtn.addEventListener('click', () => this.deleteDiscount(code));
 
-                this.tableBody.appendChild(row);
-            });
-        }
+                    this.tableBody.appendChild(row);
+                });
+            }
 
-        formatDiscountType(type) {
-            return type === 'percentage' ? 'Percentage' : 'Fixed Amount';
-        }
+            formatDiscountType(type) {
+                return type === 'percentage' ? 'Percentage' : 'Fixed Amount';
+            }
 
-        formatValue(value, type, currency) {
-            return type === 'percentage' ? `${value}%` : `${currency} ${value}`;
-        }
+            formatValue(value, type, currency) {
+                return type === 'percentage' ? `${value}%` : `${currency} ${value}`;
+            }
 
-        formatDate(date) {
-            if (!date) return 'No expiration';
-            return new Date(date).toLocaleDateString();
-        }
+            formatDate(date) {
+                if (!date) return 'No expiration';
+                return new Date(date).toLocaleDateString();
+            }
 
-        openModal(discount = null) {
-            this.modalTitle.textContent = discount ? 'Edit Discount' : 'Create New Discount';
-            this.modal.style.display = 'block';
+            openModal(discount = null) {
+                this.modalTitle.textContent = discount ? 'Edit Discount' : 'Create New Discount';
+                this.modal.style.display = 'block';
 
-            if (discount) {
-                // Populate form with discount data
-                document.getElementById('discountCode').value = discount.code;
-                document.getElementById('discountType').value = discount.discountType;
-                document.getElementById('discountValue').value = discount.value;
-                document.getElementById('minimumPurchase').value = discount.minimumPurchase;
-                document.getElementById('maxUses').value = discount.maxUses || '';
-                document.getElementById('description').value = discount.description;
+                if (discount) {
+                    // Populate form with discount data
+                    document.getElementById('discountCode').value = discount.code;
+                    document.getElementById('discountType').value = discount.discountType;
+                    document.getElementById('discountValue').value = discount.value;
+                    document.getElementById('minimumPurchase').value = discount.minimumPurchase;
+                    document.getElementById('maxUses').value = discount.maxUses || '';
+                    document.getElementById('description').value = discount.description;
 
-                if (discount.expirationDate) {
-                    const date = new Date(discount.expirationDate);
-                    document.getElementById('expirationDate').value = date.toISOString().split('T')[0];
+                    if (discount.expirationDate) {
+                        const date = new Date(discount.expirationDate);
+                        document.getElementById('expirationDate').value = date.toISOString().split('T')[0];
+                    } else {
+                        document.getElementById('expirationDate').value = '';
+                    }
                 } else {
-                    document.getElementById('expirationDate').value = '';
+                    // Reset form for new discount
+                    this.discountForm.reset();
                 }
-            } else {
-                // Reset form for new discount
+            }
+
+            closeModal() {
+                this.modal.style.display = 'none';
                 this.discountForm.reset();
             }
-        }
 
-        closeModal() {
-            this.modal.style.display = 'none';
-            this.discountForm.reset();
-        }
-
-        async handleFormSubmit(e) {
-            e.preventDefault();
-            try {
-                const formData = {
-                    code: document.getElementById('discountCode').value,
-                    discountType: document.getElementById('discountType').value,
-                    value: parseFloat(document.getElementById('discountValue').value),
-                    minimumPurchase: parseFloat(document.getElementById('minimumPurchase').value),
-                    expirationDate: document.getElementById('expirationDate').value || null,
-                    maxUses: document.getElementById('maxUses').value ? parseInt(document.getElementById('maxUses').value) : null,
-                    description: document.getElementById('description').value,
-                    currency: 'HKD', // Default currency
-                    status: 'active',
-                    usageCount: 0
-                };
-
-                // Validate form data
-                validateDiscountCode(formData.code);
-                validateAmount(formData.value);
-                validateAmount(formData.minimumPurchase);
-
-                // Save discount
-                // In a real application, this would make an API call
-                this.discountService.discounts.set(formData.code, formData);
-
-                showMessage(this.messageDiv, 'Discount saved successfully!', 'success');
-                this.closeModal();
-                this.renderDiscountTable();
-            } catch (error) {
-                showMessage(this.messageDiv, error.message, 'error');
-            }
-        }
-
-        editDiscount(code) {
-            const discount = this.discountService.discounts.get(code);
-            if (discount) {
-                this.openModal(discount);
-            }
-        }
-
-        async deleteDiscount(code) {
-            if (confirm('Are you sure you want to delete this discount code?')) {
+            async handleFormSubmit(e) {
+                e.preventDefault();
                 try {
+                    const formData = {
+                        code: document.getElementById('discountCode').value,
+                        discountType: document.getElementById('discountType').value,
+                        value: parseFloat(document.getElementById('discountValue').value),
+                        minimumPurchase: parseFloat(document.getElementById('minimumPurchase').value),
+                        expirationDate: document.getElementById('expirationDate').value || null,
+                        maxUses: document.getElementById('maxUses').value ? parseInt(document.getElementById('maxUses').value) : null,
+                        description: document.getElementById('description').value,
+                        currency: 'HKD', // Default currency
+                        status: 'active',
+                        usageCount: 0
+                    };
+
+                    // Validate form data
+                    validateDiscountCode(formData.code);
+                    validateAmount(formData.value);
+                    validateAmount(formData.minimumPurchase);
+
+                    // Save discount
                     // In a real application, this would make an API call
-                    this.discountService.discounts.delete(code);
-                    showMessage(this.messageDiv, 'Discount deleted successfully!', 'success');
+                    this.discountService.discounts.set(formData.code, formData);
+
+                    showMessage(this.messageDiv, 'Discount saved successfully!', 'success');
+                    this.closeModal();
                     this.renderDiscountTable();
                 } catch (error) {
                     showMessage(this.messageDiv, error.message, 'error');
                 }
             }
-        }
 
-        filterDiscounts() {
-            const searchTerm = this.searchInput.value.toLowerCase();
-            const statusFilter = this.statusFilter.value;
-            const typeFilter = this.typeFilter.value;
+            editDiscount(code) {
+                const discount = this.discountService.discounts.get(code);
+                if (discount) {
+                    this.openModal(discount);
+                }
+            }
 
-            const filteredDiscounts = Array.from(this.discountService.discounts.values()).filter(discount => {
-                const matchesSearch = discount.code.toLowerCase().includes(searchTerm) ||
-                    discount.description.toLowerCase().includes(searchTerm);
-                const matchesStatus = !statusFilter || discount.status.toLowerCase() === statusFilter;
-                const matchesType = !typeFilter || discount.discountType === typeFilter;
+            async deleteDiscount(code) {
+                if (confirm('Are you sure you want to delete this discount code?')) {
+                    try {
+                        // In a real application, this would make an API call
+                        this.discountService.discounts.delete(code);
+                        showMessage(this.messageDiv, 'Discount deleted successfully!', 'success');
+                        this.renderDiscountTable();
+                    } catch (error) {
+                        showMessage(this.messageDiv, error.message, 'error');
+                    }
+                }
+            }
 
-                return matchesSearch && matchesStatus && matchesType;
-            });
+            filterDiscounts() {
+                const searchTerm = this.searchInput.value.toLowerCase();
+                const statusFilter = this.statusFilter.value;
+                const typeFilter = this.typeFilter.value;
 
-            this.renderFilteredDiscounts(filteredDiscounts);
-        }
+                const filteredDiscounts = Array.from(this.discountService.discounts.values()).filter(discount => {
+                    const matchesSearch = discount.code.toLowerCase().includes(searchTerm) ||
+                        discount.description.toLowerCase().includes(searchTerm);
+                    const matchesStatus = !statusFilter || discount.status.toLowerCase() === statusFilter;
+                    const matchesType = !typeFilter || discount.discountType === typeFilter;
 
-        renderFilteredDiscounts(filteredDiscounts) {
-            this.tableBody.innerHTML = '';
-            filteredDiscounts.forEach(discount => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
+                    return matchesSearch && matchesStatus && matchesType;
+                });
+
+                this.renderFilteredDiscounts(filteredDiscounts);
+            }
+
+            renderFilteredDiscounts(filteredDiscounts) {
+                this.tableBody.innerHTML = '';
+                filteredDiscounts.forEach(discount => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
                 <td>${discount.code}</td>
                 <td>${this.formatDiscountType(discount.discountType)}</td>
                 <td>${this.formatValue(discount.value, discount.discountType, discount.currency)}</td>
@@ -595,25 +658,26 @@
                 </td>
             `;
 
-                const editBtn = row.querySelector('.edit-btn');
-                const deleteBtn = row.querySelector('.delete-btn');
+                    const editBtn = row.querySelector('.edit-btn');
+                    const deleteBtn = row.querySelector('.delete-btn');
 
-                editBtn.addEventListener('click', () => this.editDiscount(discount.code));
-                deleteBtn.addEventListener('click', () => this.deleteDiscount(discount.code));
+                    editBtn.addEventListener('click', () => this.editDiscount(discount.code));
+                    deleteBtn.addEventListener('click', () => this.deleteDiscount(discount.code));
 
-                this.tableBody.appendChild(row);
-            });
+                    this.tableBody.appendChild(row);
+                });
+            }
+
+            handleLogout() {
+                window.location.href = '../../index.html';
+            }
         }
 
-        handleLogout() {
-            window.location.href = '../../index.html';
-        }
-    }
-
-    // Initialize the UI when the DOM is loaded
-    document.addEventListener('DOMContentLoaded', () => {
-        new DiscountManagementUI();
-    });
-</script>
+        // Initialize the UI when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new DiscountManagementUI();
+        });
+    </script>
 </body>
+
 </html>

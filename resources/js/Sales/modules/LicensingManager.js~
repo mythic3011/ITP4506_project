@@ -22,17 +22,8 @@ export class LicensingManager {
         return this.fee;
     }
 
-    validate() {
-        if (this.fee > 0) {
-            // Add validation logic for licensing form
-            const required = ['licensePlate', 'licenseState', 'licenseNumber', 'licenseExpiry', 'licenseIssued'];
-            return required.every(field => this.elements.form.querySelector(`#${field}`).value.trim() !== '');
-        }
-        return true;
-    }
-
     getLicenseData() {
-        if (this.isYes) {
+        if (isYes) {
             validate();
             return {
                 licensePlate: this.elements.licensePlate.value,
@@ -51,5 +42,14 @@ export class LicensingManager {
             return "";
         }
         return this.elements.licenseAddress.value;
+    }
+
+    validate() {
+        if (this.fee > 0) {
+            // Add validation logic for licensing form
+            const required = ['licensePlate', 'licenseState', 'licenseNumber', 'licenseExpiry', 'licenseIssued'];
+            return required.every(field => this.elements.form.querySelector(`#${field}`).value.trim() !== '');
+        }
+        return true;
     }
 }

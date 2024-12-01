@@ -27,10 +27,10 @@ export class TradeInManager {
         let baseValue = 5000;
         const currentYear = new Date().getFullYear();
         const age = currentYear - year;
-        
+
         baseValue -= age * 500;
         baseValue -= Math.floor(mileage / 10000) * 200;
-        
+
         const conditionMultipliers = {
             excellent: 1.2,
             good: 1,
@@ -44,5 +44,24 @@ export class TradeInManager {
 
     getValue() {
         return this.value;
+    }
+
+    getVehicle() {
+        const formData = new FormData(this.elements.form);
+        const vehicle = {};
+
+        for (const [key, value] of formData.entries()) {
+            vehicle[key] = value;
+        }
+
+        vehicle.year = parseInt(vehicle.tradeInYear, 10);
+        vehicle.mileage = parseInt(vehicle.tradeInMileage, 10);
+
+        // Basic validation
+        if (!vehicle.tradeInMake || !vehicle.tradeInModel || isNaN(vehicle.year) || isNaN(vehicle.mileage) || !vehicle.tradeInCondition) {
+            throw new Error('Please fill in all required fields with valid data.');
+        }
+
+        return vehicle;
     }
 }
