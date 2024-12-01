@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Legend Motor Limited</title>
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/order-confirmation.css">
+</head>
+
+<body class="order-page">
+    <nav class="customer-nav">
+    </nav>
+
+    <main class="content-container">
+        <div class="order-confirmation">
+            <div class="confirmation-header">
+                <img src="/wheel-logo.png" alt="Legend Motor Logo" class="confirmation-logo">
+                <h1>Thank You for Your Order!</h1>
+                <p class="confirmation-message">Your order has been successfully placed and is being processed.</p>
+            </div>
+
+            <div class="order-details">
+                <div class="order-info">
+                    <h2>Order Information</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="label">Order ID:</span>
+                            <span class="value" id="orderId"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Order Date:</span>
+                            <span class="value" id="orderDate"></span>
+                        </div>
+                        <div class="info-item">
+                            <span class="label">Status:</span>
+                            <span class="value status-badge" id="orderStatus"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="vehicle-summary">
+                    <h2>Vehicle Details</h2>
+                    <div class="vehicle-card" id="vehicleDetails">
+                        <!-- Vehicle details will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="tradein-summary">
+                    <h2>Trade-In Information</h2>
+                    <div class="tradein-card" id="tradeinDetails">
+                        <!-- Trade-In details will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="customer-info">
+                    <h2>Customer Information</h2>
+                    <div class="info-grid" id="customerInfo">
+                        <!-- Customer details will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="payment-info">
+                    <h2>Payment Information</h2>
+                    <div class="info-grid" id="paymentInfo">
+                        <!-- Payment details will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="delivery-info">
+                    <h2>Delivery Information</h2>
+                    <div class="info-grid" id="deliveryInfo">
+                        <!-- Delivery details will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="next-steps">
+                <h2>What's Next?</h2>
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-icon">📋</div>
+                        <h3>Track Your Order</h3>
+                        <p>Keep track of your order status and get updates on delivery.</p>
+                        <a href="../orders.html" class="step-link">View Order Status</a>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">🚗</div>
+                        <h3>Explore More Vehicles</h3>
+                        <p>Browse our collection of premium vehicles.</p>
+                        <a href="../vehicles.html" class="step-link">View Vehicles</a>
+                    </div>
+                    <div class="step-card">
+                        <div class="step-icon">📞</div>
+                        <h3>Need Help?</h3>
+                        <p>Our support team is here to assist you.</p>
+                        <a href="../support.html" class="step-link">Contact Support</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="customer-footer">
+        © 2024 Legend Motor Limited. All rights reserved.
+    </footer>
+</body>
+<script type="module" src="./js/order-confirmation.js"></script>
+
+</html>
