@@ -6,29 +6,18 @@ $(document).ready(function () {
     updateWishlistCount();
     renderOrderSummary();
 
-    // Event listener for payment method selection
-    $('#paymentMethod').change(function () {
-        const selectedMethod = $(this).val();
-        if (selectedMethod === 'CreditCard') {
-            $('#CreditCard').removeClass('hidden');
-        } else {
-            $('#CreditCard').addClass('hidden');
-        }
-    });
-
     // Event listener for form submission
     $('#paymentForm').submit(function (event) {
         event.preventDefault();
 
-        // Show loading indicator
-        $('#loadingIndicator').removeClass('hidden');
-
-        let isValid = validateForm();
-        if (!isValid) {
-            alert('Please fill in all required fields correctly.', 'error');
-            $('#loadingIndicator').addClass('hidden'); // Hide loading
+        const wishlistItems = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
+        if (wishlistItems.length === 0) {
+            alert('Please add at least one item to your wishlist before proceeding.', 'error');
             return;
         }
+
+        // Show loading indicator
+        $('#loadingIndicator').removeClass('hidden');
 
         alert('Submitted successfully!', 'success');
         alert('Redirecting to Checkout page...', 'info');
@@ -38,47 +27,6 @@ $(document).ready(function () {
         }, 3000);
     });
 });
-
-function validateForm() {
-    const paymentMethod = $('#paymentMethod').val();
-    const cardName = $('#cardName').val();
-    const cardNumber = $('#cardNumber').val();
-    const expiryDate = $('#expiryDate').val();
-    const cvv = $('#cvv').val();
-
-    let isValid = true;
-
-    if (paymentMethod === 'CreditCard') {
-        if (!cardName) {
-            $('#cardNameHelp').removeClass('hidden');
-            isValid = false;
-        } else {
-            $('#cardNameHelp').addClass('hidden');
-        }
-
-        if (!cardNumber) {
-            $('#cardNumberHelp').removeClass('hidden');
-            isValid = false;
-        } else {
-            $('#cardNumberHelp').addClass('hidden');
-        }
-
-        if (!expiryDate) {
-            $('#expiryDateHelp').removeClass('hidden');
-            isValid = false;
-        } else {
-            $('#expiryDateHelp').addClass('hidden');
-        }
-
-        if (!cvv) {
-            $('#cvvHelp').removeClass('hidden');
-            isValid = false;
-        } else {
-            $('#cvvHelp').addClass('hidden');
-        }
-    }
-    return isValid;
-}
 
 
 function renderWishlist() {
@@ -99,10 +47,10 @@ function renderWishlist() {
             const upgradesList = item.upgrades.length > 0 ? item.upgrades.join(', ') : 'None';
             const insuranceList = item.insurancePlans.length > 0 ? item.insurancePlans.map(plan => plan.planName).join(', ') : 'None';
 
-            const row = $('<tr>').append($('<td>', {class: 'px-6 py-4', text: item.make}), $('<td>', {
+            const row = $('<tr>').append($('<td>', { class: 'px-6 py-4', text: item.make }), $('<td>', {
                 class: 'px-6 py-4',
                 text: item.model
-            }), $('<td>', {class: 'px-6 py-4', text: item.color}), $('<td>', {
+            }), $('<td>', { class: 'px-6 py-4', text: item.color }), $('<td>', {
                 class: 'px-6 py-4',
                 title: upgradesList,
                 style: "overflow:hidden;",
@@ -115,7 +63,7 @@ function renderWishlist() {
             }), $('<td>', {
                 class: 'px-6 py-4',
                 text: `$${item.price}`
-            }), $('<td>', {class: 'px-6 py-4'}).append($('<button>', {
+            }), $('<td>', { class: 'px-6 py-4' }).append($('<button>', {
                 class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-1 px2 rounded',
                 text: 'Remove',
                 click: function () {
@@ -126,7 +74,7 @@ function renderWishlist() {
             wishlistTableBody.append(row);
             console.log(row);
         });
-    }catch (error) {
+    } catch (error) {
         console.error('Error rendering wishlist:', error);
     }
 }
@@ -185,9 +133,9 @@ function addToWishlist(vehicle) {
 function renderOrderSummary() {
     const orderSummary = document.getElementById('orderSummary');
     const subtotalAmount = document.getElementById('subtotalAmount');
-    const totalAmount = document.getElementById('totalAmount');
-    const depositAmount = document.getElementById('DepositAmount');
-    const estimatedDelivery = document.getElementById('estimatedDelivery');
+    const totalAmount = document.getElementById('totalAmountValue');
+    const depositAmount = document.getElementById('DepositAmountValue');
+    const estimatedDelivery = document.getElementById('EstimatedDeliveryValue');
 
     // Check if required elements exist
     if (!subtotalAmount || !totalAmount || !depositAmount || !estimatedDelivery) {
@@ -244,6 +192,6 @@ function showNotification(message, type) {
     notificationArea.append(notification);
 
     setTimeout(() => {
-        notification.fadeOut(400, function() { $(this).remove(); });
+        notification.fadeOut(400, function () { $(this).remove(); });
     }, 3000);
 }
