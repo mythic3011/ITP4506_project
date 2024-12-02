@@ -64,7 +64,7 @@ function renderWishlist() {
                 class: 'px-6 py-4',
                 text: `$${item.price}`
             }), $('<td>', { class: 'px-6 py-4' }).append($('<button>', {
-                class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-1 px2 rounded',
+                class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-2 rounded shadow-lg',
                 text: 'Remove',
                 click: function () {
                     removeFromWishlist(item.id);
