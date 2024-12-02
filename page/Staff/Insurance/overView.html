@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../../../resources/css/insurance_customer_style.css">
+  <script src="../../../resources/js/customer.js"></script>
+  <link rel="stylesheet" href="../../../resources/css/horizon_menu_bar.css">
+  <title>Insurance Policy Overview | Legend Motor Limited</title>
+  <style>
+    :root {
+      --primary-color: #ff9800;
+      --secondary-color: #2c3e50;
+      --background-color: #f5f5f5;
+      --card-background: #ffffff;
+      --text-primary: #2c3e50;
+      --text-secondary: #666666;
+      --success-color: #4CAF50;
+      --danger-color: #f44336;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-color: var(--background-color);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+    }
+
+    .brand img {
+      height: 3rem;
+    }
+
+    .brand span {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+
+    .nav-links a.active {
+      color: var(--primary-color);
+    }
+
+    .dashboard-container {
+      max-width: 1400px;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background-color: var(--card-background);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .stat-card h3 {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .stat-trend {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .stat-trend.positive {
+      color: var(--success-color);
+    }
+
+    .stat-trend.negative {
+      color: var(--danger-color);
+    }
+
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .chart-card {
+      background-color: var(--card-background);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .chart-card h3 {
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .recent-policies {
+      background-color: var(--card-background);
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .recent-policies h2 {
+      color: var(--text-primary);
+      margin-bottom: 1rem;
+    }
+
+    .policy-table {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+
+    th {
+      background-color: #f8f9fa;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .status-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .status-active {
+      background-color: #e8f5e9;
+      color: var(--success-color);
+    }
+
+    .status-pending {
+      background-color: #fff3e0;
+      color: var(--primary-color);
+    }
+
+    .status-claim {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+
+    .status-expired {
+      background-color: #ffebee;
+      color: var(--danger-color);
+    }
+
+    .status-cancelled {
+      background-color: #fafafa;
+      color: #757575;
+    }
+
+    .action-button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.3s;
+    }
+
+    .action-view {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="navbar">
+  <a href="index.html" style="display: flex; align-items: center; padding: 1rem;">
+    <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited"
+         style="position: absolute; margin-top: 0.75rem;height: 3rem; width: 3rem;">
+    <span style="display: flex; margin-left: 0.75rem; align-items: center; align-self: center; padding-left: 2.5rem; font-size: 1.5rem; line-height: 2rem; font-weight: 600; white-space: nowrap;">LMC</span>
+  </a>
+  <div class="nav-links">
+    <a class="navbar_a" href="index.html">Home</a>
+    <a class="navbar_a" href="ordersIndex.html" style="color: orange">Customers Application</a>
+    <a class="navbar_a" href="../../profile.html">Profile</a>
+    <a class="navbar_a text-gray-700 hover:text-blue-500" href="../../logout.html">Log Out</a>
+  </div>
+</div>
+
+
+<div class="dashboard-container" style="margin-top: 0px; padding-top: 90px">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>Total Policies</h3>
+      <div id="totalPolicies" class="stat-value">0</div>
+      <div class="stat-trend positive">Active Policies</div>
+    </div>
+    <div class="stat-card">
+      <h3>Active Claims</h3>
+      <div id="activeClaims" class="stat-value">0</div>
+      <div class="stat-trend">Pending Review</div>
+    </div>
+    <div class="stat-card">
+      <h3>Premium Revenue</h3>
+      <div id="premiumRevenue" class="stat-value">HK$0</div>
+      <div class="stat-trend">Total Revenue</div>
+    </div>
+    <div class="stat-card">
+      <h3>Customer Satisfaction</h3>
+      <div class="stat-value">94%</div>
+      <div class="stat-trend positive">Based on Reviews</div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>Policy Distribution</h3>
+      <canvas id="policyChart"></canvas>
+    </div>
+    <div class="chart-card">
+      <h3>Monthly Claims</h3>
+      <canvas id="claimsChart"></canvas>
+    </div>
+  </div>
+
+  <div class="recent-policies">
+    <h2>Recent Policies</h2>
+    <div class="policy-table">
+      <table>
+        <thead>
+        <tr>
+          <th>Policy ID</th>
+          <th>Customer</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Premium</th>
+          <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody id="policyTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  // Utility functions
+  function getAllPolicies() {
+    const policies = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key.startsWith('pendingInsurance-')) {
+        const policy = JSON.parse(localStorage.getItem(key));
+        policies.push(policy);
+      }
+    }
+    return policies;
+  }
+
+  function formatCurrency(amount) {
+    return new Intl.NumberFormat('en-HK', {
+      style: 'currency',
+      currency: 'HKD'
+    }).format(amount);
+  }
+
+  function calculateStats(policies) {
+    const totalPolicies = policies.length;
+    const activeClaims = policies.filter(p => p.status === 'claim').length;
+    const totalRevenue = policies.reduce((sum, policy) => {
+      const price = parseFloat(policy.Save_selected_option_2.checkoutPrice.replace(/[^0-9.-]+/g, ''));
+      return sum + (isNaN(price) ? 0 : price);
+    }, 0);
+
+    return {
+      totalPolicies,
+      activeClaims,
+      totalRevenue: formatCurrency(totalRevenue)
+    };
+  }
+
+  function calculatePolicyDistribution(policies) {
+    const distribution = {
+      'Comprehensive': 0,
+      'Third Party': 0,
+      'Third Party Fire & Theft': 0
+    };
+
+    policies.forEach(policy => {
+      const type = policy.Save_selected_option.insuranceType;
+      if (distribution.hasOwnProperty(type)) {
+        distribution[type]++;
+      }
+    });
+
+    return distribution;
+  }
+
+  function calculateMonthlyStats(policies) {
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const claims = new Array(12).fill(0);
+
+    policies.forEach(policy => {
+      if (policy.status === 'claim') {
+        const date = new Date(policy.createdAt);
+        claims[date.getMonth()]++;
+      }
+    });
+
+    return {
+      labels: months,
+      claims: claims
+    };
+  }
+
+  function formatStatus(status) {
+    const statusMap = {
+      'pending': 'Pending',
+      'approved': 'Active',
+      'claim': 'Claim',
+      'expired': 'Expired',
+      'cancelled': 'Cancelled'
+    };
+    return statusMap[status] || status;
+  }
+
+  function createPolicyTable(policies) {
+    const tableBody = document.getElementById('policyTableBody');
+    tableBody.innerHTML = '';
+
+    policies.forEach(policy => {
+      const row = document.createElement('tr');
+      const customerData = policy.Save_selected_option_3.mainDriver;
+      const premium = policy.Save_selected_option_2.checkoutPrice;
+
+      row.innerHTML = `
+                    <td>${policy.referenceNumber}</td>
+                    <td>${customerData.firstName} ${customerData.lastName}</td>
+                    <td>${policy.Save_selected_option.insuranceType}</td>
+                    <td><span class="status-badge status-${policy.status.toLowerCase()}">${formatStatus(policy.status)}</span></td>
+                    <td>${premium}</td>
+                    <td>
+                        <button class="action-button action-view" data-id="${policy.referenceNumber}">View</button>
+                    </td>
+                `;
+      tableBody.appendChild(row);
+    });
+  }
+
+  // Chart configurations
+  const chartColors = {
+    comprehensive: '#ff9800',
+    thirdParty: '#2196f3',
+    thirdPartyFireAndTheft: '#4caf50'
+  };
+
+  // Initialize application
+  document.addEventListener('DOMContentLoaded', function() {
+    const policies = getAllPolicies();
+    const stats = calculateStats(policies);
+
+    // Update statistics
+    document.getElementById('totalPolicies').textContent = stats.totalPolicies;
+    document.getElementById('activeClaims').textContent = stats.activeClaims;
+    document.getElementById('premiumRevenue').textContent = stats.totalRevenue;
+
+    // Initialize charts
+    const distribution = calculatePolicyDistribution(policies);
+    const monthlyStats = calculateMonthlyStats(policies);
+
+    // Policy Distribution Chart
+    const policyCtx = document.getElementById('policyChart').getContext('2d');
+    new Chart(policyCtx, {
+      type: 'doughnut',
+      data: {
+        labels: Object.keys(distribution),
+        datasets: [{
+          data: Object.values(distribution),
+          backgroundColor: Object.values(chartColors)
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+
+    // Monthly Claims Chart
+    const claimsCtx = document.getElementById('claimsChart').getContext('2d');
+    new Chart(claimsCtx, {
+      type: 'line',
+      data: {
+        labels: monthlyStats.labels,
+        datasets: [{
+          label: 'Number of Claims',
+          data: monthlyStats.claims,
+          borderColor: chartColors.comprehensive,
+          tension: 0.4,
+          fill: false
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            display: false
+          }
+        },
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+
+    // Initialize table
+    createPolicyTable(policies);
+
+    // Add table listeners
+    document.addEventListener('click', function(e) {
+      if (e.target.classList.contains('action-view')) {
+        const policyId = e.target.dataset.id;
+        window.location.href = `orderDetail.html?id=${policyId}`;
+      }
+    });
+  });
+</script>
+</body>
+</html>
