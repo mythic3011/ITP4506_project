@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales & Insurance Statistics - Legend Motor Limited</title>
+    <!-- <link rel="stylesheet" href="./styles/main.css"> -->
+    <link rel="stylesheet" href="./styles/staff/statistics.css">
+    <link rel="stylesheet" href="../../resources/css/main.css">
+    <script link="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<script>
+    $(document).ready(function () {
+        // Vehicles dropdown toggle
+        $('#Vehicles-dropdown-toggle').on('mouseenter', function () {
+            $('#Vehicles-dropdown').stop(true, true).fadeIn(200).css('display', 'block');
+        });
+
+        $('#Vehicles-dropdown').on('mouseleave', function () {
+            $(this).stop(true, true).fadeOut(200);
+        });
+
+        // Insurance dropdown toggle
+        $('#Insurance-dropdown-toggle').on('mouseenter', function () {
+            $('#Insurance-dropdown').stop(true, true).fadeIn(200).css('display', 'block');
+        });
+
+        $('#Insurance-dropdown').on('mouseleave', function () {
+            $(this).stop(true, true).fadeOut(200);
+        });
+
+        // Close dropdowns when clicking outside
+        $(document).click(function (e) {
+            if (!$(e.target).closest('#Vehicles-dropdown, #Vehicles-dropdown-toggle').length) {
+                $('#Vehicles-dropdown').fadeOut(200);
+            }
+            if (!$(e.target).closest('#Insurance-dropdown, #Insurance-dropdown-toggle').length) {
+                $('#Insurance-dropdown').fadeOut(200);
+            }
+        });
+
+        const notificationToggle = document.getElementById('notificationToggle');
+        notificationToggle.addEventListener('click', () => {
+            alert('You have new notifications!');
+        });
+
+        $('#user-menu').on('mouseenter', function () {
+            $('#user-Submenu').stop(true, true).fadeIn(200).css('display', 'block');
+        });
+
+        $('#user-Submenu').on('mouseleave', function () {
+            $(this).stop(true, true).fadeOut(200);
+        });
+
+        // change the username-name text and avatar when loading the page
+        const user = JSON.parse(localStorage.getItem('userInfo')); // Correctly parse the user info
+
+        if (user) {
+            $('#username-name').text(user.firstName + " " + user.lastName); // Accessing firstName and lastName
+            $('#username-avatar').text(getFirstLetter(user.firstName)); // Assuming getFirstLetter is a defined function
+        } else {
+            console.error('User information not found in localStorage.');
+        }
+
+        function getFirstLetter(name) {
+            return name.charAt(0).toUpperCase();
+        }
+    });
+
+</script>
+
+
+<body class="staff-page">
+    <div class="container mx-auto flex justify-between items-center p-4">
+        <!-- Logo -->
+        <a href="#" class="flex items-center">
+            <img src="../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
+            <span class="ml-3 text-xl font-bold">LMC</span>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="relative flex-grow mx-4">
+            <label for="search-bar-vehicles" class="absolute left-2 top-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </label>
+            <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
+                class="border rounded px-10 py-1 w-full focus:outline-none focus:ring focus:ring-primary-light" />
+        </div>
+
+        <!-- Navigation Links -->
+        <nav id="nav_link" class="hidden md:flex space-x-4 gap-1">
+            <a class="navbar_a text-gray-700 hover:text-blue-500" href="./index.html">Home</a>
+            <!-- Insurance Dropdown -->
+            <div class="relative group">
+                <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
+                    id="Insurance-dropdown-toggle">
+                    Account Management
+                </button>
+                <div class='dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]'
+                    id="Insurance-dropdown">
+                    <nav class="nav-links flex flex-col space-y-2 p-2 gap-[5px]">
+                        <a href="./userAccountManagement.html">Manage Users</a>
+                        <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./statistics.html">Vehicles Sales
+                            Statistics</a>
+                    </nav>
+                </div>
+            </div>
+        </nav>
+
+        <!-- User Menu -->
+        <div class="relative group">
+            <div class="relative flex items-center gap-2 p-2 bg-gray-100 rounded-md shadow-sm border " id="user-menu">
+                <!-- User Avatar -->
+                <span
+                    class="user-avatar bg-blue-500 rounded-full h-[40px] w-[40px] flex items-center justify-center text-white font-bold"
+                    id="username-avatar">
+                    C
+                </span>
+                <!-- Username -->
+                <span class="user-name text-gray-800 font-medium" id="username-name">Admin</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600 user-menu-Dropdown-Arrow-svg"
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </div>
+            <div id="user-Submenu"
+                class="dropdown hidden absolute right-0 bg-white shadow-lg rounded-md mt-2 z-[100] w-[150px]">
+                <nav class="nav-links flex flex-col space-y-2 p-2">
+                    <a href="../profile.html"
+                        class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
+                        Profile
+                    </a>
+                    <a href="../logout.html"
+                        class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
+                        Logout
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <main class="max-w-7xl mx-auto p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold">Sales & Insurance Statistics</h1>
+            <div class="relative">
+                <select id="dateRange"
+                    class="block appearance-none border border-gray-300 rounded-md shadow-sm p-2 pr-8 bg-white text-gray-700 focus:outline-none focus:ring focus:ring-blue-500">
+                    <option value="7">Last 7 Days</option>
+                    <option value="30">Last 30 Days</option>
+                    <option value="90">Last 90 Days</option>
+                    <option value="365">Last Year</option>
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 10l5 5 5-5H7z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- Sales Overview Section -->
+            <section class="bg-white shadow rounded-lg p-6" aria-labelledby="salesTitle">
+                <h2 id="salesTitle" class="text-2xl font-semibold mb-4">Sales Overview</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <span class="block text-sm text-gray-500">Total Sales</span>
+                        <span class="block text-xl font-bold" id="totalSales">$0</span>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <span class="block text-sm text-gray-500">Orders</span>
+                        <span class="block text-xl font-bold" id="totalOrders">0</span>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <span class="block text-sm text-gray-500">Average Order Value</span>
+                        <span class="block text-xl font-bold" id="avgOrderValue">$0</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="salesChart" aria-label="Sales trend chart"></canvas>
+                </div>
+            </section>
+
+            <!-- Insurance Overview Section -->
+            <section class="bg-white shadow rounded-lg p-6" aria-labelledby="insuranceTitle">
+                <h2 id="insuranceTitle" class="text-2xl font-semibold mb-4">Insurance Overview</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <span class="block text-sm text-gray-500">Active Policies</span>
+                        <span class="block text-xl font-bold" id="activePolicies">0</span>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <span class="block text-sm text-gray-500">Premium Revenue</span>
+                        <span class="block text-xl font-bold" id="premiumRevenue">$0</span>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <span class="block text-sm text-gray-500">Claims Rate</span>
+                        <span class="block text-xl font-bold" id="claimsRate">0%</span>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="insuranceChart" aria-label="Insurance policies trend chart"></canvas>
+                </div>
+            </section>
+
+            <!-- Popular Models Section -->
+            <section class="bg-white shadow rounded-lg p-6" aria-labelledby="modelsTitle">
+                <h2 id="modelsTitle" class="text-2xl font-semibold mb-4">Popular Models</h2>
+                <div class="chart-container mb-4">
+                    <canvas id="modelsChart" aria-label="Popular models distribution chart"></canvas>
+                </div>
+                <div class="model-list" id="popularModels" role="list"></div>
+            </section>
+
+            <!-- Insurance Plans Section -->
+            <section class="bg-white shadow rounded-lg p-6" aria-labelledby="plansTitle">
+                <h2 id="plansTitle" class="text-2xl font-semibold mb-4">Insurance Plans Distribution</h2>
+                <div class="chart-container mb-4">
+                    <canvas id="plansChart" aria-label="Insurance plans distribution chart"></canvas>
+                </div>
+                <div class="plans-list" id="insurancePlans" role="list"></div>
+            </section>
+        </div>
+
+        <!-- Detailed Statistics Section -->
+        <section class="bg-white shadow rounded-lg p-6 mt-6" aria-labelledby="detailedStatsTitle">
+            <h2 id="detailedStatsTitle" class="text-2xl font-semibold mb-4">Detailed Statistics</h2>
+            <div class="overflow-x-auto">
+                <table id="statsTable" class="min-w-full bg-white border border-gray-300">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th scope="col" class="py-2 px-4 border-b">Model</th>
+                            <th scope="col" class="py-2 px-4 border-b">Units Sold</th>
+                            <th scope="col" class="py-2 px-4 border-b">Revenue</th>
+                            <th scope="col" class="py-2 px-4 border-b">Insurance Attach Rate</th>
+                            <th scope="col" class="py-2 px-4 border-b">Avg. Premium</th>
+                        </tr>
+                    </thead>
+                    <tbody id="statsTableBody">
+                        <!-- Table rows will be dynamically inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+    <footer class=" text-center py-4 mt-6">
+        © 2024 Legend Motor Limited. All rights reserved.
+    </footer>
+    <script type="module" src="./js/staff/statistics.js"></script>
+</body>
+
+</html>

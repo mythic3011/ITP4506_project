@@ -330,8 +330,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // split the address and set the fields
         const address = UserInfo.address.split(", ");
         document.getElementById('district').value = address[3];
+        document.getElementById('licenseAddress').value = UserInfo.address;
+
     }
-    // licenseAddress
 });
 
 function generateId() {
