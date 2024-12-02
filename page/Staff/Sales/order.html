@@ -1,481 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head class="dark" lang="en">
-    <title>Order | Username | Legend Motor Limited</title>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <link href="../../resources/css/order.css" rel="stylesheet" />
-    <link
-      href="../../resources/image/icon_dark.png"
-      rel="icon"
-      type="image/x-icon"
-    />
-    <script type="module" src="../../resources/js/script.js"></script>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp,container-queries"></script>
-    <script type="module" src="../../resources/js/ManageOrder.js"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              primary: {
-                50: "#eff6ff",
-                100: "#dbeafe",
-                200: "#bfdbfe",
-                300: "#93c5fd",
-                400: "#60a5fa",
-                500: "#3b82f6",
-                600: "#2563eb",
-                700: "#1d4ed8",
-                800: "#1e40af",
-                900: "#1e3a8a",
-                950: "#172554",
-              },
-            },
-          },
-          fontFamily: {
-            body: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "system-ui",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-            sans: [
-              "Inter",
-              "ui-sans-serif",
-              "system-ui",
-              "-apple-system",
-              "system-ui",
-              "Segoe UI",
-              "Roboto",
-              "Helvetica Neue",
-              "Arial",
-              "Noto Sans",
-              "sans-serif",
-              "Apple Color Emoji",
-              "Segoe UI Emoji",
-              "Segoe UI Symbol",
-              "Noto Color Emoji",
-            ],
-          },
-        },
-      };
-    </script>
-  </head>
-  <!--------------------Menu-------------------->
-  <div class="flex h-screen">
-    <!-- Navigation -->
-    <nav
-      class="bg-white border-gray-200 dark:bg-gray-900 w-64 flex-shrink-0 hidden md:flex md:flex-col"
-    >
-      <div class="flex flex-col items-center p-4">
-        <a
-          class="flex items-center space-x-3 rtl:space-x-reverse mb-6"
-          href="#"
-        >
-          <div class="h-8 w-8 relative">
-            <img
-              alt="LMC Logo"
-              class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-              src="../../resources/image/LMC.png"
-            />
-            <img
-              alt="LMC Logo"
-              class="absolute inset-0 object-contain hidden dark:block"
-              src="../../resources/image/LMC_DM.png"
-            />
-          </div>
-          <span
-            class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-            >LMC</span
-          >
-        </a>
 
-        <ul class="font-medium flex flex-col space-y-2">
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="order.html"
-              >Order Record</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="Item.html"
-              >Vehicle</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="genreport.html"
-              >Generate Report</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="../../logout.html"
-              onclick="logout()"
-              >Log Out</a
-            >
-          </li>
-        </ul>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Management - Legend Motor Limited</title>
+  <link rel="stylesheet" href="../../../resources/css/main.css">
+  <link rel="stylesheet" href="./styles/order-management.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script type="module" src="./js/order-management.js"></script>
+  <link rel="stylesheet" href="./styles/message.css">
+</head>
+<script>
+  $(document).ready(function () {
+    // Vehicles dropdown toggle
+    $('#Vehicles-dropdown-toggle').on('mouseenter', function () {
+      $('#Vehicles-dropdown').stop(true, true).fadeIn(200).css('display', 'block');
+    });
 
-        <!-- Dark mode toggle button -->
-        <button
-          class="mt-6 p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-          id="darkModeToggle"
-        >
-          <svg
-            class="w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"
-            ></path>
-          </svg>
+    $('#Vehicles-dropdown').on('mouseleave', function () {
+      $(this).stop(true, true).fadeOut(200);
+    });
+
+    // Insurance dropdown toggle
+    $('#Insurance-dropdown-toggle').on('mouseenter', function () {
+      $('#Insurance-dropdown').stop(true, true).fadeIn(200).css('display', 'block');
+    });
+
+    $('#Insurance-dropdown').on('mouseleave', function () {
+      $(this).stop(true, true).fadeOut(200);
+    });
+
+    // Close dropdowns when clicking outside
+    $(document).click(function (e) {
+      if (!$(e.target).closest('#Vehicles-dropdown, #Vehicles-dropdown-toggle').length) {
+        $('#Vehicles-dropdown').fadeOut(200);
+      }
+      if (!$(e.target).closest('#Insurance-dropdown, #Insurance-dropdown-toggle').length) {
+        $('#Insurance-dropdown').fadeOut(200);
+      }
+    });
+
+    const notificationToggle = document.getElementById('notificationToggle');
+    notificationToggle.addEventListener('click', () => {
+      alert('You have new notifications!');
+    });
+
+    $('#user-menu').on('mouseenter', function () {
+      $('#user-Submenu').stop(true, true).fadeIn(200).css('display', 'block');
+    });
+
+    $('#user-Submenu').on('mouseleave', function () {
+      $(this).stop(true, true).fadeOut(200);
+    });
+
+    // change the username-name text and avatar when loading the page
+    const user = JSON.parse(localStorage.getItem('userInfo')); // Correctly parse the user info
+
+    if (user) {
+      $('#username-name').text(user.firstName + " " + user.lastName); // Accessing firstName and lastName
+      $('#username-avatar').text(getFirstLetter(user.firstName)); // Assuming getFirstLetter is a defined function
+    } else {
+      console.error('User information not found in localStorage.');
+    }
+
+    function getFirstLetter(name) {
+      return name.charAt(0).toUpperCase();
+    }
+  });
+
+</script>
+
+<body class="bg-gray-50 font-sans">
+  <div class="container mx-auto flex justify-between items-center p-4 bg-gray-50">
+    <!-- Logo -->
+    <a href="#" class="flex items-center">
+      <img src="../../../resources/image/icon-removebg.png" alt="Legend Motor Limited" class="h-12 w-12">
+      <span class="ml-3 text-xl font-bold">LMC</span>
+    </a>
+
+    <!-- Search Bar -->
+    <div class="relative flex-grow mx-4">
+      <label for="search-bar-vehicles" class="absolute left-2 top-2">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </label>
+      <input type="text" id="search-bar-vehicles" placeholder="Search Vehicles..."
+        class="border rounded px-10 py-1 w-full focus:outline-none focus:ring focus:ring-primary-light" />
+    </div>
+
+    <!-- Navigation Links -->
+    <nav id="nav_link" class="md:flex space-x-4 gap-1">
+      <a class="navbar_a text-gray-700 hover:text-blue-500" href="../index.html">Home</a>
+
+      <!-- Vehicles Dropdown -->
+      <div class="relative group">
+        <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
+          id="Vehicles-dropdown-toggle">
+          Vehicles
         </button>
+        <div class="dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]" id="Vehicles-dropdown">
+          <nav class="nav-links flex flex-col space-y-2 p-2 gap-5">
+            <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./inventory-management.html">Manage Vehicles</a>
+            <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./order.html">Manage Orders</a>
+            <a class="hover:bg-gray-100 px-[10px] py-[8px]" href="./DiscountCodeManagementSystem.html">Manage
+              Discount Codes</a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Insurance Dropdown -->
+      <div class="relative group">
+        <button class="navbar_a text-gray-700 hover:text-blue-500 transition duration-200 cursor-pointer"
+          id="Insurance-dropdown-toggle">
+          Insurance
+        </button>
+        <div class='dropdown hidden absolute bg-white shadow-lg rounded-md mt-1 z-[100]' id="Insurance-dropdown">
+          <nav class="nav-links flex flex-col space-y-2 p-2 gap-[5px]">
+            <a href="../Insurance/ordersIndex.html">Manage Insurance</a>
+          </nav>
+        </div>
       </div>
     </nav>
 
-    <!-- Mobile Menu Button -->
-    <div
-      class="md:hidden flex items-center justify-between p-4 bg-white dark:bg-gray-900"
-    >
-      <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <div class="h-8 w-8 relative">
-          <img
-            alt="LMC Logo"
-            class="absolute inset-0 object-contain dark:hidden pt-2 dark:pt-1"
-            src="../../resources/image/LMC.png"
-          />
-          <img
-            alt="LMC Logo"
-            class="absolute inset-0 object-contain hidden dark:block"
-            src="../../resources/image/LMC_DM.png"
-          />
-        </div>
-        <span
-          class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-          >LMC</span
-        >
-      </a>
-      <button
-        class="p-2 text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-        id="mobileMenuButton"
-      >
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          ></path>
+    <!-- Notification Button -->
+    <div id="notificationsBtn" class="relative mx-[10px]">
+      <button aria-label="Notifications" aria-haspopup="true" aria-expanded="false" id="notificationToggle">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2">
+          <path d='M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9'></path>
+          <path d='M13.73 21a2 2 0 0 1-3.46'></path>
         </svg>
+        <span
+          class='notification-badge absolute top-[5px] right-[5px] bg-red text-white rounded-full px-[5px] text-xs'>3</span>
       </button>
     </div>
-
-    <!-- Mobile Menu -->
-    <!--------------------Menu-------------------->
-    <body
-      class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-body"
-    >
-      <div class="md:hidden" id="mobileMenu" style="display: none">
-        <ul
-          class="font-medium flex flex-col space-y-2 p-4 bg-white dark:bg-gray-900"
-        >
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="order.html"
-              >Order Record</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="Item.html"
-              >Vehicle</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="genreport.html"
-              >Generate Report</a
-            >
-          </li>
-          <li>
-            <a
-              class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              href="../../logout.html"
-              onclick="logout()"
-              >Log Out</a
-            >
-          </li>
-        </ul>
+    <!-- User Menu -->
+    <div class="relative group">
+      <div class="relative flex items-center gap-2 p-2 bg-gray-100 rounded-md shadow-sm border " id="user-menu">
+        <!-- User Avatar -->
+        <span
+          class="user-avatar bg-blue-500 rounded-full h-[40px] w-[40px] flex items-center justify-center text-white font-bold"
+          id="username-avatar">
+          C
+        </span>
+        <!-- Username -->
+        <span class="user-name text-gray-800 font-medium" id="username-name">customer</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600 user-menu-Dropdown-Arrow-svg" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
       </div>
-      <main class="mainContainer mx-auto px-4 py-8">
-        <section class="prose dark:prose-invert max-w-none" id="orderSection">
-          <h1 class="text-3xl font-bold mb-4">Current Orders</h1>
-          <h2 class="text-xl mb-4" id="Total-Orders-number">Total: 7 orders</h2>
-
-          <div class="mb-4">
-            <a
-              class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
-              href="genreport.html"
-            >
-              Generate report
-            </a>
-          </div>
-
-          <div class="overflow-x-auto shadow-md sm:rounded-lg">
-            <p
-              class="text-sm text-gray-600 dark:text-gray-400"
-              id="sortingInfo"
-            >
-              Click the column header to sort.
-            </p>
-            <table
-              class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
-              id="orderTable"
-            >
-              <thead
-                class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-              >
-                <tr>
-                  <th
-                    class="px-6 py-3 cursor-pointer"
-                    onclick="sortTable(0)"
-                    scope="col"
-                  >
-                    Order ID
-                  </th>
-                  <th
-                    class="px-6 py-3 cursor-pointer"
-                    onclick="sortTable(1)"
-                    scope="col"
-                  >
-                    Sales Manager ID
-                  </th>
-                  <th
-                    class="px-6 py-3 cursor-pointer"
-                    onclick="sortTable(2)"
-                    scope="col"
-                  >
-                    Order Date & Time
-                  </th>
-                  <th
-                    class="px-6 py-3 cursor-pointer"
-                    onclick="sortTable(3)"
-                    scope="col"
-                  >
-                    Delivery Date
-                  </th>
-                  <th
-                    class="px-6 py-3 cursor-pointer"
-                    onclick="sortTable(4)"
-                    scope="col"
-                  >
-                    status
-                  </th>
-                  <th
-                    class="px-6 py-3 cursor-pointer"
-                    onclick="sortTable(8)"
-                    scope="col"
-                  >
-                    Shipping Cost
-                  </th>
-                  <th
-                    class="px-6 py-3 cursor-pointer"
-                    onclick="sortTable(9)"
-                    scope="col"
-                  >
-                    Total Order Amount
-                  </th>
-                  <th class="px-6 py-3" scope="col">Update state</th>
-                </tr>
-              </thead>
-              <tbody id="orderTableBody">
-                <!-- Table rows will be inserted here by JavaScript -->
-              </tbody>
-            </table>
-          </div>
-        </section>
-        <footer class="text-center py-4 mt-6">
-          <p class="text-gray-700 dark:text-gray-300">
-            © 2024 Legend Motor Limited. All rights reserved.
-          </p>
-        </footer>
-      </main>
-      <script>
-        document.addEventListener("DOMContentLoaded", function () {
-          getOrderFromServer();
-        });
-
-        function getOrderFromServer() {
-          const apiUrl = `../../resources/php/order_api.php?action=Sales-manager-list`;
-          const AuthToken = localStorage.getItem("userToken");
-
-          fetch(apiUrl, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: "Bearer " + AuthToken,
-            },
-            credentials: "include",
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.status === "success" && data.data) {
-                loadRecord(data.data);
-              } else {
-                throw new Error(
-                  data.message || "Failed to fetch order details"
-                );
-              }
-            })
-            .catch((error) => {
-              console.error("Error fetching order data:", error);
-              // Display error message to user
-              document.getElementById(
-                "orderTableBody"
-              ).innerHTML = `<tr><td colspan="11" class="text-center text-red-500">Error loading orders: ${error.message}</td></tr>`;
-            });
-        }
-
-        function loadRecord(orders) {
-          document.title = `Order | ${
-            localStorage.getItem("username") || "Username"
-          } | Legend Motor Limited`;
-
-          const tableBody = document.getElementById("orderTableBody");
-          tableBody.replaceChildren(); // Clear existing content first
-
-          orders.forEach((order) => {
-            const row = document.createElement("tr");
-            row.className =
-              "bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600";
-
-            const cellData = [
-              {
-                value: order.orderID,
-                class: "font-medium text-gray-900 dark:text-white",
-              },
-              {
-                value: order.salesManagerID,
-                class: "text-gray-500 dark:text-gray-400 font-medium",
-              },
-              {
-                value: order.orderDateTime,
-                class: "text-gray-500 dark:text-gray-400",
-              },
-              {
-                value: order.deliveryDate,
-                class: "text-gray-500 dark:text-gray-400",
-              },
-              {
-                value: order.orderStatus,
-                class: `text-gray-900 dark:text-white font-semibold rounded-full inline-flex text-xxs leading-1 pt-4 px-2 py-4 pb-2 pr-2 pl-2 ${getStatusClass(
-                  order.orderStatus
-                )}`,
-              },
-              {
-                value: order.shipCost,
-                class: "text-gray-500 dark:text-gray-400",
-              },
-              {
-                value: order.totalCost,
-                class: "text-gray-900 dark:text-white font-bold",
-              },
-            ];
-
-            cellData.forEach((data) => {
-              const cell = document.createElement("td");
-              cell.className = `px-6 py-4 ${data.class}`;
-              cell.textContent = Array.isArray(data.value)
-                ? data.value.join(", ")
-                : data.value;
-              row.appendChild(cell);
-            });
-
-            const updateCell = document.createElement("td");
-            updateCell.className = "px-6 py-4";
-            const updateLink = document.createElement("a");
-            updateLink.href = `orderinfo.html?OrderId=${order.orderID}`;
-            updateLink.className =
-              "font-medium text-blue-600 dark:text-blue-500 hover:underline";
-            updateLink.textContent = "Update";
-            updateCell.appendChild(updateLink);
-            row.appendChild(updateCell);
-
-            tableBody.appendChild(row);
-          });
-
-          document.getElementById(
-            "Total-Orders-number"
-          ).textContent = `Total: ${orders.length} orders`;
-        }
-
-        function getStatusClass(status) {
-          switch (status.toLowerCase()) {
-            case "wait for confirmation":
-              return "bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-100";
-            case "shipped":
-              return "bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100";
-            case "processing":
-              return "bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100";
-            case "shipping":
-              return "bg-purple-100 text-purple-800 dark:bg-purple-800 dark:text-purple-100";
-            case "cancelled":
-              return "bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-100";
-            default:
-              return "bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-100";
-          }
-        }
-
-        function sortTable(columnIndex) {
-          const table = document.getElementById("orderTable");
-          const tbody = table.querySelector("tbody");
-          const rows = Array.from(tbody.querySelectorAll("tr"));
-          const isAscending = table.getAttribute("data-order") === "asc";
-
-          rows.sort((a, b) => {
-            const aValue = a.cells[columnIndex].textContent.trim();
-            const bValue = b.cells[columnIndex].textContent.trim();
-            return isAscending
-              ? aValue.localeCompare(bValue)
-              : bValue.localeCompare(aValue);
-          });
-
-          tbody.replaceChildren(); // Clear existing rows
-          rows.forEach((row) => tbody.appendChild(row));
-
-          table.setAttribute("data-order", isAscending ? "desc" : "asc");
-        }
-      </script>
-    </body>
+      <div id="user-Submenu"
+        class="dropdown hidden absolute right-0 bg-white shadow-lg rounded-md mt-2 z-[100] w-[150px]">
+        <nav class="nav-links flex flex-col space-y-2 p-2">
+          <a href="../../profile.html"
+            class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
+            Profile
+          </a>
+          <a href="../../logout.html"
+            class="dropdown-item block px-4 py-2 text-gray-700 hover:bg-blue-100 rounded-md transition duration-150">
+            Logout
+          </a>
+        </nav>
+      </div>
+    </div>
   </div>
-</html>
+
+  <body class="staff-page bg-gray-50">
+    <main class="content-container max-w-7xl mx-auto p-6">
+      <div class="message hidden" id="message">
+
+      </div>
+      <header class="page-header mb-6">
+        <h1 class="text-4xl font-bold text-gray-800 mb-4">Order Management</h1>
+        <div class="header-actions flex gap-4">
+          <button id="exportOrders"
+            class="bg-blue-600 text-white px-4 py-2 rounded-md shadow hover:bg-blue-700 transition duration-150">Export
+            Orders</button>
+          <button id="refreshOrders"
+            class="bg-green-600 text-white px-4 py-2 rounded-md shadow hover:bg-green-700 transition duration-150">Refresh</button>
+        </div>
+      </header>
+      <div class="order-filters mb-6 flex gap-4">
+        <div class="search-box flex-grow">
+          <input type="text" id="searchOrder" placeholder="Search by order ID, customer name..."
+            class="w-full px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150">
+        </div>
+        <div class="filter-group flex gap-2">
+          <select id="statusFilter"
+            class="px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150">
+            <option value="">All Status</option>
+            <option value="pending">Pending</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="processing">Processing</option>
+            <option value="completed">Completed</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+          <select id="dateFilter"
+            class="px-4 py-2 border border-gray-300 rounded-md shadow focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150">
+            <option value="">All Time</option>
+            <option value="today">Today</option>
+            <option value="this_week">This Week</option>
+            <option value="this_month">This Month</option>
+            <option value="custom">Custom Range</option>
+          </select>
+        </div>
+      </div>
+      <div class="orders-table-container overflow-x-auto rounded-lg shadow">
+        <table class="orders-table w-full bg-white border border-gray-200 rounded-lg">
+          <thead class="bg-gray-200">
+            <tr>
+              <th class="px-4 py-2 text-left">Order ID</th>
+              <th class="px-4 py-2 text-left">Customer</th>
+              <th class="px-4 py-2 text-left">Vehicle</th>
+              <th class="px-4 py-2 text-left">Total</th>
+              <th class="px-4 py-2 text-left">Status</th>
+              <th class="px-4 py-2 text-left">Date</th>
+              <th class="px-4 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTableBody">
+            <!-- Orders will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </body>
+
+  <!-- Order Details Modal -->
+  <div id="orderDetailsModal" class="modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div class="modal-content bg-white p-4 rounded shadow-lg w-full max-w-3xl">
+      <div class="message hidden" id="message">
+      </div>
+      <div class="modal-header flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">Order Details</h2>
+        <button class="close-button text-gray-500">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="order-tabs flex gap-2 mb-4">
+          <button class="tab-button active px-4 py-2 bg-blue-500 text-white rounded" data-tab="details">Details</button>
+          <button class="tab-button px-4 py-2 bg-gray-200 rounded" data-tab="licensing">Licensing</button>
+          <button class="tab-button px-4 py-2 bg-gray-200 rounded" data-tab="tradein">Trade-in</button>
+          <button class="tab-button px-4 py-2 bg-gray-200 rounded" data-tab="payment">Payment</button>
+        </div>
+
+        <div class="tab-content">
+          <div class="tab-content">
+            <!-- Details Tab -->
+            <div id="details" class="tab-panel active">
+              <div id="orderDetailsContent"></div>
+            </div>
+            <!-- Licensing Tab -->
+            <div id="licensing" class="tab-panel">
+              <div class="licensing-status">
+                <h3>Licensing Status</h3>
+                <div class="status-grid" id="licensingStatus"></div>
+              </div>
+              <div class="document-list">
+                <h3>Uploaded Documents</h3>
+                <div id="documentList"></div>
+              </div>
+            </div>
+
+            <!-- Trade-in Tab -->
+            <div id="tradein" class="tab-panel">
+              <div class="tradein-details" id="tradeinDetails"></div>
+              <div class="value-calculator">
+                <h3>Trade-in Value Calculator</h3>
+                <form id="valueCalculatorForm">
+                  <!-- Form fields will be added by JavaScript -->
+                </form>
+              </div>
+            </div>
+
+            <!-- Payment Tab -->
+            <div id="payment" class="tab-panel">
+              <div class="payment-summary" id="paymentSummary"></div>
+              <div class="payment-actions">
+                <button class="secondary-button" id="generateInvoice">Generate Invoice</button>
+                <button class="primary-button" id="recordPayment">Record Payment</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="secondary-button" data-dismiss="modal" id="cancelChanges">Close</button>
+          <button class="primary-button" id="saveChanges">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Record Payment Modal -->
+    <div id="recordPaymentModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Record Payment</h2>
+          <button class="close-button">&times;</button>
+        </div>
+        <div class="modal-body">
+          <form id="paymentForm" class="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg">
+            <div class="form-group mb-4">
+              <label for="paymentAmount" class="block text-sm font-medium text-gray-700">Amount</label>
+              <input type="number" id="paymentAmount" required min="0" step="0.01"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150">
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="paymentMethod" class="block text-sm font-medium text-gray-700">Payment Method</label>
+              <select id="paymentMethod" required
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150">
+                <option value="cash">Cash</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="bank_transfer">Bank Transfer</option>
+              </select>
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="paymentReference" class="block text-sm font-medium text-gray-700">Reference Number</label>
+              <input type="text" id="paymentReference"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150">
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="paymentNotes" class="block text-sm font-medium text-gray-700">Notes</label>
+              <textarea id="paymentNotes" rows="4"
+                class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150"></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="secondary-button" data-dismiss="modal" id="cancelPayment">Cancel</button>
+          <button class="primary-button" id="submitPayment" id="submitPayment">Submit Payment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+
+<footer class="staff-footer text-center">
+  © 2024 Legend Motor Limited. All rights reserved.
+</footer>

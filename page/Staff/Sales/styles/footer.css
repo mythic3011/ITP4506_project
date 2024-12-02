@@ -1,0 +1,7 @@
+.footer {
+  position: fixed;
+  bottom: 1rem;
+  color: white;
+  font-size: 0.875rem;
+  text-align: center;
+}

@@ -71,6 +71,7 @@ $(document).ready(function () {
 
     // Retrieve user information from localStorage
     function getUserInfo() {
+        const user = JSON.parse(localStorage.getItem('userInfo')); // Correctly parse the user info
         return {
             name: localStorage.getItem('username') || 'User',
             avatar: localStorage.getItem('avatar') || 'U'
@@ -177,10 +178,10 @@ $(document).ready(function () {
             <div class="relative group">
                 <button class="flex items-center gap-2 p-2 bg-gray-100 rounded-md shadow-sm border focus:outline-none"
                         id="user-menu">
-                    <span class="user-avatar bg-blue-500 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold">
+                    <span class="user-avatar bg-blue-500 rounded-full h-10 w-10 flex items-center justify-center text-white font-bold" id="username-avatar">
                         ${firstLetter}
                     </span>
-                    <span class="user-name text-gray-800 font-medium hidden md:inline">${userName}</span>
+                    <span class="user-name text-gray-800 font-medium hidden md:inline" id="username-name">${userName}</span>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-600"
                          fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -232,6 +233,18 @@ $(document).ready(function () {
     // Get the user role and render the navbar
     const userRole = getUserRole();
     renderNavbar(userRole);
+    const user = JSON.parse(localStorage.getItem('userInfo')); // Correctly parse the user info
+
+if (user) {
+    $('#username-name').text(user.firstName + " " + user.lastName); // Accessing firstName and lastName
+    $('#username-avatar').text(getFirstLetter(user.firstName)); // Assuming getFirstLetter is a defined function
+} else {
+    console.error('User information not found in localStorage.');
+}
+
+function getFirstLetter(name) {
+    return name.charAt(0).toUpperCase();
+}
 
     // Append the main CSS file to the document head
     $('<link>', {

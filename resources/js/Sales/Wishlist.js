@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const wishlist = localStorage.getItem('LMC_WishList');
+    const wishlist = localStorage.getItem('LMC_WishList') || [];
     console.log(wishlist);
 
     renderWishlist();
@@ -25,13 +25,13 @@ $(document).ready(function () {
 
         let isValid = validateForm();
         if (!isValid) {
-            showNotification('Please fill in all required fields correctly.', 'error');
+            alert('Please fill in all required fields correctly.', 'error');
             $('#loadingIndicator').addClass('hidden'); // Hide loading
             return;
         }
 
-        showNotification('Submitted successfully!', 'success');
-        showNotification('Redirecting to Checkout page...', 'info');
+        alert('Submitted successfully!', 'success');
+        alert('Redirecting to Checkout page...', 'info');
 
         setTimeout(() => {
             window.location.href = './Checkout.html';
@@ -80,49 +80,55 @@ function validateForm() {
     return isValid;
 }
 
+
 function renderWishlist() {
-    const wishlistItems = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
-    const wishlistTableBody = $('#wishlistTableBody');
+    try {
 
-    if (wishlist.length === 0) {
-        wishlistTableBody.append('<tr><td colspan="7" class="text-center">Your wishlist is empty.</td></tr>');
-        wishlistTableBody.append('<tr><td colspan="7" class="text-center"><a href="./ViewVehicles.html" class="button button-primary">Browse Vehicles</a></td></tr>');
-        return;
+        const wishlistItems = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
+        const wishlistTableBody = $('#wishlistTableBody');
+
+        if (wishlistItems.length === 0) {
+            wishlistTableBody.html('<tr><td colspan="7" class="text-red-500 px-6 py-4">Your wishlist is empty.</td></tr>');
+            return;
+        }
+
+        // Clear previous items
+        wishlistTableBody.empty();
+
+        wishlistItems.forEach(item => {
+            const upgradesList = item.upgrades.length > 0 ? item.upgrades.join(', ') : 'None';
+            const insuranceList = item.insurancePlans.length > 0 ? item.insurancePlans.map(plan => plan.planName).join(', ') : 'None';
+
+            const row = $('<tr>').append($('<td>', {class: 'px-6 py-4', text: item.make}), $('<td>', {
+                class: 'px-6 py-4',
+                text: item.model
+            }), $('<td>', {class: 'px-6 py-4', text: item.color}), $('<td>', {
+                class: 'px-6 py-4',
+                title: upgradesList,
+                style: "overflow:hidden;",
+                html: upgradesList.split(', ').map(upgrade => `<div>${upgrade}</div>`).join('')
+            }), $('<td>', {
+                class: 'px-6 py-4',
+                title: insuranceList,
+                style: "overflow:hidden;",
+                html: insuranceList.split(', ').map(plan => `<div>${plan}</div>`).join('')
+            }), $('<td>', {
+                class: 'px-6 py-4',
+                text: `$${item.price}`
+            }), $('<td>', {class: 'px-6 py-4'}).append($('<button>', {
+                class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-1 px2 rounded',
+                text: 'Remove',
+                click: function () {
+                    removeFromWishlist(item.id);
+                }
+            })));
+
+            wishlistTableBody.append(row);
+            console.log(row);
+        });
+    }catch (error) {
+        console.error('Error rendering wishlist:', error);
     }
-
-    // Clear previous items
-    wishlistTableBody.empty();
-
-    wishlistItems.forEach(item => {
-        const upgradesList = item.upgrades.length > 0 ? item.upgrades.join(', ') : 'None';
-        const insuranceList = item.insurancePlans.length > 0 ? item.insurancePlans.map(plan => plan.planName).join(', ') : 'None';
-
-        const row = $('<tr>').append($('<td>', {class: 'px-6 py-4', text: item.make}), $('<td>', {
-            class: 'px-6 py-4',
-            text: item.model
-        }), $('<td>', {class: 'px-6 py-4', text: item.color}), $('<td>', {
-            class: 'px-6 py-4',
-            title: upgradesList,
-            style: "overflow:hidden;",
-            html: upgradesList.split(', ').map(upgrade => `<div>${upgrade}</div>`).join('')
-        }), $('<td>', {
-            class: 'px-6 py-4',
-            title: insuranceList,
-            style: "overflow:hidden;",
-            html: insuranceList.split(', ').map(plan => `<div>${plan}</div>`).join('')
-        }), $('<td>', {
-            class: 'px-6 py-4',
-            text: `$${item.price}`
-        }), $('<td>', {class: 'px-6 py-4'}).append($('<button>', {
-            class: 'bg-red-500 hover:bg-red-700 text-white font-bold py-1 px2 rounded',
-            text: 'Remove',
-            click: function () {
-                removeFromWishlist(item.id);
-            }
-        })));
-
-        wishlistTableBody.append(row);
-    });
 }
 
 
@@ -173,6 +179,7 @@ function addToWishlist(vehicle) {
     localStorage.setItem('LMC_WishList', JSON.stringify(wishlistItems));
 
     console.log(`${vehicle.make} ${vehicle.model} has been added to your wishlist!`);
+
 }
 
 function renderOrderSummary() {
@@ -180,14 +187,19 @@ function renderOrderSummary() {
     const subtotalAmount = document.getElementById('subtotalAmount');
     const totalAmount = document.getElementById('totalAmount');
     const depositAmount = document.getElementById('DepositAmount');
-    const estimatedDelivery = document.getElementById('EstimatedDelivery');
+    const estimatedDelivery = document.getElementById('estimatedDelivery');
+
+    // Check if required elements exist
+    if (!subtotalAmount || !totalAmount || !depositAmount || !estimatedDelivery) {
+        console.error('One or more required elements are missing in the DOM.');
+        return; // Exit the function if any required element is missing
+    }
 
     // Fetch wishlist items from local storage
     const wishlist = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
 
     // Calculate total price and populate item list
     let totalPrice = 0;
-
     wishlist.forEach(item => {
         totalPrice += item.price;
     });
@@ -209,7 +221,6 @@ function renderOrderSummary() {
     orderSummary.style.display = 'block';
 
     // Store the order summary in local storage and show it on the next page
-    // the wishlist will be cleared after the order is placed
     localStorage.setItem('LMC_OrderSummary',
         JSON.stringify({
             subtotal: totalPrice,

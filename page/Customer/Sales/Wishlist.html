@@ -10,9 +10,9 @@
     <link href="../../../resources/image/icon-removebg.png" rel="icon" type="image/x-icon"/>
     <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
     <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
-    <script src="../../../resources/js/Sales/CustomerWishlist.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../../../resources/css/main.css">
+    <link rel="stylesheet" href="../../../resources/css/comon.css">
 </head>
 <style>
     /* Ensure table cells handle overflow */
@@ -208,6 +208,9 @@
                         <thead>
                         <tr>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Make
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                 Model
                             </th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -257,7 +260,7 @@
                     <!-- Payment Form -->
                     <form id="paymentForm" aria-labelledby="paymentFormTitle">
                         <!-- Loading Indicator -->
-                        <div id="loadingIndicator" class="hidden text-center mb-4"><span>Loading...</span></div>
+                        <div id="loadingIndicator" class="hidden text-center mb-4"><span class="text-green-300">Loading...</span></div>
                         <!-- Checkout Button -->
                         <button id="WishlistCheckout"
                                 class="w-full bg-indigo-600 border border-transparent rounded-md py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -309,3 +312,4 @@
 </html>
 <script src="../../../resources/js/Sales/CustomerDashboard.js"></script>
 <script src="../../../resources/js/Sales/CustomerNavigation.js"></script>
+<script src="../../../resources/js/Sales/Wishlist.js"></script>

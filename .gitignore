@@ -151,3 +151,4 @@ fabric.properties
 /resources/docker/mariadb/data/mysql/transaction_registry.ibd
 /resources/docker/mariadb/data/mysql/user.frm
 /resources/docker/mariadb/data/projectDB/userroles.frm
+mypart.md

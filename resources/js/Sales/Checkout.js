@@ -1,161 +1,339 @@
-$(document).ready(function () {
-// Trade-In Option Tabs
-    $('#tradeInTabs .tab-button').on('click', function () {
-        const tabId = $(this).data('tab');
-        switchTab(tabId, '#tradeInTabs');
-    });
+// Checkout.js
+import { DiscountController } from './modules/DiscountController.js';
+import { OrderSummary } from './modules/OrderSummary.js';
+import { DiscountManager } from './modules/DiscountManager.js';
+import { LicensingManager } from './modules/LicensingManager.js';
+import { TradeInManager } from './modules/TradeInManager.js';
+import { FinancingManager } from './modules/FinancingManager.js';
+import { AddressManager } from './modules/AddressManager.js';
+import { NotificationManager } from './modules/NotificationManager.js';
+import { TabManager } from './modules/TabManager.js';
 
-// Financing Options Tabs
-    $('#financingTabs .tab-button').on('click', function () {
-        const tabId = $(this).data('tab');
-        switchTab(tabId, '#financingTabs');
-    });
-
-// Licensing Verification Tabs
-    $('#licensingVerificationTabs .tab-button').on('click', function () {
-        const tabId = $(this).data('tab');
-        switchTab(tabId, '#licensingVerificationTabs');
-    });
-
-    function switchTab(tabId, tabContainer) {
-        $(`${tabContainer} .tab-button, ${tabContainer} .tab-panel`).removeClass('active');
-        $(`${tabContainer} [data-tab="${tabId}"]`).addClass('active');
-        $(`${tabContainer} #${tabId}`).addClass('active');
+class CheckoutManager {
+    constructor() {
+        this.initializeManagers();
+        this.loadWishlistItems();
+        this.initializeTabs();
+        this.attachEventListeners();
     }
 
-    fetchUserinfo();
-    renderOrderSummary();
+    initializeManagers() {
+        // Initialize all module managers
+        this.orderSummary = new OrderSummary(
+            document.getElementById('orderSummaryContainer'),
+            document.getElementById('orderSummary'),
+            document.getElementById('subtotalAmount'),
+            document.getElementById('totalAmount'),
+            document.getElementById('DepositAmount'),
+            document.getElementById('EstimatedDelivery')
+        );
 
-    $('#financingMethod').change(calculateMonthlyPayment); // Recalculate when financing option changes
-
-    $('#checkoutForm').on('submit', function (event) {
-        event.preventDefault();
-        const fullName = $('#fullName').val();
-        const address = $('#address').val();
-        // Validate inputs
-        if (!fullName || !address) {
-            showNotification('Please fill in all required fields.', 'error');
-            return;
-        }
-        // Show confirmation notification
-        showNotification('Order confirmed! Thank you for your purchase!', 'success');
-        console.log({
-            fullName,
-            address,
-            wishlist: JSON.parse(localStorage.getItem('LMC_WishList')),
-            selectedFinancingOption: $('#financingMethod').val()
+        this.discountManager = new DiscountManager(new DiscountController(), {
+            input: document.getElementById('discountCode'),
+            applyButton: document.getElementById('applyDiscount'),
+            removeButton: document.getElementById('removeDiscount'),
+            amountElement: document.getElementById('discountAmount'),
+            percentageElement: document.getElementById('discountPercentage')
         });
 
-        // // Optionally clear the wishlist after confirming the order
-        // localStorage.removeItem('LMC_WishList');
-        PlaceOrder();
-    });
-});
+        this.licensingManager = new LicensingManager({
+            form: document.getElementById('licensingVerificationForm'),
+            yesButton: document.getElementById('licensingVerificationYes'),
+            noButton: document.getElementById('licensingVerificationNo'),
+            feeElement: document.getElementById('licensingFee')
+        });
 
+        this.tradeInManager = new TradeInManager({
+            form: document.getElementById('tradeInForm'),
+            yesButton: document.getElementById('tradeInYes'),
+            noButton: document.getElementById('tradeInNo'),
+            yearInput: document.getElementById('tradeInYear'),
+            mileageInput: document.getElementById('tradeInMileage'),
+            conditionSelect: document.getElementById('tradeInCondition'),
+            makeInput: document.getElementById('tradeInMake'),
+            modelInput: document.getElementById('tradeInModel')
+        });
 
-function PlaceOrder() {
-    const user = localStorage.getItem('username');
-    const fullName = $('#fullName').val();
-    const address = $('#address').val();
-    const wishlist = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
-    const selectedFinancingOption = $('#financingMethod').val();
+        this.financingManager = new FinancingManager({
+            methodSelect: document.getElementById('financingMethod'),
+            paymentSelect: document.getElementById('Select-Loan-Deposit'),
+            paymentForm: document.getElementById('payment-form'),
+            creditCardFields: document.getElementById('payment-full-payment-credit-card'),
+            paypalFields: document.getElementById('payment-full-payment-paypal'),
+            cashFields: document.getElementById('payment-full-payment-cash'),
+            checkFields: document.getElementById('payment-full-payment-check')
+        });
 
-    // Generate unique identifiers for the order
-    const orderId = generateId();
-    const orderNumber = generateOrderNumber();
+        this.addressManager = new AddressManager(document.getElementById('checkoutForm'));
 
-    // Calculate total amounts
-    const totalAmount = parseFloat($('#totalAmount').text().replace(/[^0-9.-]+/g, ""));
-    const depositAmount = parseFloat($('#DepositAmount').text().replace(/[^0-9.-]+/g, ""));
-
-    // Check if wishlist is empty
-    if (wishlist.length === 0) {
-        showNotification('Your wishlist is empty.', 'error');
-        return;
+        this.notificationManager = new NotificationManager(document.getElementById('notification-container'));
     }
 
-    // Validate inputs
-    if (!fullName || !address) {
-        showNotification('Please fill in all required fields.', 'error');
-        return;
+    initializeTabs() {
+        const tabContainers = document.querySelectorAll('[data-tabs]');
+        this.tabManagers = Array.from(tabContainers).map(container => {
+            const tabManager = new TabManager(container);
+
+            // Listen for tab changes
+            container.addEventListener('tabChange', (e) => {
+                this.handleTabChange(container.id, e.detail.tabId);
+            });
+
+            return tabManager;
+        });
     }
 
-    // Show confirmation notification
-    showNotification('Order confirmed! Thank you for your purchase!', 'success');
+    handleTabChange(containerId, tabId) {
+        switch (containerId) {
+            case 'licensingVerificationTabs':
+                if (tabId === 'licensing-yes') {
+                    this.licensingManager.handleOption(true);
+                } else if (tabId === 'licensing-no') {
+                    this.licensingManager.handleOption(false);
+                }
+                break;
 
-    // Construct the order object
-    const order = {
-        id: orderId, orderNumber: orderNumber, date: new Date().toISOString(), status: 'pending', customer: {
-            id: user, name: fullName, email: user, phone: user, address: address
-        }, vehicle: wishlist.map(item => ({
-            make: item.make,
-            model: item.model,
-            color: item.color,
-            upgrades: item.upgrades,
-            insurancePlans: item.insurancePlans,
-            price: item.price
-        })), payment: {
-            status: 'pending', amount: totalAmount - depositAmount, // Remaining amount after deposit
-            method: selectedFinancingOption
+            case 'tradeInTabs':
+                if (tabId === 'tradeIn-yes') {
+                    this.tradeInManager.handleOption(true);
+                } else if (tabId === 'tradeIn-no') {
+                    this.tradeInManager.handleOption(false);
+                }
+                break;
+
+            case 'financingTabs':
+                if (tabId === 'financing-loan-plans') {
+                    this.financingManager.handleMethodChange({ target: { value: 'loan' } });
+                } else if (tabId === 'financing-payment-methods') {
+                    this.financingManager.handleMethodChange({ target: { value: 'cash' } });
+                }
+                break;
+
+            case 'addressTabs':
+                if (tabId === 'address-local') {
+                    this.addressManager.showLocalForm();
+                } else if (tabId === 'address-overseas') {
+                    this.addressManager.showOverseasForm();
+                }
+                break;
         }
-    };
 
-    console.log(order); // Log the complete order object for debugging
-    sendOrder(order);
-}
+        // Update totals after any tab change
+        this.updateTotals();
+    }
 
-function sendOrder(order) {
-    const userUrl = "../../../resources/json/user.json";
-    const orderUrl = "../../../resources/json/orders.json";
-    const user = {
-        id: order.customer.id,
-        username: order.customer.username,
-        email: order.customer.email,
-        phone: order.customer.phone,
-        address: order.customer.address,
-        roles: order.customer.roles,
-        permissions: order.customer.permissions,
-        preferences: order.customer.preferences,
-        lastLogin: order.customer.lastLogin,
-        status: order.customer.status,
-        orders: order.customer.orders
-    };
-
-    localStorage.setItem('orders', JSON.stringify(order));
-    localStorage.setItem('orders_user', JSON.stringify(user));
-    window.location.href = './OrderDetails.html?id=' + order.id;
-    // Add order to the order.json file and local storage
-    $.ajax({
-        url: orderUrl,
-        type: "POST",
-        data: JSON.stringify(order),
-        contentType: "application/json",
-        success: function (data) {
-            console.log("Successfully added order to order.json file:", data);
-            localStorage.setItem('LMC_Order', JSON.stringify(order));
-            showNotification('Order added to your order history.', 'success');
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            console.log("AJAX error:", textStatus, errorThrown);
-            console.log("Response:", jqXHR.responseText);
+    async loadWishlistItems() {
+        try {
+            const wishlistData = localStorage.getItem('LMC_WishList');
+            this.wishlistItems = wishlistData ? JSON.parse(wishlistData) : [];
+            this.orderSummary.render(this.wishlistItems);
+            this.updateTotals();
+        } catch (error) {
+            console.error('Error loading wishlist items:', error);
+            this.notificationManager.show('Error loading wishlist items. Please try again.', 'error');
         }
-    });
+    }
 
-    // Add order ID to the user.json file and local storage
-    $.ajax({
-        url: userUrl, type: "GET", dataType: "json", success: function (data) {
-            console.log("Successfully fetched user data:", data);
-            if (data.status === "success" && data.data) {
-                const userData = data.data;
-                userData.orders.push(order);
-                showNotification('Order added to your order history.', 'success');
+    updateTotals() {
+        const subtotal = this.wishlistItems.reduce((sum, item) => sum + Number(item.totalPrice), 0);
+        const discount = Number(this.discountManager.getCurrentDiscount()?.discountAmount) || 0;
+        const licensingFee = Number(this.licensingManager.getFee()) || 0;
+        const tradeInValue = Number(this.tradeInManager.getValue()) || 0;
+
+        this.orderSummary.updateTotals(subtotal, discount, licensingFee, tradeInValue);
+    }
+
+    validateCheckout() {
+        // Validate all sections
+        const validations = [
+            {
+                manager: this.financingManager,
+                message: 'Please complete the financing information.'
+            },
+            {
+                manager: this.licensingManager,
+                message: 'Please complete the licensing information.'
+            },
+            {
+                manager: this.addressManager,
+                message: 'Please complete the address information.'
             }
-        }, error: function (jqXHR, textStatus, errorThrown) {
-            console.log("AJAX error:", textStatus, errorThrown);
-            console.log("Response:", jqXHR.responseText);
+        ];
+
+        for (const validation of validations) {
+            if (!validation.manager.validate()) { /* ... */ }
         }
-    });
+
+        return true;
+    }
+
+    attachEventListeners() {
+        // Handle Apply Discount
+        document.getElementById('applyDiscount').addEventListener('click', async () => {
+            try {
+                const { discountAmount, finalTotal } = await this.discountManager.applyDiscount();
+                this.updateDiscountDetails(discountAmount, finalTotal);
+                this.notificationManager.show('Discount applied successfully!', 'success');
+            } catch (error) {
+                this.notificationManager.show(error.message, 'error');
+            }
+        });
+
+        // Handle Remove Discount
+        document.getElementById('removeDiscount').addEventListener('click', () => {
+            const { discountAmount, finalTotal } = this.discountManager.removeDiscount();
+            this.updateDiscountDetails(discountAmount, finalTotal);
+            this.notificationManager.show('Discount removed.', 'success');
+        });
+
+        // Handle Form Submission abnd the submit button
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            await this.handleCheckoutSubmit(e);
+        });
+        document.getElementById('checkoutFormbtn').addEventListener('click', async (e) => {
+            await this.handleCheckoutSubmit(e);
+        });
+
+        // Handle Financing Method Change
+        document.getElementById('financingMethod').addEventListener('change', (event) => {
+            this.financingManager.handleMethodChange(event);
+            this.calculateMonthlyPayment();
+        });
+
+    }
+
+    calculateSubtotal() {
+        return this.wishlistItems.reduce((total, item) => total + Number(item.price), 0);
+    }
+
+    updateDiscountDetails(amount, finalTotal) {
+        const discountAmountEl = document.getElementById('discountAmount');
+        const discountPercentageEl = document.getElementById('discountPercentage');
+
+        if (amount > 0) {
+            discountAmountEl.textContent = `-$${amount.toFixed(2)}`;
+            discountAmountEl.classList.remove('hidden');
+            discountPercentageEl.textContent = `${this.discountManager.getCurrentDiscount().discount.value}%`;
+            discountPercentageEl.classList.remove('hidden');
+            document.getElementById('removeDiscount').classList.remove('hidden');
+        } else {
+            discountAmountEl.textContent = '';
+            discountAmountEl.classList.add('hidden');
+            discountPercentageEl.textContent = '';
+            discountPercentageEl.classList.add('hidden');
+            document.getElementById('removeDiscount').classList.add('hidden');
+        }
+
+        console.log(`Final Total: ${finalTotal}`);
+
+        // Remove the following line to prevent conflicting updates
+        // document.getElementById('totalAmount').textContent = `$${finalTotal.toFixed(2)}`;
+    }
+
+    async handleCheckoutSubmit(e) {
+        e.preventDefault();
+
+        try {
+            if (!this.validateCheckout()) {
+                throw new Error('Please fill in all required fields.');
+            }
+
+            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+
+            const orderData = {
+                id: generateOrderNumber(),
+                data: new Date().toISOString(),
+                status: 'pending',
+                customer: {
+                    id: userInfo.id,
+                    name: userInfo.firstName + " " + userInfo.lastName,
+                    email: userInfo.email,
+                    phone: userInfo.mobile,
+                    address: userInfo.address,
+                    faxNumber: userInfo.faxNumber
+                },
+                items: this.wishlistItems,
+                discount: this.discountManager.getCurrentDiscount(),
+                licensingFee: this.licensingManager.getFee(),
+                tradeInValue: this.tradeInManager.getValue(),
+                tradeInVehicle: this.tradeInManager.getVehicle(),
+                financing: {
+                    method: document.getElementById('financingMethod').value,
+                    paymentMethod: document.getElementById('Select-Loan-Deposit').value
+                },
+                address: this.addressManager.getAddressData(),
+                licensing: this.licensingManager.getLicenseData(),
+            };
+            // update LMC_Order to local storage
+            localStorage.setItem('LMC_Order', JSON.stringify(orderData));
+            console.log(orderData);
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            // remove LMC_WishList from local storage
+            localStorage.removeItem('LMC_WishList');
+            this.notificationManager.show('Order placed successfully! Redirecting to confirmation page...', 'success');
+            // set checkoutFormbtn to disabled
+            document.getElementById('checkoutFormbtn').disabled = true;
+            document.getElementById('checkoutFormbtn').classList.remove('bg-indigo-600');
+            document.getElementById('checkoutFormbtn').classList.add('bg-red-600');
+            document.getElementById('checkoutFormbtn').textContent = 'Order Placed';
+
+            setTimeout(() => {
+                window.location.href = './orderConfirmation.html';
+            }, 2000);
+
+        } catch (error) {
+            this.notificationManager.show(error.message, 'error');
+        }
+    }
+
+    calculateMonthlyPayment() {
+        const selectedOption = document.getElementById('financingMethod').selectedOptions[0];
+        if (!selectedOption || selectedOption.value === 'none') {
+            document.getElementById('monthlyPaymentDisplay').classList.add('hidden');
+            return;
+        }
+
+        const totalText = document.getElementById('totalAmount').textContent;
+        const total = parseFloat(totalText.replace(/[^0-9.-]+/g, "")) || 0;
+        const depositText = document.getElementById('DepositAmount').textContent;
+        const deposit = parseFloat(depositText.replace(/[^0-9.-]+/g, "")) || 0;
+        const principal = total - deposit;
+        const interestRate = parseFloat(selectedOption.getAttribute('data-interest-rate')); // annual rate
+        const termMonths = parseInt(selectedOption.getAttribute('data-term-months'));
+
+        if (!principal || principal <= 0 || !interestRate || !termMonths) {
+            document.getElementById('monthlyPaymentDisplay').classList.add('hidden');
+            return;
+        }
+
+        const monthlyRate = interestRate / 12;
+        const M = principal * monthlyRate / (1 - Math.pow(1 + monthlyRate, -termMonths));
+
+        document.getElementById('monthlyPayment').textContent = M.toFixed(2);
+        document.getElementById('monthlyPaymentDisplay').classList.remove('hidden');
+    }
 }
+
+// Initialize the checkout system when the DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    new CheckoutManager();
+    // set the fullName and address fields
+    const user = localStorage.getItem('username');
+    const UserInfo = JSON.parse(localStorage.getItem('userInfo'));
+    const orders = JSON.parse(localStorage.getItem('orders'));
+    // set fullName and address
+    if (UserInfo) {
+        document.getElementById('fullName').value = UserInfo.firstName + " " + UserInfo.lastName;
+        document.getElementById('addressLine1').value = UserInfo.address;
+        // Room 244, 2/F, 21 Yuen Wo Road, Sha Tin, NT, Hong Kong
+        // split the address and set the fields
+        const address = UserInfo.address.split(", ");
+        document.getElementById('district').value = address[3];
+        document.getElementById('licenseAddress').value = UserInfo.address;
+
+    }
+});
 
 function generateId() {
     return Date.now().toString(36) + Math.random().toString(36).substr(2);
@@ -172,152 +350,4 @@ function generateOrderNumber() {
     const timestamp = Date.now().toString(36).toUpperCase();
     const random = Math.random().toString(36).substr(2, 4).toUpperCase();
     return `${prefix}-${timestamp}${random}`;
-}
-
-function fetchUserinfo() {
-    const user = localStorage.getItem('username');
-    // get user info from server and set it to the page
-    $.ajax({
-        url: "../../../resources/json/user.json", type: "GET", dataType: "json", success: function (data) {
-            console.log(data);
-            if (data.status === "success" && data.data) {
-                populateUserInfo(data.data);
-            } else {
-                console.log("Error fetching user info:", data.message);
-            }
-        }, error: function (jqXHR, textStatus, errorThrown) {
-            console.log("AJAX error:", textStatus, errorThrown);
-            console.log("Response:", jqXHR.responseText);
-        }
-    });
-}
-
-function populateUserInfo(user) {
-    const fullName = user.firstName + " " + user.lastName || "";
-    const address = user.addressLine1 + ", " + user.city + ", " + user.stateProvince + " " + user.country || "";
-    console.log(fullName, address);
-    $('#fullName').val(fullName);
-    $('#address').val(address);
-}
-
-
-// Function to render order summary
-function renderOrderSummary() {
-    const orderSummary = $('#orderSummary');
-    const subtotalAmount = $('#subtotalAmount');
-    const totalAmount = $('#totalAmount');
-    const depositAmount = $('#DepositAmount');
-    const estimatedDelivery = $('#EstimatedDelivery');
-
-    // Fetch wishlist items from local storage
-    const wishlist = JSON.parse(localStorage.getItem('LMC_WishList')) || [];
-
-    // Check if wishlist is empty
-    if (wishlist.length === 0) {
-        orderSummary.html('<p class="text-red-500">Your wishlist is empty.</p>');
-        return;
-    }
-
-    // Calculate total price and populate item list
-    let totalPrice = 0;
-
-    // Create a table for the order summary
-    let summaryHTML = `
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead>
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Make</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Model</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Color</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Upgrades</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Insurance Plans</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
-                </tr>
-            </thead>
-            <tbody>`;
-
-    wishlist.forEach(item => {
-        totalPrice += item.price;
-
-        const upgradesList = item.upgrades.length > 0 ? item.upgrades.join(', ') : 'None';
-        const insuranceList = item.insurancePlans.length > 0 ? item.insurancePlans.map(plan => `${plan.planName} ($${plan.annualPremium.toLocaleString()} annual premium)`).join('<br>') : 'None';
-
-        summaryHTML += `
-            <tr>
-                <td class="px-6 py-4">${item.make}</td>
-                <td class="px-6 py-4">${item.model}</td>
-                <td class="px-6 py-4">${item.color}</td>
-                <td class="px-6 py-4">${upgradesList}</td>
-                <td class="px-6 py-4">${insuranceList}</td>
-                <td class="px-6 py-4">$${item.price.toLocaleString()}</td>
-            </tr>`;
-    });
-
-    summaryHTML += `
-            </tbody>
-        </table>`;
-
-    // Calculate deposit amount (1% of total price)
-    const depositAmountValue = totalPrice * 0.01;
-
-    // Set estimated delivery date (today + 14 days)
-    const estimatedDeliveryDate = new Date();
-    estimatedDeliveryDate.setDate(estimatedDeliveryDate.getDate() + 14);
-
-    // Update amounts in the summary
-    estimatedDelivery.text(`Estimated Delivery Date: ${estimatedDeliveryDate.toLocaleDateString()}`);
-
-    subtotalAmount.text(`Subtotal: $${totalPrice.toLocaleString()}`);
-    totalAmount.text(`Total Amount Due: $${totalPrice.toLocaleString()}`);
-    depositAmount.text(`Deposit Amount (1%): $${depositAmountValue.toLocaleString()}`);
-
-    // Show the order summary section
-    orderSummary.html(summaryHTML).show();
-
-    // Store the order summary in local storage for future reference
-    localStorage.setItem('LMC_OrderSummary', JSON.stringify({
-        subtotal: totalPrice,
-        total: totalPrice,
-        deposit: depositAmountValue,
-        estimatedDelivery: estimatedDeliveryDate.toISOString()
-    }));
-}
-
-
-function showNotification(message, type) {
-    const notificationContainer = $('#notification-container');
-    notificationContainer.empty();
-    const notification = $('<div>').addClass(`notification ${type}`).text(message);
-    notificationContainer.append(notification);
-    setTimeout(() => {
-        notification.fadeOut(400, function () {
-            $(this).remove();
-        });
-    }, 3000);
-}
-
-// Calculate and display monthly payment based on selected financing option
-function calculateMonthlyPayment() {
-    const selectedOption = $('#financingMethod option:selected');
-
-    if (selectedOption.val() === 'none') {
-        $('#monthlyPaymentDisplay').addClass('hidden');
-        return;
-    }
-    const principal = parseFloat($('#totalAmount').text().replace(/[^0-9.-]+/g, "")) - parseFloat($('#DepositAmount').text().replace(/[^0-9.-]+/g, "")); // Total minus deposit
-    const interestRate = parseFloat(selectedOption.data('interest-rate')); // Get interest rate from selected option
-    const termMonths = parseInt(selectedOption.data('term-months')); // Get term in months from selected option
-    if (!principal || principal <= 0) {
-        $('#monthlyPaymentDisplay').addClass('hidden');
-        return;
-    }
-
-    // Monthly interest rate
-    const r = interestRate / 12;
-
-    // Monthly payment formula
-    const M = principal * r * Math.pow(1 + r, termMonths) / (Math.pow(1 + r, termMonths) - 1);
-
-    $('#monthlyPayment').text(M.toFixed(2)); // Display formatted monthly payment
-    $('#monthlyPaymentDisplay').removeClass('hidden'); // Show the payment display
 }

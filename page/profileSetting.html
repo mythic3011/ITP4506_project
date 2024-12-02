@@ -12,31 +12,22 @@
     <link rel="stylesheet" href="../resources/css/main.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function loadInfo() {
-            $.ajax({
-                url: '../../resources/php/profile.php?action=getEditInfo',
-                type: 'GET',
-                dataType: 'json',
-                success: function (data) {
+function loadInfo() {
+    // Retrieve user info from localStorage or default to an empty object
+    const user = JSON.parse(localStorage.getItem('userInfo')) || {};
 
-                    $firstName = data.name.split(" ")[0];
-                    $lastName = data.name.split(" ")[1];
+    // Set values in the input fields with fallback defaults
+    document.getElementById('editFirstName').value = user.firstName || '';
+    document.getElementById('editLastName').value = user.lastName || '';
+    document.getElementById('firstName').value = user.firstName || '';
+    document.getElementById('mobileNumber').value = user.mobile || '';
+    document.getElementById('faxNumber').value = user.faxNumber || '';
+    document.getElementById('addressLine1').value = user.address || '';
+    document.getElementById('email').value = user.email || '';
 
-                    document.getElementById('editFirstName').value = $firstName;
-                    document.getElementById('editLastName').value = $lastName;
-                    document.getElementById('email').textContent = data.email;
-                    document.getElementById('editMobileNumber').value = data.contactNumber;
-                    document.getElementById('editFaxNumber').value = data.faxNumber;
-                    document.getElementById('editAddressLine1').value = data.address;
-                    document.getElementById('Full-name').textContent = data.name;
-                    document.getElementById('email').textContent = data.email;
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.log('AJAX error:', textStatus, errorThrown);
-                    console.log('Response:', jqXHR.responseText);
-                }
-            });
-        }
+    // Display full name in the specified element
+    document.getElementById('Full-name').textContent = `${user.firstName || ''} ${user.lastName || ''}`.trim();
+}
 
         function updateProfile1() {
             //get all the values

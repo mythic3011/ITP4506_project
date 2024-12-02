@@ -152,7 +152,7 @@
         align-items: center;
         cursor: pointer;
         font-size: 0.875rem;
-        user-select: none;
+        -webkit-user-select: none;
     }
 
     .terms-text {
@@ -342,6 +342,9 @@
 
             // Successful login
             showMessage('Login successful! Redirecting...', 'success');
+                        // save the user info to local storage
+            localStorage.setItem('username', user.username);
+            localStorage.setItem('userInfo', JSON.stringify(user));
             const redirectToPage = (role, path) => {
                 setTimeout(() => {
                     window.location.href = `./page/${role}/${path}`;
@@ -356,6 +359,7 @@
             } else if (user.role === 'Customer') {
                 redirectToPage(user.role, 'index.html');
             }
+
         });
 
         // Function to show messages
@@ -368,10 +372,10 @@
     });
 </script>
 
-<body>
-<main class="mainContainer">
+<body class="py-4 mt-40">
+<main class="mainContainer py-4">
     <div class="text-center">
-        <img src="resources/image/icon-removebg.png" alt="Legend Motor Limited Logo"/>
+        <img src="resources/image/icon-removebg.png" alt="Legend Motor Limited Logo" class="mt-4"/>
         <h1>Sign in to Legend Motor Limited</h1>
     </div>
     <div class="text-center">

@@ -21,15 +21,17 @@
                 orders: []
             };
 
-            let firstName = data.name.split(" ")[0];
-            let lastName = data.name.split(" ")[1];
-            document.getElementById('FullName').innerText = data.name;
-            document.getElementById('firstName').innerText = firstName;
-            document.getElementById('lastName').innerText = lastName;
-            document.getElementById('mobileNumber').innerText = data.phone;
+            const user = JSON.parse(localStorage.getItem('userInfo')); // Correctly parse the user info
+
+            let firstName = data.name.split(" ")[0] || user.firstName;
+            let lastName = data.name.split(" ")[1] || user.lastName;
+            document.getElementById('FullName').innerText = user.firstName+ " " + user.lastName || data.name;
+            document.getElementById('firstName').innerText = user.firstName;
+            document.getElementById('lastName').innerText = user.lastName;
+            document.getElementById('mobileNumber').innerText = user.mobile;
             document.getElementById('faxNumber').innerText = data.faxNumber;
             document.getElementById('addressLine1').innerText = data.address;
-            document.getElementById('email').innerText = data.email;
+            document.getElementById('email').innerText = user.email || data.email;
         }
     </script>
 </head>

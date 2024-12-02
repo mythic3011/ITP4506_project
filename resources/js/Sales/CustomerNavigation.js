@@ -41,11 +41,13 @@ $(document).ready(function () {
     });
 
     // change the username-name text and avatar when loading the page
-    const user = localStorage.getItem('username');
-    const UserInfo = JSON.parse(localStorage.getItem('orders_user'));
+    const user = JSON.parse(localStorage.getItem('userInfo')); // Correctly parse the user info
+
     if (user) {
-        $('#username-name').text(user);
-        $('#username-avatar').text(getFirstLetter(user));
+        $('#username-name').text(user.firstName + " " + user.lastName); // Accessing firstName and lastName
+        $('#username-avatar').text(getFirstLetter(user.firstName)); // Assuming getFirstLetter is a defined function
+    } else {
+        console.error('User information not found in localStorage.');
     }
 
     function getFirstLetter(name) {
