@@ -23,7 +23,7 @@
     {
       "code": "SAVE10",
       "discount_type": "fixed_amount",
-      "value": 10,
+      "value": 10000,
       "currency": "HKD",
       "expiration_date": null,
       "status": "active",
