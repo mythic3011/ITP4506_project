@@ -160,9 +160,9 @@ class CheckoutManager {
             }
         ];
 
-        for (const validation of validations) {
-            if (!validation.manager.validate()) { /* ... */ }
-        }
+        // for (const validation of validations) {
+        //     if (!validation.manager.validate()) { /* ... */ }
+        // }
 
         return true;
     }
@@ -234,9 +234,6 @@ class CheckoutManager {
         e.preventDefault();
 
         try {
-            if (!this.validateCheckout()) {
-                throw new Error('Please fill in all required fields.');
-            }
 
             const userInfo = JSON.parse(localStorage.getItem('userInfo'));
 
