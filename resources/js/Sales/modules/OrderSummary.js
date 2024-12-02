@@ -22,7 +22,7 @@ export class OrderSummary {
         });
     }
 
-render(items) {
+    render(items) {
         if (!Array.isArray(items)) { /* ... */ }
         this.orderSummary.innerHTML = items.map(item => `
             <tr class="border-b hover:bg-gray-50 transition-colors duration-150 cursor-pointer" data-id="${item.id}">
@@ -101,7 +101,7 @@ render(items) {
         const button = event.currentTarget;
         const detailsId = button.getAttribute('aria-controls');
         const detailsSection = document.getElementById(detailsId);
-        
+
         // Toggle visibility
         if (detailsSection.classList.contains('hidden')) {
             detailsSection.classList.remove('hidden');
@@ -165,12 +165,12 @@ render(items) {
                 </div>
             </div>
 
-            <div class="mt-6 bg-blue-50 p-4 rounded-lg">
+            <div class="mt-6 bg-blue-500 p-4 rounded-lg text-white font-bold">
                 <div class="flex items-center">
                     <svg class="w-5 h-5 text-blue-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span class="text-blue-800 font-medium" id="estimatedDelivery">
+                    <span class="font-medium" id="estimatedDelivery">
                         Estimated Delivery: ${new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toLocaleDateString()}
                     </span>
                 </div>
